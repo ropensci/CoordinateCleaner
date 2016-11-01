@@ -192,7 +192,9 @@ plotter <- function(x, bgmap = NULL, clean = T, details = T, ...){
   plo <- ggplot2::ggplot()+
     geom_polygon(data = bgmap, aes(x = long, y = lat, group = group), fill = "grey60")+
     coord_fixed()+
-    theme_bw()
+    theme_bw()+
+    scale_x_continuous( expand = c(0, 0))+
+    scale_y_continuous(expand = c(0, 0))
   
   #prepare occurence points
   inv <- x

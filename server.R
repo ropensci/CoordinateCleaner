@@ -129,6 +129,7 @@ shinyServer(function(input, output) {
                      gbif = gbf(), outliers = otl(),  sea = sea(), urban = urb(), 
                      validity = val(), zeros = zer(), summary = out)
    Filter(function(k) !all(is.na(k)), out)
+
  })
   #switch to data tble or show summary instead
   output$table <- renderTable({
@@ -150,7 +151,7 @@ shinyServer(function(input, output) {
       paste("flagged_coordinates", Sys.Date(), ".csv", sep="")
     },
     content = function(file) {
-      write.csv(out(), file)
+      write.csv(out(), file, row.names = FALSE)
     }
   )
 
