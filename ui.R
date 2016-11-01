@@ -1,9 +1,3 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 library(ggplot2)
 library(DT)
 library(shiny)
@@ -11,12 +5,12 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("CoordinateCleaner"),
 
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      fileInput("file1", label = h3("Occurence Data")),
+      fileInput("file1", label = h3("Input Data")),
       checkboxInput("val", label = "Validity", value = T),
       checkboxInput("cap", label = "Capitals"),
       checkboxInput("cen", label = "Centroids"),
@@ -36,9 +30,11 @@ shinyUI(fluidPage(
       fluidRow(
        tableOutput("table")
       ),
-      fluidRow(
+      fluidRow(column(9,
         plotOutput("distPlot")
-      )
+      ),
+      column(3,
+             tableOutput("summary")))
     )
   )
 ))
