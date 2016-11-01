@@ -4,7 +4,8 @@
 #
 # http://shiny.rstudio.com
 #
-
+library(ggplot2)
+library(DT)
 library(shiny)
 
 shinyUI(fluidPage(
@@ -15,16 +16,29 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      fileInput("file1", label = h3("Occurence Data")),
+      checkboxInput("val", label = "Validity", value = T),
+      checkboxInput("cap", label = "Capitals"),
+      checkboxInput("cen", label = "Centroids"),
+      checkboxInput("con", label = "Country check"),
+      checkboxInput("dpl", label = "Duplicates"),
+      checkboxInput("gbf", label = "GBIF"),
+      checkboxInput("otl", label = "Outliers"),
+      checkboxInput("urb", label = "Urban"),
+      checkboxInput("sea", label = "Seas"),
+      checkboxInput("zer", label = "Zeros"),
+      
+    downloadButton('downloadData', label = 'Download Results')
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot")
+      fluidRow(
+       tableOutput("table")
+      ),
+      fluidRow(
+        plotOutput("distPlot")
+      )
     )
   )
 ))
