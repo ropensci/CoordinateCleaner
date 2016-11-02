@@ -19,7 +19,7 @@ The results can be downloaded as a data.frame with separate flags for each test.
 A tab-delimited text file, including the column headers 'decimallongitude' and 'decimallatitude' and optionally 'species' (for the outlier and duplicate test) and 'countrycode' (for the countrycheck test). Simple csv files downloaded from www.gbif.org can directly be used as input.
 
 #Run online
-The app is available at https://azizka.shinyapps.io/CoordinateCleaner/. In case of possible memory limitations, the app can be run locally.
+The app is available at https://azizka.shinyapps.io/CoordinateCleaner/. The online version might currently crash due to memory limitations, running the app locally solves this problem.
 
 #Run locally
 Just copy the following code into your R console.
