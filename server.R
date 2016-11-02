@@ -3,6 +3,7 @@ library(sp)
 library(raster)
 library(geosphere)
 library(rgeos)
+library(viridis)
 
 source("helpers.R")
 
@@ -11,8 +12,7 @@ buffer <- 1
 capitals.rad <- 0.1
 centroids.rad <- 0.1
 centroid.details <- "both"
-outliers.mtp <- 25
-outliers.td <- NULL
+outliers.mtp <- NULL
 zeros.rad <- 0.5
 
 #add plotting
@@ -30,10 +30,25 @@ shinyServer(function(input, output) {
   })
   
   #Define input values
-  
+  #coordinates
   x <- reactive({data.frame(dataInput()[,c("decimallongitude", "decimallatitude")])})
-  species <- reactive({dataInput()[,"species"]})
-  countries <- reactive({dataInput()[,"countrycode"]})
+  
+  #species identity
+  species <- reactive({
+    if("species" %in% names(dataInput())){
+    dataInput()[,"species"]
+    }else{
+      NULL
+    }
+    })
+  
+  #country information
+  countries <- reactive({
+    if("countrycode" %in% names(dataInput())){
+      dataInput()[,"countrycode"]
+  }else{
+        NULL
+      }})
   
   #capital coordinates
  cap <- reactive({if(input$cap){
@@ -47,10 +62,13 @@ shinyServer(function(input, output) {
   #Country check
  con <- reactive({if(input$con){
    load("countryborders.rda")
-   .CountryCheck(x(), countries = countries(), poly = countryborders)
- } else {
-   rep(NA, nrow(x()))
- }})
+   if(is.null(countries())){
+     rep(NA, nrow(x()))
+   }else{
+     .CountryCheck(x(), countries = countries(), poly = countryborders)
+   }
+   }else{rep(NA, nrow(x()))}
+})
  
  #Country centroids
  cen <- reactive({if(input$cen){
@@ -65,10 +83,12 @@ shinyServer(function(input, output) {
  dpl <- reactive({if(input$dpl){
    if (is.null(species())) {
      dpl.test <- x()
+
    } else {
      dpl.test <- data.frame(x(), species())
    }
    !duplicated(dpl.test)
+   
  } else {
    rep(NA, nrow(x()))
  }})
@@ -82,7 +102,11 @@ shinyServer(function(input, output) {
  
  #Outliers
  otl <- reactive({if(input$otl){
-   .OutlierCoordinates(x(), species = species(), mltpl = outliers.mtp, tdi = outliers.td)
+   if(is.null(species())){
+     rep(NA, nrow(x()))
+   }else{
+     .OutlierCoordinates(x(), species = species(), mltpl = NULL, tdi = input$outl.dist)
+   }
  } else {
    rep(NA, nrow(x()))
  }})
@@ -131,19 +155,42 @@ shinyServer(function(input, output) {
    Filter(function(k) !all(is.na(k)), out)
 
  })
-  #switch to data tble or show summary instead
-  output$table <- renderTable({
-    if(is.null(input$file1))
-      return()
-    head(data.frame(out()))
-  })
-  
+ 
+ ras <- reactive({
+   if(sum(!out()$summary) > 0){
+     pts <- SpatialPoints(out()[!out()$summary,1:2])
+     pts.2 <- SpatialPoints(out()[,1:2])
+     r <- raster(extent(pts.2))
+     res(r) <- 0.1
+     ras <- rasterize(pts, r, fun = "count")
+     data.frame(coordinates(ras), as.data.frame(ras))
+   }else{
+     NULL
+   }
+
+ })
+
   output$distPlot <- renderPlot({
     if(is.null(input$file1))
       return()
     load("landmass.rda")
     plotter(out(), clean = T, detail = T)
   })
+  
+  output$log <- renderTable({
+    if(is.null(input$file1))
+      return()
+    data.frame(Test = as.character(names(out()[-c(1:2)])),
+               Flags = colSums(!out()[-c(1:2)]))
+  }, digits = 0)
+  
+  output$raster <- renderPlot({
+    if(is.null(input$file1))
+      return()
+    if(is.null(ras()))
+      return()
+      rasPlotter(x = ras(), y = out())  
+    })
   
   #fix this
   output$downloadData <- downloadHandler(
@@ -155,5 +202,6 @@ shinyServer(function(input, output) {
     }
   )
 
+  
 
 })
