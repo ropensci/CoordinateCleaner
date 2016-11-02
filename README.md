@@ -1,4 +1,4 @@
-# CoordinateCleaner v0.9000-1
+# CoordinateCleaner v0.9.beta.1
 A shiny app for easy automated flagging of potential errors in geographic coordinates common to biological collection data, including tests for
 
 * General coordinate validity
