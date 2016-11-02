@@ -54,6 +54,7 @@
   
   country <- sp::over(x = pts, y = testpolys)[, "ISO2"]
   out <- as.character(country) == as.character(countries)
+  out[is.na(out)] <- TRUE
   
   return(out)
 }
@@ -190,7 +191,7 @@ plotter <- function(x, bgmap = NULL, clean = T, details = T, ...){
   
   #plot background
   plo <- ggplot2::ggplot()+
-    geom_polygon(data = bgmap, aes(x = long, y = lat, group = group), fill = "grey60")+
+    geom_polygon(data = bgmap, aes(x = long, y = lat, group = group), fill = "grey80")+
     coord_fixed()+
     theme_bw()+
     scale_x_continuous( expand = c(0, 0))+
@@ -199,7 +200,7 @@ plotter <- function(x, bgmap = NULL, clean = T, details = T, ...){
   #prepare occurence points
   inv <- x
   inv[,-c(1:2)] <- !inv[,-c(1:2)]
-  occs <- names(inv)[unlist(lapply(apply(inv == 1, 1, "which"), "[", 1))]
+  occs <- names(inv[,-c(1:2)])[unlist(lapply(apply(inv[, -c(1:2)] == 1, 1, "which"), "[", 1))]
   
   if(length(occs) == 0){
     occs <- rep("AAAclean", nrow(x))
@@ -249,3 +250,24 @@ plotter <- function(x, bgmap = NULL, clean = T, details = T, ...){
   }
   plo
 } 
+
+
+rasPlotter <- function(x, y){
+  e <- raster::extent(SpatialPoints(y[, 1:2])) + 1
+  
+  load("landmass.rda")
+  bgmap <- landmass
+  bgmap <- raster::crop(bgmap, e)
+  bgmap <- ggplot2::fortify(bgmap)
+  
+    ggplot2::ggplot()+
+    geom_polygon(data = bgmap, aes(x = long, y = lat, group = group), fill = "grey80")+
+    geom_raster(data = x, aes(x = x, y = y, fill = layer))+
+    scale_fill_viridis(option = "inferno", na.value = "transparent", name = "Flagged\nRecords", direction = 1)+
+    coord_fixed()+
+    theme_bw()+
+    scale_x_continuous(expand = c(0, 0))+
+    scale_y_continuous(expand = c(0, 0))+
+    theme(legend.position="bottom",
+          legend.key.width = unit(0.7, "in"))
+}
