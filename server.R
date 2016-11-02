@@ -114,7 +114,7 @@ shinyServer(function(input, output) {
  #Seas
  sea <- reactive({if(input$sea){
    load("landmass.rda")
-   .WaterCoordinates(x())
+   .WaterCoordinates(x(), poly = landmass)
  } else {
    rep(NA, nrow(x()))
  }})
