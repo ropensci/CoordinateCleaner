@@ -1,9 +1,5 @@
 .CapitalCoordinates <- function(x, testdist = 0.1, buffer = 1, referencedat = NULL) {
   dat <- sp::SpatialPoints(x)
-  if (is.null(referencedat)) {
-    referencedat <- speciesgeocodeR::capitals
-  }
-  
   limits <- raster::extent(dat) + buffer
   
   # subset of testdatset according to limits
@@ -19,17 +15,7 @@
 
 .CentroidCoordinates <- function(x, testdist = 0.1, buffer = 1, testtype = c("both", "country", "provinces"), referencedat = NULL) {
   dat <- sp::SpatialPoints(x)
-  if (is.null(referencedat)) {
-    referencedat <- speciesgeocodeR::centroids
-    
-    if (testtype[1] == "country") {
-      referencedat <- referencedat[referencedat$type == "country", ]
-    }
-    if (testtype[1] == "province") {
-      referencedat <- referencedat[referencedat$type == "province", ]
-    }
-  }
-  
+
   limits <- raster::extent(dat) + buffer
   
   # subset of testdatset according to limits
@@ -45,10 +31,6 @@
 
 .CountryCheck <- function(x, countries, poly = NULL) {
   pts <- SpatialPoints(x)
-  
-  if (is.null(poly)) {
-    poly <- speciesgeocodeR::countryborders
-  }
   
   testpolys <- crop(poly, extent(pts))
   
@@ -111,11 +93,7 @@
 .UrbanCoordinates <- function(x, poly = NULL) {
   pts <- SpatialPoints(x)
   limits <- extent(pts) + 1
-  
-  if (is.null(poly)) {
-    poly <- speciesgeocodeR::urbanareas
-  }
-  
+
   poly <- crop(poly, limits)
   
   urban <- over(x = pts, y = poly)[, 1]
@@ -146,13 +124,9 @@
 
 .WaterCoordinates <- function(x, poly = NULL) {
   pts <- SpatialPoints(x)
-  
-  if (is.null(poly)) {
-    testpolys <- speciesgeocodeR::landmass
-    testpolys <- crop(testpolys, extent(pts) + 1)
-  } else {
+
     testpolys <- poly
-  }
+    testpolys <- crop(testpolys, extent(pts) + 1)
   land <- over(x = pts, y = testpolys)[, 1]
   out <- !is.na(land)
   
