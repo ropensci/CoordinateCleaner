@@ -1,16 +1,16 @@
 # CoordinateCleaner
 A shiny app for easy automated flagging of potential errors in geographic coordinates common to biological collection data, including tests for
 
-* general coordinate validity
-* country and province centroids
-* capital coordinates
-* check if coordinates agree with country information
+* General coordinate validity
+* Country and province centroids
+* Capital coordinates
+* Coordinate-country discordance
 * Duplicated coordinates per species
-* assignment to the location of the GBIF headquarters
+* Assignment to the location of the GBIF headquarters
 * Outliers
 * Urban areas
 * Seas
-* PLain zeros
+* Plain zeros
 * equal longitude and latitude
 
 The results can be downloaded as a data.frame with separate flags for each test. All tests are also included in the CleanCoordinate function of [speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/tree/master/speciesgeocodeR). 
