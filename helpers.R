@@ -43,10 +43,7 @@
 
 .Institutions <- function(x, testdist = 0.001, buffer = 1, referencedat = NULL){
   dat <- sp::SpatialPoints(x)
-  if (is.null(referencedat)) {
-    referencedat <- speciesgeocodeR::institutions
-  }
-  
+
   limits <- raster::extent(dat) + buffer
   
   # subset of testdatset according to limits
