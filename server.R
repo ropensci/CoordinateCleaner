@@ -103,7 +103,8 @@ shinyServer(function(input, output) {
  
  #Biodiversity Institutions
  ins <- reactive({if(input$ins){
-   .Institutions(x(), testdist = inst.testdist)
+   load("institutions.rda")
+   .Institutions(x(), testdist = inst.testdist, referencedat = institutions)
  } else {
    rep(NA, nrow(x()))
  }})
