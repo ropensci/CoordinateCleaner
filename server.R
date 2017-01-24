@@ -14,6 +14,7 @@ centroids.rad <- 0.1
 centroid.details <- "both"
 outliers.mtp <- NULL
 zeros.rad <- 0.5
+inst.testdist <- 0.01
 
 #add plotting
 
@@ -100,6 +101,13 @@ shinyServer(function(input, output) {
     rep(NA, nrow(x()))
  }})
  
+ #Biodiversity Institutions
+ ins <- reactive({if(input$ins){
+   .Institutions(x(), testdist = inst.testdist)
+ } else {
+   rep(NA, nrow(x()))
+ }})
+ 
  #Outliers
  otl <- reactive({if(input$otl){
    if(is.null(species())){
@@ -144,13 +152,14 @@ shinyServer(function(input, output) {
  }})
  
  out <- reactive({
-   out <- list(val(), zer(), cap(), cen(), sea(), urb(), con(), otl(), gbf(), dpl())
+   out <- list(val(), zer(), cap(), cen(), sea(), urb(), con(), otl(), gbf(), ins(), dpl())
    out <- Filter(function(k) !all(is.na(k)), out)
    out <- Reduce("&", out)
    
    out <- data.frame(x(), capitals = cap(), countrycheck = con(), centroids = cen(),
                      duplicates = dpl(),  
-                     gbif = gbf(), outliers = otl(),  sea = sea(), urban = urb(), 
+                     gbif = gbf(),  institutions = ins(), outliers = otl(),  
+                     sea = sea(), urban = urb(), 
                      validity = val(), zeros = zer(), summary = out)
    Filter(function(k) !all(is.na(k)), out)
 
@@ -161,7 +170,7 @@ shinyServer(function(input, output) {
      pts <- SpatialPoints(out()[!out()$summary,1:2])
      pts.2 <- SpatialPoints(out()[,1:2])
      r <- raster(extent(pts.2))
-     res(r) <- 0.1
+     res(r) <- 2
      ras <- rasterize(pts, r, fun = "count")
      data.frame(coordinates(ras), as.data.frame(ras))
    }else{
@@ -201,7 +210,4 @@ shinyServer(function(input, output) {
       write.csv(out(), file, row.names = FALSE)
     }
   )
-
-  
-
 })

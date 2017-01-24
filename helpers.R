@@ -41,6 +41,26 @@
   return(out)
 }
 
+.Institutions <- function(x, testdist = 0.001, buffer = 1, referencedat = NULL){
+  dat <- sp::SpatialPoints(x)
+  if (is.null(referencedat)) {
+    referencedat <- speciesgeocodeR::institutions
+  }
+  
+  limits <- raster::extent(dat) + buffer
+  
+  # subset of testdatset according to limits
+  referencedat <- raster::crop(SpatialPoints(referencedat[, c("decimallongitude", "decimallatitude")]), limits)
+  
+  if(is.null(referencedat)){ # incase no bdinstitutions
+    out <- rep(TRUE, nrow(x))
+  }else{
+    referencedat <- rgeos::gBuffer(referencedat, width = testdist, byid = T)
+    out <- is.na(sp::over(x = dat, y = referencedat))
+  }
+  
+}
+
 .OutlierCoordinates <- function(x, species, mltpl, tdi, method = "Haversine") {
   
   splist <- split(x, f = as.character(species))
