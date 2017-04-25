@@ -4,6 +4,7 @@ library(raster)
 library(geosphere)
 library(rgeos)
 library(viridis)
+library(speciesgeocodeR)
 
 source("helpers.R")
 
@@ -21,7 +22,7 @@ inst.testdist <- 0.01
 shinyServer(function(input, output) {
   
   #set maximum file size
-  options(shiny.maxRequestSize=35*1024^2) # change maximum upload size
+  options(shiny.maxRequestSize=50*1024^2) # change maximum upload size
   
   #load the input data
   dataInput <- reactive({
@@ -152,6 +153,20 @@ shinyServer(function(input, output) {
    rep(NA, nrow(x()))
  }})
  
+ #DS-level coordinate conversion
+ ddmm <- reactive({if(input$ddmm){
+   CleanCoordinatesDS(x(), periodicity = F)
+ } else {
+   data.frame(pass.ddmm = NA)
+ }})
+ #DS-level Periodicity
+ per <- reactive({if(input$per){
+   CleanCoordinatesDS(x(), ddmm = F, periodicity = T, output = 'flags',
+                      subsampling = T, periodicity.diagnostics = F)
+ } else {
+   data.frame(pass.periodicity.com = NA)
+ }})
+
  out <- reactive({
    out <- list(val(), zer(), cap(), cen(), sea(), urb(), con(), otl(), gbf(), ins(), dpl())
    out <- Filter(function(k) !all(is.na(k)), out)
@@ -165,7 +180,7 @@ shinyServer(function(input, output) {
    Filter(function(k) !all(is.na(k)), out)
 
  })
- 
+
  ras <- reactive({
    if(sum(!out()$summary) > 0){
      pts <- SpatialPoints(out()[!out()$summary,1:2])
@@ -190,8 +205,15 @@ shinyServer(function(input, output) {
   output$log <- renderTable({
     if(is.null(input$file1))
       return()
-    data.frame(Test = as.character(names(out()[-c(1:2)])),
+    data.frame(Record_level_test = as.character(names(out()[-c(1:2)])),
                Flags = colSums(!out()[-c(1:2)]))
+  }, digits = 0)
+  
+  output$dslog <- renderTable({
+    if(is.null(input$file1))
+      return()
+    data.frame(Dataset_level_test = c("ddmm to dd.dd conversion", "Periodicity"),
+               Pass = c(ddmm()$pass.ddmm, per()$pass.periodicity.com))
   }, digits = 0)
   
   output$raster <- renderPlot({
@@ -199,7 +221,7 @@ shinyServer(function(input, output) {
       return()
     if(is.null(ras()))
       return()
-      rasPlotter(x = ras(), y = out())  
+      rasPlotter(x = ras(), y = out())
     })
   
   #fix this
