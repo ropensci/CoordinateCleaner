@@ -12,7 +12,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       fileInput("file1", label = h4("Input Data")),
-      h4("Tests"),
+      h4("Record-level Tests"),
       checkboxInput("val", label = "Validity", value = T),
       checkboxInput("cap", label = "Capitals"),
       checkboxInput("cen", label = "Centroids"),
@@ -26,11 +26,16 @@ shinyUI(fluidPage(
       checkboxInput("zer", label = "Zeros"),
       
       numericInput("outl.dist", label = h4("Outlier threshold distance"), value = 1000),
-      
+
+      h4("Dataset-level tests"),
+      checkboxInput("ddmm", label = "DDmm"),
+      checkboxInput("per", label = "Periodicity"),
+
+
       h4("Data Download"),
     downloadButton('downloadData', label = 'Download Results'),
     
-    bsPopover(id = "downloadData", title = "Download flags for each record", 
+    bsPopover(id = "downloadData", title = "Download flags from the record-level tests", 
               placement = "right", trigger = "hover"),
     bsPopover(id = "file1", title = "A tab delimited file containing columns named: decimallongitude, decimallatitude, and optionally species, and countrycode", 
               placement = "right", trigger = "click"),
@@ -57,17 +62,21 @@ shinyUI(fluidPage(
     bsPopover(id = "sea", title = "In the ocean", 
               placement = "right", trigger = "hover"),
     bsPopover(id = "zer", title = "Plain zero coordinates or 0.5° radius around 0/0, or lat = long", 
+              placement = "right", trigger = "hover"),
+    bsPopover(id = "ddmm", title = "Drop in record number with decimals >0.6", 
+              placement = "right", trigger = "hover"),
+    bsPopover(id = "per", title = "Decimal periodicity indicating rasterization or decimal rounding. This may take some time.", 
               placement = "right", trigger = "hover")
+    
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
-      fluidRow(column(12,
-                      plotOutput("distPlot")
-               )),
+      fluidRow(column(8, plotOutput("distPlot")),
+               column(4, tableOutput("log"))),
       
       fluidRow(column(8, plotOutput("raster")),
-               column(4, tableOutput("log")))
+               column(4, tableOutput("dslog")))
     )
   )
 ))

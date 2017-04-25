@@ -1,10 +1,11 @@
 name: CoordinateCleaner
+title:
 account: azizka
 server: shinyapps.io
 appId: 135298
-bundleId: 603474
+bundleId: 689781
 url: https://azizka.shinyapps.io/CoordinateCleaner/
-when: 1478090378.51024
+when: 1485285547.64807
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: README.md
