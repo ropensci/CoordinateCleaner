@@ -259,6 +259,6 @@ rasPlotter <- function(x, y){
     theme_bw()+
     scale_x_continuous(expand = c(0, 0))+
     scale_y_continuous(expand = c(0, 0))+
-    theme(legend.position="bottom",
-          legend.key.width = unit(0.7, "in"))
+    theme(legend.position="right",
+          legend.key.height = unit(0.7, "in"))
 }
