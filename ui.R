@@ -30,6 +30,8 @@ shinyUI(fluidPage(
       h4("Dataset-level tests"),
       checkboxInput("ddmm", label = "DDmm"),
       checkboxInput("per", label = "Periodicity"),
+      
+      numericInput("subsamp", label = h4("Subsampling for periodicity"), value = 5000),
 
 
       h4("Data Download"),
