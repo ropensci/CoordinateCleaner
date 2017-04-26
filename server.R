@@ -4,7 +4,6 @@ library(raster)
 library(geosphere)
 library(rgeos)
 library(viridis)
-library(speciesgeocodeR)
 
 source("helpers.R")
 
@@ -224,7 +223,7 @@ shinyServer(function(input, output) {
       rasPlotter(x = ras(), y = out())
     })
   
-  #fix this
+  #download record-level output
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("flagged_coordinates", Sys.Date(), ".csv", sep="")
