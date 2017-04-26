@@ -161,7 +161,7 @@ shinyServer(function(input, output) {
  #DS-level Periodicity
  per <- reactive({if(input$per){
    CleanCoordinatesDS(x(), ddmm = F, periodicity = T, output = 'flags',
-                      subsampling = T, periodicity.diagnostics = F)
+                      subsampling = input$subsamp, periodicity.diagnostics = F)
  } else {
    data.frame(pass.periodicity.com = NA)
  }})
