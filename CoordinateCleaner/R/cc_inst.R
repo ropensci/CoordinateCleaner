@@ -9,7 +9,7 @@ cc_inst <- function(x, lon = "decimallongitude", lat = "decimallatitude",
     cat("Testing biodiversity insitutions\n")
   }
   
-  dat <- sp::SpatialPoints(x[, c(lon,lat)])
+  dat <- sp::SpatialPoints(x[, c(lon, lat)])
   
   #prepare reference dataset
   if (is.null(ref)) {

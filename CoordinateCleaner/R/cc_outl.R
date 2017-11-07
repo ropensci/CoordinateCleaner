@@ -4,7 +4,7 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
   
   #check value argument
   match.arg(value, choices = c("clean", "flags"))
-  match.arg(outl.method, choices = c("distance", "quantile", "mad"))
+  match.arg(method, choices = c("distance", "quantile", "mad"))
   
   if(verbose){
     cat("Testing outliers\n")
