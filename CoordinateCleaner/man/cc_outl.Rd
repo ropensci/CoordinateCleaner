@@ -1,137 +1,65 @@
 \name{cc_outl}
 \alias{cc_outl}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+Flag geographic outliers in species distributions
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Flags records that are outliers in geographic space according to the method defined via the \code{method} argument. Geographic outliers often represent erroneous coordinates, for example due to data entry errors, imprecise geo-references, individuals in horticulture/captivity.
 }
 \usage{
-cc_outl(x, lon = "decimallongitude", lat = "decimallatitude", species = "species", method = "quantile", mltpl = 3, tdi = 1000, value = "clean", verbose = T)
+cc_outl(x, lon = "decimallongitude", lat = "decimallatitude", species = "species", 
+        method = "quantile", mltpl = 3, tdi = 1000, value = "clean", verbose = T)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+a data.frame. Containing geographical coordinates and species names.
 }
   \item{lon}{
-%%     ~~Describe \code{lon} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
 }
   \item{lat}{
-%%     ~~Describe \code{lat} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{species}{
-%%     ~~Describe \code{species} here~~
+a character string. The column with the species name. Default = \dQuote{species}.
 }
   \item{method}{
-%%     ~~Describe \code{method} here~~
+ a character string.  Defining the method for outlier selection.  See details. One of \dQuote{distance}, \dQuote{quantile}, \dQuote{mad}.  Deafault = \dQUote{quantile}.
 }
   \item{mltpl}{
-%%     ~~Describe \code{mltpl} here~~
+numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or meadian absolute deviation (\code{method == 'mad'})to identify outliers. See details.  Default = 3.
 }
   \item{tdi}{
-%%     ~~Describe \code{tdi} here~~
+numeric.  The minimum absolute distance (\code{method == 'distance'}) of a record to all other records of a species to be indentified as outlier, in km. See details. Default = 1000.
 }
   \item{value}{
-%%     ~~Describe \code{value} here~~
+character string.  Defining the output value. See value.
 }
   \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
+logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The method for outlier identification depends on the \code{method} argument. If \dQuote{outlier} a boxplot method is used and records are flagged as outliers if their \emph{mean} distance to all other records of the same species is larger than mltpl * the interquartile range of the mean distance of all records of this species. If \dQuote{mad} the median absolute deviation is used. In this case a record is flagged as outlier, if the \emph{mean} distance to all other records of the same species is larger than the medain of the mean distance of all points plus/minus the mad of the mean distances of all records of the species * mltpl. If \dQuote{distance} records are flagged as outliers, if the \emph{minimum} distance to the next record of the species is > \code{tdi}.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
+Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
-%%  ~~further notes~~
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x, lon = "decimallongitude", lat = "decimallatitude", 
-    species = "species", method = "quantile", mltpl = 3, tdi = 1000, 
-    value = "clean", verbose = T) 
-{
-    match.arg(value, choices = c("clean", "flags"))
-    match.arg(outl.method, choices = c("distance", "quantile", 
-        "mad"))
-    if (verbose) {
-        cat("Testing outliers\n")
-    }
-    splist <- split(x, f = as.character(x[[species]]))
-    test <- lapply(splist, "duplicated")
-    test <- lapply(test, "!")
-    test <- as.vector(unlist(lapply(test, "sum")))
-    splist <- splist[test > 2]
-    flags <- lapply(splist, function(k) {
-        test <- nrow(k[!duplicated(k), ])
-        if (test > 2) {
-            if (method == "distance") {
-                dist <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine)
-                dist[dist == 0] <- NA
-                mins <- apply(dist, 1, min, na.rm = T)
-                out <- which(mins > tdi * 1000)
-            }
-            if (method == "quantile") {
-                dist <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine)
-                dist[dist == 0] <- NA
-                mins <- apply(dist, 1, mean, na.rm = T)
-                quo <- quantile(mins, c(0.25, 0.75), na.rm = T)
-                out <- which(mins < quo[1] - IQR(mins) * mltpl | 
-                  mins > quo[2] + IQR(mins) * mltpl)
-            }
-            if (method == "mad") {
-                dist <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine)
-                dist[dist == 0] <- NA
-                mins <- apply(dist, 1, mean, na.rm = T)
-                quo <- median(mins)
-                tester <- mad(mins)
-                out <- which(mins < quo - tester * mltpl | mins > 
-                  quo + tester * mltpl)
-            }
-        }
-        if (length(out) == 0) {
-            ret <- NA
-        }
-        if (length(out) > 0) {
-            ret <- rownames(k)[out]
-        }
-        return(ret)
-    })
-    flags <- as.numeric(as.vector(unlist(flags)))
-    out <- flags[!is.na(flags)]
-    out <- rep(TRUE, nrow(x))
-    out[flags] <- FALSE
-    if (verbose) {
-        cat(sprintf("Flagged \%s records. \n", sum(!out)))
-    }
-    switch(value, clean = return(x[out, ]), flags = return(out))
-  }
+x <- data.frame(species = letters[1:10], 
+                decimallongitude = runif(100, -180, 180), 
+                decimallatitude = runif(100, -90,90))
+                
+cc_outl(x)
+cc_outl(x, method = "quantile", value = "flags")
+cc_outl(x, method = "distance", value = "flags", tdi = 10000)
+cc_outl(x, method = "distance", value = "flags", tdi = 1000)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ "Coordinate cleaning" }

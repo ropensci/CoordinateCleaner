@@ -1,92 +1,54 @@
 \name{cc_sea}
 \alias{cc_sea}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+Flag non-terrestrial coordinates
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Flags coordinates outside the reference landmass. Can be used to restrict datasets to terrestrial taxa, or exclude records from the open ocean, when a buffered reference is used (see details). Often records of terrestrial taxa can be found in the open ocean, mostly due to switched latitude and longitude.
 }
 \usage{
 cc_sea(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL, value = "clean", verbose = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+a data.frame. Containing geographical coordinates and species names.
 }
   \item{lon}{
-%%     ~~Describe \code{lon} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
 }
   \item{lat}{
-%%     ~~Describe \code{lat} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{ref}{
-%%     ~~Describe \code{ref} here~~
+a SpatialPointsPolygonsframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{landmass}. See details.  Default = \code{\link{landmass}}}
 }
   \item{value}{
-%%     ~~Describe \code{value} here~~
+character string.  Defining the output value. See value.
 }
   \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
+logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+In some cases flagging records close of the coastline, is not recommendable, because of the low precision of the reference dataset, minor gps imprecision or because a dataset might include coast or marshland species. If you only want to flag records in the open ocean, consider using a buffered landmass reference, such as the one provided here: \url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
+Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
-%%  ~~further notes~~
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+x <- data.frame(species = letters[1:10], 
+                decimallongitude = runif(100, -180, 180), 
+                decimallatitude = runif(100, -90,90))
+                
+cc_sea(x)
+cc_sea(x, value = "flags")
 
-## The function is currently defined as
-function (x, lon = "decimallongitude", lat = "decimallatitude", 
-    ref = NULL, value = "clean", verbose = TRUE) 
-{
-    match.arg(value, choices = c("clean", "flags"))
-    if (verbose) {
-        cat("Testing sea coordinates\n")
-    }
-    pts <- sp::SpatialPoints(x[, c(lon, lat)])
-    if (is.null(ref)) {
-        ref <- CoordinateCleaner::landmass
-        ref <- raster::crop(ref, raster::extent(pts) + 1)
-    }
-    else {
-        sp::proj4string(ref) <- ""
-        warning("Assuming lat/lon for seas.ref")
-    }
-    out <- sp::over(x = pts, y = ref)[, 1]
-    out <- !is.na(out)
-    if (verbose) {
-        cat(sprintf("Flagged \%s records. \n", sum(!out)))
-    }
-    switch(value, clean = return(x[out, ]), flags = return(out))
-  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ "Coordinate cleaning" }
