@@ -1,1 +1,15 @@
-exportPattern("^[[:alpha:]]+")
+exportPattern("^[^\\.]")
+
+S3method(is, spatialvalid)
+S3method(plot, spatialvalid)
+S3method(summary, spatialvalid)
+
+
+import(graphics)
+importFrom("ggplot2", aes_string, coord_fixed, fortify, ggplot, geom_point, geom_polygon, scale_colour_manual, scale_shape_manual, theme, theme_bw)
+importFrom("geosphere", distm)
+importFrom("methods", as, is)
+importFrom("stats", binom.test, IQR, mad)
+importFrom("sp", over, proj4string, "proj4string<-", SpatialPoints)
+importFrom("raster", as.matrix, crop, extent, raster, rasterize, res)
+importFrom("rgeos", gBuffer)
