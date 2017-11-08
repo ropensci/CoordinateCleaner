@@ -36,7 +36,7 @@ numerical. Indicates the factor by which one of the two periodic bins must outnu
 numeric. If NULL, the entire dataset is tested, if not NULL a random subsample of size \code{subsampling} is tested. This is recommedned for very large datasets, but \code{subsampling values below 1000 are not recommended.  Default = NULL}
 }
   \item{diagnostics}{
- should
+logical. If TRUE, plots a series of diagnostics visualizing the periodicity test. Default = FALSE.
 }
   \item{value}{
 character string.  Defining the output value. See value. Default = \dQuote{clean}.

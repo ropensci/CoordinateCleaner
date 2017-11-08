@@ -1,5 +1,5 @@
 
-R version 3.3.3 (2017-03-06) -- "Another Canoe"
+R version 3.4.2 (2017-09-28) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
@@ -21,19 +21,8 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > options(pager = "console")
-> base::assign(".ExTimings", "CoordinateCleaner-Ex.timings", pos = 'CheckExEnv')
-> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
-> base::assign(".format_ptime",
-+ function(x) {
-+   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
-+   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
-+   options(OutDec = '.')
-+   format(x[1L:3L], digits = 7L)
-+ },
-+ pos = 'CheckExEnv')
-> 
-> ### * </HEADER>
 > library('CoordinateCleaner')
+Loading required package: sp
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > cleanEx()
@@ -42,7 +31,6 @@ Type 'q()' to quit R.
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: CleanCoordinates
 > ### Title: Geographic Cleaning of Coordinates from Biologic Collections
 > ### Aliases: CleanCoordinates summary.spatialvalid is.spatialvalid
@@ -81,21 +69,17 @@ decimallatitude        validity           equal           zeros        capitals
               0               0               0               0               0 
       centroids             sea            gbif     institution         summary 
               0             163               0               0             163 
-> plot(test)
-Regions defined for each Polygons
+> #plot(test)
 > 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("CleanCoordinates", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("CleanCoordinatesDS")
 > ### * CleanCoordinatesDS
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: CleanCoordinatesDS
 > ### Title: Geographic Coordinate Cleaning based on Dataset Properties
 > ### Aliases: CleanCoordinatesDS
@@ -134,15 +118,12 @@ Regions defined for each Polygons
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("CleanCoordinatesDS", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("capitals")
 > ### * capitals
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: capitals
 > ### Title: Global Capital Locations
 > ### Aliases: capitals
@@ -160,17 +141,14 @@ Regions defined for each Polygons
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("capitals", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_cap")
 > ### * cc_cap
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_cap
-> ### Title: Flag coordinates in vicinity of country capitals.
+> ### Title: Flag coordinates in cicinity of country Capitals.
 > ### Aliases: cc_cap
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -304,18 +282,15 @@ TRUE TRUE TRUE TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_cap", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_cen")
 > ### * cc_cen
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_cen
-> ### Title: Flag coordinates in vicinity of centroids of countries and
-> ###   provinces.
+> ### Title: Flag Coordinates in Vicinity of Centroids of Countries and
+> ###   Provinces.
 > ### Aliases: cc_cen
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -449,77 +424,39 @@ FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_cen", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_coun")
 > ### * cc_coun
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_coun
-> ### Title: Flag coordinates outside their reported country
+> ### Title: Flag Coordinates Outside their Reported Country
 > ### Aliases: cc_coun
 > ### Keywords: "Coordinate cleaning"
 > 
 > ### ** Examples
 > 
-> x <- data.frame(species = letters[1:10], 
-+                 decimallongitude = runif(100, -20, 30), 
-+                 decimallatitude = runif(100, 35,60),
-+                 countrycode = "RUS")
-> 
-> cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
-Testing country identity
-The rnaturalearthdata package needs to be installed.
-Installing the rnaturalearthdata package.
-Installing package into 'C:/Users/alexander.zizka/AppData/Local/Temp/RtmpW0VNOm/RLIBS_2b8c2d575b68'
-(as 'lib' is unspecified)
-trying URL 'http://packages.ropensci.org/src/contrib/rnaturalearthdata_0.1.0.tar.gz'
-Content type 'application/gzip' length 3218741 bytes (3.1 MB)
-==================================================
-downloaded 3.1 MB
-
-* installing *source* package 'rnaturalearthdata' ...
-** R
-** data
-*** moving datasets to lazyload DB
-** preparing package for lazy loading
-** help
-*** installing help indices
-** building package indices
-** testing if installed package can be loaded
-*** arch - i386
-*** arch - x64
-* DONE (rnaturalearthdata)
-
-The downloaded source packages are in
-	'C:\Users\alexander.zizka\AppData\Local\Temp\RtmpGU3I7v\downloaded_packages'
-Flagged 51 records. 
-  [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
- [13]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE
- [25] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
- [37] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
- [49]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
- [61] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
- [73]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
- [85]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
- [97]  TRUE  TRUE  TRUE  TRUE
+> ## Not run: 
+> ##D x <- data.frame(species = letters[1:10], 
+> ##D                 decimallongitude = runif(100, -20, 30), 
+> ##D                 decimallatitude = runif(100, 35,60),
+> ##D                 countrycode = "RUS")
+> ##D 
+> ##D cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
+> ## End(Not run)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_coun", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> 
 > cleanEx()
 > nameEx("cc_dupl")
 > ### * cc_dupl
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_dupl
-> ### Title: Flag duplicated records
+> ### Title: Flag Duplicated Records
 > ### Aliases: cc_dupl
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -746,17 +683,14 @@ Flagged 3 records
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_dupl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_equ")
 > ### * cc_equ
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_equ
-> ### Title: Flags records with identical lat/lon
+> ### Title: Flags Records with Identical lat/lon
 > ### Aliases: cc_equ
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -883,17 +817,14 @@ Flagged 0 records.
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_equ", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_gbif")
 > ### * cc_gbif
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_gbif
-> ### Title: Flag records assigned to GBIF headquarters
+> ### Title: Flag Records Assigned to GBIF Headquarters
 > ### Aliases: cc_gbif
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -920,17 +851,14 @@ FALSE  TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_gbif", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_inst")
 > ### * cc_inst
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_inst
-> ### Title: Flag records in the vicinity of biodiversity institutions
+> ### Title: Flag Records in the Vicinity of Biodiversity Institutions
 > ### Aliases: cc_inst
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1035,17 +963,14 @@ FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_inst", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_outl")
 > ### * cc_outl
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_outl
-> ### Title: Flag geographic outliers in species distributions
+> ### Title: Flag Geographic Outliers in Species Distributions
 > ### Aliases: cc_outl
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1196,17 +1121,14 @@ Flagged 92 records.
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_outl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_sea")
 > ### * cc_sea
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_sea
-> ### Title: Flag non-terrestrial coordinates
+> ### Title: Flag Non-terrestrial Coordinates
 > ### Aliases: cc_sea
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1232,17 +1154,14 @@ Flagged 64 records.
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_sea", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_urb")
 > ### * cc_urb
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_urb
-> ### Title: Flag records inside urban areas
+> ### Title: Flag Records Inside Urban Areas
 > ### Aliases: cc_urb
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1263,17 +1182,14 @@ Flagged 64 records.
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_urb", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_val")
 > ### * cc_val
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_val
-> ### Title: Check coordinate validity in lat/lon
+> ### Title: Check Coordinate Validity in lat/lon
 > ### Aliases: cc_val
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1409,17 +1325,14 @@ Flagged 4 records.
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_val", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cc_zero")
 > ### * cc_zero
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cc_zero
-> ### Title: Flag zero coordinates
+> ### Title: Flag Zero Coordinates
 > ### Aliases: cc_zero
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1442,15 +1355,12 @@ FALSE FALSE FALSE  TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cc_zero", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("centroids")
 > ### * centroids
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: centroids
 > ### Title: Global Country and Province Centroids
 > ### Aliases: centroids
@@ -1470,15 +1380,12 @@ FALSE FALSE FALSE  TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("centroids", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("countryref")
 > ### * countryref
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: countryref
 > ### Title: Country Centroids and Country Capitals
 > ### Aliases: countryref
@@ -1490,18 +1397,14 @@ FALSE FALSE FALSE  TRUE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("countryref", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("dc_ddmm")
 > ### * dc_ddmm
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: dc_ddmm
-> ### Title: Flag datasets with a ddmm to dd.dd conversion error. BETA
-> ###   VERSION!
+> ### Title: Flag Datasets with a Degree Conversion Error.
 > ### Aliases: dc_ddmm
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1514,14 +1417,16 @@ FALSE FALSE FALSE  TRUE
 >                 
 > dc_ddmm(x = clean, value = "flags")
 Testing datasets for dd.mm to dd.dd conversion errors
-Flagged 0 records
-  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+Flagged 100 records
+  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [97] FALSE FALSE FALSE FALSE
 > 
 > #problematic dataset
 > lon <- sample(-180:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
@@ -1534,28 +1439,27 @@ Flagged 0 records
 >                 
 > dc_ddmm(x = prob, value = "flags")
 Testing datasets for dd.mm to dd.dd conversion errors
-Flagged 0 records
-  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
- [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+Flagged 100 records
+  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [97] FALSE FALSE FALSE FALSE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("dc_ddmm", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("dc_round")
 > ### * dc_round
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: dc_round
-> ### Title: Flag datasets with a significant fraction of rounded coordinates
+> ### Title: Flag Datasets with a Significant Fraction of Rounded Coordinates
 > ### Aliases: dc_round
 > ### Keywords: "Coordinate cleaning"
 > 
@@ -1592,15 +1496,12 @@ Flagged 0 records
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("dc_round", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("institutions")
 > ### * institutions
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: institutions
 > ### Title: Global Locations of Biodiversity Institutions.
 > ### Aliases: institutions
@@ -1614,7 +1515,7 @@ Flagged 0 records
  $ name                       : chr  "Indian Agricultural Research Institute" "University of Oulu" "EMBRAPA" "KwaZulu-Natal Nature Conservation Service" ...
  $ decimallongitude           : num  77.2 25.5 -57.7 30.3 -78.5 ...
  $ decimallatitude            : num  28.64 65.06 -19.02 -29.57 -7.17 ...
- $ city                       : chr  "New Delhis" "FOulu" "Corumbá" "Pietermaritzburg" ...
+ $ city                       : chr  "New Delhis" "FOulu" "Corumb\032" "Pietermaritzburg" ...
  $ country                    : chr  "IND" "FIN" "BRA" "ZAF" ...
  $ address                    : chr  "Pusa Campus  " "Linnanmaa F2. Dept .of Biology, University of Oulu P.O. Box 3000" "Rua 21 de Setembro 1880.  " "Douglas Mitchell Centre, Level 6, Queen Elizabeth Park, Duncan MacKenzie Drive, Pietermaritzburg.  " ...
  $ source                     : chr  "grbioorg" "grbioorg" "grbioorg" "grbioorg" ...
@@ -1738,15 +1639,12 @@ Flagged 0 records
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("institutions", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("landmass")
 > ### * landmass
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: landmass
 > ### Title: Global Coastlines
 > ### Aliases: landmass
@@ -1758,15 +1656,12 @@ Flagged 0 records
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("landmass", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("plot.spatialvalid")
 > ### * plot.spatialvalid
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot.spatialvalid
 > ### Title: Plot Method for Class Spatialvalid
 > ### Aliases: plot.spatialvalid
@@ -1788,18 +1683,15 @@ decimallatitude        validity           equal           zeros        capitals
               0               0               0               0               0 
       centroids             sea            gbif     institution         summary 
               0             163               0               0             163 
-> plot(test)
-Regions defined for each Polygons
+> #plot(test)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("plot.spatialvalid", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  20.5 0.98 36.51 NA NA 
+Time elapsed:  14.31 0.63 15.09 NA NA 
 > grDevices::dev.off()
 null device 
           1 

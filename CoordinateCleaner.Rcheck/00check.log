@@ -1,8 +1,7 @@
 * using log directory 'C:/Users/alexander.zizka/Dropbox (Antonelli Lab)/Arbeit/Gothenburg/projects/29_CoordinateCleaner/Code/CoordinateCleaner.Rcheck'
-* using R version 3.3.3 (2017-03-06)
+* using R version 3.4.2 (2017-09-28)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
-* using options '--no-manual --as-cran'
 * checking for file 'CoordinateCleaner/DESCRIPTION' ... OK
 * checking extension type ... Package
 * this is package 'CoordinateCleaner' version '0.9-1'
@@ -36,7 +35,6 @@
 * checking R code for possible problems ... OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
-* checking Rd line widths ... OK
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
@@ -47,9 +45,6 @@
 * checking data for non-ASCII characters ... OK
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
-Examples with CPU or elapsed time > 5s
-        user system elapsed
-cc_sea  4.68   0.45    5.19
-cc_coun 1.44   0.19   16.35
+* checking PDF version of manual ... OK
 * DONE
 Status: OK

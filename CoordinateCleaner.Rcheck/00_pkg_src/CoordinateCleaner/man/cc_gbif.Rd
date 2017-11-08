@@ -2,7 +2,7 @@
 \alias{cc_gbif}
 
 \title{
-Flag records assigned to GBIF headquarters
+Flag Records Assigned to GBIF Headquarters
 }
 \description{
 Flags records within 0.5 degree radius around the GBIF headquarters in Copenhagen, DK.

@@ -33,8 +33,8 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       r <- raster::raster(xmn = 0, xmx = 1, ymn = 0, ymx = 1)
       raster::res(r) <- 0.01
       
-      dat.t1 <- raster::rasterize(sp::SpatialPoints(dat.unique[, c("lon.test", "lat.test")]), 
-                                  r, fun = "count")
+      dat.t1 <- raster::rasterize(x = sp::SpatialPoints(dat.unique[, c("lon.test", "lat.test")]), 
+                                  y = r, fun = "count")
       dat.t1 <- raster::as.matrix(dat.t1)
       dat.t1[is.na(dat.t1)] <- 0
       
@@ -64,6 +64,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
     # Create output objects  
     ## Reduce output to data.frame
     out.ds <- do.call("rbind.data.frame", out)
+    rownames(out.ds) <- names(out)
     names(out.ds) <- c("binomial.pvalue", "perc.difference", "pass")
     
     flags <- x[[ds]] %in% rownames(out.ds[out.ds$pass == 1,])

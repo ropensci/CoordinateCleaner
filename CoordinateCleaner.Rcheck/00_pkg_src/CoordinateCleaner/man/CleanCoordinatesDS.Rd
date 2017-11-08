@@ -70,8 +70,8 @@ Depending on the \sQuote{value} argument, either a summary per dataset \code{dat
 }
 \author{
 person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
-                  role = c("aut", "cre"))
-person("Daniele", "Silvestro", role = c("aut", "cre"))
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
+person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
 }
 
 \seealso{

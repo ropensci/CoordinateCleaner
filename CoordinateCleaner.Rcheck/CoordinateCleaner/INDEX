@@ -6,28 +6,27 @@ CoordinateCleaner-package
                         Automated cleaning of occurrence records from
                         biological colections
 capitals                Global Capital Locations
-cc_cap                  Flag coordinates in vicinity of country
-                        capitals.
-cc_cen                  Flag coordinates in vicinity of centroids of
-                        countries and provinces.
-cc_coun                 Flag coordinates outside their reported country
-cc_dupl                 Flag duplicated records
-cc_equ                  Flags records with identical lat/lon
-cc_gbif                 Flag records assigned to GBIF headquarters
-cc_inst                 Flag records in the vicinity of biodiversity
-                        institutions
-cc_outl                 Flag geographic outliers in species
-                        distributions
-cc_sea                  Flag non-terrestrial coordinates
-cc_urb                  Flag records inside urban areas
-cc_val                  Check coordinate validity in lat/lon
-cc_zero                 Flag zero coordinates
+cc_cap                  Flag coordinates in cicinity of country
+                        Capitals.
+cc_cen                  Flag Coordinates in Vicinity of Centroids of
+                        Countries and Provinces.
+cc_coun                 Flag Coordinates Outside their Reported Country
+cc_dupl                 Flag Duplicated Records
+cc_equ                  Flags Records with Identical lat/lon
+cc_gbif                 Flag Records Assigned to GBIF Headquarters
+cc_inst                 Flag Records in the Vicinity of Biodiversity
+                        Institutions
+cc_outl                 Flag Geographic Outliers in Species
+                        Distributions
+cc_sea                  Flag Non-terrestrial Coordinates
+cc_urb                  Flag Records Inside Urban Areas
+cc_val                  Check Coordinate Validity in lat/lon
+cc_zero                 Flag Zero Coordinates
 centroids               Global Country and Province Centroids
 countryref              Country Centroids and Country Capitals
-dc_ddmm                 Flag datasets with a ddmm to dd.dd conversion
-                        error. BETA VERSION!
-dc_round                Flag datasets with a significant fraction of
-                        rounded coordinates
+dc_ddmm                 Flag Datasets with a Degree Conversion Error.
+dc_round                Flag Datasets with a Significant Fraction of
+                        Rounded Coordinates
 institutions            Global Locations of Biodiversity Institutions.
 landmass                Global Coastlines
 plot.spatialvalid       Plot Method for Class Spatialvalid

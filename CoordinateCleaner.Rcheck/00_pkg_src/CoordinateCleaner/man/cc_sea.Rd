@@ -2,7 +2,7 @@
 \alias{cc_sea}
 
 \title{
-Flag non-terrestrial coordinates
+Flag Non-terrestrial Coordinates
 }
 \description{
 Flags coordinates outside the reference landmass. Can be used to restrict datasets to terrestrial taxa, or exclude records from the open ocean, when a buffered reference is used (see details). Often records of terrestrial taxa can be found in the open ocean, mostly due to switched latitude and longitude.

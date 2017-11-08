@@ -1,6 +1,5 @@
 dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                    pvalue = 0.025, diff = 0.2,
-                    value = "clean", verbose = TRUE){
+                    pvalue = 0.025, diff = 0.1, value = "clean", verbose = TRUE){
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "dataset"))
@@ -17,7 +16,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   if (nrow(dat) == 0) {
     stop("no complete cases found")
   }
-  
+
   ## create test columns: decimal degrees long and lat
   dat$lon.test <- abs(dat[[lon]]) - floor(abs(dat[[lon]]))
   dat$lat.test <- abs(dat[[lat]]) - floor(abs(dat[[lat]]))
@@ -34,15 +33,15 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       r <- raster::raster(xmn = 0, xmx = 1, ymn = 0, ymx = 1)
       raster::res(r) <- 0.01
       
-      dat.t1 <- raster::rasterize(sp::SpatialPoints(dat.unique[, c("lon.test", "lat.test")]), 
-                                  r, fun = "count")
+      dat.t1 <- raster::rasterize(x = sp::SpatialPoints(dat.unique[, c("lon.test", "lat.test")]), 
+                                  y = r, fun = "count")
       dat.t1 <- raster::as.matrix(dat.t1)
       dat.t1[is.na(dat.t1)] <- 0
       
       # Binomial test, to see if more values are below 0.6 than expected
       P_smaller_than_06 <- 59 * 59/10000  # 0.3481
       
-      subt <- dat.t1[1:59, 1:59]  # subset tbl 
+      subt <- dat.t1[41:100, 1:59]  # subset tbl 
       p06 <- sum(subt >= 1)
       pAll <- sum(dat.t1 >= 1)
       
