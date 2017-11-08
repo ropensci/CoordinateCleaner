@@ -51,7 +51,7 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
 
 summary(test)
-plot(test)
+#plot(test)
 }
 \keyword{ Visualisation }
 

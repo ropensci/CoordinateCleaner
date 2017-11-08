@@ -2,7 +2,7 @@
 \alias{cc_inst}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Flag records in the vicinity of biodiversity institutions
+Flag Records in the Vicinity of Biodiversity Institutions
 }
 \description{
 Flag records assigned to the location of zoos, botanical gardens, herbaria, universities and museums, based on a global database of ~10,000 such institutions. Coordinates from these locations can be related to data-entry errors, false automated geo-reference or individuals in captivity/horticulture.

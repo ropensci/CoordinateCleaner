@@ -2,7 +2,7 @@
 \alias{cc_equ}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Flags records with identical lat/lon
+Flags Records with Identical lat/lon
 }
 \description{
 Flags records with equal latitude and longitude coordinates, either exact or absolute. Equal coordinates can often indicate data entry errors.

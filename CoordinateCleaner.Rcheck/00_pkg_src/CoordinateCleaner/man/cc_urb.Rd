@@ -2,7 +2,7 @@
 \alias{cc_urb}
 
 \title{
-Flag records inside urban areas
+Flag Records Inside Urban Areas
 }
 \description{
 Flags records from inside urban areas, absed on a geographic gazetteer. Often records from large databases spann subtantial time periods (centuries) and old records might represent habitats which today are replaced by city area.

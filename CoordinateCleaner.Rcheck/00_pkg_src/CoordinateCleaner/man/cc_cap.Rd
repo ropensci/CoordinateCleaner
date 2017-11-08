@@ -2,7 +2,7 @@
 \alias{cc_cap}
 
 \title{
-Flag coordinates in vicinity of country capitals.
+Flag coordinates in cicinity of country Capitals.
 }
 \description{
 Flags records within a certain radius around country capitals. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to capitals.

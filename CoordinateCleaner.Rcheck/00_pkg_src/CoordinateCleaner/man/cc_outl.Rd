@@ -2,7 +2,7 @@
 \alias{cc_outl}
 
 \title{
-Flag geographic outliers in species distributions
+Flag Geographic Outliers in Species Distributions
 }
 \description{
 Flags records that are outliers in geographic space according to the method defined via the \code{method} argument. Geographic outliers often represent erroneous coordinates, for example due to data entry errors, imprecise geo-references, individuals in horticulture/captivity.

@@ -2,7 +2,7 @@
 \alias{cc_val}
 
 \title{
-Check coordinate validity in lat/lon
+Check Coordinate Validity in lat/lon
 }
 \description{
 Checks if all coordinates in a data set are valid in a latitude/longitude reference system. That is, non-numeric, not available coordinates and lat >90, la <-90, lon > 180 and lon < -180 are flagged. 

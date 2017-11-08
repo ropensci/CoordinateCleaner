@@ -2,14 +2,14 @@
 \alias{dc_ddmm}
 
 \title{
-Flag datasets with a ddmm to dd.dd conversion error. BETA VERSION!
+Flag Datasets with a Degree Conversion Error.
 }
 \description{
 This test identifies datasets where a significant fraction of records has been subject to a common degree minute to decimal degree conversion error, where the degree sign is recognized as decimal delimitor.
 }
 \usage{
 dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
-        pvalue = 0.025, diff = 0.2, value = "clean", verbose = TRUE)
+        pvalue = 0.025, diff = 0.1, value = "clean", verbose = TRUE)
 }
 
 \arguments{
@@ -29,7 +29,7 @@ a character string. The column with the dataset of each record. In case \code{x}
 numeric. The p-value for the one-sided t-test to flag the test as passed or not. Both ddmm.pvalue and diff must be met. Default = 0.025.
 }
   \item{diff}{
-numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.025. Default = 0.2
+numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Adapt to dataset size and desired test strictness. See details. Default = 0.1
 }
   \item{value}{
 character string.  Defining the output value. See value.
@@ -39,10 +39,16 @@ logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-If the degree sign is recognized as decimal delimiter during coordinate conversion, no coordinate decimals above 0.59 (59') are possible. The test here uses a binomial test to test if a significant proportion of records in a dataset have been subject to this problem.
+If the degree sign is recognized as decimal delimiter during coordinate conversion, no coordinate decimals above 0.59 (59') are possible. The test here uses a binomial test to test if a significant proportion of records in a dataset have been subject to this problem. The test is best adjusted via the diff argument. The lower \code{diff}, the stricter the test. Also scales with dataset size. Empirically, for datasets with < 5,000 unique coordinate records \code{diff = 0.1} has proven reasonable flagging most datasets with >25\% problematic records and all dataset with >50\% problematic records. For datasets between 5,000 and 100,000 geographic unique records \code{diff = 0.01} is recommended, for datasets between 100,000 and 1 M records diff = 0.001, and so on.  See \url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-CleanCoordinatesDS} for explanation and simulation results.
 }
+
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
+}
+\author{
+person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
+person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
