@@ -2,13 +2,14 @@
 \alias{cc_cap}
 
 \title{
-Flag coordinates in vicinity of country capitals.
+Flag coordinates in cicinity of country Capitals.
 }
 \description{
 Flags records within a certain radius around country capitals. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to capitals.
 }
 \usage{
-cc_cap(x, lon = "decimallongitude", lat = "decimallatitude", buffer = 0.1, ref = NULL, value = "clean", verbose = TRUE)
+cc_cap(x, lon = "decimallongitude", lat = "decimallatitude", 
+       buffer = 0.1, ref = NULL, value = "clean", verbose = TRUE)
 }
 \arguments{
   \item{x}{
@@ -24,7 +25,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 The buffer around each capital coordinate (the centre of the city), where records should be flagged as problematic, in decimal degrees.  Default = 0.1.
 }
   \item{ref}{
-a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{capitals}.  Default = \code{\link{capitals}}}
+a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{capitals}}.  Default = \code{\link{capitals}}
 }
   \item{value}{
 character string.  Defining the output value. See value.

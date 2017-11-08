@@ -2,7 +2,7 @@
 \alias{cc_zero}
 
 \title{
-Flag zero coordinates
+Flag Zero Coordinates
 }
 \description{
 Flags records with either zero longitude or latitude and a radius around the point at zero longitude and zero latitude. These problems are often due to erroneous data-entry or geo-referencing and can lead to typical patterns of high diversity around the equator.
@@ -42,7 +42,7 @@ See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and 
 \examples{
 x <- data.frame(species = "A", 
                 decimallongitude = c(0,34.84, 0, 33.98), 
-                decimallatitude = c(23.08, 0, 0))
+                decimallatitude = c(23.08, 0, 0, 15.98))
                 
 cc_zero(x)
 cc_zero(x, value = "flags")

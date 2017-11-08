@@ -2,7 +2,7 @@
 \alias{cc_equ}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Flags records with identical lat/lon
+Flags Records with Identical lat/lon
 }
 \description{
 Flags records with equal latitude and longitude coordinates, either exact or absolute. Equal coordinates can often indicate data entry errors.
@@ -31,9 +31,6 @@ character string.  Defining the output value. See value.
   \item{verbose}{
 logical. If TRUE reports the name of the test and the number of records flagged
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.

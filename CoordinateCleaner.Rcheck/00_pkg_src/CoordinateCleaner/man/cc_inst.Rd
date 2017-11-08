@@ -1,0 +1,57 @@
+\name{cc_inst}
+\alias{cc_inst}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Flag records in the vicinity of biodiversity institutions
+}
+\description{
+Flag records assigned to the location of zoos, botanical gardens, herbaria, universities and museums, based on a global database of ~10,000 such institutions. Coordinates from these locations can be related to data-entry errors, false automated geo-reference or individuals in captivity/horticulture.
+}
+\usage{
+cc_inst(x, lon = "decimallongitude", lat = "decimallatitude", 
+        buffer = 0.001, ref = NULL, value = "clean", verbose = TRUE)
+}
+
+\arguments{
+  \item{x}{
+a data.frame. Containing geographical coordinates and species names.
+}
+  \item{lon}{
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
+}
+  \item{lat}{
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
+}
+  \item{buffer}{
+numerical. The buffer around each province or country centroid, where records should be flagged as problematic, in decimal degrees.  Default = 0.001 (= ~ 100m).
+}
+  \item{ref}{
+a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{institutions}}.  Default = \code{\link{institutions}}
+}
+  \item{value}{
+character string.  Defining the output value. See value.
+}
+  \item{verbose}{
+logical. If TRUE reports the name of the test and the number of records flagged
+}
+}
+\details{
+Note: the buffer radius is in degrees, thus will differ slightly between different latitudes.
+}
+\value{
+Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
+}
+\note{
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
+}
+
+\examples{
+x <- data.frame(species = letters[1:10], 
+                decimallongitude = runif(100, -180, 180), 
+                decimallatitude = runif(100, -90,90))
+                
+cc_inst(x, buffer = 5)#large buffer for demonstration
+cc_inst(x, value = "flags", buffer = 5)
+}
+
+\keyword{ "Coordinate cleaning" }

@@ -2,13 +2,14 @@
 \alias{cc_sea}
 
 \title{
-Flag non-terrestrial coordinates
+Flag Non-terrestrial Coordinates
 }
 \description{
 Flags coordinates outside the reference landmass. Can be used to restrict datasets to terrestrial taxa, or exclude records from the open ocean, when a buffered reference is used (see details). Often records of terrestrial taxa can be found in the open ocean, mostly due to switched latitude and longitude.
 }
 \usage{
-cc_sea(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL, value = "clean", verbose = TRUE)
+cc_sea(x, lon = "decimallongitude", lat = "decimallatitude", 
+       ref = NULL, value = "clean", verbose = TRUE)
 }
 
 \arguments{
@@ -22,7 +23,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{ref}{
-a SpatialPointsPolygonsframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{landmass}. See details.  Default = \code{\link{landmass}}}
+a SpatialPointsPolygonsframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{landmass}}. See details.  Default = \code{\link{landmass}}
 }
   \item{value}{
 character string.  Defining the output value. See value.
@@ -46,7 +47,6 @@ x <- data.frame(species = letters[1:10],
                 decimallongitude = runif(100, -180, 180), 
                 decimallatitude = runif(100, -90,90))
                 
-cc_sea(x)
 cc_sea(x, value = "flags")
 
 }

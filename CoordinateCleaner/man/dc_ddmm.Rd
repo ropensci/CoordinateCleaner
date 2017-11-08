@@ -1,128 +1,77 @@
 \name{dc_ddmm}
 \alias{dc_ddmm}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+Flag Datasets with a Degree Conversion Error.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This test identifies datasets where a significant fraction of records has been subject to a common degree minute to decimal degree conversion error, where the degree sign is recognized as decimal delimitor.
 }
 \usage{
-dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", pvalue = 0.025, diff = 0.2, value = "clean", verbose = TRUE)
+dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
+        pvalue = 0.025, diff = 0.1, value = "clean", verbose = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+a data.frame. Containing geographical coordinates and species names.
 }
   \item{lon}{
-%%     ~~Describe \code{lon} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
 }
   \item{lat}{
-%%     ~~Describe \code{lat} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{ds}{
-%%     ~~Describe \code{ds} here~~
+a character string. The column with the dataset of each record. In case \code{x} should be treated as a single dataset, identical for all records.  Default = \dQuote{dataset}.
 }
   \item{pvalue}{
-%%     ~~Describe \code{pvalue} here~~
+numeric. The p-value for the one-sided t-test to flag the test as passed or not. Both ddmm.pvalue and diff must be met. Default = 0.025.
 }
   \item{diff}{
-%%     ~~Describe \code{diff} here~~
+numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Adapt to dataset size and desired test strictness. See details. Default = 0.1
 }
   \item{value}{
-%%     ~~Describe \code{value} here~~
+character string.  Defining the output value. See value.
 }
   \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
+logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+If the degree sign is recognized as decimal delimiter during coordinate conversion, no coordinate decimals above 0.59 (59') are possible. The test here uses a binomial test to test if a significant proportion of records in a dataset have been subject to this problem. The test is best adjusted via the diff argument. The lower \code{diff}, the stricter the test. Also scales with dataset size. Empirically, for datasets with < 5,000 unique coordinate records \code{diff = 0.1} has proven reasonable flagging most datasets with >25\% problematic records and all dataset with >50\% problematic records. For datasets between 5,000 and 100,000 geographic unique records \code{diff = 0.01} is recommended, for datasets between 100,000 and 1 M records diff = 0.001, and so on.  See \url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-CleanCoordinatesDS} for explanation and simulation results.
 }
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \author{
-%%  ~~who you are~~
+person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
+person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
 }
 \note{
-%%  ~~further notes~~
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+clean <- data.frame(species = letters[1:10], 
+                decimallongitude = runif(100, -180, 180), 
+                decimallatitude = runif(100, -90,90),
+                dataset = "FR")
+                
+dc_ddmm(x = clean, value = "flags")
 
-## The function is currently defined as
-function (x, lon = "decimallongitude", lat = "decimallatitude", 
-    ds = "dataset", pvalue = 0.025, diff = 0.2, value = "clean", 
-    verbose = TRUE) 
-{
-    match.arg(value, choices = c("clean", "flags", "dataset"))
-    if (verbose) {
-        cat("Testing datasets for dd.mm to dd.dd conversion errors\n")
-    }
-    if (sum(!complete.cases(x)) > 0) {
-        warning(sprintf("ignored \%s cases with incomplete data", 
-            sum(!complete.cases(x))))
-    }
-    dat <- x[complete.cases(x), ]
-    if (nrow(dat) == 0) {
-        stop("no complete cases found")
-    }
-    dat$lon.test <- abs(dat$decimallongitude) - floor(abs(dat$decimallongitude))
-    dat$lat.test <- abs(dat$decimallatitude) - floor(abs(dat$decimallatitude))
-    test <- split(dat, f = dat[[ds]])
-    out <- lapply(test, function(k) {
-        dat.unique <- k[!duplicated(k[, 1:2]), ]
-        r <- raster::raster(xmn = 0, xmx = 1, ymn = 0, ymx = 1)
-        raster::res(r) <- 0.01
-        dat.t1 <- raster::rasterize(SpatialPoints(dat.unique[, 
-            c("lon.test", "lat.test")]), r, fun = "count")
-        dat.t1 <- raster::as.matrix(dat.t1)
-        dat.t1[is.na(dat.t1)] <- 0
-        P_smaller_than_06 <- 59 * 59/10000
-        subt <- dat.t1[1:59, 1:59]
-        p06 <- sum(subt >= 1)
-        pAll <- sum(dat.t1 >= 1)
-        B <- stats::binom.test(p06, pAll, p = P_smaller_than_06, 
-            alternative = c("greater"))
-        v1 <- B$p.value
-        v2 <- (B$estimate - P_smaller_than_06)/P_smaller_than_06
-        if (v1 < pvalue & v2 > diff) {
-            flag.t1 <- FALSE
-        }
-        else {
-            flag.t1 <- TRUE
-        }
-        c(round(v1, 4), round(v2, 3), flag.t1)
-    })
-    out.ds <- do.call("rbind.data.frame", out)
-    names(out.ds) <- c("binomial.pvalue", "perc.difference", 
-        "pass")
-    flags <- x[[ds]] \%in\% rownames(out.ds[out.ds$pass == 1])
-    if (verbose) {
-        cat(sprintf("Flagged \%s records\n", sum(!flags)))
-    }
-    switch(value, dataset = return(out.ds), clean = return(x[flags, 
-        ]), flags = return(flags))
-  }
+#problematic dataset
+lon <- sample(-180:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
+lat <- sample(-90:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
+
+prob <-  data.frame(species = letters[1:10], 
+                decimallongitude = lon, 
+                decimallatitude = lat,
+                dataset = "FR")
+                
+dc_ddmm(x = prob, value = "flags")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ "Coordinate cleaning" }

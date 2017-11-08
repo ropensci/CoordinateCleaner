@@ -1,0 +1,33 @@
+CleanCoordinates        Geographic Cleaning of Coordinates from
+                        Biologic Collections
+CleanCoordinatesDS      Geographic Coordinate Cleaning based on Dataset
+                        Properties
+CoordinateCleaner-package
+                        Automated cleaning of occurrence records from
+                        biological colections
+capitals                Global Capital Locations
+cc_cap                  Flag coordinates in vicinity of country
+                        capitals.
+cc_cen                  Flag coordinates in vicinity of centroids of
+                        countries and provinces.
+cc_coun                 Flag coordinates outside their reported country
+cc_dupl                 Flag duplicated records
+cc_equ                  Flags records with identical lat/lon
+cc_gbif                 Flag records assigned to GBIF headquarters
+cc_inst                 Flag records in the vicinity of biodiversity
+                        institutions
+cc_outl                 Flag geographic outliers in species
+                        distributions
+cc_sea                  Flag non-terrestrial coordinates
+cc_urb                  Flag records inside urban areas
+cc_val                  Check coordinate validity in lat/lon
+cc_zero                 Flag zero coordinates
+centroids               Global Country and Province Centroids
+countryref              Country Centroids and Country Capitals
+dc_ddmm                 Flag datasets with a ddmm to dd.dd conversion
+                        error. BETA VERSION!
+dc_round                Flag datasets with a significant fraction of
+                        rounded coordinates
+institutions            Global Locations of Biodiversity Institutions.
+landmass                Global Coastlines
+plot.spatialvalid       Plot Method for Class Spatialvalid

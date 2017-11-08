@@ -1,158 +1,93 @@
 \name{dc_round}
 \alias{dc_round}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+Flag Datasets with a Significant Fraction of Rounded Coordinates
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Uses a three 3 rate Poisson process to model the distribution of coordinate decimals in the coordinates and to identify datasets with a significant fraction of records with low precision. Often these records have been subject to strong decimal rounding, or are based on rasterized data collection schemes.
 }
 \usage{
-dc_round(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", target = "lon_lat", threshold = 3.5, subsampling = NULL, diagnostics = FALSE, value = "clean", verbose = T)
+dc_round(x, lon = "decimallongitude", lat = "decimallatitude", 
+         ds = "dataset", target = "lon_lat", threshold = 3.5, 
+         subsampling = NULL, diagnostics = FALSE, value = "clean", verbose = T)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+a data.frame. Containing geographical coordinates and species names.
 }
   \item{lon}{
-%%     ~~Describe \code{lon} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
 }
   \item{lat}{
-%%     ~~Describe \code{lat} here~~
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{ds}{
-%%     ~~Describe \code{ds} here~~
+a character string. The column with the dataset of each record. In case \code{x} should be treated as a single dataset, identical for all records.  Default = \dQuote{dataset}.
 }
   \item{target}{
-%%     ~~Describe \code{target} here~~
+a character string. Defining the target of the test. One of \dQuote{lon}, \dQuote{lat}, \dQuote{lon_lat}, \dQuote{lon_lat} is recommended.  Default = \dQuote{lon_lat}.
 }
   \item{threshold}{
-%%     ~~Describe \code{threshold} here~~
+numerical. Indicates the factor by which one of the two periodic bins must outnumber the other. Default = 1.5. Higher values are more conservative/flag less datasets.
 }
   \item{subsampling}{
-%%     ~~Describe \code{subsampling} here~~
+numeric. If NULL, the entire dataset is tested, if not NULL a random subsample of size \code{subsampling} is tested. This is recommedned for very large datasets, but \code{subsampling values below 1000 are not recommended.  Default = NULL}
 }
   \item{diagnostics}{
-%%     ~~Describe \code{diagnostics} here~~
+ should
 }
   \item{value}{
-%%     ~~Describe \code{value} here~~
+character string.  Defining the output value. See value. Default = \dQuote{clean}.
 }
   \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
+logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+To detect these patterns, we model the distribution of decimals in the range [0,1] as the result of a 3-rate Poisson process, where the first rate (lambda_0) is assigned to the range $R_0 = [0, t_0)]$ and the second and third rates (lambda_1 and lambda_2) are assigned to successive bins of sizes $s_1$ and s_2$. We use maximum likelihood to estimate the three rates and the sizes of the bins. The number of resulting bins ($N$) depends on the quantities $t_0,s_1,s_2$, all of which are constrained to be positive and smaller than 0.3. We note that, while the number of bins changes based on their size, the number of parameters in the model is constant and equal to 6. We expect this model to return high values of lambda_0 compared to lambda_1, ambda_2, and $t_0$ to be small, in the presence of a bias increasing the frequency of 0s in the decimals. Periodic biases are expected to result in strongly different rates in the following bins (e.g. lambda_1 >> lambda_2) and small estimated values of $s_1,s_2$ such that they allow for multiple repeated peaks. After empirically inspecting the behaviour of these estimates and their ability to detect biases in the data we defined arbitrary thresholds to flag a data set as potentially biased by poor precision
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+Depending on the \sQuote{value} argument, either a summary per dataset \code{dataset}, a dataframe containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \author{
-%%  ~~who you are~~
+person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
+person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
 }
 \note{
-%%  ~~further notes~~
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+clean <- data.frame(species = letters[1:10], 
+                decimallongitude = runif(100, -180, 180), 
+                decimallatitude = runif(100, -90,90),
+                dataset = "clean")
+#biased dataset        
+bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
+               round(runif(min = -42, max = -40, n = 300), 0),
+               runif(min = -42, max = -40, n = 200))
+bias.lat <- c(round(runif(min = -12, max = -10, n = 500), 1),
+              round(runif(min = -12, max = -10, n = 300), 0),
+              runif(min = -12, max = -10, n = 200))
+bias <- data.frame(species = letters[1:10],
+                   decimallongitude = bias.long,
+                   decimallatitude = bias.lat,
+                   dataset = "rounded")
+test <- rbind(clean, bias)
 
-## The function is currently defined as
-function (x, lon = "decimallongitude", lat = "decimallatitude", 
-    ds = "dataset", target = "lon_lat", threshold = 3.5, subsampling = NULL, 
-    diagnostics = FALSE, value = "clean", verbose = T) 
-{
-    match.arg(value, choices = c("clean", "flags"))
-    if (verbose) {
-        cat("Testing for rounded coordinates\n")
-    }
-    if (!is.null(subsampling)) {
-        if (subsampling < 1000) {
-            warning("Subsampling <1000 not recommended")
-        }
-    }
-    if (sum(!complete.cases(x)) > 0) {
-        warning(sprintf("ignored \%s cases with incomplete data", 
-            sum(!complete.cases(x))))
-    }
-    dat <- x[complete.cases(x), ]
-    if (nrow(dat) == 0) {
-        stop("no complete cases found")
-    }
-    dat$lon.test <- abs(dat$decimallongitude) - floor(abs(dat$decimallongitude))
-    dat$lat.test <- abs(dat$decimallatitude) - floor(abs(dat$decimallatitude))
-    test <- split(dat, f = dat[[ds]])
-    out <- lapply(test, function(k) {
-        t2 <- k[, c("lon.test", "lat.test")]
-        if (!is.null(subsampling)) {
-            if (subsampling > nrow(t2)) {
-                warning("Subsampling larger than rows in data, subsampling skipped")
-            }
-            else {
-                warning(sprintf("Using subsampling for periodicity, n = \%s", 
-                  subsampling))
-                t2 <- t2[sample(nrow(t2), subsampling), ]
-            }
-        }
-        if (target == "lon") {
-            t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], 
-                var_latlong = 1, plot_bias = diagnostics, ratio_threshold = threshold)
-            names(t2.res) <- c("mle", "rate.ratio", "pass.lon", 
-                "zero.mle", "zero.rate.ratio", "pass.zero.lon")
-            t2.res$pass.zero.com <- t2.res$pass.zero.lon
-            t2.res$pass.periodicity.com <- t2.res$pass.lon
-        }
-        if (target == "lat") {
-            t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], 
-                var_latlong = 2, plot_bias = diagnostics, ratio_threshold = threshold)
-            names(t2.res) <- c("mle", "rate.ratio", "pass.lat", 
-                "zero.mle", "zero.rate.ratio", "pass.zero.lat")
-            t2.res$pass.zero.com <- t2.res$pass.zero.lat
-            t2.res$pass.periodicity.com <- t2.res$pass.lat
-        }
-        if (target == "lon_lat") {
-            lon <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 1, 
-                plot_bias = diagnostics, ratio_threshold = threshold)
-            lat <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 2, 
-                plot_bias = diagnostics, ratio_threshold = threshold)
-            t2.res <- cbind(lon, lat)
-            names(t2.res) <- c("mle.lon", "rate.ratio.lon", "pass.periodicity.lon", 
-                "zero.mle.lon", "zero.rate.ratio.lon", "pass.zero.lon", 
-                "mle.lat", "rate.ratio.lat", "pass.periodicity.lat", 
-                "zero.mle.lat", "zero.rate.ratio.lat", "pass.zero.lat")
-            t2.res$pass.zero.com <- t2.res$pass.zero.lon & t2.res$pass.zero.lat
-            t2.res$pass.periodicity.com <- t2.res$pass.periodicity.lon | 
-                t2.res$pass.periodicity.lat
-        }
-        return(t2.res)
-    })
-    out.ds <- do.call("rbind.data.frame", out)
-    flags <- x[[ds]] \%in\% rownames(out.ds[out.ds$pass.zero.com & 
-        out.ds$pass.periodicity.com, ])
-    if (verbose) {
-        cat(sprintf("Flagged \%s records\n", sum(!flags)))
-    }
-    switch(value, dataset = return(out.ds), clean = return(x[flags, 
-        ]), flags = return(flags))
-  }
+\dontrun{                  
+#run CleanCoordinatesDS
+flags <- CleanCoordinatesDS(test)
+
+#check problems
+#clean
+hist(test[test$dataset == rownames(flags[flags$summary,]), "decimallongitude"])
+#biased
+hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+}
+
+\keyword{ "Coordinate cleaning" }
