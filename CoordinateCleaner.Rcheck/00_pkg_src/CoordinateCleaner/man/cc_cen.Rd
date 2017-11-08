@@ -2,7 +2,7 @@
 \alias{cc_cen}
 
 \title{
-Flag coordinates in vicinity of centroids of countries and provinces.
+Flag Coordinates in Vicinity of Centroids of Countries and Provinces.
 }
 \description{
 Flags records within a certain radius around the geographic centroids of political countries and provinces. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to centroids.

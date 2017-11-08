@@ -2,7 +2,7 @@
 \alias{cc_dupl}
 
 \title{
-Flag duplicated records
+Flag Duplicated Records
 }
 \description{
 Flags duplicated records based on species name and coordinates, as well as user-defined additional columns. True (specimen) duplicates or duplicates from the same species can make up the bulk of records in a biological collection database, but are undesirable for many analyses. Both can be flagged with this function, the former given enough additional information.

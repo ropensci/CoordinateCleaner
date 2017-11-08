@@ -2,7 +2,7 @@
 \alias{cc_coun}
 
 \title{
-Flag coordinates outside their reported country
+Flag Coordinates Outside their Reported Country
 }
 \description{
 Identifies mismatches between geographic coordinates and additional country information (usually this information is reliably reported with specimens). Such a mismatch can occur for example, if latitude and longitude are switched.
@@ -43,12 +43,15 @@ Non-terrestrial records are ignored. use \code{\link{cc_sea}} to flag these. See
 }
 
 \examples{
+\dontrun{
 x <- data.frame(species = letters[1:10], 
                 decimallongitude = runif(100, -20, 30), 
                 decimallatitude = runif(100, 35,60),
                 countrycode = "RUS")
 
 cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
+}
+
 }
 
 \keyword{ "Coordinate cleaning" }

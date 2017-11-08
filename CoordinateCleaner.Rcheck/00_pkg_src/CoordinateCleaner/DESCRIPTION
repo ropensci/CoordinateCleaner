@@ -3,15 +3,14 @@ Type: Package
 Title: Automated cleaning of occurrence records from biological
         colections
 Version: 0.9-1
-Date: 2017-11-07
-Author: Alexander Zizka [aut, cre]
+Date: 2017-11-08
+Author: Alexander Zizka <alexander.zizka@bioenv.gu.se>
 Maintainer: Alexander Zizka <alexander.zizka@bioenv.gu.se>
 Description: Automated cleaning of geographic occurrence records by automated flagging of problems common to biodiversity data from biological collections. Includes automated tests to easily flag (and exclude) records assigned to country or province centroids, the open ocean, the GBIF headquarters, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outliers, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify datasets with a significant proportion of rounded coordinates. Especially suited for large datasets. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 License: GPL-3
-Depends: R (>= 3.0.0)
-Imports: geosphere, grDevices, ggplot2, methods, raster, rgeos, sp,
-        stats, utils
-Suggests: rnaturalearth
+Depends: R (>= 3.0.0), sp
+Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth,
+        stats
 LazyData: true
 NeedsCompilation: no
-Packaged: 2017-11-07 20:20:29 UTC; alexander.zizka
+Packaged: 2017-11-08 10:44:04 UTC; alexander.zizka
