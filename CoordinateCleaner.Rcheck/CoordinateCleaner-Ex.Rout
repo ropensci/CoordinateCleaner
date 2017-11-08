@@ -1,0 +1,1811 @@
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "CoordinateCleaner"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> base::assign(".ExTimings", "CoordinateCleaner-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('CoordinateCleaner')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CleanCoordinates")
+> ### * CleanCoordinates
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: CleanCoordinates
+> ### Title: Geographic Cleaning of Coordinates from Biologic Collections
+> ### Aliases: CleanCoordinates summary.spatialvalid is.spatialvalid
+> ### Keywords: Coordinate cleaning
+> 
+> ### ** Examples
+> 
+> 
+> exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
++                     decimallongitude = runif(250, min = 42, max = 51),
++                     decimallatitude = runif(250, min = -26, max = -11))
+> 
+> test <- CleanCoordinates(x = exmpl)
+Testing coordinate validity
+Flagged 0 records. 
+Testing equal lat/lon
+Flagged 0 records. 
+Testing zero coordinates
+Flagged 0 records. 
+Testing country capitals
+Flagged 0 records
+Testing country centroids
+Flagged 0 records
+Testing sea coordinates
+Flagged 163 records. 
+Testing GBIF headquarters
+Warning in cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flags") :
+  running GBIF test, flagging records around Copenhagen
+Flagged 0 records. 
+Testing biodiversity insitutions
+Flagged 0 records
+flagged 163 of 250 records, EQ = 0.65 
+> 
+> summary(test)
+decimallatitude        validity           equal           zeros        capitals 
+              0               0               0               0               0 
+      centroids             sea            gbif     institution         summary 
+              0             163               0               0             163 
+> plot(test)
+Regions defined for each Polygons
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("CleanCoordinates", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("CleanCoordinatesDS")
+> ### * CleanCoordinatesDS
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: CleanCoordinatesDS
+> ### Title: Geographic Coordinate Cleaning based on Dataset Properties
+> ### Aliases: CleanCoordinatesDS
+> ### Keywords: Coordinate cleaning
+> 
+> ### ** Examples
+> 
+> #Create test dataset
+> clean <- data.frame(dataset = rep("clean", 1000),
++                     decimallongitude = runif(min = -42, max = -40, n = 1000),
++                     decimallatitude = runif(min = -12, max = -10, n = 1000))
+>                     
+> bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
++                round(runif(min = -42, max = -40, n = 300), 0),
++                runif(min = -42, max = -40, n = 200))
+> bias.lat <- c(round(runif(min = -12, max = -10, n = 500), 1),
++               round(runif(min = -12, max = -10, n = 300), 0),
++               runif(min = -12, max = -10, n = 200))
+> bias <- data.frame(dataset = rep("biased", 1000),
++                    decimallongitude = bias.long,
++                    decimallatitude = bias.lat)
+> test <- rbind(clean, bias)
+> 
+> ## Not run: 
+> ##D                   
+> ##D #run CleanCoordinatesDS
+> ##D flags <- CleanCoordinatesDS(test)
+> ##D 
+> ##D #check problems
+> ##D #clean
+> ##D hist(test[test$dataset == rownames(flags[flags$summary,]), "decimallongitude"])
+> ##D #biased
+> ##D hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
+> ##D 
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("CleanCoordinatesDS", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("capitals")
+> ### * capitals
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: capitals
+> ### Title: Global Capital Locations
+> ### Aliases: capitals
+> ### Keywords: gazetteers
+> 
+> ### ** Examples
+> 
+> data(capitals)
+> str(capitals)
+'data.frame':	225 obs. of  4 variables:
+ $ ISO3     : Factor w/ 225 levels "ABW","AFG","AGO",..: 2 5 58 10 6 3 4 11 8 9 ...
+ $ capital  : Factor w/ 224 levels "Abu Dhabi","Abuja",..: 84 203 6 143 10 104 201 174 44 223 ...
+ $ longitude: num  69.18 19.82 3.05 -170.7 1.52 ...
+ $ latitude : num  34.5 41.3 36.8 -14.3 42.5 ...
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("capitals", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_cap")
+> ### * cc_cap
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_cap
+> ### Title: Flag coordinates in vicinity of country capitals.
+> ### Aliases: cc_cap
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+> 
+> cc_cap(x)
+Testing country capitals
+Flagged 0 records
+    species decimallongitude decimallatitude
+1         a      -84.4168813     27.85030705
+2         b      -46.0353961    -26.42449105
+3         c       26.2272108    -41.35317374
+4         d      146.9548044     88.68313101
+5         e     -107.3945048     24.02878760
+6         f      143.4202866    -51.62253566
+7         g      160.0830967    -66.71297735
+8         h       57.8872053     -3.93875382
+9         i       46.4810558     76.33340457
+10        j     -157.7569426     17.77697409
+11        a     -105.8491530     85.71072509
+12        b     -116.4395691     41.72265214
+13        c       67.3282248    -25.78915583
+14        d      -41.7226614    -12.33473570
+15        e       97.1429112    -63.32191908
+16        f       -0.8282728    -87.64603641
+17        g       78.3426630     38.80189190
+18        h      177.0861941    -71.42683757
+19        i      -43.1873354     -9.66881725
+20        j       99.8802797     25.21818812
+21        a      156.4938832     88.53095161
+22        b     -103.6286923     -0.79315599
+23        c       54.6025558     -2.81708561
+24        d     -134.8001655    -58.78037972
+25        e      -83.8005593     45.86777001
+26        f      -40.9989267     -8.29881194
+27        g     -175.1794801      2.01056108
+28        h      -42.3403355    -52.64187961
+29        i      133.0887045    -48.84153431
+30        j      -57.4743612     17.22815934
+31        a       -6.4511584     13.47699569
+32        b       35.8436972    -76.12841155
+33        c       -2.3251295    -83.60269567
+34        d     -112.9616635     25.70318860
+35        e      117.8543947     77.15073593
+36        f       60.6480257     17.65663602
+37        g      105.9263499     10.96213464
+38        h     -141.1402947      4.68499030
+39        i       80.5359406     87.31714030
+40        j      -31.9412053      1.37552802
+41        a      115.5406659     32.90185416
+42        b       52.9416698     18.27741918
+43        c      101.8557944    -47.00363800
+44        d       19.0930722    -43.53013320
+45        e       10.6990489     41.27573221
+46        f      104.1682434     -8.53725035
+47        g     -171.6007672    -58.47718169
+48        h       -8.1971766     44.40568853
+49        i       83.6329459    -71.10222473
+50        j       69.3833603     65.61809083
+51        a       -8.0569360     20.63609490
+52        b      130.0354117     10.28871699
+53        c      -22.2850414    -30.82008257
+54        d      -91.8729803     -8.43633982
+55        e     -154.5555430      0.07937507
+56        f     -144.1921823    -57.44405500
+57        g      -66.1421854      5.33350850
+58        h        6.7083347    -76.45036577
+59        i       58.3218275    -40.00393212
+60        j      -33.5411326    -51.71408654
+61        a      148.6353327    -38.73771342
+62        b      -74.3027858     71.11693853
+63        c      -14.7363385     -9.67764180
+64        d      -60.3379173     50.39728016
+65        e       54.3133681     68.51142628
+66        f      -87.1139589    -15.63764229
+67        g       -7.7237106    -78.51447351
+68        h       95.8718414    -29.61225150
+69        i     -149.6711108     40.27067039
+70        j      135.1156788    -29.22923997
+71        a      -57.9337424     23.47454205
+72        b      122.1985261     61.31061972
+73        c      -55.1939439     64.10369965
+74        d      -59.8410249    -19.55532942
+75        e       -8.5135518    -21.51110059
+76        f      141.1914009     71.18017668
+77        g      131.1622094     25.97683732
+78        h      -39.6037643     43.39415677
+79        i       99.8354516     18.95462038
+80        j      165.8224790     72.55469007
+81        a      -23.5225855    -37.12857208
+82        b       76.5052843    -55.57318022
+83        c      -36.0020272     69.56116979
+84        d      -62.8732253      0.60110743
+85        e       92.5513733     67.87035774
+86        f     -107.0307881    -55.94514796
+87        g       76.0036401     46.45854943
+88        h     -136.1909084     40.40980068
+89        i      -91.6241350     79.87046729
+90        j     -128.4104234      8.57638566
+91        a      -93.7334106     38.11389619
+92        b     -158.7836242    -19.99708203
+93        c       51.2237731    -71.84283729
+94        d      135.4569166     76.91437595
+95        e      100.4092839    -39.01814994
+96        f      107.0311773     16.30316859
+97        g      -16.1011967    -70.13509111
+98        h      -32.3697305     61.29126578
+99        i      111.9132874    -32.76653680
+100       j       37.7759845     50.91324066
+> cc_cap(x, value = "flags")
+Testing country capitals
+Flagged 0 records
+   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  65   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96 
+TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+  97   98   99  100 
+TRUE TRUE TRUE TRUE 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_cap", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_cen")
+> ### * cc_cen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_cen
+> ### Title: Flag coordinates in vicinity of centroids of countries and
+> ###   provinces.
+> ### Aliases: cc_cen
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+>                 
+> cc_cen(x)
+Testing country centroids
+Flagged 2 records
+    species decimallongitude decimallatitude
+1         a      -84.4168813     27.85030705
+2         b      -46.0353961    -26.42449105
+3         c       26.2272108    -41.35317374
+4         d      146.9548044     88.68313101
+5         e     -107.3945048     24.02878760
+6         f      143.4202866    -51.62253566
+7         g      160.0830967    -66.71297735
+8         h       57.8872053     -3.93875382
+9         i       46.4810558     76.33340457
+10        j     -157.7569426     17.77697409
+11        a     -105.8491530     85.71072509
+12        b     -116.4395691     41.72265214
+13        c       67.3282248    -25.78915583
+15        e       97.1429112    -63.32191908
+16        f       -0.8282728    -87.64603641
+17        g       78.3426630     38.80189190
+18        h      177.0861941    -71.42683757
+19        i      -43.1873354     -9.66881725
+20        j       99.8802797     25.21818812
+21        a      156.4938832     88.53095161
+22        b     -103.6286923     -0.79315599
+23        c       54.6025558     -2.81708561
+24        d     -134.8001655    -58.78037972
+25        e      -83.8005593     45.86777001
+26        f      -40.9989267     -8.29881194
+27        g     -175.1794801      2.01056108
+28        h      -42.3403355    -52.64187961
+29        i      133.0887045    -48.84153431
+30        j      -57.4743612     17.22815934
+31        a       -6.4511584     13.47699569
+32        b       35.8436972    -76.12841155
+33        c       -2.3251295    -83.60269567
+34        d     -112.9616635     25.70318860
+35        e      117.8543947     77.15073593
+36        f       60.6480257     17.65663602
+38        h     -141.1402947      4.68499030
+39        i       80.5359406     87.31714030
+40        j      -31.9412053      1.37552802
+41        a      115.5406659     32.90185416
+42        b       52.9416698     18.27741918
+43        c      101.8557944    -47.00363800
+44        d       19.0930722    -43.53013320
+45        e       10.6990489     41.27573221
+46        f      104.1682434     -8.53725035
+47        g     -171.6007672    -58.47718169
+48        h       -8.1971766     44.40568853
+49        i       83.6329459    -71.10222473
+50        j       69.3833603     65.61809083
+51        a       -8.0569360     20.63609490
+52        b      130.0354117     10.28871699
+53        c      -22.2850414    -30.82008257
+54        d      -91.8729803     -8.43633982
+55        e     -154.5555430      0.07937507
+56        f     -144.1921823    -57.44405500
+57        g      -66.1421854      5.33350850
+58        h        6.7083347    -76.45036577
+59        i       58.3218275    -40.00393212
+60        j      -33.5411326    -51.71408654
+61        a      148.6353327    -38.73771342
+62        b      -74.3027858     71.11693853
+63        c      -14.7363385     -9.67764180
+64        d      -60.3379173     50.39728016
+65        e       54.3133681     68.51142628
+66        f      -87.1139589    -15.63764229
+67        g       -7.7237106    -78.51447351
+68        h       95.8718414    -29.61225150
+69        i     -149.6711108     40.27067039
+70        j      135.1156788    -29.22923997
+71        a      -57.9337424     23.47454205
+72        b      122.1985261     61.31061972
+73        c      -55.1939439     64.10369965
+74        d      -59.8410249    -19.55532942
+75        e       -8.5135518    -21.51110059
+76        f      141.1914009     71.18017668
+77        g      131.1622094     25.97683732
+78        h      -39.6037643     43.39415677
+79        i       99.8354516     18.95462038
+80        j      165.8224790     72.55469007
+81        a      -23.5225855    -37.12857208
+82        b       76.5052843    -55.57318022
+83        c      -36.0020272     69.56116979
+84        d      -62.8732253      0.60110743
+85        e       92.5513733     67.87035774
+86        f     -107.0307881    -55.94514796
+87        g       76.0036401     46.45854943
+88        h     -136.1909084     40.40980068
+89        i      -91.6241350     79.87046729
+90        j     -128.4104234      8.57638566
+91        a      -93.7334106     38.11389619
+92        b     -158.7836242    -19.99708203
+93        c       51.2237731    -71.84283729
+94        d      135.4569166     76.91437595
+95        e      100.4092839    -39.01814994
+96        f      107.0311773     16.30316859
+97        g      -16.1011967    -70.13509111
+98        h      -32.3697305     61.29126578
+99        i      111.9132874    -32.76653680
+100       j       37.7759845     50.91324066
+> cc_cen(x, value = "flags")
+Testing country centroids
+Flagged 2 records
+    1     2     3     4     5     6     7     8     9    10    11    12    13 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   14    15    16    17    18    19    20    21    22    23    24    25    26 
+FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   27    28    29    30    31    32    33    34    35    36    37    38    39 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE 
+   40    41    42    43    44    45    46    47    48    49    50    51    52 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   53    54    55    56    57    58    59    60    61    62    63    64    65 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   66    67    68    69    70    71    72    73    74    75    76    77    78 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   79    80    81    82    83    84    85    86    87    88    89    90    91 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+   92    93    94    95    96    97    98    99   100 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_cen", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_coun")
+> ### * cc_coun
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_coun
+> ### Title: Flag coordinates outside their reported country
+> ### Aliases: cc_coun
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -20, 30), 
++                 decimallatitude = runif(100, 35,60),
++                 countrycode = "RUS")
+> 
+> cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
+Testing country identity
+The rnaturalearthdata package needs to be installed.
+Installing the rnaturalearthdata package.
+Installing package into 'C:/Users/alexander.zizka/AppData/Local/Temp/RtmpW0VNOm/RLIBS_2b8c2d575b68'
+(as 'lib' is unspecified)
+trying URL 'http://packages.ropensci.org/src/contrib/rnaturalearthdata_0.1.0.tar.gz'
+Content type 'application/gzip' length 3218741 bytes (3.1 MB)
+==================================================
+downloaded 3.1 MB
+
+* installing *source* package 'rnaturalearthdata' ...
+** R
+** data
+*** moving datasets to lazyload DB
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+*** arch - i386
+*** arch - x64
+* DONE (rnaturalearthdata)
+
+The downloaded source packages are in
+	'C:\Users\alexander.zizka\AppData\Local\Temp\RtmpGU3I7v\downloaded_packages'
+Flagged 51 records. 
+  [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+ [13]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE
+ [25] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+ [37] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+ [49]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+ [61] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
+ [73]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+ [85]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+ [97]  TRUE  TRUE  TRUE  TRUE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_coun", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_dupl")
+> ### * cc_dupl
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_dupl
+> ### Title: Flag duplicated records
+> ### Aliases: cc_dupl
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = sample(x = 0:10, size = 100, replace = TRUE), 
++                 decimallatitude = sample(x = 0:10, size = 100, replace = TRUE),
++                 collector = "Bonpl",
++                 collector.number = c(1001, 354),
++                 collection = rep(c("K", "WAG","FR", "P", "S"), 20))
+> 
+> cc_dupl(x, value = "flags")
+Testing duplicates
+Flagged 3 records
+  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [49]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+ [97]  TRUE  TRUE  TRUE  TRUE
+> cc_dupl(x, additions = c("collector", "collector.number"))
+Testing duplicates
+Flagged 3 records
+    species decimallongitude decimallatitude collector collector.number
+1         a                2               7     Bonpl             1001
+2         b                4               3     Bonpl              354
+3         c                6               2     Bonpl             1001
+4         d                9              10     Bonpl              354
+5         e                2               6     Bonpl             1001
+6         f                9               2     Bonpl              354
+7         g               10               1     Bonpl             1001
+8         h                7               5     Bonpl              354
+9         i                6              10     Bonpl             1001
+10        j                0               6     Bonpl              354
+11        a                2              10     Bonpl             1001
+12        b                1               8     Bonpl              354
+13        c                7               3     Bonpl             1001
+14        d                4               4     Bonpl              354
+15        e                8               1     Bonpl             1001
+16        f                5               0     Bonpl              354
+17        g                7               7     Bonpl             1001
+18        h               10               1     Bonpl              354
+19        i                4               4     Bonpl             1001
+20        j                8               7     Bonpl              354
+21        a               10              10     Bonpl             1001
+22        b                2               5     Bonpl              354
+23        c                7               5     Bonpl             1001
+24        d                1               1     Bonpl              354
+25        e                2               8     Bonpl             1001
+26        f                4               4     Bonpl              354
+27        g                0               5     Bonpl             1001
+28        h                4               2     Bonpl              354
+29        i                9               2     Bonpl             1001
+30        j                3               6     Bonpl              354
+31        a                5               6     Bonpl             1001
+32        b                6               0     Bonpl              354
+33        c                5               0     Bonpl             1001
+34        d                2               7     Bonpl              354
+35        e                9              10     Bonpl             1001
+36        f                7               6     Bonpl              354
+37        g                8               6     Bonpl             1001
+38        h                1               5     Bonpl              354
+39        i                7              10     Bonpl             1001
+40        j                4               5     Bonpl              354
+41        a                9               7     Bonpl             1001
+42        b                7               6     Bonpl              354
+43        c                8               2     Bonpl             1001
+44        d                6               2     Bonpl              354
+45        e                5               8     Bonpl             1001
+46        f                8               4     Bonpl              354
+47        g                0               1     Bonpl             1001
+48        h                5               8     Bonpl              354
+49        i                8               1     Bonpl             1001
+50        j                7               9     Bonpl              354
+52        b                9               6     Bonpl              354
+53        c                4               3     Bonpl             1001
+54        d                2               4     Bonpl              354
+55        e                0               5     Bonpl             1001
+56        f                1               1     Bonpl              354
+57        g                3               5     Bonpl             1001
+58        h                5               0     Bonpl              354
+59        i                7               3     Bonpl             1001
+60        j                4               2     Bonpl              354
+61        a               10               3     Bonpl             1001
+62        b                3               9     Bonpl              354
+63        c                5               4     Bonpl             1001
+64        d                3               8     Bonpl              354
+65        e                7               9     Bonpl             1001
+66        f                2               4     Bonpl              354
+67        g                5               0     Bonpl             1001
+68        h                8               3     Bonpl              354
+69        i                0               7     Bonpl             1001
+70        j                9               3     Bonpl              354
+71        a                3               6     Bonpl             1001
+72        b                9               9     Bonpl              354
+73        c                3               9     Bonpl             1001
+74        d                3               4     Bonpl              354
+75        e                5               4     Bonpl             1001
+76        f                9               9     Bonpl              354
+77        g                9               7     Bonpl             1001
+78        h                4               8     Bonpl              354
+79        i                8               6     Bonpl             1001
+80        j               10               9     Bonpl              354
+81        a                4               3     Bonpl             1001
+82        b                7               2     Bonpl              354
+83        c                4               9     Bonpl             1001
+84        d                3               5     Bonpl              354
+85        e                8               9     Bonpl             1001
+86        f                2               2     Bonpl              354
+87        g                7               8     Bonpl             1001
+88        h                1               7     Bonpl              354
+89        i                2              10     Bonpl             1001
+90        j                1               6     Bonpl              354
+92        b                0               4     Bonpl              354
+93        c                7               1     Bonpl             1001
+95        e                8               3     Bonpl             1001
+96        f                8               6     Bonpl              354
+97        g                5               1     Bonpl             1001
+98        h                4               9     Bonpl              354
+99        i                8               3     Bonpl             1001
+100       j                6               8     Bonpl              354
+    collection
+1            K
+2          WAG
+3           FR
+4            P
+5            S
+6            K
+7          WAG
+8           FR
+9            P
+10           S
+11           K
+12         WAG
+13          FR
+14           P
+15           S
+16           K
+17         WAG
+18          FR
+19           P
+20           S
+21           K
+22         WAG
+23          FR
+24           P
+25           S
+26           K
+27         WAG
+28          FR
+29           P
+30           S
+31           K
+32         WAG
+33          FR
+34           P
+35           S
+36           K
+37         WAG
+38          FR
+39           P
+40           S
+41           K
+42         WAG
+43          FR
+44           P
+45           S
+46           K
+47         WAG
+48          FR
+49           P
+50           S
+52         WAG
+53          FR
+54           P
+55           S
+56           K
+57         WAG
+58          FR
+59           P
+60           S
+61           K
+62         WAG
+63          FR
+64           P
+65           S
+66           K
+67         WAG
+68          FR
+69           P
+70           S
+71           K
+72         WAG
+73          FR
+74           P
+75           S
+76           K
+77         WAG
+78          FR
+79           P
+80           S
+81           K
+82         WAG
+83          FR
+84           P
+85           S
+86           K
+87         WAG
+88          FR
+89           P
+90           S
+92         WAG
+93          FR
+95           S
+96           K
+97         WAG
+98          FR
+99           P
+100          S
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_dupl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_equ")
+> ### * cc_equ
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_equ
+> ### Title: Flags records with identical lat/lon
+> ### Aliases: cc_equ
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+> 
+> cc_equ(x)
+Testing equal lat/lon
+Flagged 0 records. 
+    species decimallongitude decimallatitude
+1         a      -84.4168813     27.85030705
+2         b      -46.0353961    -26.42449105
+3         c       26.2272108    -41.35317374
+4         d      146.9548044     88.68313101
+5         e     -107.3945048     24.02878760
+6         f      143.4202866    -51.62253566
+7         g      160.0830967    -66.71297735
+8         h       57.8872053     -3.93875382
+9         i       46.4810558     76.33340457
+10        j     -157.7569426     17.77697409
+11        a     -105.8491530     85.71072509
+12        b     -116.4395691     41.72265214
+13        c       67.3282248    -25.78915583
+14        d      -41.7226614    -12.33473570
+15        e       97.1429112    -63.32191908
+16        f       -0.8282728    -87.64603641
+17        g       78.3426630     38.80189190
+18        h      177.0861941    -71.42683757
+19        i      -43.1873354     -9.66881725
+20        j       99.8802797     25.21818812
+21        a      156.4938832     88.53095161
+22        b     -103.6286923     -0.79315599
+23        c       54.6025558     -2.81708561
+24        d     -134.8001655    -58.78037972
+25        e      -83.8005593     45.86777001
+26        f      -40.9989267     -8.29881194
+27        g     -175.1794801      2.01056108
+28        h      -42.3403355    -52.64187961
+29        i      133.0887045    -48.84153431
+30        j      -57.4743612     17.22815934
+31        a       -6.4511584     13.47699569
+32        b       35.8436972    -76.12841155
+33        c       -2.3251295    -83.60269567
+34        d     -112.9616635     25.70318860
+35        e      117.8543947     77.15073593
+36        f       60.6480257     17.65663602
+37        g      105.9263499     10.96213464
+38        h     -141.1402947      4.68499030
+39        i       80.5359406     87.31714030
+40        j      -31.9412053      1.37552802
+41        a      115.5406659     32.90185416
+42        b       52.9416698     18.27741918
+43        c      101.8557944    -47.00363800
+44        d       19.0930722    -43.53013320
+45        e       10.6990489     41.27573221
+46        f      104.1682434     -8.53725035
+47        g     -171.6007672    -58.47718169
+48        h       -8.1971766     44.40568853
+49        i       83.6329459    -71.10222473
+50        j       69.3833603     65.61809083
+51        a       -8.0569360     20.63609490
+52        b      130.0354117     10.28871699
+53        c      -22.2850414    -30.82008257
+54        d      -91.8729803     -8.43633982
+55        e     -154.5555430      0.07937507
+56        f     -144.1921823    -57.44405500
+57        g      -66.1421854      5.33350850
+58        h        6.7083347    -76.45036577
+59        i       58.3218275    -40.00393212
+60        j      -33.5411326    -51.71408654
+61        a      148.6353327    -38.73771342
+62        b      -74.3027858     71.11693853
+63        c      -14.7363385     -9.67764180
+64        d      -60.3379173     50.39728016
+65        e       54.3133681     68.51142628
+66        f      -87.1139589    -15.63764229
+67        g       -7.7237106    -78.51447351
+68        h       95.8718414    -29.61225150
+69        i     -149.6711108     40.27067039
+70        j      135.1156788    -29.22923997
+71        a      -57.9337424     23.47454205
+72        b      122.1985261     61.31061972
+73        c      -55.1939439     64.10369965
+74        d      -59.8410249    -19.55532942
+75        e       -8.5135518    -21.51110059
+76        f      141.1914009     71.18017668
+77        g      131.1622094     25.97683732
+78        h      -39.6037643     43.39415677
+79        i       99.8354516     18.95462038
+80        j      165.8224790     72.55469007
+81        a      -23.5225855    -37.12857208
+82        b       76.5052843    -55.57318022
+83        c      -36.0020272     69.56116979
+84        d      -62.8732253      0.60110743
+85        e       92.5513733     67.87035774
+86        f     -107.0307881    -55.94514796
+87        g       76.0036401     46.45854943
+88        h     -136.1909084     40.40980068
+89        i      -91.6241350     79.87046729
+90        j     -128.4104234      8.57638566
+91        a      -93.7334106     38.11389619
+92        b     -158.7836242    -19.99708203
+93        c       51.2237731    -71.84283729
+94        d      135.4569166     76.91437595
+95        e      100.4092839    -39.01814994
+96        f      107.0311773     16.30316859
+97        g      -16.1011967    -70.13509111
+98        h      -32.3697305     61.29126578
+99        i      111.9132874    -32.76653680
+100       j       37.7759845     50.91324066
+> cc_equ(x, value = "flags")
+Testing equal lat/lon
+Flagged 0 records. 
+  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_equ", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_gbif")
+> ### * cc_gbif
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_gbif
+> ### Title: Flag records assigned to GBIF headquarters
+> ### Aliases: cc_gbif
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = "A", 
++                 decimallongitude = c(12.58, 12.58), 
++                 decimallatitude = c(55.67, 30.00))
+>                 
+> cc_gbif(x)
+Testing GBIF headquarters
+Warning in cc_gbif(x) :
+  running GBIF test, flagging records around Copenhagen
+Flagged 1 records. 
+  species decimallongitude decimallatitude
+2       A            12.58              30
+> cc_gbif(x, value = "flags")
+Testing GBIF headquarters
+Warning in cc_gbif(x, value = "flags") :
+  running GBIF test, flagging records around Copenhagen
+Flagged 1 records. 
+    1     2 
+FALSE  TRUE 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_gbif", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_inst")
+> ### * cc_inst
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_inst
+> ### Title: Flag records in the vicinity of biodiversity institutions
+> ### Aliases: cc_inst
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+>                 
+> cc_inst(x, buffer = 5)#large buffer for demonstration
+Testing biodiversity insitutions
+Flagged 31 records
+   species decimallongitude decimallatitude
+3        c       26.2272108    -41.35317374
+4        d      146.9548044     88.68313101
+6        f      143.4202866    -51.62253566
+7        g      160.0830967    -66.71297735
+8        h       57.8872053     -3.93875382
+9        i       46.4810558     76.33340457
+11       a     -105.8491530     85.71072509
+13       c       67.3282248    -25.78915583
+15       e       97.1429112    -63.32191908
+16       f       -0.8282728    -87.64603641
+18       h      177.0861941    -71.42683757
+21       a      156.4938832     88.53095161
+22       b     -103.6286923     -0.79315599
+23       c       54.6025558     -2.81708561
+24       d     -134.8001655    -58.78037972
+27       g     -175.1794801      2.01056108
+28       h      -42.3403355    -52.64187961
+29       i      133.0887045    -48.84153431
+31       a       -6.4511584     13.47699569
+32       b       35.8436972    -76.12841155
+33       c       -2.3251295    -83.60269567
+35       e      117.8543947     77.15073593
+36       f       60.6480257     17.65663602
+38       h     -141.1402947      4.68499030
+39       i       80.5359406     87.31714030
+40       j      -31.9412053      1.37552802
+42       b       52.9416698     18.27741918
+43       c      101.8557944    -47.00363800
+44       d       19.0930722    -43.53013320
+47       g     -171.6007672    -58.47718169
+49       i       83.6329459    -71.10222473
+50       j       69.3833603     65.61809083
+51       a       -8.0569360     20.63609490
+52       b      130.0354117     10.28871699
+53       c      -22.2850414    -30.82008257
+54       d      -91.8729803     -8.43633982
+55       e     -154.5555430      0.07937507
+56       f     -144.1921823    -57.44405500
+58       h        6.7083347    -76.45036577
+59       i       58.3218275    -40.00393212
+60       j      -33.5411326    -51.71408654
+62       b      -74.3027858     71.11693853
+63       c      -14.7363385     -9.67764180
+65       e       54.3133681     68.51142628
+66       f      -87.1139589    -15.63764229
+67       g       -7.7237106    -78.51447351
+68       h       95.8718414    -29.61225150
+69       i     -149.6711108     40.27067039
+70       j      135.1156788    -29.22923997
+71       a      -57.9337424     23.47454205
+72       b      122.1985261     61.31061972
+75       e       -8.5135518    -21.51110059
+76       f      141.1914009     71.18017668
+78       h      -39.6037643     43.39415677
+80       j      165.8224790     72.55469007
+81       a      -23.5225855    -37.12857208
+82       b       76.5052843    -55.57318022
+83       c      -36.0020272     69.56116979
+85       e       92.5513733     67.87035774
+86       f     -107.0307881    -55.94514796
+88       h     -136.1909084     40.40980068
+89       i      -91.6241350     79.87046729
+90       j     -128.4104234      8.57638566
+92       b     -158.7836242    -19.99708203
+93       c       51.2237731    -71.84283729
+94       d      135.4569166     76.91437595
+95       e      100.4092839    -39.01814994
+97       g      -16.1011967    -70.13509111
+98       h      -32.3697305     61.29126578
+> cc_inst(x, value = "flags", buffer = 5)
+Testing biodiversity insitutions
+Flagged 31 records
+    1     2     3     4     5     6     7     8     9    10    11    12    13 
+FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE 
+   14    15    16    17    18    19    20    21    22    23    24    25    26 
+FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE 
+   27    28    29    30    31    32    33    34    35    36    37    38    39 
+ TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE 
+   40    41    42    43    44    45    46    47    48    49    50    51    52 
+ TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE 
+   53    54    55    56    57    58    59    60    61    62    63    64    65 
+ TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE 
+   66    67    68    69    70    71    72    73    74    75    76    77    78 
+ TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE 
+   79    80    81    82    83    84    85    86    87    88    89    90    91 
+FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE 
+   92    93    94    95    96    97    98    99   100 
+ TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_inst", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_outl")
+> ### * cc_outl
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_outl
+> ### Title: Flag geographic outliers in species distributions
+> ### Aliases: cc_outl
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+>                 
+> cc_outl(x)
+Testing outliers
+Flagged 2 records. 
+    species decimallongitude decimallatitude
+1         a      -84.4168813     27.85030705
+2         b      -46.0353961    -26.42449105
+3         c       26.2272108    -41.35317374
+4         d      146.9548044     88.68313101
+5         e     -107.3945048     24.02878760
+6         f      143.4202866    -51.62253566
+7         g      160.0830967    -66.71297735
+8         h       57.8872053     -3.93875382
+9         i       46.4810558     76.33340457
+10        j     -157.7569426     17.77697409
+11        a     -105.8491530     85.71072509
+12        b     -116.4395691     41.72265214
+13        c       67.3282248    -25.78915583
+14        d      -41.7226614    -12.33473570
+15        e       97.1429112    -63.32191908
+16        f       -0.8282728    -87.64603641
+17        g       78.3426630     38.80189190
+18        h      177.0861941    -71.42683757
+19        i      -43.1873354     -9.66881725
+20        j       99.8802797     25.21818812
+21        a      156.4938832     88.53095161
+22        b     -103.6286923     -0.79315599
+23        c       54.6025558     -2.81708561
+24        d     -134.8001655    -58.78037972
+25        e      -83.8005593     45.86777001
+26        f      -40.9989267     -8.29881194
+27        g     -175.1794801      2.01056108
+28        h      -42.3403355    -52.64187961
+29        i      133.0887045    -48.84153431
+30        j      -57.4743612     17.22815934
+31        a       -6.4511584     13.47699569
+32        b       35.8436972    -76.12841155
+33        c       -2.3251295    -83.60269567
+34        d     -112.9616635     25.70318860
+35        e      117.8543947     77.15073593
+36        f       60.6480257     17.65663602
+37        g      105.9263499     10.96213464
+38        h     -141.1402947      4.68499030
+39        i       80.5359406     87.31714030
+40        j      -31.9412053      1.37552802
+41        a      115.5406659     32.90185416
+42        b       52.9416698     18.27741918
+43        c      101.8557944    -47.00363800
+44        d       19.0930722    -43.53013320
+45        e       10.6990489     41.27573221
+46        f      104.1682434     -8.53725035
+47        g     -171.6007672    -58.47718169
+48        h       -8.1971766     44.40568853
+49        i       83.6329459    -71.10222473
+50        j       69.3833603     65.61809083
+51        a       -8.0569360     20.63609490
+52        b      130.0354117     10.28871699
+53        c      -22.2850414    -30.82008257
+54        d      -91.8729803     -8.43633982
+55        e     -154.5555430      0.07937507
+56        f     -144.1921823    -57.44405500
+58        h        6.7083347    -76.45036577
+59        i       58.3218275    -40.00393212
+60        j      -33.5411326    -51.71408654
+61        a      148.6353327    -38.73771342
+62        b      -74.3027858     71.11693853
+63        c      -14.7363385     -9.67764180
+64        d      -60.3379173     50.39728016
+65        e       54.3133681     68.51142628
+66        f      -87.1139589    -15.63764229
+67        g       -7.7237106    -78.51447351
+68        h       95.8718414    -29.61225150
+69        i     -149.6711108     40.27067039
+70        j      135.1156788    -29.22923997
+71        a      -57.9337424     23.47454205
+72        b      122.1985261     61.31061972
+74        d      -59.8410249    -19.55532942
+75        e       -8.5135518    -21.51110059
+76        f      141.1914009     71.18017668
+77        g      131.1622094     25.97683732
+78        h      -39.6037643     43.39415677
+79        i       99.8354516     18.95462038
+80        j      165.8224790     72.55469007
+81        a      -23.5225855    -37.12857208
+82        b       76.5052843    -55.57318022
+83        c      -36.0020272     69.56116979
+84        d      -62.8732253      0.60110743
+85        e       92.5513733     67.87035774
+86        f     -107.0307881    -55.94514796
+87        g       76.0036401     46.45854943
+88        h     -136.1909084     40.40980068
+89        i      -91.6241350     79.87046729
+90        j     -128.4104234      8.57638566
+91        a      -93.7334106     38.11389619
+92        b     -158.7836242    -19.99708203
+93        c       51.2237731    -71.84283729
+94        d      135.4569166     76.91437595
+95        e      100.4092839    -39.01814994
+96        f      107.0311773     16.30316859
+97        g      -16.1011967    -70.13509111
+98        h      -32.3697305     61.29126578
+99        i      111.9132874    -32.76653680
+100       j       37.7759845     50.91324066
+> cc_outl(x, method = "quantile", value = "flags")
+Testing outliers
+Flagged 2 records. 
+  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+ [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [73] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [97]  TRUE  TRUE  TRUE  TRUE
+> cc_outl(x, method = "distance", value = "flags", tdi = 10000)
+Testing outliers
+Flagged 1 records. 
+  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [97]  TRUE  TRUE  TRUE  TRUE
+> cc_outl(x, method = "distance", value = "flags", tdi = 1000)
+Testing outliers
+Flagged 92 records. 
+  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+ [13] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+ [25] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [49] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [61] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [85] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [97]  TRUE FALSE FALSE FALSE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_outl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_sea")
+> ### * cc_sea
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_sea
+> ### Title: Flag non-terrestrial coordinates
+> ### Aliases: cc_sea
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90))
+>                 
+> cc_sea(x, value = "flags")
+Testing sea coordinates
+Flagged 64 records. 
+  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [13] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+ [25]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+ [37]  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+ [49]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+ [61] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+ [73] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+ [85]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+ [97] FALSE FALSE FALSE  TRUE
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_sea", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_urb")
+> ### * cc_urb
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_urb
+> ### Title: Flag records inside urban areas
+> ### Aliases: cc_urb
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # load reference 
+> ##D #See details section on where to download the reference data
+> ##D load("extra_gazetteers/urbanareas.rda")
+> ##D 
+> ##D x <- data.frame(species = letters[1:10], 
+> ##D                 decimallongitude = runif(100, -180, 180), 
+> ##D                 decimallatitude = runif(100, -90,90))
+> ##D                 
+> ##D cc_urb(x, ref = urbanareas)
+> ##D cc_urb(x, value = "flags", ref = urbanareas)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_urb", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_val")
+> ### * cc_val
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_val
+> ### Title: Check coordinate validity in lat/lon
+> ### Aliases: cc_val
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = letters[1:10], 
++                 decimallongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
++                 decimallatitude = runif(110, -90,90))
+>                 
+> cc_val(x)
+Testing coordinate validity
+Flagged 4 records. 
+    species   decimallongitude decimallatitude
+1         a   -84.416881268844    -66.71297735
+2         b  -46.0353961307555     -3.93875382
+3         c   26.2272108066827     76.33340457
+4         d   146.954804398119     17.77697409
+5         e  -107.394504826516     85.71072509
+6         f   143.420286588371     41.72265214
+7         g   160.083096697927    -25.78915583
+8         h   57.8872052952647    -12.33473570
+9         i    46.481055803597    -63.32191908
+10        j  -157.756942631677    -87.64603641
+11        a  -105.849153036252     38.80189190
+12        b  -116.439569089562    -71.42683757
+13        c   67.3282247968018     -9.66881725
+14        d  -41.7226614430547     25.21818812
+15        e   97.1429111994803     88.53095161
+16        f -0.828272849321365     -0.79315599
+17        g   78.3426629751921     -2.81708561
+18        h   177.086194138974    -58.78037972
+19        i  -43.1873354036361     45.86777001
+20        j   99.8802796751261     -8.29881194
+21        a   156.493883198127      2.01056108
+22        b  -103.628692338243    -52.64187961
+23        c   54.6025557909161    -48.84153431
+24        d  -134.800165453926     17.22815934
+25        e  -83.8005592580885     13.47699569
+26        f  -40.9989266842604    -76.12841155
+27        g  -175.179480062798    -83.60269567
+28        h  -42.3403354547918     25.70318860
+29        i   133.088704459369     77.15073593
+30        j   -57.474361192435     17.65663602
+31        a  -6.45115843042731     10.96213464
+32        b   35.8436971530318      4.68499030
+33        c  -2.32512946240604     87.31714030
+34        d  -112.961663492024      1.37552802
+35        e   117.854394698516     32.90185416
+36        f   60.6480257492512     18.27741918
+37        g   105.926349861547    -47.00363800
+38        h  -141.140294680372    -43.53013320
+39        i   80.5359405744821     41.27573221
+40        j  -31.9412053283304     -8.53725035
+41        a   115.540665881708    -58.47718169
+42        b   52.9416697751731     44.40568853
+43        c   101.855794424191    -71.10222473
+44        d   19.0930721908808     65.61809083
+45        e   10.6990488711745     20.63609490
+46        f   104.168243408203     10.28871699
+47        g  -171.600767159835    -30.82008257
+48        h  -8.19717658683658     -8.43633982
+49        i    83.632945921272      0.07937507
+50        j   69.3833603337407    -57.44405500
+51        a  -8.05693603120744      5.33350850
+52        b   130.035411659628    -76.45036577
+53        c  -22.2850413993001    -40.00393212
+54        d  -91.8729802686721    -51.71408654
+55        e  -154.555543027818    -38.73771342
+56        f  -144.192182337865     71.11693853
+57        g    -66.14218541421     -9.67764180
+58        h   6.70833474956453     50.39728016
+59        i   58.3218275103718     68.51142628
+60        j  -33.5411326121539    -15.63764229
+61        a   148.635332733393    -78.51447351
+62        b  -74.3027858063579    -29.61225150
+63        c  -14.7363385464996     40.27067039
+64        d  -60.3379172924906    -29.22923997
+65        e   54.3133681453764     23.47454205
+66        f  -87.1139589417726     61.31061972
+67        g  -7.72371062077582     64.10369965
+68        h   95.8718414325267    -19.55532942
+69        i  -149.671110827476    -21.51110059
+70        j   135.115678813308     71.18017668
+71        a  -57.9337423760444     25.97683732
+72        b   122.198526067659     43.39415677
+73        c  -55.1939439028502     18.95462038
+74        d  -59.8410249128938     72.55469007
+75        e  -8.51355177350342    -37.12857208
+76        f   141.191400904208    -55.57318022
+77        g   131.162209426984     69.56116979
+78        h  -39.6037643495947      0.60110743
+79        i    99.835451580584     67.87035774
+80        j   165.822478998452    -55.94514796
+81        a  -23.5225854814053     46.45854943
+82        b   76.5052843373269     40.40980068
+83        c  -36.0020271968096     79.87046729
+84        d  -62.8732253238559      8.57638566
+85        e    92.551373289898     38.11389619
+86        f  -107.030788147822    -19.99708203
+87        g    76.003640089184    -71.84283729
+88        h  -136.190908430144     76.91437595
+89        i  -91.6241349745542    -39.01814994
+90        j  -128.410423407331     16.30316859
+91        a  -93.7334105651826    -70.13509111
+92        b  -158.783624181524     61.29126578
+93        c   51.2237730715424    -32.76653680
+94        d   135.456916568801     50.91324066
+95        e   100.409283880144    -41.84852268
+96        f   107.031177319586    -50.64384872
+97        g  -16.1011966969818      3.02343055
+98        h  -32.3697304632515    -41.58889343
+99        i   111.913287397474    -57.38970108
+100       j   37.7759844996035      3.34370475
+101       a   55.7006141077727     11.30092844
+102       b   -52.848982103169    -66.75176620
+103       c  -82.7063474804163    -43.85383128
+104       d   177.366262022406     39.22834968
+105       e   48.0575751978904     83.05378856
+106       f  -103.245071321726    -71.97464762
+> cc_val(x, value = "flags")
+Testing coordinate validity
+Flagged 4 records. 
+  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [97]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+[109] FALSE FALSE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_val", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cc_zero")
+> ### * cc_zero
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cc_zero
+> ### Title: Flag zero coordinates
+> ### Aliases: cc_zero
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> x <- data.frame(species = "A", 
++                 decimallongitude = c(0,34.84, 0, 33.98), 
++                 decimallatitude = c(23.08, 0, 0, 15.98))
+>                 
+> cc_zero(x)
+Testing zero coordinates
+Flagged 3 records. 
+  species decimallongitude decimallatitude
+4       A            33.98           15.98
+> cc_zero(x, value = "flags")
+Testing zero coordinates
+Flagged 3 records. 
+    1     2     3     4 
+FALSE FALSE FALSE  TRUE 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cc_zero", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("centroids")
+> ### * centroids
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: centroids
+> ### Title: Global Country and Province Centroids
+> ### Aliases: centroids
+> ### Keywords: gazetteers
+> 
+> ### ** Examples
+> 
+> data(centroids)
+> str(centroids)
+'data.frame':	5142 obs. of  6 variables:
+ $ iso3     : Factor w/ 271 levels "ABW","AFG","AGO",..: 1 1 2 2 3 3 4 4 5 5 ...
+ $ adm1_code: Factor w/ 4897 levels "ABW","ABW-5150",..: 1 1 3 3 38 38 57 57 73 73 ...
+ $ name     : Factor w/ 4692 levels " Eua","A ana",..: 12 12 34 34 44 44 54 54 131 131 ...
+ $ type     : Factor w/ 2 levels "country","province": 1 1 1 1 1 1 1 1 1 1 ...
+ $ longitude: num  -70 -70 65.2 65 17.5 ...
+ $ latitude : num  12.5 12.5 33.7 33 -12.3 ...
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("centroids", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("countryref")
+> ### * countryref
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: countryref
+> ### Title: Country Centroids and Country Capitals
+> ### Aliases: countryref
+> ### Keywords: gazetteers
+> 
+> ### ** Examples
+> 
+> data(countryref)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("countryref", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("dc_ddmm")
+> ### * dc_ddmm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: dc_ddmm
+> ### Title: Flag datasets with a ddmm to dd.dd conversion error. BETA
+> ###   VERSION!
+> ### Aliases: dc_ddmm
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> clean <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90),
++                 dataset = "FR")
+>                 
+> dc_ddmm(x = clean, value = "flags")
+Testing datasets for dd.mm to dd.dd conversion errors
+Flagged 0 records
+  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+> 
+> #problematic dataset
+> lon <- sample(-180:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
+> lat <- sample(-90:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
+> 
+> prob <-  data.frame(species = letters[1:10], 
++                 decimallongitude = lon, 
++                 decimallatitude = lat,
++                 dataset = "FR")
+>                 
+> dc_ddmm(x = prob, value = "flags")
+Testing datasets for dd.mm to dd.dd conversion errors
+Flagged 0 records
+  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("dc_ddmm", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("dc_round")
+> ### * dc_round
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: dc_round
+> ### Title: Flag datasets with a significant fraction of rounded coordinates
+> ### Aliases: dc_round
+> ### Keywords: "Coordinate cleaning"
+> 
+> ### ** Examples
+> 
+> clean <- data.frame(species = letters[1:10], 
++                 decimallongitude = runif(100, -180, 180), 
++                 decimallatitude = runif(100, -90,90),
++                 dataset = "clean")
+> #biased dataset        
+> bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
++                round(runif(min = -42, max = -40, n = 300), 0),
++                runif(min = -42, max = -40, n = 200))
+> bias.lat <- c(round(runif(min = -12, max = -10, n = 500), 1),
++               round(runif(min = -12, max = -10, n = 300), 0),
++               runif(min = -12, max = -10, n = 200))
+> bias <- data.frame(species = letters[1:10],
++                    decimallongitude = bias.long,
++                    decimallatitude = bias.lat,
++                    dataset = "rounded")
+> test <- rbind(clean, bias)
+> 
+> ## Not run: 
+> ##D                   
+> ##D #run CleanCoordinatesDS
+> ##D flags <- CleanCoordinatesDS(test)
+> ##D 
+> ##D #check problems
+> ##D #clean
+> ##D hist(test[test$dataset == rownames(flags[flags$summary,]), "decimallongitude"])
+> ##D #biased
+> ##D hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("dc_round", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("institutions")
+> ### * institutions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: institutions
+> ### Title: Global Locations of Biodiversity Institutions.
+> ### Aliases: institutions
+> ### Keywords: gazetteers
+> 
+> ### ** Examples
+> 
+> data(institutions)
+> str(institutions)
+'data.frame':	12170 obs. of  12 variables:
+ $ name                       : chr  "Indian Agricultural Research Institute" "University of Oulu" "EMBRAPA" "KwaZulu-Natal Nature Conservation Service" ...
+ $ decimallongitude           : num  77.2 25.5 -57.7 30.3 -78.5 ...
+ $ decimallatitude            : num  28.64 65.06 -19.02 -29.57 -7.17 ...
+ $ city                       : chr  "New Delhis" "FOulu" "Corumbá" "Pietermaritzburg" ...
+ $ country                    : chr  "IND" "FIN" "BRA" "ZAF" ...
+ $ address                    : chr  "Pusa Campus  " "Linnanmaa F2. Dept .of Biology, University of Oulu P.O. Box 3000" "Rua 21 de Setembro 1880.  " "Douglas Mitchell Centre, Level 6, Queen Elizabeth Park, Duncan MacKenzie Drive, Pietermaritzburg.  " ...
+ $ source                     : chr  "grbioorg" "grbioorg" "grbioorg" "grbioorg" ...
+ $ type                       : chr  "Research_centre" "University" NA NA ...
+ $ geocoding.precision.m      : num  1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 ...
+ $ geocoding.issue            : chr  NA NA NA NA ...
+ $ geocoding.source           : chr  "AH" "AH" "AH" "AH" ...
+ $ inside.ptoected.area.WDPAID: num  NA NA NA NA NA NA NA NA NA NA ...
+ - attr(*, "vars")=List of 2
+  ..$ : symbol decimallongitude
+  ..$ : symbol decimallatitude
+ - attr(*, "indices")=List of 8143
+  ..$ : int 4177
+  ..$ : int 4168
+  ..$ : int 8632
+  ..$ : int 7692
+  ..$ : int  4375 5357
+  ..$ : int 785
+  ..$ : int 6159
+  ..$ : int 1497
+  ..$ : int 8259
+  ..$ : int 953
+  ..$ : int 3768
+  ..$ : int 7076
+  ..$ : int 3315
+  ..$ : int 1362
+  ..$ : int  8629 8630 8783
+  ..$ : int 4870
+  ..$ : int 896
+  ..$ : int 7370
+  ..$ : int 4824
+  ..$ : int 8614
+  ..$ : int 6468
+  ..$ : int 6451
+  ..$ : int 2806
+  ..$ : int 1102
+  ..$ : int 5075
+  ..$ : int 3317
+  ..$ : int 2899
+  ..$ : int 4109
+  ..$ : int 1509
+  ..$ : int  222 2973
+  ..$ : int 8734
+  ..$ : int 1343
+  ..$ : int 2451
+  ..$ : int 6880
+  ..$ : int 5963
+  ..$ : int 5761
+  ..$ : int 6008
+  ..$ : int 4879
+  ..$ : int  2395 3243 4143
+  ..$ : int  7074 7075
+  ..$ : int  4335 5912 5924
+  ..$ : int 3244
+  ..$ : int 566
+  ..$ : int 3093
+  ..$ : int  4438 5975
+  ..$ : int 567
+  ..$ : int 315
+  ..$ : int 6769
+  ..$ : int  4369 4985
+  ..$ : int 163
+  ..$ : int  6876 7149
+  ..$ : int 8341
+  ..$ : int 5139
+  ..$ : int 8345
+  ..$ : int 1865
+  ..$ : int 1560
+  ..$ : int 973
+  ..$ : int  3088 3265
+  ..$ : int 9480
+  ..$ : int 1031
+  ..$ : int 3886
+  ..$ : int 8346
+  ..$ : int  5285 6326 6735
+  ..$ : int 6970
+  ..$ : int 3570
+  ..$ : int 1654
+  ..$ : int 3624
+  ..$ : int  2013 7061
+  ..$ : int 3364
+  ..$ : int 998
+  ..$ : int  1470 2187 2240
+  ..$ : int 9196
+  ..$ : int 9469
+  ..$ : int 4218
+  ..$ : int 5742
+  ..$ : int 828
+  ..$ : int 7278
+  ..$ : int 9350
+  ..$ : int 2461
+  ..$ : int 3332
+  ..$ : int 2415
+  ..$ : int 156
+  ..$ : int 545
+  ..$ : int 4528
+  ..$ : int 4568
+  ..$ : int 544
+  ..$ : int  7579 7897
+  ..$ : int 4388
+  ..$ : int 8349
+  ..$ : int  7604 8038
+  ..$ : int 3524
+  ..$ : int 5175
+  ..$ : int 3932
+  ..$ : int 5260
+  ..$ : int 4495
+  ..$ : int 4500
+  ..$ : int  7605 8039
+  ..$ : int 8350
+  ..$ : int 2512
+  .. [list output truncated]
+ - attr(*, "group_sizes")= int  1 1 1 1 2 1 1 1 1 1 ...
+ - attr(*, "biggest_group_size")= int 2475
+ - attr(*, "labels")='data.frame':	8143 obs. of  2 variables:
+  ..$ decimallongitude: num  -168 -160 -160 -159 -159 ...
+  ..$ decimallatitude : num  37.1 24.8 21.9 21.9 21.9 ...
+  ..- attr(*, "vars")=List of 2
+  .. ..$ : symbol decimallongitude
+  .. ..$ : symbol decimallatitude
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("institutions", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("landmass")
+> ### * landmass
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: landmass
+> ### Title: Global Coastlines
+> ### Aliases: landmass
+> ### Keywords: gazetteers
+> 
+> ### ** Examples
+> 
+> data("landmass")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("landmass", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot.spatialvalid")
+> ### * plot.spatialvalid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot.spatialvalid
+> ### Title: Plot Method for Class Spatialvalid
+> ### Aliases: plot.spatialvalid
+> ### Keywords: Visualisation
+> 
+> ### ** Examples
+> 
+> 
+> exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
++                     decimallongitude = runif(250, min = 42, max = 51),
++                     decimallatitude = runif(250, min = -26, max = -11))
+> 
+> test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
+Warning in cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flags") :
+  running GBIF test, flagging records around Copenhagen
+> 
+> summary(test)
+decimallatitude        validity           equal           zeros        capitals 
+              0               0               0               0               0 
+      centroids             sea            gbif     institution         summary 
+              0             163               0               0             163 
+> plot(test)
+Regions defined for each Polygons
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot.spatialvalid", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  20.5 0.98 36.51 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

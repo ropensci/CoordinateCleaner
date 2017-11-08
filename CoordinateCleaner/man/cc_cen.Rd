@@ -2,13 +2,14 @@
 \alias{cc_cen}
 
 \title{
-Flag coordinates in vicinity of centroids of countries and provinces.
+Flag Coordinates in Vicinity of Centroids of Countries and Provinces.
 }
 \description{
 Flags records within a certain radius around the geographic centroids of political countries and provinces. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to centroids.
 }
 \usage{
-cc_cen(x, lon = "decimallongitude", lat = "decimallatitude", buffer = 0.1, test = "both", ref = NULL, value = "clean", verbose = TRUE)
+cc_cen(x, lon = "decimallongitude", lat = "decimallatitude", 
+       buffer = 0.1, test = "both", ref = NULL, value = "clean", verbose = TRUE)
 }
 
 \arguments{
@@ -28,7 +29,7 @@ numerical. The buffer around each province or country centroid, where records sh
 a character string. Specifying the details of the test. One of c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for country and province centroids.
 }
   \item{ref}{
-a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{centroids}.  Default = \code{\link{centroids}}}
+a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{centroids}}.  Default = \code{\link{centroids}}
 }
   \item{value}{
 character string.  Defining the output value. See value.

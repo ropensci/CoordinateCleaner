@@ -2,13 +2,14 @@
 \alias{cc_dupl}
 
 \title{
-Flag duplicated records
+Flag Duplicated Records
 }
 \description{
 Flags duplicated records based on species name and coordinates, as well as user-defined additional columns. True (specimen) duplicates or duplicates from the same species can make up the bulk of records in a biological collection database, but are undesirable for many analyses. Both can be flagged with this function, the former given enough additional information.
 }
 \usage{
-cc_dupl(x, lon = "decimallongitude", lat = "decimallatitude", species = "species", additions = NULL, value = "clean", verbose = T)
+cc_dupl(x, lon = "decimallongitude", lat = "decimallatitude", 
+        species = "species", additions = NULL, value = "clean", verbose = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +27,12 @@ a character string. The column with the species name. Default = \dQuote{species}
 }
   \item{additions}{
 a vector of character strings. Additional columns to be included in the test for duplication. For example as below, collector name and collector number.
+}
+  \item{value}{
+character string.  Defining the output value. See value.
+}
+  \item{verbose}{
+logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \value{

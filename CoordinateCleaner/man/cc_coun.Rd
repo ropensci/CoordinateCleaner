@@ -2,13 +2,14 @@
 \alias{cc_coun}
 
 \title{
-Flag coordinates outside their reported country
+Flag Coordinates Outside their Reported Country
 }
 \description{
 Identifies mismatches between geographic coordinates and additional country information (usually this information is reliably reported with specimens). Such a mismatch can occur for example, if latitude and longitude are switched.
 }
 \usage{
-cc_coun(x, lon = "decimallongitude", lat = "decimallatitude", iso3 = "countrycode", value = "clean", ref = NULL, verbose = TRUE)
+cc_coun(x, lon = "decimallongitude", lat = "decimallatitude", 
+        iso3 = "countrycode", value = "clean", ref = NULL, verbose = TRUE)
 }
 
 \arguments{
@@ -25,7 +26,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the country assignment of each record in three letter ISO code. \dQuote{countrycode}.
 }
   \item{ref}{
-a SpatialPolygonDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{countryref}.  Default = \code{\link{centroids}}}
+a SpatialPolygonDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{countryref}}.  Default = \code{\link{countryref}}
 }
   \item{value}{
 character string.  Defining the output value. See value.
@@ -38,16 +39,19 @@ logical. If TRUE reports the name of the test and the number of records flagged
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
+Non-terrestrial records are ignored. use \code{\link{cc_sea}} to flag these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
 \examples{
+\dontrun{
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
+                decimallongitude = runif(100, -20, 30), 
+                decimallatitude = runif(100, 35,60),
+                countrycode = "RUS")
 
-cc_coun(x)
-cc_coun(x, value = "flags")
+cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
+}
+
 }
 
 \keyword{ "Coordinate cleaning" }

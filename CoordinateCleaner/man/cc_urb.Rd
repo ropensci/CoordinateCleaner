@@ -2,13 +2,14 @@
 \alias{cc_urb}
 
 \title{
-Flag records inside urban areas
+Flag Records Inside Urban Areas
 }
 \description{
 Flags records from inside urban areas, absed on a geographic gazetteer. Often records from large databases spann subtantial time periods (centuries) and old records might represent habitats which today are replaced by city area.
 }
 \usage{
-cc_urb(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL, value = "clean", verbose = T)
+cc_urb(x, lon = "decimallongitude", lat = "decimallatitude", 
+       ref = NULL, value = "clean", verbose = T)
 }
 
 \arguments{
@@ -32,7 +33,7 @@ logical. If TRUE reports the name of the test and the number of records flagged
 }
 }
 \details{
-No default reference is provided with the package due to the large file size of such (global) gazetteers. You can download an example here: \url{https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda}. Can be any SpatialPolygonDataframe, but the structure must be identical to \code{\link{centroids}.  Default = \code{\link{centroids}}}
+No default reference is provided with the package due to the large file size of such (global) gazetteers. You can download an example here: \url{https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda}. Can be any SpatialPolygonDataframe, but the structure must be identical to \code{urbanareas}.
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
@@ -42,9 +43,9 @@ See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and 
 }
 
 \examples{
-\notrun{
+\dontrun{
 # load reference 
-#download from https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda
+#See details section on where to download the reference data
 load("extra_gazetteers/urbanareas.rda")
 
 x <- data.frame(species = letters[1:10], 
