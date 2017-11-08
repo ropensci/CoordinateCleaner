@@ -2,7 +2,7 @@
 \alias{cc_outl}
 
 \title{
-Flag geographic outliers in species distributions
+Flag Geographic Outliers in Species Distributions
 }
 \description{
 Flags records that are outliers in geographic space according to the method defined via the \code{method} argument. Geographic outliers often represent erroneous coordinates, for example due to data entry errors, imprecise geo-references, individuals in horticulture/captivity.
@@ -26,7 +26,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the species name. Default = \dQuote{species}.
 }
   \item{method}{
- a character string.  Defining the method for outlier selection.  See details. One of \dQuote{distance}, \dQuote{quantile}, \dQuote{mad}.  Deafault = \dQUote{quantile}.
+ a character string.  Defining the method for outlier selection.  See details. One of \dQuote{distance}, \dQuote{quantile}, \dQuote{mad}.  Deafault = \dQuote{quantile}.
 }
   \item{mltpl}{
 numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or meadian absolute deviation (\code{method == 'mad'})to identify outliers. See details.  Default = 3.
