@@ -5,7 +5,7 @@
 Check Coordinate Validity in lat/lon
 }
 \description{
-Checks if all coordinates in a data set are valid in a latitude/longitude reference system. That is, non-numeric, not available coordinates and lat >90, la <-90, lon > 180 and lon < -180 are flagged. 
+Checks if all coordinates in a data set are valid in a latitude/longitude coordinate reference system. That is non-numeric, not available coordinates and lat >90, la <-90, lon > 180 and lon < -180 are flagged. 
 }
 \usage{
 cc_val(x, lon = "decimallongitude", lat = "decimallatitude", value = "clean", verbose = T)
@@ -22,10 +22,10 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
@@ -47,4 +47,4 @@ cc_val(x)
 cc_val(x, value = "flags")
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

@@ -26,10 +26,10 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 numerical. The buffer around each province or country centroid, where records should be flagged as problematic, in decimal degrees.  Default = 0.1.
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \value{
@@ -48,5 +48,5 @@ cc_zero(x)
 cc_zero(x, value = "flags")
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }
 

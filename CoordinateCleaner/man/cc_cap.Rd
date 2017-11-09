@@ -2,7 +2,7 @@
 \alias{cc_cap}
 
 \title{
-Flag coordinates in cicinity of country Capitals.
+Flag Coordinates in Vicinity of Country Capitals.
 }
 \description{
 Flags records within a certain radius around country capitals. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to capitals.
@@ -28,10 +28,10 @@ The buffer around each capital coordinate (the centre of the city), where record
 a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{capitals}}.  Default = \code{\link{capitals}}
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
@@ -53,4 +53,4 @@ cc_cap(x)
 cc_cap(x, value = "flags")
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }
