@@ -5,7 +5,7 @@
 Flag Datasets with a Significant Fraction of Rounded Coordinates
 }
 \description{
-Uses a three 3 rate Poisson process to model the distribution of coordinate decimals in the coordinates and to identify datasets with a significant fraction of records with low precision. Often these records have been subject to strong decimal rounding, or are based on rasterized data collection schemes.
+Uses a three-rate Poisson process to model the distribution of coordinate decimals in the coordinates and to identify datasets with a significant fraction of records with low precision. Often these records have been subject to strong decimal rounding, or are based on rasterized data collection schemes.
 }
 \usage{
 dc_round(x, lon = "decimallongitude", lat = "decimallatitude", 
@@ -36,13 +36,13 @@ numerical. Indicates the factor by which one of the two periodic bins must outnu
 numeric. If NULL, the entire dataset is tested, if not NULL a random subsample of size \code{subsampling} is tested. This is recommedned for very large datasets, but \code{subsampling values below 1000 are not recommended.  Default = NULL}
 }
   \item{diagnostics}{
- should
+logical. If TRUE, plots a series of diagnostics visualizing the periodicity test. Default = FALSE.
 }
   \item{value}{
-character string.  Defining the output value. See value. Default = \dQuote{clean}.
+a character string.  Defining the output value. See value. Default = \dQuote{clean}.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
@@ -50,11 +50,6 @@ To detect these patterns, we model the distribution of decimals in the range [0,
 }
 \value{
 Depending on the \sQuote{value} argument, either a summary per dataset \code{dataset}, a dataframe containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
-}
-\author{
-person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
-                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
-person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.

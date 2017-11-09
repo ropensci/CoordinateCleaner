@@ -10,7 +10,7 @@ A \code{SpatialPolygonsDataFrame} with global coastlines.
 \usage{data("landmass")}
 
 \note{
-Most of the times it might be desirable to only flag records far away from the coast as problematic rather than thos close to the coastline (which might be due to disagreeements in coastlines, or low gps uncertainty). For these cases, there is a alternative coastline reference buffered by one degree available at \url{https://github.com/azizka/speciesgeocodeR/tree/master/extra_gazetteers}.
+Most of the times it might be desirable to only flag records far away from the coast as problematic rather than thos close to the coastline (which might be due to disagreeements in coastlines, or low gps uncertainty). For these cases, there is a alternative coastline reference buffered by one degree available at \url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
 }
 
 \source{

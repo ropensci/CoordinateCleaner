@@ -51,11 +51,6 @@ To detect these patterns, we model the distribution of decimals in the range [0,
 \value{
 Depending on the \sQuote{value} argument, either a summary per dataset \code{dataset}, a dataframe containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
-\author{
-person("Alexander", "Zizka", email = "alexander.zizka@bioenv.gu.se",
-                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1680-9192"))
-person("Daniele", "Silvestro", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0100-0961"))
-}
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
