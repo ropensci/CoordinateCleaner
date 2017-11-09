@@ -5,7 +5,7 @@
 Flag Datasets with a Significant Fraction of Rounded Coordinates
 }
 \description{
-Uses a three 3 rate Poisson process to model the distribution of coordinate decimals in the coordinates and to identify datasets with a significant fraction of records with low precision. Often these records have been subject to strong decimal rounding, or are based on rasterized data collection schemes.
+Uses a three-rate Poisson process to model the distribution of coordinate decimals in the coordinates and to identify datasets with a significant fraction of records with low precision. Often these records have been subject to strong decimal rounding, or are based on rasterized data collection schemes.
 }
 \usage{
 dc_round(x, lon = "decimallongitude", lat = "decimallatitude", 
@@ -39,10 +39,10 @@ numeric. If NULL, the entire dataset is tested, if not NULL a random subsample o
 logical. If TRUE, plots a series of diagnostics visualizing the periodicity test. Default = FALSE.
 }
   \item{value}{
-character string.  Defining the output value. See value. Default = \dQuote{clean}.
+a character string.  Defining the output value. See value. Default = \dQuote{clean}.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{

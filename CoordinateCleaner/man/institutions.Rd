@@ -2,7 +2,7 @@
 \alias{institutions}
 \docType{data}
 \title{
-Global Locations of Biodiversity Institutions.
+Global Locations of Biodiversity Institutions
 }
 \description{
 A global gazetteer for biodiviersity institutions from various sources, including zoos, museums, botanical gardens, GBIF contributors, herbaria, university collections.
