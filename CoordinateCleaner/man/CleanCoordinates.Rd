@@ -156,8 +156,6 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(x = exmpl)
 
 summary(test)
-plot(test)
-
 }
 \keyword{ Coordinate cleaning wrapper }
 
