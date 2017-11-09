@@ -19,4 +19,4 @@ CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook}, Washington, DC.
 \examples{
 data(countryref)
 }
-\keyword{gazetteers}
+\keyword{ gazetteers }

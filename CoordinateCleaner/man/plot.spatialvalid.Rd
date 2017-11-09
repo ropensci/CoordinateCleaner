@@ -5,7 +5,7 @@
 Plot Method for Class Spatialvalid
 }
 \description{
-a set of plots to explore objects of the class \code{spatialvalid}. A plot to visualize the flags from CleanCoordinates
+A set of plots to explore objects of the class \code{spatialvalid}. A plot to visualize the flags from CleanCoordinates
 }
 \usage{
 \method{plot}{spatialvalid}(x, bgmap = NULL, clean = T, details = T, 

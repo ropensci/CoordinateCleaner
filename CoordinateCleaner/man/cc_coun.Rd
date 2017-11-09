@@ -23,23 +23,23 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{iso3}{
-a character string. The column with the country assignment of each record in three letter ISO code. \dQuote{countrycode}.
+a character string. The column with the country assignment of each record in three letter ISO code. Default =  \dQuote{countrycode}.
 }
   \item{ref}{
 a SpatialPolygonDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{countryref}}.  Default = \code{\link{countryref}}
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
-Non-terrestrial records are ignored. use \code{\link{cc_sea}} to flag these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
+Non-terrestrial records are ignored. Use \code{\link{cc_sea}} to flag these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
 \examples{
@@ -54,4 +54,4 @@ cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea 
 
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

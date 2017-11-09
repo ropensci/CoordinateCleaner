@@ -5,7 +5,7 @@
 Flag Records Inside Urban Areas
 }
 \description{
-Flags records from inside urban areas, absed on a geographic gazetteer. Often records from large databases spann subtantial time periods (centuries) and old records might represent habitats which today are replaced by city area.
+Flags records from inside urban areas, based on a geographic gazetteer. Often records from large databases spann subtantial time periods (centuries) and old records might represent habitats which today are replaced by city area.
 }
 \usage{
 cc_urb(x, lon = "decimallongitude", lat = "decimallatitude", 
@@ -26,10 +26,10 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a SpatialPolygonDataframe. Providing the geographic gazetteer with the urban areas. See details.
 }
   \item{value}{
-character string. Defining the output value. See value.
+a character string. Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
@@ -57,4 +57,4 @@ cc_urb(x, value = "flags", ref = urbanareas)
 }
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

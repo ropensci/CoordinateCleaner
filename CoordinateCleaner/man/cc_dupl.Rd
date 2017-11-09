@@ -29,7 +29,7 @@ a character string. The column with the species name. Default = \dQuote{species}
 a vector of character strings. Additional columns to be included in the test for duplication. For example as below, collector name and collector number.
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
 logical. If TRUE reports the name of the test and the number of records flagged
@@ -54,4 +54,4 @@ cc_dupl(x, value = "flags")
 cc_dupl(x, additions = c("collector", "collector.number"))
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

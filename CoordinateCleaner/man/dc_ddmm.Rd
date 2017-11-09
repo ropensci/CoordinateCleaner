@@ -2,7 +2,7 @@
 \alias{dc_ddmm}
 
 \title{
-Flag Datasets with a Degree Conversion Error.
+Flag Datasets with a Degree Conversion Error
 }
 \description{
 This test identifies datasets where a significant fraction of records has been subject to a common degree minute to decimal degree conversion error, where the degree sign is recognized as decimal delimitor.
@@ -32,10 +32,10 @@ numeric. The p-value for the one-sided t-test to flag the test as passed or not.
 numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Adapt to dataset size and desired test strictness. See details. Default = 0.1
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{

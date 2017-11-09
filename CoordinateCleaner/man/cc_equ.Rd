@@ -1,8 +1,8 @@
 \name{cc_equ}
 \alias{cc_equ}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-Flags Records with Identical lat/lon
+Flag Records with Identical lat/lon
 }
 \description{
 Flags records with equal latitude and longitude coordinates, either exact or absolute. Equal coordinates can often indicate data entry errors.
@@ -26,14 +26,14 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 character string. Defines if coordinates are compared exactly (\dQuote{identical}) or on the absolute scale (i.e. -1 = 1, \dQuote{absolute}). Default is to \dQuote{absolute}.
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \value{
-Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
+Depending on the value argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
@@ -48,4 +48,4 @@ cc_equ(x)
 cc_equ(x, value = "flags")
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }
