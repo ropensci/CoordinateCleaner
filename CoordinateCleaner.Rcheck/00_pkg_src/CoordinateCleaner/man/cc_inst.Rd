@@ -5,7 +5,7 @@
 Flag Records in the Vicinity of Biodiversity Institutions
 }
 \description{
-Flag records assigned to the location of zoos, botanical gardens, herbaria, universities and museums, based on a global database of ~10,000 such institutions. Coordinates from these locations can be related to data-entry errors, false automated geo-reference or individuals in captivity/horticulture.
+Flag records assigned to the location of zoos, botanical gardens, herbaria, universities and museums, based on a global database of ~10,000 such biodiversity institutions. Coordinates from these locations can be related to data-entry errors, false automated geo-reference or individuals in captivity/horticulture.
 }
 \usage{
 cc_inst(x, lon = "decimallongitude", lat = "decimallatitude", 
@@ -29,10 +29,10 @@ numerical. The buffer around each province or country centroid, where records sh
 a SpatialPointsDataframe. Providing the geographic gazetteer. Can be any SpatialPointsDataframe, but the structure must be identical to \code{\link{institutions}}.  Default = \code{\link{institutions}}
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
@@ -54,4 +54,4 @@ cc_inst(x, buffer = 5)#large buffer for demonstration
 cc_inst(x, value = "flags", buffer = 5)
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

@@ -3,16 +3,16 @@ CleanCoordinates        Geographic Cleaning of Coordinates from
 CleanCoordinatesDS      Geographic Coordinate Cleaning based on Dataset
                         Properties
 CoordinateCleaner-package
-                        Automated cleaning of occurrence records from
-                        biological colections
+                        Automated Cleaning of Occurrence Records from
+                        Biological Collections
 capitals                Global Capital Locations
-cc_cap                  Flag coordinates in cicinity of country
+cc_cap                  Flag Coordinates in Vicinity of Country
                         Capitals.
-cc_cen                  Flag Coordinates in Vicinity of Centroids of
-                        Countries and Provinces.
+cc_cen                  Flag Coordinates in Vicinity of Country and
+                        Province Centroids
 cc_coun                 Flag Coordinates Outside their Reported Country
 cc_dupl                 Flag Duplicated Records
-cc_equ                  Flags Records with Identical lat/lon
+cc_equ                  Flag Records with Identical lat/lon
 cc_gbif                 Flag Records Assigned to GBIF Headquarters
 cc_inst                 Flag Records in the Vicinity of Biodiversity
                         Institutions
@@ -24,9 +24,9 @@ cc_val                  Check Coordinate Validity in lat/lon
 cc_zero                 Flag Zero Coordinates
 centroids               Global Country and Province Centroids
 countryref              Country Centroids and Country Capitals
-dc_ddmm                 Flag Datasets with a Degree Conversion Error.
+dc_ddmm                 Flag Datasets with a Degree Conversion Error
 dc_round                Flag Datasets with a Significant Fraction of
                         Rounded Coordinates
-institutions            Global Locations of Biodiversity Institutions.
+institutions            Global Locations of Biodiversity Institutions
 landmass                Global Coastlines
 plot.spatialvalid       Plot Method for Class Spatialvalid

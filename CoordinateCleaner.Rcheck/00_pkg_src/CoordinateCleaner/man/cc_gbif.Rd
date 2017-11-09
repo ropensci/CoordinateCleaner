@@ -23,14 +23,14 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{value}{
-character string.  Defining the output value. See value.
+a character string.  Defining the output value. See value.
 }
   \item{verbose}{
-logical. If TRUE reports the name of the test and the number of records flagged
+logical. If TRUE reports the name of the test and the number of records flagged.
 }
 }
 \details{
-Not recommended if woring with records from DEnmark or the COpenhagen area.
+Not recommended if working with records from Denmark or the Copenhagen area.
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
@@ -48,4 +48,4 @@ cc_gbif(x)
 cc_gbif(x, value = "flags")
 }
 
-\keyword{ "Coordinate cleaning" }
+\keyword{ Coordinate cleaning }

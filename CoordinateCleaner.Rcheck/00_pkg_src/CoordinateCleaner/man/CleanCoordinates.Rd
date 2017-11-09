@@ -37,10 +37,10 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{species}{
-character. A vector of the same length as rows in x, with the species identity for each record.  If missing, the outliers test is skipped.
+a character string. A vector of the same length as rows in x, with the species identity for each record.  If missing, the outliers test is skipped.
 }
   \item{countries}{
-character. A vector of the same length as rows in x, with country information for each record in ISO3 format.  If missing, the countries test is skipped.
+a character string. A vector of the same length as rows in x, with country information for each record in ISO3 format.  If missing, the countries test is skipped.
 }
   \item{capitals}{
 logical. If TRUE, tests a radius around adm-0 capitals. The radius is \code{capitals.rad}. Default = TRUE.
@@ -76,16 +76,16 @@ logical. If TRUE, tests if coordinates are from urban areas.  Default = FALSE.
 logical. If TRUE, tests for plain zeros, equal latitude and longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.  Default = TRUE.
 }
   \item{capitals.rad}{
-numeric. The radius around capital coordinates in degrees. Default = 0.1
+numeric. The radius around capital coordinates in degrees. Default = 0.1.
 }
   \item{centroids.rad}{
-numeric. The side length of the rectangle around country centroids in degrees. Default = 0.01
+numeric. The side length of the rectangle around country centroids in degrees. Default = 0.01.
 }
   \item{centroids.detail}{
 a \code{character string}. If set to \sQuote{country} only country (adm-0) centroids are tested, if set to \sQuote{provinces} only province (adm-1) centroids are tested.  Default = \sQuote{both}.
 }
   \item{inst.rad}{
-numeric. The radius around biodiveristy institutions coordinates in degrees. Default = 0.001
+numeric. The radius around biodiveristy institutions coordinates in degrees. Default = 0.001.
 }
   \item{outliers.method}{
 The method used for outlier testing. See details.
@@ -136,7 +136,7 @@ The function needs all coordinates to be formally valid according to WGS84. If t
 Depending on the output argument:
 \describe{
 \item{\dQuote{spatialvalid}}{an object of calss \code{spatialvalid} with one column for each test. TRUE = clean coordinate, FALSE = potentially problematic coordinates.  The summary column is FALSE if any test flagged the respective coordinate.}
-\item{\dQuote{summary}}{a logical vector with the same order as the input data summarizing the results of all test. TRUE = clean coordinate, FALSE = potentially problematic (= at least one test failed).}
+\item{\dQuote{flags}}{a logical vector with the same order as the input data summarizing the results of all test. TRUE = clean coordinate, FALSE = potentially problematic (= at least one test failed).}
 \item{\dQuote{cleaned}}{a \code{data.frame} of cleaned coordinates if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and species ID otherwise}
 }
 }
@@ -156,8 +156,6 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(x = exmpl)
 
 summary(test)
-#plot(test)
-
 }
-\keyword{ Coordinate cleaning }
+\keyword{ Coordinate cleaning wrapper }
 

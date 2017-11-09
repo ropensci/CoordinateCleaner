@@ -2,6 +2,18 @@ pkgname <- "CoordinateCleaner"
 source(file.path(R.home("share"), "R", "examples-header.R"))
 options(warn = 1)
 options(pager = "console")
+base::assign(".ExTimings", "CoordinateCleaner-Ex.timings", pos = 'CheckExEnv')
+base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+base::assign(".format_ptime",
+function(x) {
+  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
+  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
+  options(OutDec = '.')
+  format(x[1L:3L], digits = 7L)
+},
+pos = 'CheckExEnv')
+
+### * </HEADER>
 library('CoordinateCleaner')
 
 base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
@@ -11,10 +23,11 @@ nameEx("CleanCoordinates")
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: CleanCoordinates
 ### Title: Geographic Cleaning of Coordinates from Biologic Collections
 ### Aliases: CleanCoordinates summary.spatialvalid is.spatialvalid
-### Keywords: Coordinate cleaning
+### Keywords: Coordinate cleaning wrapper
 
 ### ** Examples
 
@@ -26,21 +39,22 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(x = exmpl)
 
 summary(test)
-#plot(test)
 
 
 
-
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("CleanCoordinates", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("CleanCoordinatesDS")
 ### * CleanCoordinatesDS
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: CleanCoordinatesDS
 ### Title: Geographic Coordinate Cleaning based on Dataset Properties
 ### Aliases: CleanCoordinatesDS
-### Keywords: Coordinate cleaning
+### Keywords: Coordinate cleaning wrapper
 
 ### ** Examples
 
@@ -75,12 +89,15 @@ test <- rbind(clean, bias)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("CleanCoordinatesDS", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("capitals")
 ### * capitals
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: capitals
 ### Title: Global Capital Locations
 ### Aliases: capitals
@@ -93,16 +110,19 @@ str(capitals)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("capitals", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_cap")
 ### * cc_cap
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_cap
-### Title: Flag coordinates in cicinity of country Capitals.
+### Title: Flag Coordinates in Vicinity of Country Capitals.
 ### Aliases: cc_cap
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -115,17 +135,19 @@ cc_cap(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_cap", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_cen")
 ### * cc_cen
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_cen
-### Title: Flag Coordinates in Vicinity of Centroids of Countries and
-###   Provinces.
+### Title: Flag Coordinates in Vicinity of Country and Province Centroids
 ### Aliases: cc_cen
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -138,16 +160,19 @@ cc_cen(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_cen", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_coun")
 ### * cc_coun
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_coun
 ### Title: Flag Coordinates Outside their Reported Country
 ### Aliases: cc_coun
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -163,16 +188,19 @@ flush(stderr()); flush(stdout())
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_coun", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_dupl")
 ### * cc_dupl
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_dupl
 ### Title: Flag Duplicated Records
 ### Aliases: cc_dupl
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -188,16 +216,19 @@ cc_dupl(x, additions = c("collector", "collector.number"))
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_dupl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_equ")
 ### * cc_equ
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_equ
-### Title: Flags Records with Identical lat/lon
+### Title: Flag Records with Identical lat/lon
 ### Aliases: cc_equ
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -210,16 +241,19 @@ cc_equ(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_equ", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_gbif")
 ### * cc_gbif
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_gbif
 ### Title: Flag Records Assigned to GBIF Headquarters
 ### Aliases: cc_gbif
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -232,16 +266,19 @@ cc_gbif(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_gbif", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_inst")
 ### * cc_inst
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_inst
 ### Title: Flag Records in the Vicinity of Biodiversity Institutions
 ### Aliases: cc_inst
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -254,16 +291,19 @@ cc_inst(x, value = "flags", buffer = 5)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_inst", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_outl")
 ### * cc_outl
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_outl
 ### Title: Flag Geographic Outliers in Species Distributions
 ### Aliases: cc_outl
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -278,16 +318,19 @@ cc_outl(x, method = "distance", value = "flags", tdi = 1000)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_outl", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_sea")
 ### * cc_sea
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_sea
 ### Title: Flag Non-terrestrial Coordinates
 ### Aliases: cc_sea
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -300,16 +343,19 @@ cc_sea(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_sea", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_urb")
 ### * cc_urb
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_urb
 ### Title: Flag Records Inside Urban Areas
 ### Aliases: cc_urb
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -328,16 +374,19 @@ flush(stderr()); flush(stdout())
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_urb", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_val")
 ### * cc_val
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_val
 ### Title: Check Coordinate Validity in lat/lon
 ### Aliases: cc_val
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -350,16 +399,19 @@ cc_val(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_val", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("cc_zero")
 ### * cc_zero
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: cc_zero
 ### Title: Flag Zero Coordinates
 ### Aliases: cc_zero
-### Keywords: "Coordinate cleaning"
+### Keywords: Coordinate cleaning
 
 ### ** Examples
 
@@ -372,12 +424,15 @@ cc_zero(x, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("cc_zero", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("centroids")
 ### * centroids
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: centroids
 ### Title: Global Country and Province Centroids
 ### Aliases: centroids
@@ -390,12 +445,15 @@ str(centroids)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("centroids", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("countryref")
 ### * countryref
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: countryref
 ### Title: Country Centroids and Country Capitals
 ### Aliases: countryref
@@ -407,14 +465,17 @@ data(countryref)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("countryref", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("dc_ddmm")
 ### * dc_ddmm
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: dc_ddmm
-### Title: Flag Datasets with a Degree Conversion Error.
+### Title: Flag Datasets with a Degree Conversion Error
 ### Aliases: dc_ddmm
 ### Keywords: "Coordinate cleaning"
 
@@ -440,12 +501,15 @@ dc_ddmm(x = prob, value = "flags")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("dc_ddmm", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("dc_round")
 ### * dc_round
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: dc_round
 ### Title: Flag Datasets with a Significant Fraction of Rounded Coordinates
 ### Aliases: dc_round
@@ -484,14 +548,17 @@ test <- rbind(clean, bias)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("dc_round", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("institutions")
 ### * institutions
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: institutions
-### Title: Global Locations of Biodiversity Institutions.
+### Title: Global Locations of Biodiversity Institutions
 ### Aliases: institutions
 ### Keywords: gazetteers
 
@@ -502,12 +569,15 @@ str(institutions)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("institutions", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("landmass")
 ### * landmass
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: landmass
 ### Title: Global Coastlines
 ### Aliases: landmass
@@ -519,12 +589,15 @@ data("landmass")
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("landmass", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("plot.spatialvalid")
 ### * plot.spatialvalid
 
 flush(stderr()); flush(stdout())
 
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: plot.spatialvalid
 ### Title: Plot Method for Class Spatialvalid
 ### Aliases: plot.spatialvalid
@@ -540,10 +613,11 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
 
 summary(test)
-#plot(test)
 
 
 
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("plot.spatialvalid", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 ### * <FOOTER>
 ###
 options(digits = 7L)
