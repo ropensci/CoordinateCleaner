@@ -5,7 +5,7 @@
 Flag Coordinates in Vicinity of Country and Province Centroids
 }
 \description{
-Flags records within a radius around the geographic centroids of political countries and provinces. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to centroids.
+Flags records within a radius around the geographic centroids of political countries and provinces. Poorly geo-referenced occurrence records in biological databases are often erroneously geo-referenced to centroids.
 }
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude", 
