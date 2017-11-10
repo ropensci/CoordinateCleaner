@@ -26,7 +26,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the country assignment of each record in three letter ISO code. Default =  \dQuote{countrycode}.
 }
   \item{ref}{
-a SpatialPolygonDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{countryref}}.  Default = \code{\link{countryref}}
+a SpatialPolygonsDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{countryref}}.  Default = \code{\link{countryref}}
 }
   \item{value}{
 a character string.  Defining the output value. See value.

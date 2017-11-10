@@ -23,7 +23,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{ref}{
-a SpatialPointsPolygonsframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{landmass}}. See details.  Default = \code{\link{landmass}}
+a SpatialPolygonsDataframe. Providing the geographic gazetteer. Can be any SpatialPolygonsDataframe, but the structure must be identical to \code{\link{landmass}}. See details.  Default = \code{\link{landmass}}
 }
   \item{value}{
 a character string.  Defining the output value. See value.
@@ -44,8 +44,8 @@ See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and 
 
 \examples{
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
+                decimallongitude = runif(10, -30, 30), 
+                decimallatitude = runif(10, -30, 30))
                 
 cc_sea(x, value = "flags")
 

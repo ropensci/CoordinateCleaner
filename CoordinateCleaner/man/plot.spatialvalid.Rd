@@ -22,7 +22,7 @@ an object of the class \code{SpatialPolygonsDataFrame} used as background map. D
 logical.  If TRUE, non-flagged coordinates are included in the map.
 }
   \item{details}{
-logical. If TRUE, occurences are colourcoded by the type of flag.
+logical. If TRUE, occurrences are colour-coded by the type of flag.
 }
   \item{pts.size}{
 numeric. The point size for the plot.

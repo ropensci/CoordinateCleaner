@@ -5,7 +5,7 @@
 Flag Datasets with a Degree Conversion Error
 }
 \description{
-This test identifies datasets where a significant fraction of records has been subject to a common degree minute to decimal degree conversion error, where the degree sign is recognized as decimal delimitor.
+This test identifies datasets where a significant fraction of records has been subject to a common degree minute to decimal degree conversion error, where the degree sign is recognized as decimal delimiter.
 }
 \usage{
 dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
@@ -33,7 +33,7 @@ numeric. The p-value for the one-sided t-test to flag the test as passed or not.
 numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Default = 0.1
 }
   \item{mat.size}{
-numeric. The size of the matrix for the binomial test. Must be changed in decimals (e.g. 100, 1000, 10000). Adapt to dataset size, generally 100 is better for datasets < 10000 records, 1000 is better for datasets with 10000 - 1M records. Higher values also work reasonably well for smaler datasets, therefor, default = 1000. FOr large datasets try 10000. 
+numeric. The size of the matrix for the binomial test. Must be changed in decimals (e.g. 100, 1000, 10000). Adapt to dataset size, generally 100 is better for datasets < 10000 records, 1000 is better for datasets with 10000 - 1M records. Higher values also work reasonably well for smaller datasets, therefore, default = 1000. For large datasets try 10000. 
 }
   \item{value}{
 a character string.  Defining the output value. See value.
