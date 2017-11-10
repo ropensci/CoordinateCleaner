@@ -130,7 +130,7 @@ logical or character.  If TRUE a report file is written to the working directory
 }
 
 \details{
-The function needs all coordinates to be formally valid according to WGS84. If the data contains invalid coordinates, the function will stop and return a vector flagging the invalid records. TRUE = non-problematic coordinate, FALSE = potentially problematic coordinates. A reference gazetteer for the urban test is available at at \url{https://github.com/azizka/CoordinateCleaner/extra_gazetteers}. Three different methods are available for the outlier test: "If \dQuote{outlier} a boxplot method is used and records are flagged as outliers if their \emph{mean} distance to all other records of the same species is larger than mltpl * the interquartile range of the mean distance of all records of this species. If \dQuote{mad} the median absolute deviation is used. In this case a record is flagged as outlier, if the \emph{mean} distance to all other records of the same species is larger than the median of the mean distance of all points plus/minus the mad of the mean distances of all records of the species * mltpl. If \dQuote{distance} records are flagged as outliers, if the \emph{minimum} distance to the next record of the species is > \code{tdi}}
+The function needs all coordinates to be formally valid according to WGS84. If the data contains invalid coordinates, the function will stop and return a vector flagging the invalid records. TRUE = non-problematic coordinate, FALSE = potentially problematic coordinates. A reference gazetteer for the urban test is available at at \url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}. Three different methods are available for the outlier test: "If \dQuote{outlier} a boxplot method is used and records are flagged as outliers if their \emph{mean} distance to all other records of the same species is larger than mltpl * the interquartile range of the mean distance of all records of this species. If \dQuote{mad} the median absolute deviation is used. In this case a record is flagged as outlier, if the \emph{mean} distance to all other records of the same species is larger than the median of the mean distance of all points plus/minus the mad of the mean distances of all records of the species * mltpl. If \dQuote{distance} records are flagged as outliers, if the \emph{minimum} distance to the next record of the species is > \code{tdi}}
 
 \value{
 Depending on the output argument:
@@ -144,7 +144,7 @@ Depending on the output argument:
 \note{
 Always tests for coordinate validity: non-numeric or missing coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 
-See \url{https://github.com/azizka/speciesgeocodeR/wiki} for more details and tutorials.
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
 }
 
 \examples{
