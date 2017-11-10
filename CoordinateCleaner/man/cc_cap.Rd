@@ -5,7 +5,7 @@
 Flag Coordinates in Vicinity of Country Capitals.
 }
 \description{
-Flags records within a certain radius around country capitals. Poorly georeferenced occurrence records in biological databases are often erroneously geo-referenced to capitals.
+Flags records within a certain radius around country capitals. Poorly geo-referenced occurrence records in biological databases are often erroneously geo-referenced to capitals.
 }
 \usage{
 cc_cap(x, lon = "decimallongitude", lat = "decimallatitude", 
