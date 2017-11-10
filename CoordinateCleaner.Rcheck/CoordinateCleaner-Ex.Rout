@@ -1178,21 +1178,13 @@ Flagged 92 records.
 > ### ** Examples
 > 
 > x <- data.frame(species = letters[1:10], 
-+                 decimallongitude = runif(100, -180, 180), 
-+                 decimallatitude = runif(100, -90,90))
++                 decimallongitude = runif(10, -30, 30), 
++                 decimallatitude = runif(10, -30, 30))
 >                 
 > cc_sea(x, value = "flags")
 Testing sea coordinates
-Flagged 64 records. 
-  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
- [13] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
- [25]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
- [37]  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
- [49]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
- [61] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE
- [73] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
- [85]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE
- [97] FALSE FALSE FALSE  TRUE
+Flagged 5 records. 
+ [1] FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE
 > 
 > 
 > 
@@ -1761,7 +1753,7 @@ decimallatitude        validity           equal           zeros        capitals
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  14.26 0.59 15.01 NA NA 
+Time elapsed:  11.86 0.32 12.47 NA NA 
 > grDevices::dev.off()
 null device 
           1 

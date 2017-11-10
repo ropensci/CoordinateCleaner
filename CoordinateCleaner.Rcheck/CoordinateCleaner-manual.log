@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.7.21)  9 NOV 2017 15:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.7.21)  10 NOV 2017 11:17
 entering extended mode
-**C:/Users/alexander.zizka/AppData/Local/Temp/RtmpEVH8Uu/Rd2pdf20449791b66/Rd2.
-tex
+**C:/Users/alexander.zizka/AppData/Local/Temp/RtmpEdl4Zy/Rd2pdf3a743ce428cd/Rd2
+.tex
 
-(C:/Users/alexander.zizka/AppData/Local/Temp/RtmpEVH8Uu/Rd2pdf20449791b66/Rd2.t
-ex
+(C:/Users/alexander.zizka/AppData/Local/Temp/RtmpEdl4Zy/Rd2pdf3a743ce428cd/Rd2.
+tex
 LaTeX2e <2016/03/31> patch level 1
 Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 
@@ -783,9 +783,9 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
 
-Overfull \hbox (11.11841pt too wide) in paragraph at lines 21--22
-\T1/ptm/m/n/10 cially suited for large datasets. See <https://github.com/azizka
-/CoordinateCleaner/wiki> for more de- 
+Overfull \hbox (13.01843pt too wide) in paragraph at lines 21--22
+\T1/ptm/m/n/10 cially suited for large data sets. See <https://github.com/azizk
+a/CoordinateCleaner/wiki> for more de- 
  []
 
 LaTeX Font Info:    Try loading font information for T1+zi4 on input line 31.
@@ -815,21 +815,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 )
-Overfull \hbox (70.34534pt too wide) in paragraph at lines 39--40
-\T1/ptm/m/n/10 of rounded co-or-di-nates. Es-pe-cially suited for large dataset
-s. See <https://github.com/azizka/CoordinateCleaner/wiki>
- []
-
-
-Overfull \hbox (2646.20972pt too wide) in alignment at lines 63--63
+Overfull \hbox (2856.09753pt too wide) in alignment at lines 63--63
  [] [] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
+[2] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 ) [3]
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
@@ -838,9 +828,9 @@ File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 )
-Overfull \hbox (6.3972pt too wide) in paragraph at lines 215--216
-\T1/ptm/m/n/10 Poorly geo-ref-er-enced oc-cur-rence records in bi-o-log-i-cal d
-atabases are of-ten er-ro-neously geo-referenced
+Overfull \hbox (9.72716pt too wide) in paragraph at lines 215--216
+\T1/ptm/m/n/10 Poorly geo-referenced oc-cur-rence records in bi-o-log-i-cal dat
+abases are of-ten er-ro-neously geo-referenced
  []
 
 [5] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
@@ -882,12 +872,6 @@ Overfull \hbox (2.31723pt too wide) in paragraph at lines 747--748
 the large file size of such (global) gazetteers.
  []
 
-
-Overfull \hbox (4.92903pt too wide) in paragraph at lines 747--748
-\T1/zi4/m/n/10 master / extra _ gazetteers / urbanareas . rda$[][]\T1/ptm/m/n/1
-0 . Can be any Spa-tialPoly-gon-Dataframe, but the struc-
- []
-
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 )
@@ -926,9 +910,9 @@ m/m/n/10 dataset is used.
 [19] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 ) [20]
-[21] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
+[21] [22] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
-) [22]
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 ) [23]
@@ -986,12 +970,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1546.
  ) 
 Here is how much of TeX's memory you used:
  6748 strings out of 493335
- 97254 string characters out of 3136650
- 177173 words of memory out of 3000000
+ 97257 string characters out of 3136650
+ 176173 words of memory out of 3000000
  9905 multiletter control sequences out of 15000+200000
  41566 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,6n,34p,1719b,592s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,6n,34p,1720b,592s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-ts1.enc}{C:
 /Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Program Files (
@@ -1002,9 +986,9 @@ iles (x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files (x8
 .9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
 pe1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/tim
 es/utmri8a.pfb>
-Output written on Rd2.pdf (29 pages, 225757 bytes).
+Output written on Rd2.pdf (29 pages, 226721 bytes).
 PDF statistics:
- 610 PDF objects out of 1000 (max. 8388607)
+ 613 PDF objects out of 1000 (max. 8388607)
  225 named destinations out of 1000 (max. 500000)
  193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
