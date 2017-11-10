@@ -335,8 +335,8 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
+                decimallongitude = runif(10, -30, 30), 
+                decimallatitude = runif(10, -30, 30))
                 
 cc_sea(x, value = "flags")
 

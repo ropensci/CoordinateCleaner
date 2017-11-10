@@ -16,3 +16,4 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackagePath: CoordinateCleaner
 PackageInstallArgs: --no-multiarch --with-keep.source
+PackageCheckArgs: --as-cran
