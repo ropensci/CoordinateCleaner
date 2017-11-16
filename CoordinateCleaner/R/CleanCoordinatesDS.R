@@ -1,7 +1,9 @@
 CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
                                ddmm = TRUE, periodicity = TRUE, 
                                ddmm.pvalue = 0.025, ddmm.diff = 0.2, 
-                               periodicity.target = "lon_lat", periodicity.thresh = 3.5, 
+                               periodicity.target = "lon_lat", 
+                               periodicity.thresh.deg = 15, 
+                               periodicity.thresh.dec = 3.5, 
                                periodicity.diagnostics = FALSE, 
                                periodicity.subsampling = NULL, 
                                value = "dataset", verbose = TRUE) {
@@ -64,8 +66,11 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
   # Run periodicity test
   if (periodicity) {
     out.t2 <- dc_round(x = dat, lon = lon, lat = lat, ds = ds,
-                       target = periodicity.target, threshold = periodicity.thresh, 
-                       subsampling = periodicity.subsampling, diagnostics = periodicity.diagnostics, 
+                       target = periodicity.target,
+                       threshold.period = periodicity.thresh.dec, 
+                       threshold.degree = periodicity.thresh.deg, 
+                       subsampling = periodicity.subsampling, 
+                       diagnostics = periodicity.diagnostics, 
                        value = value2, verbose = verbose)
 
   
