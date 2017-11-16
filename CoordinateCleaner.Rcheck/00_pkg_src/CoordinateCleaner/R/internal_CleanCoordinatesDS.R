@@ -1,6 +1,6 @@
 # Test 2 - Periodicity and zero inflation
 .AnalyzeBias <- function(var, nam, var_latlong = 1, rounding_digits = 5, plot_bias = T, 
-                         ratio_threshold = 2.5) {
+                         ratio_threshold_0 = 15, ratio_threshold_12 = 3.5) {
   x <- unlist(var[, var_latlong])
   x <- round(x, rounding_digits)
   mle <- .RunGreedyOptim(x)  # run greedy ML optimization (rates, time frames)
@@ -13,10 +13,10 @@
   
   # condition for periodic bias
   PB <- min(log(mle$rate_changes[mle$lik_vec >= (mle$max_lik - 2)])) > log(7) & rate12_ratio > 
-    ratio_threshold
+    ratio_threshold_12
   
   # condition for 0-rounding bias
-  PCP <- max(mle$s0_size[mle$lik_vec >= (mle$max_lik - 2)]) < 0.1 & rate0_ratio > ratio_threshold
+  PCP <- max(mle$s0_size[mle$lik_vec >= (mle$max_lik - 2)]) < 0.1 & rate0_ratio > ratio_threshold_0
   
   out <- data.frame(min(log(mle$rate_changes[mle$lik_vec >= (mle$max_lik - 2)])), rate12_ratio, 
                     !PB, max(mle$s0_size[mle$lik_vec >= (mle$max_lik - 2)]), rate0_ratio, !PCP)
