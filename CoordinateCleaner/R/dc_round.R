@@ -1,5 +1,5 @@
 dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                     target = "lon_lat", threshold = 3.5, 
+                     target = "lon_lat", threshold.degree = 15, threshold.period = 3.5, 
                      subsampling = NULL, diagnostics = FALSE, 
                      value = "clean", verbose = T){
   
@@ -51,7 +51,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
     if (target == "lon") {
       t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], var_latlong = 1, 
                              plot_bias = diagnostics, 
-                             ratio_threshold = threshold)
+                             ratio_threshold_0 = threshold.degree,
+                             ratio_threshold_12 = threshold.period)
       names(t2.res) <- c("mle", "rate.ratio", "pass.lon", "zero.mle", "zero.rate.ratio", 
                          "pass.zero.lon")
       t2.res$pass.zero.com <- t2.res$pass.zero.lon
@@ -62,7 +63,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
     if (target == "lat") {
       t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], var_latlong = 2, 
                              plot_bias = diagnostics, 
-                             ratio_threshold = threshold)
+                             ratio_threshold_0 = threshold.degree,
+                             ratio_threshold_12 = threshold.period)
       names(t2.res) <- c("mle", "rate.ratio", "pass.lat", "zero.mle", "zero.rate.ratio", 
                          "pass.zero.lat")
       t2.res$pass.zero.com <- t2.res$pass.zero.lat
@@ -73,10 +75,12 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
     if (target == "lon_lat") {
       lon <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 1, 
                           plot_bias = diagnostics, 
-                          ratio_threshold = threshold)
+                          ratio_threshold_0 = threshold.degree,
+                          ratio_threshold_12 = threshold.period)
       lat <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 2, 
                           plot_bias = diagnostics, 
-                          ratio_threshold = threshold)
+                          ratio_threshold_0 = threshold.degree,
+                          ratio_threshold_12 = threshold.period)
       
       t2.res <- cbind(lon, lat)
       
