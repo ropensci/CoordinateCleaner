@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-08 r73690) -- "Unsuffered Consequences"
+R version 3.4.2 (2017-09-28) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
@@ -1753,7 +1753,7 @@ decimallatitude        validity           equal           zeros        capitals
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.86 0.32 12.47 NA NA 
+Time elapsed:  11.6 0.31 12.17 NA NA 
 > grDevices::dev.off()
 null device 
           1 
