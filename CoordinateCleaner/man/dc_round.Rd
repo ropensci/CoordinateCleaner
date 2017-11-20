@@ -10,7 +10,7 @@ Uses a three-rate Poisson process to model the distribution of coordinate decima
 \usage{
 dc_round(x, lon = "decimallongitude", lat = "decimallatitude", 
          ds = "dataset", target = "lon_lat", 
-         threshold.degree = 15, threshold.period = 3.5,  
+         threshold.degree = 50, threshold.period = 3.5,  
          subsampling = NULL, diagnostics = FALSE, value = "clean", verbose = T)
 }
 
@@ -31,7 +31,7 @@ a character string. The column with the dataset of each record. In case \code{x}
 a character string. Defining the target of the test. One of \dQuote{lon}, \dQuote{lat}, \dQuote{lon_lat}, \dQuote{lon_lat} is recommended.  Default = \dQuote{lon_lat}.
 }
   \item{threshold.degree}{
-numerical. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to zero decimals (one degree resolution). Default = 15. Higher values are more conservative/flag less datasets.
+numerical. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to zero decimals (one degree resolution).  The default flags datasets with more than 30\% of rounded coordinates, values of 100 are more conservative and flag datasets with >50\% of rounded records Default = 50. Higher values are more conservative/flag less datasets.
 }
   \item{threshold.period}{
 numerical. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to the first decimal (0.1 degree resolution). Default = 3.5. Higher values are more conservative/flag less datasets.

@@ -2,7 +2,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
                                ddmm = TRUE, periodicity = TRUE, 
                                ddmm.pvalue = 0.025, ddmm.diff = 0.2, 
                                periodicity.target = "lon_lat", 
-                               periodicity.thresh.deg = 15, 
+                               periodicity.thresh.deg = 50, 
                                periodicity.thresh.dec = 3.5, 
                                periodicity.diagnostics = FALSE, 
                                periodicity.subsampling = NULL, 
