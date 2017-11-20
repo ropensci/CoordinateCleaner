@@ -40,7 +40,7 @@ cc_cen <- function(x, lon = "decimallongitude", lat = "decimallatitude",
 
   #create output based on value argument
   if(verbose){
-    cat(sprintf("Flagged %s records\n", sum(!out)))
+    cat(sprintf("Flagged %s records. \n", sum(!out)))
   }
   
   switch(value,
