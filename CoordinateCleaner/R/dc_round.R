@@ -1,5 +1,5 @@
 dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                     target = "lon_lat", threshold.degree = 15, threshold.period = 3.5, 
+                     target = "lon_lat", threshold.degree = 50, threshold.period = 3.5, 
                      subsampling = NULL, diagnostics = FALSE, 
                      value = "clean", verbose = T){
   

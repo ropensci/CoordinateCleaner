@@ -6,7 +6,7 @@ cc_inst <- function(x, lon = "decimallongitude", lat = "decimallatitude",
   match.arg(value, choices = c("clean", "flags"))
   
   if(verbose){
-    cat("Testing biodiversity insitutions\n")
+    cat("Testing biodiversity institutions\n")
   }
   
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
