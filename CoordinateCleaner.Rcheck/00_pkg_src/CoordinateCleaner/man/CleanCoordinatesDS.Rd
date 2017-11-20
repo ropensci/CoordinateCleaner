@@ -13,7 +13,7 @@ CleanCoordinatesDS(x, lon = "decimallongitude", lat = "decimallatitude",
                    ddmm = TRUE, periodicity = TRUE,
                    ddmm.pvalue = 0.025, ddmm.diff = 0.2, 
                    periodicity.target = "lon_lat",
-                   periodicity.thresh.deg = 15,
+                   periodicity.thresh.deg = 50,
                    periodicity.thresh.dec = 3.5, 
                    periodicity.diagnostics = FALSE, 
                    periodicity.subsampling = NULL,
@@ -49,7 +49,7 @@ numeric. The threshold difference for the ddmm test. Indicates by which fraction
 a character string. One of \sQuote{lat}, \sQuote{lon}, \sQuote{lon_lat}. Sets the target for the periodicity test which runs on latitude and longitude separately. If \sQuote{lon_lat}. Tests run sequentially and results for both and a combined flag are returned.
 }
   \item{periodicity.thresh.deg}{
-numerical. The threshold to for flagging in the periodicity test. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to zero decimals (one degree resolution). Default = 15. Higher values are more conservative/ flag less datasets.
+numerical. The threshold to for flagging in the periodicity test. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to zero decimals (one degree resolution). The default flags datasets with more than 30\% of rounded coordinates, values of 100 are more conservative and flag datasets with >50\% of rounded records. Default = 50. Higher values are more conservative/ flag less datasets.
 }
   \item{periodicity.thresh.dec}{
 numerical. The threshold to for flagging in the periodicity test. Indicates the factor by which one of the two periodic bins must outnumber the other to identify rounding to the first decimal (0.1 degree resolution). Default = 3.5. Higher values are more conservative/ flag less datasets.

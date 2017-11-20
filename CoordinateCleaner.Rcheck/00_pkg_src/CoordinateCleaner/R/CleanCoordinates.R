@@ -180,14 +180,15 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
   
   if (verbose) {
     if (!is.null(out)) {
-      cat(sprintf("flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = T), 
+      cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = T), 
                   length(out), round(sum(!out, na.rm = T)/length(out), 2)))
     } else {
       cat("flagged 0 records, EQ = 0 \n")
     }
   }
   if (value == "spatialvalid") {
-    out <- data.frame(x, validity = val, equal = equ, zeros = zer, capitals = cap, centroids = cen, 
+    inp <- data.frame(species = x[, species], decimallongitude = x[, lon], decimallatitude = x[, lat])
+    out <- data.frame(inp, validity = val, equal = equ, zeros = zer, capitals = cap, centroids = cen, 
                       sea = sea, urban = urb, countrycheck = con, outliers = otl, 
                       gbif = gbf, institution = inst, duplicates = dpl, summary = out)
     out <- Filter(function(x) !all(is.na(x)), out)
