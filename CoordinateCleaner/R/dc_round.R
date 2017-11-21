@@ -28,8 +28,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
   }
   
   ## create test columns: decimal degrees long and lat
-  dat$lon.test <- abs(dat$decimallongitude) - floor(abs(dat$decimallongitude))
-  dat$lat.test <- abs(dat$decimallatitude) - floor(abs(dat$decimallatitude))
+  dat$lon.test <- abs(dat[[lon]]) - floor(abs(dat[[lon]]))
+  dat$lat.test <- abs(dat[[lat]]) - floor(abs(dat[[lat]]))
   
   # split into seperate datasets
   test <- split(dat, f = dat[[ds]])
