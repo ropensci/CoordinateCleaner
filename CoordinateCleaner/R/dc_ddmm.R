@@ -27,14 +27,14 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   
   # split into seperate datasets
   test <- split(dat, f = dat[[ds]])
-  
+
   # run ddmm to dd.dd conversion test error at 0.6
   out <- lapply(test, function(k) {
       ## create test datasets
-      #dat.unique <- k[!duplicated(k[, c("species", "decimallongitude", "decimallatitude")]),]
+      dat.unique <- k[!duplicated(k[, c(lon, lat, ds)]),]
       
       #Assign decimals to a 100x100 matrix for binomial test
-      cl <- ceiling(k[, c("lon.test", "lat.test")] * mat.size)
+      cl <- ceiling(dat.unique[, c("lon.test", "lat.test")] * mat.size)
       cl$lat.test <- mat.size - cl$lat.test
       
       mat <- matrix(ncol = mat.size, nrow = mat.size)
