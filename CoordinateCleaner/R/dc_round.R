@@ -22,7 +22,7 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
   }
   #create working dataset
   dat <- x[complete.cases(x), ]
-  
+
   if (nrow(dat) == 0) {
     stop("no complete cases found")
   }
