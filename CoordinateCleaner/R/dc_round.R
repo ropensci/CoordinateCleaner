@@ -17,11 +17,11 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
   }
 
   #prepare dataset for analyses
-  if (sum(!complete.cases(x)) > 0) {
+  if (sum(!complete.cases(x[,c(lon, lat, ds)])) > 0) {
     warning(sprintf("ignored %s cases with incomplete data", sum(!complete.cases(x))))
   }
   #create working dataset
-  dat <- x[complete.cases(x), ]
+  dat <- x[complete.cases(x[,c(lon, lat, ds)]), ]
 
   if (nrow(dat) == 0) {
     stop("no complete cases found")
