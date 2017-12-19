@@ -9,7 +9,7 @@ Cleaning records by multiple empirical tests to flag potentially erroneous coord
 }
 \usage{
 CleanCoordinatesFOS(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma", 
-                    taxon = "identified_name", countries = "cc", 
+                    taxon = "accepted_name", countries = "cc", 
                     centroids = T, countrycheck = T, 
                     equal = T, GBIF = T, institutions = T, 
                     temp.range.outliers = T, spatio.temp.outliers = T, 
@@ -42,7 +42,7 @@ a character string. The column with the minimum age. Default = \dQuote{min_ma}.
 a character string. The column with the maximum age. Default = \dQuote{max_ma}.
 }
   \item{taxon}{
-a character string. The column with the taxon name. If \dQuote{}, searches for outliers over the entire dataset, otherwise per specified taxon. Default = \dQuote{identified_name}.
+a character string. The column with the taxon name. If \dQuote{}, searches for outliers over the entire dataset, otherwise per specified taxon. Default = \dQuote{accepted_name}.
 }
  \item{countries}{
 a character string. A vector of the same length as rows in x, with country information for each record in ISO3 format.  If missing, the countries test is skipped.
@@ -136,7 +136,7 @@ See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and 
 }
 \examples{
 minages <- runif(250, 0, 65)
-exmpl <- data.frame(identified_name = sample(letters, size = 250, replace = TRUE),
+exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
                     lng = runif(250, min = 42, max = 51),
                     lat = runif(250, min = -26, max = -11),
                     min_ma = minages,
