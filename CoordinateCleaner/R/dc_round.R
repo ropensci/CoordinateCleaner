@@ -21,7 +21,11 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
       tester <- k[complete.cases(k[,c(lon, lat)]),]
       if(nrow(tester[!duplicated(tester[,c(lon, lat)]), ]) < min.unique.ds.size){
         warning("Dataset smaller than minimum test size")
-        n.outl <- NA
+        out <- data.frame(dataset = unique(x[[ds]]),
+                          n.outliers = NA,
+                          n.regular.outliers = NA,
+                          regular.distance = NA,
+                          summary = NA)
       }else{
         if(test == "lon"){
           #calculate autocorrelation
