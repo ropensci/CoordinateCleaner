@@ -104,9 +104,13 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
     
     out <- do.call("rbind.data.frame", out)
   }else{
-    if(nrow(x[!duplicated(c(lon,lat)),]) < min.unique.ds.size){
+    if(nrow(x[!duplicated(x[,c(lon,lat)]),]) < min.unique.ds.size){
       warning("Dataset smaller than minimum test size")
-      out <- NA
+      out <- data.frame(dataset = unique(x[[ds]]),
+                        n.outliers = NA,
+                        n.regular.outliers = NA,
+                        regular.distance = NA,
+                        summary = NA)
     }else{
       if(test == "lon"){
         #calculate autocorrelation
