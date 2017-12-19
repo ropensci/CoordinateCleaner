@@ -1,7 +1,7 @@
 #A function to clean fossil data
 CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                                 min.age = "min_ma", max.age = "max_ma",
-                                taxon = "identified_name", countries = "cc",
+                                taxon = "accepted_name", countries = "cc",
                                 centroids = T, countrycheck = T, 
                                 equal = T,  GBIF = T, institutions = T, 
                                 temp.range.outliers = T, spatio.temp.outliers = T, temp.ages.equal = T, 

@@ -1,8 +1,9 @@
-# the autocorrelation function and simulations to test it
 # 1. The autocorrelation function returning a gamma vector, paramters = nbins and roudning, the latter = 0 for now
 
 .CalcACT <- function(data, digit.round = 0, nc = 3000, graphs = T, graph.title = "Title", rarefy = F){
+  
   if(rarefy){data <- unique(data)}
+  
   data.units <- sort(abs(data))
   
   if (digit.round > 0){ # if set to 10 takes only units into account
