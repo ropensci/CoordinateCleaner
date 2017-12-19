@@ -3,11 +3,11 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
                    value = "clean", verbose = T) {
   
   #check value argument
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flags", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
   
   if(verbose){
-    cat("Testing outliers\n")
+    cat("Testing geographic outliers\n")
   }
   
   #split up into species
@@ -17,13 +17,13 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
   test <- lapply(splist, "duplicated")
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
-  splist <- splist[test > 2]
+  splist <- splist[test > 7]
   
   #loop over species and run outlier test
   flags <- lapply(splist, function(k) {
     test <- nrow(k[!duplicated(k), ])
     
-    if(test >2){
+    if(test > 7){
       #absolute distance test with mean interpoint distance
       if (method == "distance") {
         dist <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine)
@@ -65,17 +65,22 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
   })
   
   flags <- as.numeric(as.vector(unlist(flags)))
-  out <- flags[!is.na(flags)]
+  flags <- flags[!is.na(flags)]
   
   out <- rep(TRUE, nrow(x))
   out[flags] <- FALSE
   
   if(verbose){
-    cat(sprintf("Flagged %s records. \n", sum(!out)))
+    if(value == "ids"){
+      cat(sprintf("Flagged %s records. \n", length(flags)))
+      }else{
+        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        }
   }
   
   switch(value,
          clean = return(x[out,]),
-         flags = return(out))
+         flags = return(out),
+         ids = return(flags))
 }
 

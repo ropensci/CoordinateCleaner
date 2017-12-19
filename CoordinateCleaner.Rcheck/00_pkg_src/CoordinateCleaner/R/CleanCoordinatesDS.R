@@ -1,13 +1,15 @@
 CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
                                ddmm = TRUE, periodicity = TRUE, 
                                ddmm.pvalue = 0.025, ddmm.diff = 0.2, 
-                               periodicity.target = "lon_lat", 
-                               periodicity.thresh.deg = 50, 
-                               periodicity.thresh.dec = 3.5, 
-                               periodicity.diagnostics = FALSE, 
-                               periodicity.subsampling = NULL, 
+                               periodicity.T1 = 7,
+                               periodicity.reg.thresh = 2,
+                               periodicity.dist.min = 0.1,
+                               periodicity.dist.max = 2,
+                               periodicity.min.size = 4, 
+                               periodicity.target = "both",
+                               periodicity.diagnostics = TRUE,
                                value = "dataset", verbose = TRUE) {
-  
+
   # check input arguments
   match.arg(value, choices = c("dataset", "flags", "clean"))
   match.arg(periodicity.target, choices = c("lat", "lon", "lon_lat"))
@@ -65,15 +67,12 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
   
   # Run periodicity test
   if (periodicity) {
-    out.t2 <- dc_round(x = dat, lon = lon, lat = lat, ds = ds,
-                       target = periodicity.target,
-                       threshold.period = periodicity.thresh.dec, 
-                       threshold.degree = periodicity.thresh.deg, 
-                       subsampling = periodicity.subsampling, 
-                       diagnostics = periodicity.diagnostics, 
-                       value = value2, verbose = verbose)
+    out.t2 <- dc_round(x, lon = lon, lat = lat, ds = ds, 
+                       T1 = periodicity.T1, reg.out.thresh = periodicity.reg.thresh, 
+                       reg.dist.min = periodicity.dist.min, reg.dist.max = periodicity.dist.max, 
+                       min.unique.ds.size = periodicity.min.size, graphs = periodicity.diagnostics, 
+                       test = periodicity.target, value = value)
 
-  
     }else{
       if(value == "dataset"){
         out.t2 <- data.frame(pass.periodicity.com = rep(NA, length(test)),
@@ -86,7 +85,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
   # prepare output
   if (value == "dataset") {
     out <- data.frame(out.t1, out.t2)
-    out$summary <- out$pass.ddmm & out$pass.zero.com & out$pass.periodicity.com
+    out$summary <- out$pass.ddmm & out$summary
     out <- Filter(function(x) !all(is.na(x)), out)
   }
   if (value == "flags") {

@@ -1,113 +1,207 @@
-dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                     target = "lon_lat", threshold.degree = 50, threshold.period = 3.5, 
-                     subsampling = NULL, diagnostics = FALSE, 
-                     value = "clean", verbose = T){
+dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
+                     T1 = 7, reg.out.thresh = 2, reg.dist.min = 0.1, reg.dist.max = 2,
+                     min.unique.ds.size = 4,
+                     graphs = T, test = "both", 
+                     value = "clean"){
   
-  #check value argument
-  match.arg(value, choices = c("dataset", "clean", "flags"))
+  #fix operators which are tuned and people most likely do not want to change
+  window.size = 10
+  detection.rounding = 2
+  detection.threshold = 6
+  digit.round = 0
+  nc = 3000 
+  rarefy = F
   
-  if(verbose){
-    cat("Testing for rounded coordinates\n")
-  }
+  match.arg(value, choices = c("flags", "clean", "dataset"))
   
-  if(!is.null(subsampling)){
-    if(subsampling < 1000){
-      warning("Subsampling <1000 not recommended") 
-    }
-  }
-
-  #prepare dataset for analyses
-  if (sum(!complete.cases(x)) > 0) {
-    warning(sprintf("ignored %s cases with incomplete data", sum(!complete.cases(x))))
-  }
-  #create working dataset
-  dat <- x[complete.cases(x), ]
-  
-  if (nrow(dat) == 0) {
-    stop("no complete cases found")
-  }
-  
-  ## create test columns: decimal degrees long and lat
-  dat$lon.test <- abs(dat$decimallongitude) - floor(abs(dat$decimallongitude))
-  dat$lat.test <- abs(dat$decimallatitude) - floor(abs(dat$decimallatitude))
-  
-  # split into seperate datasets
-  test <- split(dat, f = dat[[ds]])
-  
-  out<- lapply(test, function(k) {
-    t2 <- k[, c("lon.test", "lat.test")]
+  if(length(unique(x[[ds]])) > 1){
+    dat <- split(x, f = x[[ds]])
     
-    #Subsampling (for large datasets)
-    if (!is.null(subsampling)) {
-      if(subsampling > nrow(t2)){
-        warning("Subsampling larger than rows in data, subsampling skipped")
+    out <- lapply(dat, function(k){
+      tester <- k[complete.cases(k[,c(lon, lat)]),]
+      if(nrow(tester[!duplicated(tester[,c(lon, lat)]), ]) < min.unique.ds.size){
+        warning("Dataset smaller than minimum test size")
+        n.outl <- NA
       }else{
-        warning(sprintf("Using subsampling for periodicity, n = %s", subsampling))
-        t2 <- t2[sample(nrow(t2), subsampling), ]
-      }
-    }
-    
-    #if only longitude is tested
-    if (target == "lon") {
-      t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], var_latlong = 1, 
-                             plot_bias = diagnostics, 
-                             ratio_threshold_0 = threshold.degree,
-                             ratio_threshold_12 = threshold.period)
-      names(t2.res) <- c("mle", "rate.ratio", "pass.lon", "zero.mle", "zero.rate.ratio", 
-                         "pass.zero.lon")
-      t2.res$pass.zero.com <- t2.res$pass.zero.lon
-      t2.res$pass.periodicity.com  <- t2.res$pass.lon
-      
-    }
-    #if only latitude is tested
-    if (target == "lat") {
-      t2.res <- .AnalyzeBias(var = t2, nam = k[[ds]][1], var_latlong = 2, 
-                             plot_bias = diagnostics, 
-                             ratio_threshold_0 = threshold.degree,
-                             ratio_threshold_12 = threshold.period)
-      names(t2.res) <- c("mle", "rate.ratio", "pass.lat", "zero.mle", "zero.rate.ratio", 
-                         "pass.zero.lat")
-      t2.res$pass.zero.com <- t2.res$pass.zero.lat
-      t2.res$pass.periodicity.com  <- t2.res$pass.lat
-    }
-    
-    #if both are tested
-    if (target == "lon_lat") {
-      lon <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 1, 
-                          plot_bias = diagnostics, 
-                          ratio_threshold_0 = threshold.degree,
-                          ratio_threshold_12 = threshold.period)
-      lat <- .AnalyzeBias(t2, nam = k[[ds]][1], var_latlong = 2, 
-                          plot_bias = diagnostics, 
-                          ratio_threshold_0 = threshold.degree,
-                          ratio_threshold_12 = threshold.period)
-      
-      t2.res <- cbind(lon, lat)
-      
-      names(t2.res) <- c("mle.lon", "rate.ratio.lon", "pass.periodicity.lon", 
-                         "zero.mle.lon", "zero.rate.ratio.lon", "pass.zero.lon", 
-                         "mle.lat", "rate.ratio.lat", 
-                         "pass.periodicity.lat", "zero.mle.lat", 
-                         "zero.rate.ratio.lat", "pass.zero.lat")
-      t2.res$pass.zero.com <- t2.res$pass.zero.lon & t2.res$pass.zero.lat
-      t2.res$pass.periodicity.com <- t2.res$pass.periodicity.lon | t2.res$pass.periodicity.lat
-    }
-    return(t2.res)
-  })
-  
-  out.ds <- do.call("rbind.data.frame", out)
-  
-  flags <- x[[ds]] %in% rownames(out.ds[out.ds$pass.zero.com & out.ds$pass.periodicity.com,])
+        if(test == "lon"){
+          #calculate autocorrelation
+          gvec <- .CalcACT(data = k[[lon]], digit.round = digit.round, nc = nc, 
+                           graphs = graphs, graph.title = unique(k[[ds]]))
+          #run the sliding window outlier detection
+          n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
+                               detection.rounding = detection.rounding, 
+                               detection.threshold = detection.threshold)
+          
+          n.outl$flag <- !all(n.outl$n.outliers > 0,
+                              n.outl$regular.distance <= reg.dist.min,  
+                              n.outl$regular.distance <= reg.dist.max, 
+                              n.outl$n.regular.outliers >= reg.out.thresh)
+          
+          if(graphs){
+            title(paste(unique(k[[ds]]), n.outl$flag, sep = " - "))
+          }
+        }
+        
+        if(test == "lat"){
+          gvec <- .CalcACT(data = k[[lat]], digit.round = digit.round, nc = nc, 
+                           graphs = graphs, graph.title = unique(k[[ds]]))
+          #run the sliding window outlier detection
+          n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
+                               detection.rounding = detection.rounding, 
+                               detection.threshold = detection.threshold)
+          
+          n.outl$flag <- !all(n.outl$n.outliers > 0,
+                              n.outl$regular.distance <= reg.dist.min,  
+                              n.outl$regular.distance <= reg.dist.max,  
+                              n.outl$n.regular.outliers >= reg.out.thresh)
+          
+          if(graphs){
+            title(paste(unique(k[[ds]]), n.outl$flag, sep = " - "))
+          }
+        }
+        
+        if(test == "both"){
+          gvec1 <- .CalcACT(data = k[[lon]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
+          n.outl.lon <- .OutDetect(gvec1, T1 = T1, window.size = window.size, 
+                                   detection.rounding = detection.rounding, 
+                                   detection.threshold = detection.threshold)
+          
+          n.outl.lon$flag <- !all(n.outl.lon$n.outliers > 0,
+                                  n.outl.lon$regular.distance <= reg.dist.min,  
+                                  n.outl.lon$regular.distance <= reg.dist.max,   
+                                  n.outl.lon$n.regular.outliers >= reg.out.thresh)
+          
+          if(graphs){
+            title(paste(unique(k[[ds]]), n.outl.lon$flag, sep = " - "))
+          }
+          
+          gvec2 <- .CalcACT(data = k[[lat]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
+          n.outl.lat <- .OutDetect(gvec2, T1 = T1, window.size = window.size, 
+                                   detection.rounding = detection.rounding, 
+                                   detection.threshold = detection.threshold)
+          
 
-  
-  # return output dependent on value argument
-  if(verbose){
-    cat(sprintf("Flagged %s records\n", sum(!flags)))
+          
+          n.outl.lat$flag <- !all(n.outl.lat$n.outliers > 0,
+                                  n.outl.lat$regular.distance <= reg.dist.min,  
+                                  n.outl.lat$regular.distance <= reg.dist.max,  
+                                  n.outl.lat$n.regular.outliers >= reg.out.thresh)
+          
+          if(graphs){
+            title(paste(unique(k[[ds]]), n.outl.lat$flag, sep = " - "))
+          }
+          
+          n.outl <- cbind(unique(k[[ds]]), n.outl.lon, n.outl.lat)
+          names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.outliers", "lon.regular.distance", "lon.flag",
+                             "lat.n.outliers", "lat.n.regular.outliers", "lat.regular.distance", "lat.flag")
+          
+          n.outl$summary <- n.outl$lon.flag | n.outl$lat.flag #only flag if both are flagged
+        }
+
+        return(n.outl)
+      }
+    })
+    
+    out <- do.call("rbind.data.frame", out)
+  }else{
+    if(nrow(x[!duplicated(c(lon,lat)),]) < min.unique.ds.size){
+      warning("Dataset smaller than minimum test size")
+      out <- NA
+    }else{
+      if(test == "lon"){
+        #calculate autocorrelation
+        gvec <- .CalcACT(data = x[[lon]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(x[[ds]]))
+        #run the sliding window outlier detection
+        n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
+                             detection.rounding = detection.rounding, 
+                             detection.threshold = detection.threshold)
+        
+        n.outl$flag <- !all(n.outl$n.outliers > 0,
+                            n.outl$regular.distance >= reg.dist.min,  
+                            n.outl$regular.distance <= reg.dist.max, 
+                            n.outl$n.regular.outliers >= reg.out.thresh)
+        
+        if(graphs){
+          title(paste(unique(x[[ds]]), n.outl$flag, sep = " - "))
+        }
+        
+        n.outl <- data.frame(unique(x[[ds]]), n.outl)
+        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", "lon.regular.distance", "summary")
+      }
+      
+      if(test == "lat"){
+        gvec <- .CalcACT(data = x[[lat]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(x[[ds]]))
+        #run the sliding window outlier detection
+        n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
+                             detection.rounding = detection.rounding, 
+                             detection.threshold = detection.threshold)
+        
+        n.outl$flag <- !all(n.outl$n.outliers > 0,
+                            n.outl$regular.distance >= reg.dist.min,  
+                            n.outl$regular.distance <= reg.dist.max,  
+                            n.outl$n.regular.outliers >= reg.out.thresh)
+        
+        if(graphs){
+          title(paste(unique(x[[ds]]), n.outl$flag, sep = " - "))
+        }
+        
+        n.outl <- data.frame(unique(x[[ds]]), n.outl)
+        names(n.outl) <- c("dataset", "lat.n.outliers", "lat.n.regular.distance", "lat.regular.distance", "summary")
+      }
+      
+      if(test == "both"){
+        gvec1 <- .CalcACT(data = x[[lon]], digit.round = digit.round, nc = nc, 
+                          graphs = graphs, graph.title = unique(x[[ds]]))
+        
+        n.outl.lon <- .OutDetect(gvec1, T1 = T1, window.size = window.size, 
+                                 detection.rounding = detection.rounding, 
+                                 detection.threshold = detection.threshold)
+        
+        n.outl.lon$flag <- !all(n.outl.lon$n.outliers > 0,
+                                n.outl.lon$regular.distance >= reg.dist.min,  
+                                n.outl.lon$regular.distance <= reg.dist.max,   
+                                n.outl.lon$n.regular.outliers >= reg.out.thresh)
+        
+        if(graphs){
+          title(paste(unique(x[[ds]]), n.outl.lon$flag, sep = " - "))
+        }
+        
+        
+        gvec2 <- .CalcACT(data = x[[lat]], digit.round = digit.round, nc = nc, 
+                          graphs = graphs, graph.title = unique(x[[ds]]))
+        
+        n.outl.lat <- .OutDetect(gvec2, T1 = T1, window.size = window.size, 
+                                 detection.rounding = detection.rounding, 
+                                 detection.threshold = detection.threshold)
+        
+        
+        n.outl.lat$flag <- !all(n.outl.lat$n.outliers > 0,
+                                n.outl.lat$regular.distance >= reg.dist.min,  
+                                n.outl.lat$regular.distance <= reg.dist.max,  
+                                n.outl.lat$n.regular.outliers >= reg.out.thresh)
+        
+        if(graphs){
+          title(paste(unique(x[[ds]]), n.outl.lat$flag, sep = " - "))
+        }
+        
+        n.outl <- data.frame(unique(x[[ds]]), n.outl.lon, n.outl.lat)
+        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", "lon.regular.distance", "lon.flag",
+                           "lat.n.outliers", "lat.n.regular.distance", "lat.regular.distance", "lat.flag")
+        
+        n.outl$summary <- n.outl$lon.flag | n.outl$lat.flag #only flag if both are flagged
+      }
+      out <- n.outl
+    }
+
   }
   
   switch(value,
-         dataset = return(out.ds),
-         clean = return(x[flags,]),
-         flags = return(flags))
-
+         dataset = return(out),
+         clean = return({
+           test <- x[x[[ds]] %in% out[out$summary, "dataset"], ]
+           if(length(test) < 0){
+             test}
+           else{NULL}
+           }),
+         flags = return(x[[ds]] %in% out[out$summary, "dataset"]))
 }
