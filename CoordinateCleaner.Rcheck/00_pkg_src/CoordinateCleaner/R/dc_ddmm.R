@@ -10,12 +10,12 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   }
   
   #prepare dataset for analyses
-  if (sum(!complete.cases(x)) > 0) {
+  if (sum(!complete.cases(x[, c(lon, lat, ds)])) > 0) {
     warning(sprintf("ignored %s cases with incomplete data", sum(!complete.cases(x))))
   }
   
   #get function data
-  dat <- x[complete.cases(x), ]
+  dat <- x[complete.cases(x[, c(lon, lat, ds)]), ]
   
   if (nrow(dat) == 0) {
     stop("no complete cases found")
@@ -27,14 +27,14 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   
   # split into seperate datasets
   test <- split(dat, f = dat[[ds]])
-  
+
   # run ddmm to dd.dd conversion test error at 0.6
   out <- lapply(test, function(k) {
       ## create test datasets
-      #dat.unique <- k[!duplicated(k[, c("species", "decimallongitude", "decimallatitude")]),]
+      dat.unique <- k[!duplicated(k[, c(lon, lat, ds)]),]
       
       #Assign decimals to a 100x100 matrix for binomial test
-      cl <- ceiling(k[, c("lon.test", "lat.test")] * mat.size)
+      cl <- ceiling(dat.unique[, c("lon.test", "lat.test")] * mat.size)
       cl$lat.test <- mat.size - cl$lat.test
       
       mat <- matrix(ncol = mat.size, nrow = mat.size)

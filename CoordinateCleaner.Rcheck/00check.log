@@ -5,7 +5,7 @@
 * using options '--no-manual --as-cran'
 * checking for file 'CoordinateCleaner/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'CoordinateCleaner' version '1.0-2'
+* this is package 'CoordinateCleaner' version '1.0-4'
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -34,7 +34,8 @@
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
-* checking Rd files ... OK
+* checking Rd files ... NOTE
+prepare_Rd: dc_round.Rd:54-56: Dropping empty section \details
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
 * checking Rd cross-references ... OK
@@ -48,4 +49,4 @@
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
 * DONE
-Status: OK
+Status: 1 NOTE

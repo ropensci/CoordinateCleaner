@@ -16,15 +16,15 @@
   }
   
   f <- h$counts
-  max.range <- round(length(f) * 0.8)
-  gamma.0 <- cov(f[1:max.range], f[1:max.range])
+  max.range <- round(length(f) * 0.9)
+  gamma.0 <- stats::cov(f[1:max.range], f[1:max.range])
   
   gamma.vec <- c()
   
   for (k in 1:max.range){
     f.0 <- f[-(1:k)]
     f.k <- f[-((length(f) - k + 1):(length(f)))]
-    gamma.vec <- c(gamma.vec, cov(f.0, f.k) / gamma.0)
+    gamma.vec <- c(gamma.vec, stats::cov(f.0, f.k) / gamma.0)
   }
   
   #add coordinates
@@ -54,14 +54,14 @@
     sub <- x[k:(k + window.size),] #sliding window
     
     #interquantile range outlier detection
-    quo <- quantile(sub$gamma, c(0.25, 0.75), na.rm = T)
+    quo <- stats::quantile(sub$gamma, c(0.25, 0.75), na.rm = T)
     outl <- matrix(nrow = nrow(sub), ncol = 2)
-    outl[, 1] <- sub$gamma > (quo[2] + IQR(sub$gamma) * T1) #what if more than one outlier are found?
+    outl[, 1] <- sub$gamma > (quo[2] + stats::IQR(sub$gamma) * T1) #what if more than one outlier are found?
     outl[, 2] <- sub$coord
     out <- rbind(out,outl)
   }
   
-  out <- aggregate(out[,1] ~ out[,2] , FUN = "sum")
+  out <- stats::aggregate(out[,1] ~ out[,2] , FUN = "sum")
   names(out) <- c("V1", "V2")
   out <- out[,c(2,1)]
   out[,1] <- as.numeric(out[,1] >= detection.threshold) # only "outliers" that have at least been found by at least 6 sliding windows
@@ -85,7 +85,7 @@
     if(plots){abline(v = outl[,2], col = "green")}
     
     #calculate the distance between outliers
-    dist.m <- round(dist(round(outl[,2, drop = F], detection.rounding), diag = F), detection.rounding)
+    dist.m <- round(stats::dist(round(outl[,2, drop = F], detection.rounding), diag = F), detection.rounding)
     dist.m[dist.m > 2] <- NA
     
     if(length(dist.m) == sum(is.na(dist.m))){

@@ -8,7 +8,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
                              urban = F, zeros = T, 
                              capitals.rad = 0.05, centroids.rad = 0.01, 
                              centroids.detail = "both", inst.rad = 0.001, 
-                             outliers.method = "quantile", outliers.mtp = 3, outliers.td = 1000, 
+                             outliers.method = "quantile", outliers.mtp = 3, outliers.td = 1000, outliers.size = 7,
                              zeros.rad = 0.5, capitals.ref, centroids.ref, country.ref,
                              inst.ref, seas.ref, urban.ref,
                              value = "spatialvalid", verbose = T,
@@ -67,7 +67,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     }
     
     ##Equal coordinates
-    if (zeros) {
+    if (equal) {
       equ <- cc_equ(x, lon = lon, lat = lat,
                     verbose = verbose, value = "flags", test = "absolute")
 
@@ -131,9 +131,17 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     
     # Outliers
     if (outliers) {
-      otl <- cc_outl(x, lon = lon, lat = lat, species = species,
-                     method = outliers.method, mltpl = outliers.mtp, tdi = outliers.td, 
-                     value = "flags", verbose = verbose)
+      #select species with more than threshold species
+      otl.test <- table(x[species])
+      otl.test <- otl.test[otl.test > outliers.size]
+      otl.test <- x[x[[species]] %in% names(otl.test),]
+      otl.test <- otl.test[, c(species, lon, lat)]
+      
+      otl.flag <- cc_outl(otl.test, lon = lon, lat = lat, species = species,
+                          method = outliers.method, mltpl = outliers.mtp, tdi = outliers.td, 
+                          value = "ids", verbose = verbose)
+      otl <- rep(TRUE, nrow(x))
+      otl[otl.flag] <- FALSE
     } else {
       otl <- rep(NA, dim(x)[1])
     }
