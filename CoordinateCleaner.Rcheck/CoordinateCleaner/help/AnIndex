@@ -15,6 +15,7 @@ cc_zero	cc_zero
 centroids	centroids
 CleanCoordinates	CleanCoordinates
 CleanCoordinatesDS	CleanCoordinatesDS
+CleanCoordinatesFOS	CleanCoordinatesFOS
 CoordinateCleaner	CoordinateCleaner-package
 countryref	countryref
 dc_ddmm	dc_ddmm
@@ -24,3 +25,7 @@ is.spatialvalid	CleanCoordinates
 landmass	landmass
 plot.spatialvalid	plot.spatialvalid
 summary.spatialvalid	CleanCoordinates
+tc_equal	tc_equal
+tc_outl	tc_outl
+tc_range	tc_range
+WritePyRate	WritePyRate

@@ -18,8 +18,8 @@ CleanCoordinates(x, lon = "decimallongitude", lat = "decimallatitude",
                 urban = F, zeros = T, 
                 capitals.rad = 0.05, centroids.rad = 0.01,
                 centroids.detail = "both", inst.rad = 0.001, 
-                outliers.method = "quantile", outliers.mtp = 3, 
-                outliers.td = 1000, zeros.rad = 0.5,
+                outliers.method = "quantile", outliers.mtp = 3,
+                outliers.td = 1000, outliers.size = 7, zeros.rad = 0.5,
                 capitals.ref, centroids.ref, country.ref,
                 inst.ref, seas.ref, urban.ref,
                 value = "spatialvalid", verbose = T,
@@ -90,12 +90,14 @@ numeric. The radius around biodiversity institutions coordinates in degrees. Def
   \item{outliers.method}{
 The method used for outlier testing. See details.
 }
-
   \item{outliers.mtp}{
 numeric. The multiplier for the interquartile range of the outlier test.  If NULL \code{outliers.td} is used.  Default = 3.
 }
   \item{outliers.td}{
 numeric.  The minimum distance of a record to all other records of a species to be identified as outlier, in km. Default = 1000.
+}
+  \item{outliers.size}{
+numerical.  THe minimum number of records in a dataset to run the taxon-specific outlier test.  Default = 7.
 }
   \item{zeros.rad}{
 numeric. The radius around 0/0 in degrees. Default = 0.5.

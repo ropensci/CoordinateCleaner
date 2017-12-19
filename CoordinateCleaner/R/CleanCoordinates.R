@@ -8,8 +8,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
                              urban = F, zeros = T, 
                              capitals.rad = 0.05, centroids.rad = 0.01, 
                              centroids.detail = "both", inst.rad = 0.001, 
-                             outliers.method = "quantile", outliers.mtp = 3, outliers.td = 1000,
-                             outliers.threshold = 7,
+                             outliers.method = "quantile", outliers.mtp = 3, outliers.td = 1000, outliers.size = 7,
                              zeros.rad = 0.5, capitals.ref, centroids.ref, country.ref,
                              inst.ref, seas.ref, urban.ref,
                              value = "spatialvalid", verbose = T,
@@ -134,7 +133,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     if (outliers) {
       #select species with more than threshold species
       otl.test <- table(x[species])
-      otl.test <- otl.test[otl.test > outliers.threshold]
+      otl.test <- otl.test[otl.test > outliers.size]
       otl.test <- x[x[[species]] %in% names(otl.test),]
       otl.test <- otl.test[, c(species, lon, lat)]
       
