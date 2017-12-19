@@ -9,7 +9,7 @@ Flags records of fossils that are spatio-temporal outliers based on interquantil
 }
 \usage{
 tc_outl(x, lon = "lng", lat = "lat", 
-        min.age = "min_ma", max.age = "max_ma", taxon = "identified_name", 
+        min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
         method = "quantile", size.thresh = 7, mltpl = 3, 
         replicates = 5, flag.thresh = 0.5, 
         value = "clean", verbose = T)
@@ -32,7 +32,7 @@ a character string. The column with the minimum age. Default = \dQuote{min_ma}.
 a character string. The column with the maximum age. Default = \dQuote{max_ma}.
 }
   \item{taxon}{
-a character string. The column with the taxon name. If \dQuote{}, searches for outliers over the entire dataset, otherwise per specified taxon. Default = \dQuote{identified_name}.
+a character string. The column with the taxon name. If \dQuote{}, searches for outliers over the entire dataset, otherwise per specified taxon. Default = \dQuote{accepted_name}.
 }
   \item{method}{
 a character string.  Defining the method for outlier selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default = \dQuote{quantile}.
