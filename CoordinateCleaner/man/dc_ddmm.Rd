@@ -47,7 +47,7 @@ If the degree sign is recognized as decimal delimiter during coordinate conversi
 }
 
 \value{
-Depending on the \sQuote{value} argument, either a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
+Depending on the \sQuote{value} argument, either a \code{data.frame} with summary statistics and flags for each dataset (\dQuote{dataset}) or a \code{data.frame} containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}.
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details and tutorials.
@@ -74,3 +74,4 @@ dc_ddmm(x = prob, value = "flags")
 }
 
 \keyword{ "Coordinate cleaning" }
+\keyword{ "Dataset level cleaning" }

@@ -2,9 +2,12 @@ CleanCoordinates        Geographic Cleaning of Coordinates from
                         Biologic Collections
 CleanCoordinatesDS      Geographic Coordinate Cleaning based on Dataset
                         Properties
+CleanCoordinatesFOS     Geographic and Temporal Cleaning of Records
+                        from Fossil Collections
 CoordinateCleaner-package
                         Automated Cleaning of Occurrence Records from
                         Biological Collections
+WritePyRate             Create Input Files for PyRate
 capitals                Global Capital Locations
 cc_cap                  Flag Coordinates in Vicinity of Country
                         Capitals.
@@ -25,8 +28,10 @@ cc_zero                 Flag Zero Coordinates
 centroids               Global Country and Province Centroids
 countryref              Country Centroids and Country Capitals
 dc_ddmm                 Flag Datasets with a Degree Conversion Error
-dc_round                Flag Datasets with a Significant Fraction of
-                        Rounded Coordinates
+dc_round                Flags Datasets with Rasterized Coordinates
 institutions            Global Locations of Biodiversity Institutions
 landmass                Global Coastlines
 plot.spatialvalid       Plot Method for Class Spatialvalid
+tc_equal                Flag Fossils with equal min and max age
+tc_outl                 Flag Fossil Outlier Records in Space and Time
+tc_range                Flag Fossils with Extreme Age Ranges
