@@ -34,7 +34,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
           #run the sliding window outlier detection
           n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
                                detection.rounding = detection.rounding, 
-                               detection.threshold = detection.threshold)
+                               detection.threshold = detection.threshold,
+                               graphs = graphs)
           
           n.outl$flag <- !all(n.outl$n.outliers > 0,
                               n.outl$regular.distance <= reg.dist.min,  
@@ -52,7 +53,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
           #run the sliding window outlier detection
           n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
                                detection.rounding = detection.rounding, 
-                               detection.threshold = detection.threshold)
+                               detection.threshold = detection.threshold,
+                               graphs = graphs)
           
           n.outl$flag <- !all(n.outl$n.outliers > 0,
                               n.outl$regular.distance <= reg.dist.min,  
@@ -68,7 +70,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
           gvec1 <- .CalcACT(data = k[[lon]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
           n.outl.lon <- .OutDetect(gvec1, T1 = T1, window.size = window.size, 
                                    detection.rounding = detection.rounding, 
-                                   detection.threshold = detection.threshold)
+                                   detection.threshold = detection.threshold,
+                                   graphs = graphs)
           
           n.outl.lon$flag <- !all(n.outl.lon$n.outliers > 0,
                                   n.outl.lon$regular.distance <= reg.dist.min,  
@@ -82,7 +85,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
           gvec2 <- .CalcACT(data = k[[lat]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
           n.outl.lat <- .OutDetect(gvec2, T1 = T1, window.size = window.size, 
                                    detection.rounding = detection.rounding, 
-                                   detection.threshold = detection.threshold)
+                                   detection.threshold = detection.threshold,
+                                   graphs = graphs)
           
 
           
@@ -122,7 +126,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         #run the sliding window outlier detection
         n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
                              detection.rounding = detection.rounding, 
-                             detection.threshold = detection.threshold)
+                             detection.threshold = detection.threshold,
+                             graphs = graphs)
         
         n.outl$flag <- !all(n.outl$n.outliers > 0,
                             n.outl$regular.distance >= reg.dist.min,  
@@ -138,11 +143,13 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
       }
       
       if(test == "lat"){
-        gvec <- .CalcACT(data = x[[lat]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(x[[ds]]))
+        gvec <- .CalcACT(data = x[[lat]], digit.round = digit.round, nc = nc, 
+                         graphs = graphs, graph.title = unique(x[[ds]]))
         #run the sliding window outlier detection
         n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
                              detection.rounding = detection.rounding, 
-                             detection.threshold = detection.threshold)
+                             detection.threshold = detection.threshold,
+                             graphs = graphs)
         
         n.outl$flag <- !all(n.outl$n.outliers > 0,
                             n.outl$regular.distance >= reg.dist.min,  
@@ -163,7 +170,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         
         n.outl.lon <- .OutDetect(gvec1, T1 = T1, window.size = window.size, 
                                  detection.rounding = detection.rounding, 
-                                 detection.threshold = detection.threshold)
+                                 detection.threshold = detection.threshold,
+                                 graphs = graphs)
         
         n.outl.lon$flag <- !all(n.outl.lon$n.outliers > 0,
                                 n.outl.lon$regular.distance >= reg.dist.min,  
@@ -180,7 +188,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         
         n.outl.lat <- .OutDetect(gvec2, T1 = T1, window.size = window.size, 
                                  detection.rounding = detection.rounding, 
-                                 detection.threshold = detection.threshold)
+                                 detection.threshold = detection.threshold,
+                                 graphs = graphs)
         
         
         n.outl.lat$flag <- !all(n.outl.lat$n.outliers > 0,
