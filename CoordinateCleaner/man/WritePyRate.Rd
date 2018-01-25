@@ -8,7 +8,7 @@ Create Input Files for PyRate
 Creates the input necessary to run Pyrate, based on a data.frame with fossil ages (as derived e.g. from CleanCoordinatesFOS) and a vector of the extinction status for each sample. Creates files in the working directory!
 }
 \usage{
-WritePyRate(x, taxon = "identified_name", min.age = "min_ma", max.age = "max_ma", 
+WritePyRate(x, taxon = "accepted_name", min.age = "min_ma", max.age = "max_ma", 
             status = NULL, trait = NULL, fname = NULL, path = getwd(), 
             replicates = 1, cutoff = NULL, random = TRUE)
 }

@@ -52,6 +52,7 @@ a character string.  Defining the output value. See value.
 }
 }
 \details{
+see supplement
 %Copy later from supplementary material
 }
 \value{
