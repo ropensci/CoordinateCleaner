@@ -12,8 +12,19 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   match.arg(value, choices = c("clean", "flags", "ids"))
   match.arg(method, choices = c("quantile", "mad"))
   
+  # report analyses step
+  if (verbose) {
+    if (taxon == "") {
+      cat("Testing spatio-temporal outliers on dataset level\n")
+    }else{
+      cat("Testing spatio-temporal outliers on taxon level\n")
+    }
+  }
+
   out <- replicate(replicates, expr = {
   
+    
+    
   # create testing data by simulating 100 points within the age range of each individal method fossil
   x$samplepoint <- apply(X = x, 1, FUN = function(k){stats::runif(n = 1, 
                                                          min = as.numeric(k[[max.age]], na.rm = T),
@@ -21,11 +32,6 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   x$samplepoint <- round(x$samplepoint, 2)
   
   if (taxon == "") {
-    
-    if (verbose) {
-      cat("Testing spatio-temporal outliers on dataset level\n")
-    }
-    
     # select relevant columns
     test <- x[, c(lon, lat, min.age, max.age, "samplepoint")]
     
@@ -70,10 +76,6 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     flags <- rownames(test)[out]
   
     } else {
-    if (verbose) {
-      cat("Testing spatio-temporal outliers on taxon level\n")
-    }
-    
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon)]
     

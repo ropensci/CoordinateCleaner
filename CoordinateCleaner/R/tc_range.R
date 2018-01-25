@@ -24,19 +24,19 @@ tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepte
     #Quantile based test, with mean interpoint distances
     if (method == "quantile") {
       quo <- quantile(rang, 0.75, na.rm = T)
-      flags <- which(rang > (quo + IQR(rang) * mltpl))
+      flags <- which(rang > (quo + IQR(rang, na.rm = T) * mltpl))
     }
     
     #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
     if (method == "mad") {
       quo <- median(rang)
-      tester <- mad(rang)
+      tester <- mad(rang, na.rm = T)
       flags <- which(rang > quo + tester * mltpl)
     }
   
     }else{
     if (verbose) {
-      cat("Testing spatio-temporal outliers on taxon level\n")
+      cat("Testing temporal range outliers on taxon level\n")
     }
     #split up into taxon
     range <- "range"
@@ -63,13 +63,13 @@ tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepte
       #Quantile based test, with mean interpoint distances
       if (method == "quantile") {
         quo <- quantile(rang, 0.75, na.rm = T)
-        out <- which(rang > quo + IQR(rang) * mltpl)
+        out <- which(rang > quo + IQR(rang, na.rm = T) * mltpl)
       }
       
       #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
       if (method == "mad") {
         quo <- median(rang)
-        tester <- mad(rang)
+        tester <- mad(rang, na.rm = T)
         out <- which(rang > quo + tester * mltpl)
       }
       #create output object

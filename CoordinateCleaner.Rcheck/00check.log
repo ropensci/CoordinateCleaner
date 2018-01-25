@@ -5,7 +5,7 @@
 * using options '--no-manual --as-cran'
 * checking for file 'CoordinateCleaner/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'CoordinateCleaner' version '1.0-4'
+* this is package 'CoordinateCleaner' version '1.0-5'
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -47,5 +47,9 @@
 * checking data for non-ASCII characters ... OK
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
+Examples with CPU or elapsed time > 5s
+         user system elapsed
+dc_round 5.47   0.07    5.64
+cc_inst  5.10   0.04    5.18
 * DONE
 Status: OK

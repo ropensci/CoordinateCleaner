@@ -14,7 +14,7 @@ CleanCoordinatesFOS(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
                     equal = T, GBIF = T, institutions = T, 
                     temp.range.outliers = T, spatio.temp.outliers = T, 
                     temp.ages.equal = T, 
-                    zeros = T, centroids.rad = 0.01, 
+                    zeros = T, centroids.rad = 0.05, 
                     centroids.detail = "both", 
                     inst.rad = 0.001, outliers.method = "quantile", 
                     outliers.threshold = 3, outliers.size = 7, 
