@@ -4,14 +4,17 @@ tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma",
   
   
   if(verbose){
-    cat("Testing ages\n")
+    cat("Testing age validity\n")
   }
   
   #min.age == max.age
-  
   t1 <- x[[max.age]] == x[[min.age]]
   
-  flags <- t1
+  #min.age > max.age
+  
+  t2 <- x[[min.age]] > x[[max.age]]
+  
+  flags <- t1 | t2
   
   #create output
   out <- rep(TRUE, nrow(x))
