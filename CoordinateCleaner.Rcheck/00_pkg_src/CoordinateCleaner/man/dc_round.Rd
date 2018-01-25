@@ -27,7 +27,7 @@ a character string. The column with the longitude coordinates. Default = \dQuote
 a character string. The column with the dataset of each record. In case \code{x} should be treated as a single dataset, identical for all records.  Default = \dQuote{dataset}.
 }
   \item{T1}{
-numeric.  The threshold for oultier detection in a in an interquantile range based test. This is the major paramter to specify the sensitivity of the test: lower values, equal higher detection rate. Values between 7-11 are recommended. Default = 7.
+numeric.  The threshold for outlier detection in a in an interquantile range based test. This is the major parameter to specify the sensitivity of the test: lower values, equal higher detection rate. Values between 7-11 are recommended. Default = 7.
 }
   \item{reg.out.thresh}{
 numeric. Threshold on the number of equal distances between outlier points.  See details.  Default = 2.
@@ -45,13 +45,14 @@ numeric.  The minimum number of unique locations (values in the tested column) f
 logical. If TRUE, diagnostic plots are produced.  Default = TRUE.
 }
   \item{test}{
-character string.  Indicates which column to test. Either \dQuote{lat] for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failes.  Defualt = \dQuote{both}}
+character string.  Indicates which column to test. Either \dQuote{lat] for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failed.  Default = \dQuote{both}}
 }
   \item{value}{
 a character string.  Defining the output value. See value.
 }
 }
 \details{
+see supplement
 %Copy later from supplementary material
 }
 \value{
