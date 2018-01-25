@@ -150,7 +150,7 @@ decimallatitude        validity           equal           zeros        capitals
 > ### ** Examples
 > 
 > minages <- runif(250, 0, 65)
-> exmpl <- data.frame(identified_name = sample(letters, size = 250, replace = TRUE),
+> exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 +                     lng = runif(250, min = 42, max = 51),
 +                     lat = runif(250, min = -26, max = -11),
 +                     min_ma = minages,
@@ -1969,7 +1969,7 @@ Flagged 1 records.
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.03 0.32 16.63 NA NA 
+Time elapsed:  17.16 0.29 17.89 NA NA 
 > grDevices::dev.off()
 null device 
           1 

@@ -4,7 +4,7 @@
 
 
 tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
-                    taxon = "identified_name", method = "quantile", size.thresh = 7,
+                    taxon = "accepted_name", method = "quantile", size.thresh = 7,
                     mltpl = 3, replicates = 5, flag.thresh = 0.5,
                     value = "clean", verbose = T) {
   

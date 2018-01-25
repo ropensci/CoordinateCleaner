@@ -107,7 +107,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 
 minages <- runif(250, 0, 65)
-exmpl <- data.frame(identified_name = sample(letters, size = 250, replace = TRUE),
+exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
                     lng = runif(250, min = 42, max = 51),
                     lat = runif(250, min = -26, max = -11),
                     min_ma = minages,
