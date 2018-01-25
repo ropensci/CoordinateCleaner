@@ -48,7 +48,7 @@ numeric. The p-value for the one-sided t-test to flag the ddmm test as passed or
 numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.025. Default = 0.2
 }
   \item{periodicity.T1}{
-numeric.  The threshold for oultier detection in a in an interquantile range based test. This is the major paramter to specify the sensitivity of the test: lower values, equal higher detection rate. Values between 7-11 are recommended. Default = 7.
+numeric.  The threshold for outlier detection in a in an interquantile range based test. This is the major parameter to specify the sensitivity of the test: lower values, equal higher detection rate. Values between 7-11 are recommended. Default = 7.
 }
   \item{periodicity.reg.thresh}{
 numeric. Threshold on the number of equal distances between outlier points.  See details.  Default = 2.
@@ -63,7 +63,7 @@ numeric.  The maximum detection distance between outliers in degrees (the maximu
 numeric.  The minimum number of unique locations (values in the tested column) for datasets to be included in the test.  Default = 4.
 }
   \item{periodicity.target}{
-character string.  Indicates which column to test. Either \dQuote{lat] for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failes.  Defualt = \dQuote{both}}
+character string.  Indicates which column to test. Either \dQuote{lat] for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failed.  Default = \dQuote{both}}
 }
   \item{periodicity.diagnostics}{
 logical. If TRUE, diagnostic plots are produced.  Default = TRUE.
@@ -79,7 +79,7 @@ logical. If TRUE reports the name of the test and the number of records flagged.
 This function checks the statistical distribution of decimals within datasets of geographic distribution records to identify datasets with potential errors/biases. Three potential error sources can be identified. The ddmm flag tests for the particular pattern that emerges if geographical coordinates in a degree minute annotation are transferred into decimal degrees, simply replacing the degree symbol with the decimal point. This kind of problem has been observed by in older datasets first recorded on paper using typewriters, where e.g. a floating point was used as symbol for degrees. The function uses a binomial test to check if more records then expected have decimals blow 0.6 (which is the maximum that can be obtained in minutes, as one degree has 60 minutes) and if the number of these records is higher than those above 0.59 by a certain proportion. The periodicity test uses rate estimation in a poison process to estimate if there is periodicity in the decimals of a dataset (as would be expected by for example rounding or data that was collected in a raster format) and if there is an over proportional number of records with the decimal 0 (full degrees) which indicates rounding and thus low precision. The default values are empirically optimized by with GBIF data, but should probably be adapted.
 }
 \value{
-Depending on the \sQuote{value} argument, either a summary per dataset \code{dataset}, a dataframe containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one row for each dataset in \code{x} and columns depending on the output option: \sQuote{detail} shows most level of detail, \sQuote{flag} shows only  flags from the test and \sQuote{minimal} shows only the combined flags. Available columns are: \code{binomial.pvalue} = p-value compared to ddmm.pvalue; \code{perc.difference} = the percentage of difference from the expectation under a binomial test; \code{pass.ddmm} = logical flag summarizing the ddmm test, if TRUE: passed, if FALSE: potentially problematic; \code{mle} = the maximum likelihood for the rate parameters of the periodicity test; rate.ratio = rate ratio between the two rates of the periodicity model compared to \code{periodicity.thresh}; \code{zero.mle} = size of the maximum likelihood zero size bin from the zero test; \code{zero.rate.ratio} = ratio by which the number of zero decimals surpasses the number of records with other decimals; \code{pass.zero} = logical flag summarizing the zero test, if TRUE: passed, if FALSE: potentially problematic; \code{pass.periodicity} = logical flag summarizing the periodicity test, if TRUE: passed, if FALSE: potentially problematic. Flags for the periodicity test will be marked dependent on the meridional direction tested: \sQuote{lon} = longitude, \sQuote{lat} = latitude, \sQuote{com} = AND combination of the two former.
+Depending on the \sQuote{value} argument, either a summary per dataset \code{dataset}, a data.frame containing the records considered correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE = test failed/potentially problematic (\dQuote{flags}). Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one row for each dataset in \code{x}.
 }
 
 \seealso{

@@ -34,8 +34,7 @@
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
-* checking Rd files ... NOTE
-prepare_Rd: dc_round.Rd:54-56: Dropping empty section \details
+* checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
 * checking Rd cross-references ... OK
@@ -49,4 +48,4 @@ prepare_Rd: dc_round.Rd:54-56: Dropping empty section \details
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
 * DONE
-Status: 1 NOTE
+Status: OK

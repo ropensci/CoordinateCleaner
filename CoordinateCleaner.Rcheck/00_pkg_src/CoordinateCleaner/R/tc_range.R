@@ -1,4 +1,4 @@
-tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "identified_name", 
+tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
                      method = "quantile", mltpl = 5,
                      size.thresh = 7, max.range = 500,
                      value = "clean", verbose = T) {

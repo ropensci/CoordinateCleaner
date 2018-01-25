@@ -1,4 +1,4 @@
-WritePyRate <- function(x, taxon = "identified_name", min.age = "min_ma", max.age = "max_ma", 
+WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age = "max_ma", 
                         status = NULL, trait = NULL, 
                         fname = NULL, path = getwd(), 
                         replicates = 1, cutoff = NULL, random = TRUE){
