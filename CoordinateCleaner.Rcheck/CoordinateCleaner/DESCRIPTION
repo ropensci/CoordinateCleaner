@@ -2,8 +2,8 @@ Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological
         Collections
-Version: 1.0-4
-Date: 2017-12-18
+Version: 1.0-5
+Date: 2018-01-25
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@bioenv.gu.se",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = c("ctb")))
@@ -15,8 +15,8 @@ Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth,
 LazyData: true
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2018-01-25 12:38:15 UTC; alexander.zizka
+Packaged: 2018-01-25 15:11:26 UTC; alexander.zizka
 Author: Alexander Zizka [aut, cre],
   Daniele Silvestro [ctb]
 Maintainer: Alexander Zizka <alexander.zizka@bioenv.gu.se>
-Built: R 3.4.2; ; 2018-01-25 12:38:47 UTC; windows
+Built: R 3.4.2; ; 2018-01-25 15:11:31 UTC; windows

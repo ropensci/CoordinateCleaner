@@ -11,20 +11,27 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   # check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
   match.arg(method, choices = c("quantile", "mad"))
+  
+  # report analyses step
+  if (verbose) {
+    if (taxon == "") {
+      cat("Testing spatio-temporal outliers on dataset level\n")
+    }else{
+      cat("Testing spatio-temporal outliers on taxon level\n")
+    }
+  }
 
   out <- replicate(replicates, expr = {
   
+    
+    
   # create testing data by simulating 100 points within the age range of each individal method fossil
   x$samplepoint <- apply(X = x, 1, FUN = function(k){stats::runif(n = 1, 
-                                                         min = as.numeric(k[[min.age]]),
-                                                         max = as.numeric(k[[max.age]]))})
+                                                         min = as.numeric(k[[max.age]], na.rm = T),
+                                                         max = as.numeric(k[[min.age]], na.rm = T))})
+  x$samplepoint <- round(x$samplepoint, 2)
   
   if (taxon == "") {
-    
-    if (verbose) {
-      cat("Testing spatio-temporal outliers on dataset level\n")
-    }
-    
     # select relevant columns
     test <- x[, c(lon, lat, min.age, max.age, "samplepoint")]
     
@@ -55,24 +62,20 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     if (method == "quantile") {
       mins <- apply(dis, 1, mean, na.rm = T)
       quo <- quantile(mins, 0.75, na.rm = T)
-      out <- which(mins > quo + IQR(mins) * mltpl)
+      out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
     }
     
     # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
     if (method == "mad") {
       mins <- apply(dis, 1, mean, na.rm = T)
       quo <- median(mins, na.rm = T)
-      tester <- mad(mins)
+      tester <- mad(mins, na.rm = T)
       out <- which(mins > quo + tester * mltpl)
     }
     
     flags <- rownames(test)[out]
   
     } else {
-    if (verbose) {
-      cat("Testing spatio-temporal outliers on taxon level\n")
-    }
-    
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon)]
     
@@ -110,14 +113,14 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
         if (method == "quantile") {
           mins <- apply(dis, 1, mean, na.rm = T)
           quo <- quantile(mins, 0.75, na.rm = T)
-          out <- which(mins > quo + IQR(mins) * mltpl)
+          out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
         }
         
         # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
         if (method == "mad") {
           mins <- apply(dis, 1, mean, na.rm = T)
           quo <- median(mins, na.rm = T)
-          tester <- mad(mins)
+          tester <- mad(mins, na.rm = T)
           out <- which(mins > quo + tester * mltpl)
         }
         
