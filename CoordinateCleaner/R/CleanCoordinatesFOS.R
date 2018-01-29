@@ -134,11 +134,11 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   #Temporal, range size outliers
   if (temp.range.outliers) {
     
-    #over entire dataset
-    ran.otl.flag <- tc_range(x, taxon = "",  min.age = min.age, max.age = max.age,
+    #always over entire dataset
+    ran.otl<- tc_range(x, taxon = "",  min.age = min.age, max.age = max.age,
                              method = outliers.method, mltpl = outliers.threshold,
-                             value = "ids", verbose = verbose)
-    
+                             value = "flags", verbose = verbose)
+
     #per taxon
     if(taxon != ""){
       ran.test <- table(x[taxon])
@@ -146,14 +146,14 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
       ran.test <- x[x[[taxon]] %in% names(ran.test),]
       ran.test <- ran.test[, c(taxon, min.age, max.age)]
       
-      ran.otl  <- rep(TRUE, nrow(x))
-      ran.otl[names(ran.otl) %in% ran.otl.flag] <- FALSE
+      # ran.otl  <- rep(TRUE, nrow(x))
+      # ran.otl[ran.otl.flag] <- FALSE
       
       ran.otl.flag <- tc_range(ran.test, taxon = taxon,  min.age = min.age, max.age = max.age,
                                method = outliers.method, mltpl = outliers.threshold,
                                value = "ids", verbose = verbose)
       
-      ran.otl[names(ran.otl) %in% ran.otl.flag] <- FALSE
+      ran.otl[ran.otl.flag] <- FALSE
     }
   } else {
     ran.otl <- rep(NA, nrow(x))
