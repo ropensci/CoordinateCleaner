@@ -25,10 +25,10 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   
     
     
-  # create testing data by simulating 100 points within the age range of each individal method fossil
+  # create testing data by simulating points within the age range of each individal method fossil
   x$samplepoint <- apply(X = x, 1, FUN = function(k){stats::runif(n = 1, 
-                                                         min = as.numeric(k[[max.age]], na.rm = T),
-                                                         max = as.numeric(k[[min.age]], na.rm = T))})
+                                                         min = as.numeric(k[[min.age]], na.rm = T),
+                                                         max = as.numeric(k[[max.age]], na.rm = T))})
   x$samplepoint <- round(x$samplepoint, 2)
   
   if (taxon == "") {
