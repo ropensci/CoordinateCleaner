@@ -123,6 +123,7 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                           replicates = outliers.replicates,
                           value = "ids", verbose = verbose)
       
+      otl <- rep(TRUE, nrow(x))
       otl[rownames(otl) %in% otl.flag] <- FALSE
 
     }
