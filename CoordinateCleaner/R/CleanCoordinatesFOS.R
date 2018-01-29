@@ -95,21 +95,21 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   
   # Spatiotemporal
   if (spatio.temp.outliers) {
-    
-    if(nrow(x) < 25000){
-      otl.flag <- tc_outl(x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
-                          taxon = "",
-                          method = outliers.method, mltpl = outliers.threshold,
-                          replicates = outliers.replicates, 
-                          value = "ids", verbose = verbose)
-      
-      otl <- rep(TRUE, nrow(x))
-      otl[rownames(otl) %in% otl.flag] <- FALSE
-      
-    }else{
-      warning("Very large dataset skipped dataset level outlier test")
-      otl <- rep(TRUE, nrow(x))
-    }
+    # 
+    # if(nrow(x) < 10000){
+    #   otl.flag <- tc_outl(x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
+    #                       taxon = "",
+    #                       method = outliers.method, mltpl = outliers.threshold,
+    #                       replicates = outliers.replicates, 
+    #                       value = "ids", verbose = verbose)
+    #   
+    #   otl <- rep(TRUE, nrow(x))
+    #   otl[rownames(otl) %in% otl.flag] <- FALSE
+    #   
+    # }else{
+    #   warning("Very large dataset skipped dataset level outlier test")
+    #   otl <- rep(TRUE, nrow(x))
+    # }
 
     if(taxon != ""){
       otl.test <- table(x[taxon])
