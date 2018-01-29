@@ -41,7 +41,7 @@ a character string.  Defining the method for outlier selection.  See details. Ei
 numeric.  The minimum number of records needed for a dataset to be tested. Default = 10.
 }
   \item{mltpl}{
-numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or median absolute deviation (\code{method == 'mad'})to identify outliers. See details.  Default = 3.
+numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or median absolute deviation (\code{method == 'mad'}) to identify outliers. See details.  Default = 3.
 }
   \item{replicates}{
 numeric. The number of replications for the distance matrix calculation. See details.  Default = 5.
