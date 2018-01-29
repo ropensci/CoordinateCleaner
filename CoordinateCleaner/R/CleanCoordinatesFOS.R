@@ -124,10 +124,9 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                           value = "ids", verbose = verbose)
       
       otl <- rep(TRUE, nrow(x))
-      otl[rownames(otl) %in% otl.flag] <- FALSE
-
+      
+      otl[otl.flag] <- FALSE
     }
-
   } else {
     otl <- rep(NA, nrow(x))
   }
