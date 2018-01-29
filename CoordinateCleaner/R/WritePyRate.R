@@ -27,13 +27,14 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   }
   
   if (any(is.na(dat1[,1:4]))){
-    print(c(which(is.na(dat1[,1])),which(is.na(dat1[,2])),which(is.na(dat1[,3])),which(is.na(dat1[,4]))  )   )
+    print(c(which(is.na(dat1[,1])), which(is.na(dat1[,2])),
+            which(is.na(dat1[,3])), which(is.na(dat1[,4]))))
     stop("the input file contains missing data in species names, status or ages)\n")
   }
   
   if (!is.null(cutoff)){
     dat <- dat1[!(dat1[,4] - dat1[,3] >= cutoff),]
-    cat("\n\nExcluded ", 100-round(100*dim(dat)[1]/dim(dat1)[1]), "% occurrences")
+    cat("\n\nExcluded ", 100 - round(100*dim(dat)[1]/dim(dat1)[1]), "% occurrences")
     hist(dat1[,4] - dat1[,3])
   } else { 
     dat <- dat1 
