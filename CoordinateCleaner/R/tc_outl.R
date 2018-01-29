@@ -2,7 +2,6 @@
 #nrmalization correct? are mean values for the distances OK or any obvious problem? 
 #excluded duplications for dataset test? - No duplications of coordinates and timrange?
 
-
 tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
                     taxon = "accepted_name", method = "quantile", size.thresh = 7,
                     mltpl = 3, replicates = 5, flag.thresh = 0.5,
