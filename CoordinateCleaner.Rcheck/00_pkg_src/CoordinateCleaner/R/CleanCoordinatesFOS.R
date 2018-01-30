@@ -7,7 +7,7 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                                 temp.range.outliers = T, spatio.temp.outliers = T, temp.ages.equal = T, 
                                 zeros = T, centroids.rad = 0.05,
                                 centroids.detail = "both", inst.rad = 0.001, 
-                                outliers.method = "quantile", outliers.threshold = 3, outliers.size = 7,
+                                outliers.method = "quantile", outliers.threshold = 5, outliers.size = 7,
                                 outliers.replicates = 5,
                                 zeros.rad = 0.5, centroids.ref, country.ref,
                                 inst.ref, value = "spatialvalid", verbose = T, report = F){
@@ -95,38 +95,38 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   
   # Spatiotemporal
   if (spatio.temp.outliers) {
-    
-    if(nrow(x) < 25000){
-      otl.flag <- tc_outl(x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
-                          taxon = "",
-                          method = outliers.method, mltpl = outliers.threshold,
-                          replicates = outliers.replicates, 
-                          value = "ids", verbose = verbose)
-      
-      otl <- rep(TRUE, nrow(x))
-      otl[rownames(otl) %in% otl.flag] <- FALSE
-      
-    }else{
-      warning("Very large dataset skipped dataset level outlier test")
-      otl <- rep(TRUE, nrow(x))
-    }
+    # 
+    # if(nrow(x) < 10000){
+    #   otl.flag <- tc_outl(x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
+    #                       taxon = "",
+    #                       method = outliers.method, mltpl = outliers.threshold,
+    #                       replicates = outliers.replicates, 
+    #                       value = "ids", verbose = verbose)
+    #   
+    #   otl <- rep(TRUE, nrow(x))
+    #   otl[rownames(otl) %in% otl.flag] <- FALSE
+    #   
+    # }else{
+    #   warning("Very large dataset skipped dataset level outlier test")
+    #   otl <- rep(TRUE, nrow(x))
+    # }
 
     if(taxon != ""){
-      otl.test <- table(x[taxon])
-      otl.test <- otl.test[otl.test > outliers.size]
-      otl.test <- x[x[[taxon]] %in% names(otl.test),]
-      otl.test <- otl.test[, c(taxon, lon, lat, min.age, max.age)]
+      # otl.test <- table(x[taxon])
+      # otl.test <- otl.test[otl.test > outliers.size]
+      # otl.test <- x[x[[taxon]] %in% names(otl.test),]
+      # otl.test <- otl.test[, c(taxon, lon, lat, min.age, max.age)]
       
-      otl.flag <- tc_outl(x = otl.test, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
-                          taxon = taxon,
+      otl.flag <- tc_outl(x = x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
+                          taxon = taxon, size.thresh = outliers.size,
                           method = outliers.method, mltpl = outliers.threshold,
                           replicates = outliers.replicates,
                           value = "ids", verbose = verbose)
       
-      otl[rownames(otl) %in% otl.flag] <- FALSE
-
+      otl <- rep(TRUE, nrow(x))
+      
+      otl[otl.flag] <- FALSE
     }
-
   } else {
     otl <- rep(NA, nrow(x))
   }
@@ -134,26 +134,26 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   #Temporal, range size outliers
   if (temp.range.outliers) {
     
-    #over entire dataset
-    ran.otl.flag <- tc_range(x, taxon = "",  min.age = min.age, max.age = max.age,
+    #always over entire dataset
+    ran.otl<- tc_range(x, taxon = "",  min.age = min.age, max.age = max.age,
                              method = outliers.method, mltpl = outliers.threshold,
-                             value = "ids", verbose = verbose)
-    
+                             value = "flags", verbose = verbose)
+
     #per taxon
     if(taxon != ""){
       ran.test <- table(x[taxon])
       ran.test <- ran.test[ran.test > outliers.size]
       ran.test <- x[x[[taxon]] %in% names(ran.test),]
-      ran.test <- ran.test[, c(taxon, min.age, max.age)]
+      ran.test <- ran.test[, c(taxon, lon, lat, min.age, max.age)]
       
-      ran.otl  <- rep(TRUE, nrow(x))
-      ran.otl[names(ran.otl) %in% ran.otl.flag] <- FALSE
+      # ran.otl  <- rep(TRUE, nrow(x))
+      # ran.otl[ran.otl.flag] <- FALSE
       
       ran.otl.flag <- tc_range(ran.test, taxon = taxon,  min.age = min.age, max.age = max.age,
                                method = outliers.method, mltpl = outliers.threshold,
                                value = "ids", verbose = verbose)
       
-      ran.otl[names(ran.otl) %in% ran.otl.flag] <- FALSE
+      ran.otl[ran.otl.flag] <- FALSE
     }
   } else {
     ran.otl <- rep(NA, nrow(x))

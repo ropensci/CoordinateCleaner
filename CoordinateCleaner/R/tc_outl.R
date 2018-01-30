@@ -1,6 +1,6 @@
 tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
                     taxon = "accepted_name", method = "quantile", size.thresh = 7,
-                    mltpl = 3, replicates = 5, flag.thresh = 0.5,
+                    mltpl = 5, replicates = 5, flag.thresh = 0.5, uniq.loc = T,
                     value = "clean", verbose = T) {
   
   # check value argument
@@ -29,11 +29,17 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   
   if (taxon == "") {
     # select relevant columns
-    test <- x[, c(lon, lat, min.age, max.age, "samplepoint")]
+    test <- x[, c(lon, lat, min.age, max.age, "samplepoint", "idf")]
+    
+    #round coordinates to one decimal
+    test[, lon] <- round(test[, lon], 1)
+    test[, lat] <- round(test[, lat], 1)
     
     # remove duplicates
-    #test <- test[!duplicated(test[, c(lon, lat, min.age, max.age)]), ]
-    
+    if(uniq.loc){
+      test <- test[!duplicated(test[,c(lon, lat, min.age, max.age)]),]
+    }
+
     # calculate geographic distance
     if (nrow(test) < 10000) {
       dis.geo <- geosphere::distm(test[, c(lon, lat)], fun = geosphere::distHaversine)/1000
@@ -59,6 +65,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       mins <- apply(dis, 1, mean, na.rm = T)
       quo <- quantile(mins, 0.75, na.rm = T)
       out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
+      flags <- test[out, "idf"]
     }
     
     # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
@@ -67,10 +74,8 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       quo <- median(mins, na.rm = T)
       tester <- mad(mins, na.rm = T)
       out <- which(mins > quo + tester * mltpl)
+      flags <- test[out, "idf"]
     }
-    
-    flags <- rownames(test)[out]
-  
     } else {
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon, "idf")]
@@ -80,14 +85,15 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     splist[, lat] <- round(splist[, lat], 1)
     
     #get unique occurrences
-    splist <- splist[!duplicated(splist[,c(taxon, lon, lat, min.age, max.age)]),]
-    
+    if(uniq.loc){
+      splist <- splist[!duplicated(splist[,c(taxon, lon, lat, min.age, max.age)]),]
+    }
     # split up into taxon
     splist <- split(splist, f = as.character(splist[[taxon]]))
 
     # only test taxa with a minimum number of records
     test <- as.vector(unlist(lapply(splist, "nrow")))
-    splist <- splist[test > size.thresh]
+    splist <- splist[test >= size.thresh]
     
     # loop over taxon and run outlier test
     flags <- lapply(splist, function(k) {
@@ -132,9 +138,8 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
         # create output object
         if (length(out) == 0) {
           ret <- NA
-        }
-        if (length(out) > 0) {
-          ret <- out
+        }else{
+          ret <- unlist(out)
         }
       }else{
         ret <- NA
@@ -159,12 +164,22 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   out <- frac >= flag.thresh
   
   #also mark records that might not have been flagged due to the duplicate removal above
-  supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
-  supp$id <-  "tested"
-  supp <- merge(supp, x, by = c(taxon, lon, lat, min.age, max.age), all.x = T)
-  supp <- supp[, c("idf", "id")]
-  out[as.numeric(supp$idf)] <- FALSE
-
+  if(taxon == "" & any(!out)){
+    supp <- x[!out, c(lon, lat, min.age, max.age)]
+    supp$id <-  "tested"
+    supp <- merge(supp, x, by = c(lon, lat, min.age, max.age), all.x = T)
+    supp <- supp[, c("idf", "id")]
+    out[as.numeric(supp$idf)] <- FALSE
+  }else{
+    if(any(!out)){
+      supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
+      supp$id <-  "tested"
+      supp <- merge(supp, x, by = c(taxon, lon, lat, min.age, max.age), all.x = T)
+      supp <- supp[, c("idf", "id")]
+      out[as.numeric(supp$idf)] <- FALSE
+    }
+  }
+  
   #remove identifier column
   x <- x[,names(x) != "idf"]
 

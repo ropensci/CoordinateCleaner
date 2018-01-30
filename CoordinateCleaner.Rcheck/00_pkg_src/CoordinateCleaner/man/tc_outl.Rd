@@ -10,9 +10,9 @@ Flags records of fossils that are spatio-temporal outliers based on interquantil
 \usage{
 tc_outl(x, lon = "lng", lat = "lat", 
         min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
-        method = "quantile", size.thresh = 7, mltpl = 3, 
+        method = "quantile", size.thresh = 7, mltpl = 5, 
         replicates = 5, flag.thresh = 0.5, 
-        value = "clean", verbose = T)
+        uniq.loc = T, value = "clean", verbose = T)
 }
 
 \arguments{
@@ -41,13 +41,16 @@ a character string.  Defining the method for outlier selection.  See details. Ei
 numeric.  The minimum number of records needed for a dataset to be tested. Default = 10.
 }
   \item{mltpl}{
-numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or median absolute deviation (\code{method == 'mad'})to identify outliers. See details.  Default = 3.
+numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or median absolute deviation (\code{method == 'mad'}) to identify outliers. See details.  Default = 3.
 }
   \item{replicates}{
 numeric. The number of replications for the distance matrix calculation. See details.  Default = 5.
 }
   \item{flag.thresh}{
 numeric.  The fraction of replicates necessary to flag a record. See details. Default = 0.5.
+}
+  \item{uniq.loc}{
+logical.  If TRUE only single records per location and time point (and taxon if \code{taxon} != "") are used for the outlier testing. Default = T. 
 }
   \item{value}{
 a character string.  Defining the output value. See value.
