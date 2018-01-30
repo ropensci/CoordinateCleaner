@@ -766,7 +766,9 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 
 minages <- runif(n = 11, min = 0.1, max = 25)
-x <- data.frame(species = c(letters[1:10], "z"), 
+x <- data.frame(species = c(letters[1:10], "z"),
+                lng = c(runif(n = 9, min = 4, max = 16), 75, 7),
+                lat = c(runif(n = 11, min = -5, max = 5)),
                 min_ma = minages, 
                 max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
 

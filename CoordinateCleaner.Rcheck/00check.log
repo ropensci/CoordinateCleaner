@@ -47,9 +47,5 @@
 * checking data for non-ASCII characters ... OK
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
-Examples with CPU or elapsed time > 5s
-         user system elapsed
-dc_round 5.47   0.07    5.64
-cc_inst  5.10   0.04    5.18
 * DONE
 Status: OK
