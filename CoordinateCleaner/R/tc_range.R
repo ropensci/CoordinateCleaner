@@ -1,69 +1,96 @@
-tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
+tc_range <- function(x, lon = "lng", lat = "lat", 
+                     min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
                      method = "quantile", mltpl = 5,
                      size.thresh = 7, max.range = 500,
+                     uniq.loc = T,
                      value = "clean", verbose = T) {
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
-  match.arg(method, choices = c("quantile", "mad"))
+  match.arg(method, choices = c("quantile", "mad", "time"))
 
   #select relevant columns and calcualte age range
   x$range <- x[[max.age]] - x[[min.age]]
+  x$idf <- rownames(x)
   
   if(taxon == ""){
     if (verbose) {
       cat("Testing temporal range outliers on dataset level\n")
     }
+
+    # Get unique records
+    if(uniq.loc){
+      # select relevant columns
+      rang <- x[, c(lon, lat, min.age, max.age, "idf", "range")]
+      
+      #round coordinates to one decimal
+      rang[, lon] <- round(rang[, lon], 1)
+      rang[, lat] <- round(rang[, lat], 1)
+      
+      #get unique occurrences
+      rang <- rang[!duplicated(rang[,c(lon, lat, min.age, max.age)]),]
+    }
     
-    rang <- x$range
     #Are there points with outlier min or max ages
     if (method == "time") {
-      out <- which(rang >  max.range)
+      flags <- which(rang$range > max.range)
+      flags <- rang[flags, "idf"]
     }
     
     #Quantile based test, with mean interpoint distances
     if (method == "quantile") {
-      quo <- quantile(rang, 0.75, na.rm = T)
-      flags <- which(rang > (quo + IQR(rang, na.rm = T) * mltpl))
+      quo <- quantile(rang$range, 0.75, na.rm = T)
+      flags <- which(rang$range > (quo + IQR(rang$range, na.rm = T) * mltpl))
+      flags <- rang[flags, "idf"]
     }
     
     #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
     if (method == "mad") {
-      quo <- median(rang)
-      tester <- mad(rang, na.rm = T)
-      flags <- which(rang > quo + tester * mltpl)
+      quo <- median(rang$range)
+      tester <- mad(rang$range, na.rm = T)
+      flags <- which(rang$range > quo + tester * mltpl)
+      flags <- rang[flags, "idf"]
     }
   
     }else{
     if (verbose) {
       cat("Testing temporal range outliers on taxon level\n")
     }
+      if(uniq.loc){
+        # select relevant columns
+        splist <- x[, c(lon, lat, min.age, max.age, taxon, "idf", "range")]
+        
+        #round coordinates to one decimal
+        splist[, lon] <- round(splist[, lon], 1)
+        splist[, lat] <- round(splist[, lat], 1)
+        
+        #get unique occurrences
+        splist <- splist[!duplicated(splist[,c(taxon, lon, lat, min.age, max.age)]),]
+      }
+
     #split up into taxon
-    range <- "range"
-    splist <- x[, c(taxon, range)]
-    splist <- split(splist, f = as.character(x[[taxon]]))
+    #range <- "range"
+    splist <- split(splist, f = as.character(splist[[taxon]]))
     
-    #remove duplicate records and make sure that there are at least two records left
-    # test <- lapply(splist, "duplicated")
-    # test <- lapply(test, "!")
-    # test <- as.vector(unlist(lapply(test, "sum")))
+    #only keep taxa with at least size.thresh taxa leftleft
     test <- as.vector(unlist(lapply(splist, "nrow")))
-    splist <- splist[test > size.thresh]
+    splist <- splist[test >= size.thresh]
     
     #loop over taxon and run outlier test
     flags <- lapply(splist, function(k) {
-      #test <- nrow(k[!duplicated(k), ])
-      rang <- k[[range]]
+      rang <- k[["range"]]
       
       #Are there points with outlier min or max ages
       if (method == "time") {
         out <- which(rang >  max.range)
+        out <- k[out, "idf"]
       }
       
       #Quantile based test, with mean interpoint distances
       if (method == "quantile") {
         quo <- quantile(rang, 0.75, na.rm = T)
         out <- which(rang > quo + IQR(rang, na.rm = T) * mltpl)
+        out <- k[out, "idf"]
       }
       
       #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
@@ -71,13 +98,13 @@ tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepte
         quo <- median(rang)
         tester <- mad(rang, na.rm = T)
         out <- which(rang > quo + tester * mltpl)
+        out <- k[out, "idf"]
       }
       #create output object
       if (length(out) == 0) {
         ret <- NA
-      }
-      if (length(out) > 0) {
-        ret <- rownames(k)[out]
+      }else{
+        ret <- unlist(out)
       }
       return(ret)
     })
@@ -88,6 +115,26 @@ tc_range <- function(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepte
   
   out <- rep(TRUE, nrow(x))
   out[rownames(x) %in% flags] <- FALSE
+  
+  #also mark records that might not have been flagged due to the duplicate removal above
+  if(taxon == "" & any(!out)){
+    supp <- x[!out, c(lon, lat, min.age, max.age)]
+    supp$id <-  "tested"
+    supp <- merge(supp, x, by = c(lon, lat, min.age, max.age), all.x = T)
+    supp <- supp[, c("idf", "id")]
+    out[as.numeric(supp$idf)] <- FALSE
+  }else{
+    if(any(!out)){
+      supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
+      supp$id <-  "tested"
+      supp <- merge(supp, x, by = c(taxon, lon, lat, min.age, max.age), all.x = T)
+      supp <- supp[, c("idf", "id")]
+      out[as.numeric(supp$idf)] <- FALSE
+    }
+}
+
+  #remove identifier column
+  x <- x[,names(x) != "idf"]
   
   if(verbose){
     if(value == "ids"){
