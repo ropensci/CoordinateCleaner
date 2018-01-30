@@ -8,14 +8,21 @@ Flag Fossils with Extreme Age Ranges
 Flags record with an unexpectedly large temporal range, based on a quantile outlier test. 
 }
 \usage{
-tc_range(x, min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
-        method = "quantile", mltpl = 5,  size.thresh = 7, max.range = 500,
-        value = "clean", verbose = T)
+tc_range(x, lon = "lng", lat = "lat", 
+         min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
+         method = "quantile", mltpl = 5,  size.thresh = 7, max.range = 500,
+         uniq.loc = T, value = "clean", verbose = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 a data.frame. Containing geographical coordinates and species names.
+}
+  \item{lon}{
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallongitude}.
+}
+  \item{lat}{
+a character string. The column with the longitude coordinates. Default = \dQuote{decimallatitude}.
 }
   \item{min.age}{
 a character string. The column with the minimum age. Default = \dQuote{min_ma}.
@@ -27,7 +34,7 @@ a character string. The column with the maximum age. Default = \dQuote{max_ma}.
 a character string. The column with the taxon name. If \dQuote{}, searches for outliers over the entire dataset, otherwise per specified taxon. Default = \dQuote{accepted_name}.
 }
   \item{method}{
-a character string.  Defining the method for outlier selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default = \dQuote{quantile}.
+a character string.  Defining the method for outlier selection.  See details. Either \dQuote{quantile} \dQuote{mad}, or \dQuote{time}.  Default = \dQuote{quantile}.
 }
   \item{mltpl}{
 numeric. The multiplier of the interquartile range (\code{method == 'quantile'}) or median absolute deviation (\code{method == 'mad'})to identify outliers. See details.  Default = 3.
@@ -36,7 +43,10 @@ numeric. The multiplier of the interquartile range (\code{method == 'quantile'})
 numeric.  The minimum number of records needed for a dataset to be tested. Default = 10.
 }
   \item{max.range}{
-%%     ~~Describe \code{max.range} here~~
+numeric. A absolute maximum time interval between min age and max age. Only relevant for \code{method} = \dQuote{time}.
+}
+  \item{uniq.loc}{
+logical.  If TRUE only single records per location and time point (and taxon if \code{taxon} != "") are used for the outlier testing. Default = T. 
 }
   \item{value}{
 a character string.  Defining the output value. See value.
@@ -51,7 +61,9 @@ Depending on the \sQuote{value} argument, either a \code{data.frame} containing 
 
 \examples{
 minages <- runif(n = 11, min = 0.1, max = 25)
-x <- data.frame(species = c(letters[1:10], "z"), 
+x <- data.frame(species = c(letters[1:10], "z"),
+                lng = c(runif(n = 9, min = 4, max = 16), 75, 7),
+                lat = c(runif(n = 11, min = -5, max = 5)),
                 min_ma = minages, 
                 max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
 
