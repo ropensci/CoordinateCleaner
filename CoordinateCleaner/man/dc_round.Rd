@@ -45,7 +45,7 @@ numeric.  The minimum number of unique locations (values in the tested column) f
 logical. If TRUE, diagnostic plots are produced.  Default = TRUE.
 }
   \item{test}{
-character string.  Indicates which column to test. Either \dQuote{lat] for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failed.  Default = \dQuote{both}}
+character string.  Indicates which column to test. Either \dQuote{lat} for latitude, \dQuote{lon} for longitude, or \dQuote{both} for both.  In the latter case datasets are only flagged if both test are failed.  Default = \dQuote{both}
 }
   \item{value}{
 a character string.  Defining the output value. See value.

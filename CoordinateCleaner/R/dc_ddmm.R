@@ -1,6 +1,6 @@
 dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
                     pvalue = 0.025, diff = 0.1, mat.size = 1000, 
-                    value = "clean", verbose = TRUE){
+                    value = "clean", verbose = TRUE, diagnostic = F){
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "dataset"))
@@ -27,7 +27,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   
   # split into seperate datasets
   test <- split(dat, f = dat[[ds]])
-
+  
   # run ddmm to dd.dd conversion test error at 0.6
   out <- lapply(test, function(k) {
       ## create test datasets
@@ -65,9 +65,18 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       } else {
         flag.t1 <- TRUE
       }
-      c(round(v1, 4), round(v2, 3), flag.t1)
+      
+      outp <- c(round(v1, 4), round(v2, 3), flag.t1)
+      
+      #diagnostic plot of the decimal matrix
+      if(diagnostic){
+        plo <- raster(dat.t1)
+        raster::plot(plo)
+      }
+      
+      return(outp)
     })
-    
+  
     # Create output objects  
     ## Reduce output to data.frame
     out.ds <- do.call("rbind.data.frame", out)
