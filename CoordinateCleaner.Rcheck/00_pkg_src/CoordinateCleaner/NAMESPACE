@@ -10,7 +10,7 @@ importFrom("ggplot2", aes_string, coord_fixed, element_blank, element_text, fort
 importFrom("geosphere", distm)
 importFrom("grDevices", rgb)
 importFrom("methods", as, is)
-importFrom("raster", as.matrix, crop, extent, raster, rasterize, res)
+importFrom("raster", as.matrix, crop, extent, plot, raster, rasterize, res)
 importFrom("rgeos", gBuffer)
 importFrom("rnaturalearth", ne_countries)
 importFrom("stats", aggregate, cov, dist, binom.test, complete.cases, IQR, mad, quantile, median, runif)
