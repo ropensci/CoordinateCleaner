@@ -38,7 +38,7 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
                                graphs = graphs)
           
           n.outl$flag <- !all(n.outl$n.outliers > 0,
-                              n.outl$regular.distance <= reg.dist.min,  
+                              n.outl$regular.distance >= reg.dist.min,  
                               n.outl$regular.distance <= reg.dist.max, 
                               n.outl$n.regular.outliers >= reg.out.thresh)
           
@@ -57,7 +57,7 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
                                graphs = graphs)
           
           n.outl$flag <- !all(n.outl$n.outliers > 0,
-                              n.outl$regular.distance <= reg.dist.min,  
+                              n.outl$regular.distance >= reg.dist.min,  
                               n.outl$regular.distance <= reg.dist.max,  
                               n.outl$n.regular.outliers >= reg.out.thresh)
           
@@ -74,7 +74,7 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
                                    graphs = graphs)
           
           n.outl.lon$flag <- !all(n.outl.lon$n.outliers > 0,
-                                  n.outl.lon$regular.distance <= reg.dist.min,  
+                                  n.outl.lon$regular.distance >= reg.dist.min,  
                                   n.outl.lon$regular.distance <= reg.dist.max,   
                                   n.outl.lon$n.regular.outliers >= reg.out.thresh)
           
@@ -88,10 +88,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
                                    detection.threshold = detection.threshold,
                                    graphs = graphs)
           
-
-          
           n.outl.lat$flag <- !all(n.outl.lat$n.outliers > 0,
-                                  n.outl.lat$regular.distance <= reg.dist.min,  
+                                  n.outl.lat$regular.distance >= reg.dist.min,  
                                   n.outl.lat$regular.distance <= reg.dist.max,  
                                   n.outl.lat$n.regular.outliers >= reg.out.thresh)
           
@@ -209,7 +207,6 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
       }
       out <- n.outl
     }
-
   }
   
   switch(value,
