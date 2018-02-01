@@ -1,5 +1,5 @@
 dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                    pvalue = 0.025, diff = 0.1, mat.size = 1000, min.span = 2,
+                    pvalue = 0.025, diff = 1, mat.size = 1000, min.span = 2,
                     value = "clean", verbose = TRUE, diagnostic = F){
   
   #check value argument
