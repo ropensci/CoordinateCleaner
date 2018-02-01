@@ -1957,7 +1957,7 @@ Flagged 1 records.
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  14.99 0.43 15.68 NA NA 
+Time elapsed:  15.96 0.4 16.69 NA NA 
 > grDevices::dev.off()
 null device 
           1 
