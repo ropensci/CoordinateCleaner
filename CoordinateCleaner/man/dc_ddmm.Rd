@@ -9,7 +9,7 @@ This test identifies datasets where a significant fraction of records has been s
 }
 \usage{
 dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
-        pvalue = 0.025, diff = 0.1, mat.size = 1000,
+        pvalue = 0.025, diff = 0.1, mat.size = 1000, min.span = 2,
         value = "clean", verbose = TRUE, diagnostic = F)
 }
 
@@ -31,6 +31,9 @@ numeric. The p-value for the one-sided t-test to flag the test as passed or not.
 }
   \item{diff}{
 numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Default = 0.1
+}
+  \item{min.span}{
+numeric. The minimum geographic extent of datasets to be tested. Default = 2.
 }
   \item{mat.size}{
 numeric. The size of the matrix for the binomial test. Must be changed in decimals (e.g. 100, 1000, 10000). Adapt to dataset size, generally 100 is better for datasets < 10000 records, 1000 is better for datasets with 10000 - 1M records. Higher values also work reasonably well for smaller datasets, therefore, default = 1000. For large datasets try 10000. 
