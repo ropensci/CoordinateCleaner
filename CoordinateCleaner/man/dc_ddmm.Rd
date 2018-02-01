@@ -9,7 +9,7 @@ This test identifies datasets where a significant fraction of records has been s
 }
 \usage{
 dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
-        pvalue = 0.025, diff = 0.1, mat.size = 1000, min.span = 2,
+        pvalue = 0.025, diff = 1, mat.size = 1000, min.span = 2,
         value = "clean", verbose = TRUE, diagnostic = F)
 }
 
@@ -30,7 +30,7 @@ a character string. The column with the dataset of each record. In case \code{x}
 numeric. The p-value for the one-sided t-test to flag the test as passed or not. Both ddmm.pvalue and diff must be met. Default = 0.025.
 }
   \item{diff}{
-numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Default = 0.1
+numeric. The threshold difference for the ddmm test. Indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. Default = 1
 }
   \item{min.span}{
 numeric. The minimum geographic extent of datasets to be tested. Default = 2.
