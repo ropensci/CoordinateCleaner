@@ -91,7 +91,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
     rownames(out.ds) <- names(out)
     names(out.ds) <- c("binomial.pvalue", "perc.difference", "pass")
     
-    flags <- x[[ds]] %in% rownames(out.ds[out.ds$pass == 1,])
+    flags <- x[[ds]] %in% c(rownames(out.ds[out.ds$pass == 1,]), rownames(out.ds[is.na(out.ds$pass),]))
 
     # return output dependent on value argument
     if(verbose){
