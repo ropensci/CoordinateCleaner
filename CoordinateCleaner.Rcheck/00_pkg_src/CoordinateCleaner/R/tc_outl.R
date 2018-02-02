@@ -1,6 +1,6 @@
 tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
                     taxon = "accepted_name", method = "quantile", size.thresh = 7,
-                    mltpl = 5, replicates = 5, flag.thresh = 0.5, uniq.loc = T,
+                    mltpl = 5, replicates = 5, flag.thresh = 0.5, uniq.loc = F,
                     value = "clean", verbose = T) {
   
   # check value argument
@@ -76,6 +76,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       out <- which(mins > quo + tester * mltpl)
       flags <- test[out, "idf"]
     }
+    
     } else {
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon, "idf")]
@@ -164,19 +165,27 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   out <- frac >= flag.thresh
   
   #also mark records that might not have been flagged due to the duplicate removal above
-  if(taxon == "" & any(!out)){
+  if(taxon == "" & any(!out) & uniq.loc){
     supp <- x[!out, c(lon, lat, min.age, max.age)]
-    supp$id <-  "tested"
-    supp <- merge(supp, x, by = c(lon, lat, min.age, max.age), all.x = T)
-    supp <- supp[, c("idf", "id")]
-    out[as.numeric(supp$idf)] <- FALSE
+    test <- apply(supp, 1, function(k){
+      outp <- which(k[[lon]] == x[[lon]] & k[[lat]] == x[[lat]] & k[[min.age]] == x[[min.age]] & k[[max.age]] == x[[max.age]])
+    })
+    test <- unlist(test)
+    test <- as.numeric(x[test,]$idf)
+    out[test] <- FALSE
   }else{
-    if(any(!out)){
+    if(any(!out) & uniq.loc){
       supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
-      supp$id <-  "tested"
-      supp <- merge(supp, x, by = c(taxon, lon, lat, min.age, max.age), all.x = T)
-      supp <- supp[, c("idf", "id")]
-      out[as.numeric(supp$idf)] <- FALSE
+      outp <- list()
+      for(j in 1:nrow(supp)){
+        k <- supp[j,]
+        outp[[j]] <- which(k[[taxon]]== x[[taxon]] & k[[lon]] == x[[lon]] & 
+                        k[[lat]] == x[[lat]] & k[[min.age]] == x[[min.age]] & 
+                        k[[max.age]] == x[[max.age]])
+      }
+      test <- unlist(outp)
+      test <- as.numeric(x[test,]$idf)
+      out[test] <- FALSE
     }
   }
   
