@@ -2,12 +2,17 @@ tc_range <- function(x, lon = "lng", lat = "lat",
                      min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
                      method = "quantile", mltpl = 5,
                      size.thresh = 7, max.range = 500,
-                     uniq.loc = T,
+                     uniq.loc = F,
                      value = "clean", verbose = T) {
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
   match.arg(method, choices = c("quantile", "mad", "time"))
+  
+  #time and uniq loc do not work together
+  if(method == "time"){
+    unig.loc <- F
+    warning("Using method = 'time', set 'uniq.loc' to FALSE")}
 
   #select relevant columns and calcualte age range
   x$range <- x[[max.age]] - x[[min.age]]
@@ -29,6 +34,8 @@ tc_range <- function(x, lon = "lng", lat = "lat",
       
       #get unique occurrences
       rang <- rang[!duplicated(rang[,c(lon, lat, min.age, max.age)]),]
+    }else{
+      rang <- x[, c(lon, lat, min.age, max.age, "idf", "range")]
     }
     
     #Are there points with outlier min or max ages
@@ -51,7 +58,6 @@ tc_range <- function(x, lon = "lng", lat = "lat",
       flags <- which(rang$range > quo + tester * mltpl)
       flags <- rang[flags, "idf"]
     }
-  
     }else{
     if (verbose) {
       cat("Testing temporal range outliers on taxon level\n")
@@ -66,6 +72,8 @@ tc_range <- function(x, lon = "lng", lat = "lat",
         
         #get unique occurrences
         splist <- splist[!duplicated(splist[,c(taxon, lon, lat, min.age, max.age)]),]
+      }else{
+        splist <- x[, c(lon, lat, min.age, max.age, taxon, "idf", "range")]
       }
 
     #split up into taxon
@@ -117,21 +125,12 @@ tc_range <- function(x, lon = "lng", lat = "lat",
   out[rownames(x) %in% flags] <- FALSE
   
   #also mark records that might not have been flagged due to the duplicate removal above
-  if(taxon == "" & any(!out)){
-    supp <- x[!out, c(lon, lat, min.age, max.age)]
-    supp$id <-  "tested"
-    supp <- merge(supp, x, by = c(lon, lat, min.age, max.age), all.x = T)
-    supp <- supp[, c("idf", "id")]
-    out[as.numeric(supp$idf)] <- FALSE
-  }else{
-    if(any(!out)){
-      supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
-      supp$id <-  "tested"
-      supp <- merge(supp, x, by = c(taxon, lon, lat, min.age, max.age), all.x = T)
-      supp <- supp[, c("idf", "id")]
-      out[as.numeric(supp$idf)] <- FALSE
-    }
-}
+  if(uniq.loc & any(!out)){
+    sel <- x[rownames(x) %in% flags, c(min.age, max.age)]
+    sel <- unique(sel[[max.age]] - sel[[min.age]])
+    tar <- x[[max.age]] - x[[min.age]]
+    out[as.numeric(x[tar %in% sel,]$idf)] <- FALSE
+  }
 
   #remove identifier column
   x <- x[,names(x) != "idf"]
