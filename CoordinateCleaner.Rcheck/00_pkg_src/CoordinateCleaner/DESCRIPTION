@@ -15,7 +15,7 @@ Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth,
 LazyData: true
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2018-02-01 13:05:19 UTC; alexander.zizka
+Packaged: 2018-02-02 15:38:05 UTC; alexander.zizka
 Author: Alexander Zizka [aut, cre],
   Daniele Silvestro [ctb]
 Maintainer: Alexander Zizka <alexander.zizka@bioenv.gu.se>
