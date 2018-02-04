@@ -155,11 +155,11 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   
   # create vector of logical flags
   out <- rep(TRUE, nrow(x))
-  out[flags] <- FALSE
+  out[rownames(out) %in% flags] <- FALSE
 
   return(out)
   })
-
+ 
   frac <- apply(out, 1, "mean")
   
   out <- frac >= flag.thresh
