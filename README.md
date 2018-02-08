@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/azizka/CoordinateCleaner/badge.svg?branch=master)](https://coveralls.io/github/azizka/CoordinateCleaner?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 
 # CoordinateCleaner v1.0-3
 An R-package and shiny app for easy automated flagging of potential errors in geographic coordinates common to biological collection data, including tests for
