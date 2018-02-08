@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/DomBennett/CoordianteCleaner)
 [![Coverage Status](https://coveralls.io/repos/github/azizka/CoordinateCleaner/badge.svg?branch=master)](https://coveralls.io/github/azizka/CoordinateCleaner?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 
@@ -23,20 +24,3 @@ The results can be downloaded as a data.frame with separate flags for each test.
 #Input data
 A tab-delimited text file, including the column headers 'decimallongitude' and 'decimallatitude' and optionally 'species' (for the outlier and duplicate test) and 'countrycode' (for the countrycheck test). Simple csv files downloaded from www.gbif.org can directly be used as input.
 
-#Run shiny app online
-The app is available at https://azizka.shinyapps.io/CoordinateCleaner/. The online version might currently crash due to memory limitations, running the app locally solves this problem.
-
-#Run shiny app locally
-To run the shiny app locally, just copy the following code into your R console.
-
-```{r}
-require(DT)
-require(geosphere)
-require(ggplot2)
-require(raster)
-require(rgeos)
-require(sp)
-require(shiny)
-require(viridis)
-shiny::runGitHub('CoordinateCleaner', 'azizka')
-```
