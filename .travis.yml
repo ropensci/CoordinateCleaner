@@ -4,18 +4,10 @@ os:
 - linux
 - osx
 
-r_binary_packages:
-- ggplot2
-- geosphere
-- grDevice
-- methods
-- raster
-- rgeos
-- rnaturalearth
-- stats
-- sp
-- utils
-
+ addons:
+   apt:
+     packages:
+       - udunits-2
 
 after_success:
 - Rscript -e 'covr::coveralls()'
