@@ -1,4 +1,21 @@
 language: R
 
+os:
+- linux
+- osx
+
+r_binary_packages:
+- ggplot2
+- geosphere
+- grDevice
+- methods
+- raster
+- rgeos
+- rnaturalearth
+- stats
+- sp
+- utils
+
+
 after_success:
 - Rscript -e 'covr::coveralls()'
