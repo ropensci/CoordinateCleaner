@@ -1,13 +1,9 @@
 language: R
+sudo: required
+cache: packages
 
-os:
-- linux
-- osx
-
- addons:
-   apt:
-     packages:
-       - udunits-2
+ apt_packages:
+  - libudunits2-dev
 
 after_success:
-- Rscript -e 'covr::coveralls()'
+  - Rscript -e 'covr::coveralls()'
