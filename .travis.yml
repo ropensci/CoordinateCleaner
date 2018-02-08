@@ -2,8 +2,4 @@ language: R
 sudo: required
 cache: packages
 
- apt_packages:
-  - libudunits2-dev
-
-after_success:
-  - Rscript -e 'covr::coveralls()'
+- Rscript -e 'covr::coveralls()'
