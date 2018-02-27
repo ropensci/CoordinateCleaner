@@ -16,8 +16,6 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     }
   }
   
-  x$idf <- rownames(x)
-
   out <- replicate(replicates, expr = {
 
   # create testing data by simulating points within the age range of each individal method fossil
@@ -29,8 +27,8 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   
   if (taxon == "") {
     # select relevant columns
-    test <- x[, c(lon, lat, min.age, max.age, "samplepoint", "idf")]
-    
+   # test <- x[, c(lon, lat, min.age, max.age, "samplepoint", "idf")]
+    test <- x[, c(lon, lat, min.age, max.age, "samplepoint")]
     #round coordinates to one decimal
     test[, lon] <- round(test[, lon], 1)
     test[, lat] <- round(test[, lat], 1)
@@ -64,8 +62,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     if (method == "quantile") {
       mins <- apply(dis, 1, mean, na.rm = T)
       quo <- quantile(mins, 0.75, na.rm = T)
-      out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
-      flags <- test[out, "idf"]
+      flags <- mins > quo + IQR(mins, na.rm = T) * mltpl
+      #out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
+      #flags <- test[out, "idf"]
     }
     
     # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
@@ -73,13 +72,20 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       mins <- apply(dis, 1, mean, na.rm = T)
       quo <- median(mins, na.rm = T)
       tester <- mad(mins, na.rm = T)
-      out <- which(mins > quo + tester * mltpl)
-      flags <- test[out, "idf"]
+      flags <- mins > quo + tester * mltpl
+      # out <- which(mins > quo + tester * mltpl)
+      # flags <- test[out, "idf"]
     }
     
     } else {
+    #create identifier
+    x$idf <- seq(1:nrow(x))
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon, "idf")]
+    #splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon)]
+    
+    #remove identifier column
+    x <- x[,names(x) != "idf"]
     
     #round coordinates to one decimal
     splist[, lon] <- round(splist[, lon], 1)
@@ -97,7 +103,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     splist <- splist[test >= size.thresh]
     
     # loop over taxon and run outlier test
-    flags <- lapply(splist, function(k) {
+    test <- lapply(splist, function(k) {
 
       # calculate geographic distance
       if (nrow(k) < 10000) {
@@ -123,8 +129,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
         if (method == "quantile") {
           mins <- apply(dis, 1, mean, na.rm = T)
           quo <- quantile(mins, 0.75, na.rm = T)
-          out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
-          out <- k[out, "idf"]
+          flags <- mins > quo + IQR(mins, na.rm = T) * mltpl
+          # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
+          # out <- k[out, "idf"]
         }
         
         # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
@@ -132,30 +139,37 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
           mins <- apply(dis, 1, mean, na.rm = T)
           quo <- median(mins, na.rm = T)
           tester <- mad(mins, na.rm = T)
-          out <- which(mins > quo + tester * mltpl)
-          out <- k[out, "idf"]
+          flags <- mins > quo + tester * mltpl
+          # out <- which(mins > quo + tester * mltpl)
+          # out <- k[out, "idf"]
         }
+
         
         # create output object
-        if (length(out) == 0) {
+        if (length(flags) == 0) {
           ret <- NA
         }else{
-          ret <- unlist(out)
+          ret <- k[flags, "idf"]
         }
       }else{
         ret <- NA
       }
      return(ret)
     })
+    
+    #transform the identifiers into true/flas flags in the sam order as x; TRUE means flagged
+    flags <- rep(FALSE, nrow(x))
+    flags[unlist(test)] <- TRUE
   }
   
   # create vector with flagged rownumbers
-  flags <- as.numeric(as.vector(unlist(flags)))
-  flags <- flags[!is.na(flags)]
+  #flags <- as.numeric(as.vector(unlist(flags)))
+  #flags <- flags[!is.na(flags)]
   
   # create vector of logical flags
-  out <- rep(TRUE, nrow(x))
-  out[rownames(out) %in% flags] <- FALSE
+  #out <- rep(TRUE, nrow(x))
+  #out[as.numeric(flags)] <- FALSE
+  out <- !flags
 
   return(out)
   })
@@ -189,9 +203,6 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     }
   }
   
-  #remove identifier column
-  x <- x[,names(x) != "idf"]
-
   # report to screen
   if (verbose) {
       cat(sprintf("Flagged %s records. \n", sum(!out, na.rm = T)))
