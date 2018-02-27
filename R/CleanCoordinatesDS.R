@@ -12,7 +12,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
 
   # check input arguments
   match.arg(value, choices = c("dataset", "flags", "clean"))
-  match.arg(periodicity.target, choices = c("lat", "lon", "lon_lat"))
+  match.arg(periodicity.target, choices = c("lat", "lon", "both"))
   
   #check column names
   nams <- c(lon, lat, ds)
@@ -87,23 +87,29 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
     out <- data.frame(out.t1, out.t2)
     out$summary <- out$pass.ddmm & out$summary
     out <- Filter(function(x) !all(is.na(x)), out)
+    if(verbose){
+      cat(sprintf("Flagged %s datasets\n", sum(!out$summary)))
+    }
   }
   if (value == "flags") {
     out <- data.frame(ddmm = out.t1, periodicity = out.t2)
     out <- Filter(function(x) !all(is.na(x)), out)
     out$summary <-  Reduce("&", out)
-
+    
+    if(verbose){
+      cat(sprintf("Flagged %s records\n", sum(!out$summary)))
+    }
   }
   if (value == "clean") {
     out <- data.frame(ddmm = out.t1, periodicity = out.t2)
     out <- Filter(function(x) !all(is.na(x)), out)
     out$summary <-  Reduce("&", out)
+    if(verbose){
+      cat(sprintf("Flagged %s records\n", sum(!out$summary)))
+    }
     out <- dat[out$summary,]
   }
   
   #return output
-  if(verbose){
-    cat(sprintf("Flagged %s records\n", sum(!out)))
-  }
  return(out)
 }
