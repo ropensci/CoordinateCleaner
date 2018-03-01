@@ -9,7 +9,7 @@ Flags records of fossil with equal minimum and maximum age.
 }
 \usage{
 tc_equal(x, min.age = "min_ma", max.age = "max_ma", 
-         value = "clean", verbose = T)
+         value = "clean", verbose = TRUE)
 }
 
 \arguments{

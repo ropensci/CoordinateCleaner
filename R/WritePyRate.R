@@ -64,7 +64,8 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     dat[dat$min_age == 0,3] <- 0.001
 
     if (isTRUE(random)){
-      dat$new_age <- round(stats::runif(length(dat[,1]), min=apply(dat[,3:4],FUN=min,1), max=apply(dat[,3:4],FUN=max,1)), digits=6)
+      dat$new_age <- round(stats::runif(length(dat[,1]), min=apply(dat[,3:4], FUN = min,1),
+                                        max=apply(dat[,3:4], FUN=max,1)), digits = 6)
     } else {
       for (i in 1:length(dat[,1])){
         dat$new_age[i] <- mean(c(dat[i,3], dat[i,4]))
@@ -119,31 +120,34 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     names <- noquote(sprintf(" '%s_1'", fname))	
   }
   
-  cat(noquote(sprintf("d=[%s]", data_sets)), noquote(sprintf("names=[%s]", names)), "def get_data(i): return d[i]", "def get_out_name(i): return  names[i]", file=outfile, append=TRUE, sep="\n")
+  cat(noquote(sprintf("d=[%s]", data_sets)), 
+      noquote(sprintf("names=[%s]", names)), "def get_data(i): return d[i]", "def get_out_name(i): return  names[i]", 
+      file=outfile, append=TRUE, sep="\n")
   
   
   tax_names <- paste(taxa, collapse="','")
-  cat(noquote(sprintf("taxa_names=['%s']", tax_names)), "def get_taxa_names(): return taxa_names", file=outfile, append=TRUE, sep="\n")
+  cat(noquote(sprintf("taxa_names=['%s']", tax_names)), "def get_taxa_names(): return taxa_names", 
+      file=outfile, append=TRUE, sep="\n")
   
   
   if ("trait" %in% colnames(dat)){
     datBM <- dat[,1]
     splist$Trait <- NA
     for (n in 1:length(splist[,1])){
-      splist$Trait[n] <- mean(dat$trait[datBM == splist[n,1]], na.rm=T)
+      splist$Trait[n] <- mean(dat$trait[datBM == splist[n,1]], na.rm=TRUE)
     }
     s1 <- "\ntrait1=array(["
     BM <- gsub("NaN|NA", "nan", toString(splist$Trait))
     s2 <- "])\ntraits=[trait1]\ndef get_continuous(i): return traits[i]"
     STR <- paste(s1,BM,s2)
-    cat(STR, file=outfile, append=TRUE, sep="\n")
+    cat(STR, file=outfile, append = TRUE, sep="\n")
   }
   
   splistout <- paste(path, "/", fname, "_TaxonList.txt", sep="")
   lookup <- as.data.frame(taxa)
   lookup$status  <- "extinct"
   
-  write.table(splist, file=splistout, sep="\t", row.names=F, quote=F)
+  write.table(splist, file = splistout, sep="\t", row.names = FALSE, quote = FALSE)
   cat("\n\nPyRate input file was saved in: ", sprintf("%s", outfile), "\n\n")
   
 }

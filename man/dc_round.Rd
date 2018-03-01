@@ -10,7 +10,7 @@ Flags datasets with periodicity patterns indicative of a rasterized (lattice) co
 \usage{
 dc_round(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
          T1 = 7, reg.out.thresh = 2, reg.dist.min = 0.1, reg.dist.max = 2, 
-         min.unique.ds.size = 4, graphs = T, test = "both", value = "clean")
+         min.unique.ds.size = 4, graphs = TRUE, test = "both", value = "clean")
 }
 
 \arguments{

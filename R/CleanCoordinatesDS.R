@@ -1,4 +1,6 @@
-CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
+CleanCoordinatesDS <- function(x, lon = "decimallongitude", 
+                               lat = "decimallatitude", 
+                               ds = "dataset",
                                ddmm = TRUE, periodicity = TRUE, 
                                ddmm.pvalue = 0.025, ddmm.diff = 0.2, 
                                periodicity.T1 = 7,
@@ -26,7 +28,9 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
   
   ## kick out NAs
   if (sum(!complete.cases(dat)) > 0) {
-    warning(sprintf("Data contains incomplete cases. value set to 'dataset', ignoring %s cases with incomplete data", sum(!complete.cases(dat))))
+    warning(sprintf("Incomplete cases found. value set to 'dataset', 
+                    ignoring %s cases with incomplete data", 
+                    sum(!complete.cases(dat))))
     dat <- dat[complete.cases(dat), ]
     value <- "dataset"
   }
@@ -68,9 +72,12 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
   # Run periodicity test
   if (periodicity) {
     out.t2 <- dc_round(x, lon = lon, lat = lat, ds = ds, 
-                       T1 = periodicity.T1, reg.out.thresh = periodicity.reg.thresh, 
-                       reg.dist.min = periodicity.dist.min, reg.dist.max = periodicity.dist.max, 
-                       min.unique.ds.size = periodicity.min.size, graphs = periodicity.diagnostics, 
+                       T1 = periodicity.T1, 
+                       reg.out.thresh = periodicity.reg.thresh, 
+                       reg.dist.min = periodicity.dist.min, 
+                       reg.dist.max = periodicity.dist.max, 
+                       min.unique.ds.size = periodicity.min.size, 
+                       graphs = periodicity.diagnostics, 
                        test = periodicity.target, value = value)
 
     }else{

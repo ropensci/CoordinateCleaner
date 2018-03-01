@@ -1,23 +1,24 @@
 tc_range <- function(x, lon = "lng", lat = "lat", 
-                     min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
+                     min.age = "min_ma", max.age = "max_ma", 
+                     taxon = "accepted_name", 
                      method = "quantile", mltpl = 5,
                      size.thresh = 7, max.range = 500,
-                     uniq.loc = F,
-                     value = "clean", verbose = T) {
+                     uniq.loc = FALSE,
+                     value = "clean", verbose = TRUE) {
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
   match.arg(method, choices = c("quantile", "mad", "time"))
+  
+  #select relevant columns and calcualte age range
+  x$range <- x[[max.age]] - x[[min.age]]
+  x$idf <- rownames(x)
   
   #time and uniq loc do not work together
   if(method == "time"){
     unig.loc <- F
     warning("Using method = 'time', set 'uniq.loc' to FALSE")}
 
-  #select relevant columns and calcualte age range
-  x$range <- x[[max.age]] - x[[min.age]]
-  x$idf <- rownames(x)
-  
   if(taxon == ""){
     if (verbose) {
       cat("Testing temporal range outliers on dataset level\n")
@@ -96,8 +97,8 @@ tc_range <- function(x, lon = "lng", lat = "lat",
       
       #Quantile based test, with mean interpoint distances
       if (method == "quantile") {
-        quo <- quantile(rang, 0.75, na.rm = T)
-        out <- which(rang > quo + IQR(rang, na.rm = T) * mltpl)
+        quo <- quantile(rang, 0.75, na.rm = TRUE)
+        out <- which(rang > quo + IQR(rang, na.rm = TRUE) * mltpl)
         out <- k[out, "idf"]
       }
       
