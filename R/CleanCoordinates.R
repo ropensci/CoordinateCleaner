@@ -2,17 +2,19 @@
 
 CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude",
                              species = "species", countries = NULL,
-                             capitals = T, centroids = T, countrycheck = F, 
-                             duplicates = F, equal = T,
-                             GBIF = T, institutions = T, outliers = F, seas = T, 
-                             urban = F, zeros = T, 
+                             capitals = TRUE, centroids = TRUE, countrycheck = FALSE, 
+                             duplicates = FALSE, equal = TRUE,
+                             GBIF = TRUE, institutions = TRUE, outliers = FALSE, 
+                             seas = TRUE, urban = FALSE, zeros = TRUE, 
                              capitals.rad = 0.05, centroids.rad = 0.01, 
                              centroids.detail = "both", inst.rad = 0.001, 
-                             outliers.method = "quantile", outliers.mtp = 3, outliers.td = 1000, outliers.size = 7,
-                             zeros.rad = 0.5, capitals.ref, centroids.ref, country.ref,
+                             outliers.method = "quantile", outliers.mtp = 3, 
+                             outliers.td = 1000, outliers.size = 7,
+                             zeros.rad = 0.5, capitals.ref, centroids.ref,
+                             country.ref,
                              inst.ref, seas.ref, urban.ref,
-                             value = "spatialvalid", verbose = T,
-                             report = F){
+                             value = "spatialvalid", verbose = TRUE,
+                             report = FALSE){
   #check function arguments
   match.arg(value, choices = c("spatialvalid", "flags", "clean"))
   match.arg(centroids.detail, choices = c("both", "country", "provinces"))
@@ -57,7 +59,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     urban.ref <- NULL
   }
 
-    # Run tests Validity, check if coordinates fit to lat/long system, this has to be run all the time, as otherwise the other tests don't work
+  # Run tests Validity, check if coordinates fit to lat/long system, 
+  #this has to be run all the time, as otherwise the other tests don't work
     val <- cc_val(x, lon = lon, lat = lat,
                   verbose = verbose, value = "flags")
     
@@ -97,7 +100,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     ## Centroids
     if (centroids) {
       cen <- cc_cen(x, lon = lon, lat = lat, 
-                    buffer = centroids.rad, test = centroids.detail, ref = centroids.ref,
+                    buffer = centroids.rad, test = centroids.detail, 
+                    ref = centroids.ref,
                     value = "flags", verbose = verbose)
     } else {
       cen <- rep(NA, nrow(x))
@@ -138,7 +142,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
       otl.test <- otl.test[, c(species, lon, lat)]
       
       otl.flag <- cc_outl(otl.test, lon = lon, lat = lat, species = species,
-                          method = outliers.method, mltpl = outliers.mtp, tdi = outliers.td, 
+                          method = outliers.method, 
+                          mltpl = outliers.mtp, tdi = outliers.td, 
                           value = "ids", verbose = verbose)
       otl <- rep(TRUE, nrow(x))
       otl[otl.flag] <- FALSE
@@ -168,7 +173,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
       cat("running duplicates test\n")
       if (is.null(species)) {
         dpl.test <- x
-        warning("running duplicates test without species id, assuming single species dataset")
+        warning("duplicates test without species id, assuming single species dataset")
       } else {
         dpl.test <- data.frame(x, species)
       }
@@ -195,10 +200,15 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     }
   }
   if (value == "spatialvalid") {
-    inp <- data.frame(species = x[, species], decimallongitude = x[, lon], decimallatitude = x[, lat])
-    out <- data.frame(inp, validity = val, equal = equ, zeros = zer, capitals = cap, centroids = cen, 
-                      sea = sea, urban = urb, countrycheck = con, outliers = otl, 
-                      gbif = gbf, institution = inst, duplicates = dpl, summary = out)
+    inp <- data.frame(species = x[, species], 
+                      decimallongitude = x[, lon], 
+                      decimallatitude = x[, lat])
+    out <- data.frame(inp, validity = val, equal = equ, 
+                      zeros = zer, capitals = cap, centroids = cen, 
+                      sea = sea, urban = urb, 
+                      countrycheck = con, outliers = otl, 
+                      gbif = gbf, institution = inst, duplicates = dpl, 
+                      summary = out)
     out <- Filter(function(x) !all(is.na(x)), out)
     class(out) <- c("spatialvalid", "data.frame", class(out))
     if (report) {

@@ -1,6 +1,6 @@
 dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
                     pvalue = 0.025, diff = 1, mat.size = 1000, min.span = 2,
-                    value = "clean", verbose = TRUE, diagnostic = F){
+                    value = "clean", verbose = TRUE, diagnostic = FALSE){
   
   #check value argument
   match.arg(value, choices = c("clean", "flags", "dataset"))
@@ -34,8 +34,8 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       dat.unique <- k[!duplicated(k[, c(lon, lat, ds)]),]
       
       ##Test geographic span
-      lon.span <- abs(max(dat.unique[,lon], na.rm = T) - min(dat.unique[,lon], na.rm = T))
-      lat.span <- abs(max(dat.unique[,lat], na.rm = T) - min(dat.unique[,lat], na.rm = T))
+      lon.span <- abs(max(dat.unique[,lon], na.rm = T) - min(dat.unique[,lon], na.rm = TRUE))
+      lat.span <- abs(max(dat.unique[,lat], na.rm = T) - min(dat.unique[,lat], na.rm = TRUE))
       
       if(lon.span >= min.span & lat.span >= min.span){
         #Assign decimals to a 100x100 matrix for binomial test

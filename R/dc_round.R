@@ -1,16 +1,16 @@
 dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
                      T1 = 7, reg.out.thresh = 2, reg.dist.min = 0.1, reg.dist.max = 2,
                      min.unique.ds.size = 4,
-                     graphs = T, test = "both", 
+                     graphs = TRUE, test = "both", 
                      value = "clean"){
   
   #fix operators which are tuned and people most likely do not want to change
-  window.size = 10
-  detection.rounding = 2
-  detection.threshold = 6
-  digit.round = 0
-  nc = 3000 
-  rarefy = F
+  window.size <- 10
+  detection.rounding <- 2
+  detection.threshold <- 6
+  digit.round <- 0
+  nc <- 3000 
+  rarefy <- FALSE
   
   match.arg(value, choices = c("flags", "clean", "dataset"))
   
@@ -67,7 +67,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         }
         
         if(test == "both"){
-          gvec1 <- .CalcACT(data = k[[lon]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
+          gvec1 <- .CalcACT(data = k[[lon]], digit.round = digit.round, nc = nc, 
+                            graphs = graphs, graph.title = unique(k[[ds]]))
           n.outl.lon <- .OutDetect(gvec1, T1 = T1, window.size = window.size, 
                                    detection.rounding = detection.rounding, 
                                    detection.threshold = detection.threshold,
@@ -82,7 +83,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
             title(paste(unique(k[[ds]]), n.outl.lon$flag, sep = " - "))
           }
           
-          gvec2 <- .CalcACT(data = k[[lat]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(k[[ds]]))
+          gvec2 <- .CalcACT(data = k[[lat]], digit.round = digit.round, nc = nc, 
+                            graphs = graphs, graph.title = unique(k[[ds]]))
           n.outl.lat <- .OutDetect(gvec2, T1 = T1, window.size = window.size, 
                                    detection.rounding = detection.rounding, 
                                    detection.threshold = detection.threshold,
@@ -98,8 +100,10 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
           }
           
           n.outl <- cbind(unique(k[[ds]]), n.outl.lon, n.outl.lat)
-          names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.outliers", "lon.regular.distance", "lon.flag",
-                             "lat.n.outliers", "lat.n.regular.outliers", "lat.regular.distance", "lat.flag")
+          names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.outliers", 
+                             "lon.regular.distance", "lon.flag",
+                             "lat.n.outliers", "lat.n.regular.outliers", 
+                             "lat.regular.distance", "lat.flag")
           
           n.outl$summary <- n.outl$lon.flag | n.outl$lat.flag #only flag if both are flagged
         }
@@ -120,7 +124,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
     }else{
       if(test == "lon"){
         #calculate autocorrelation
-        gvec <- .CalcACT(data = x[[lon]], digit.round = digit.round, nc = nc, graphs = graphs, graph.title = unique(x[[ds]]))
+        gvec <- .CalcACT(data = x[[lon]], digit.round = digit.round, nc = nc, 
+                         graphs = graphs, graph.title = unique(x[[ds]]))
         #run the sliding window outlier detection
         n.outl <- .OutDetect(gvec, T1 = T1, window.size = window.size, 
                              detection.rounding = detection.rounding, 
@@ -137,7 +142,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         }
         
         n.outl <- data.frame(unique(x[[ds]]), n.outl)
-        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", "lon.regular.distance", "summary")
+        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", 
+                           "lon.regular.distance", "summary")
       }
       
       if(test == "lat"){
@@ -159,7 +165,8 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         }
         
         n.outl <- data.frame(unique(x[[ds]]), n.outl)
-        names(n.outl) <- c("dataset", "lat.n.outliers", "lat.n.regular.distance", "lat.regular.distance", "summary")
+        names(n.outl) <- c("dataset", "lat.n.outliers", "lat.n.regular.distance", 
+                           "lat.regular.distance", "summary")
       }
       
       if(test == "both"){
@@ -200,8 +207,10 @@ dc_round <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = 
         }
         
         n.outl <- data.frame(unique(x[[ds]]), n.outl.lon, n.outl.lat)
-        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", "lon.regular.distance", "lon.flag",
-                           "lat.n.outliers", "lat.n.regular.distance", "lat.regular.distance", "lat.flag")
+        names(n.outl) <- c("dataset", "lon.n.outliers", "lon.n.regular.distance", 
+                           "lon.regular.distance", "lon.flag",
+                           "lat.n.outliers", "lat.n.regular.distance", 
+                           "lat.regular.distance", "lat.flag")
         
         n.outl$summary <- n.outl$lon.flag | n.outl$lat.flag #only flag if both are flagged
       }

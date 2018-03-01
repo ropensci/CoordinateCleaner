@@ -1,7 +1,7 @@
 tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
                     taxon = "accepted_name", method = "quantile", size.thresh = 7,
-                    mltpl = 5, replicates = 5, flag.thresh = 0.5, uniq.loc = F,
-                    value = "clean", verbose = T) {
+                    mltpl = 5, replicates = 5, flag.thresh = 0.5, uniq.loc = FALSE,
+                    value = "clean", verbose = TRUE) {
   
   # check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
@@ -19,9 +19,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   out <- replicate(replicates, expr = {
 
   # create testing data by simulating points within the age range of each individal method fossil
-  x$samplepoint <- apply(X = x, 1, FUN = function(k){stats::runif(n = 1, 
-                                                         min = as.numeric(k[[min.age]], na.rm = T),
-                                                         max = as.numeric(k[[max.age]], na.rm = T))})
+  x$samplepoint <- apply(X = x, 1, FUN = function(k){
+    stats::runif(n = 1,min = as.numeric(k[[min.age]], na.rm = TRUE),
+                 max = as.numeric(k[[max.age]], na.rm = TRUE))})
   x$samplepoint <- round(x$samplepoint, 2)
   
   
@@ -53,25 +53,25 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     dis.tmp[dis.tmp == 0] <- NA
     
     # scale distance to be comparable
-    dis.tmp <- dis.tmp * max(dis.geo, na.rm = T)/max(dis.tmp, na.rm = T)
+    dis.tmp <- dis.tmp * max(dis.geo, na.rm = TRUE)/max(dis.tmp, na.rm = TRUE)
     
     # sum time and space
     dis <- round(dis.tmp + dis.geo, 0)
     
     # quantile based method
     if (method == "quantile") {
-      mins <- apply(dis, 1, mean, na.rm = T)
-      quo <- quantile(mins, 0.75, na.rm = T)
-      flags <- mins > quo + IQR(mins, na.rm = T) * mltpl
+      mins <- apply(dis, 1, mean, na.rm = TRUE)
+      quo <- quantile(mins, 0.75, na.rm = TRUE)
+      flags <- mins > quo + IQR(mins, na.rm = TRUE) * mltpl
       #out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
       #flags <- test[out, "idf"]
     }
     
     # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
     if (method == "mad") {
-      mins <- apply(dis, 1, mean, na.rm = T)
-      quo <- median(mins, na.rm = T)
-      tester <- mad(mins, na.rm = T)
+      mins <- apply(dis, 1, mean, na.rm = TRUE)
+      quo <- median(mins, na.rm = TRUE)
+      tester <- mad(mins, na.rm = TRUE)
       flags <- mins > quo + tester * mltpl
       # out <- which(mins > quo + tester * mltpl)
       # flags <- test[out, "idf"]
@@ -117,7 +117,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       dis.tmp <- as.matrix(dist(k[, c("samplepoint")]))
 
       # scale distance to be comparable
-      dis.tmp <- dis.tmp * max(dis.geo, na.rm = T)/max(dis.tmp, na.rm = T)
+      dis.tmp <- dis.tmp * max(dis.geo, na.rm = TRUE)/max(dis.tmp, na.rm = TRUE)
       dis.tmp[is.na(dis.tmp)] <- 0
       
       # sum time and space
@@ -127,18 +127,18 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       if(sum(!is.na(dis)) > 0){
         
         if (method == "quantile") {
-          mins <- apply(dis, 1, mean, na.rm = T)
-          quo <- quantile(mins, 0.75, na.rm = T)
-          flags <- mins > quo + IQR(mins, na.rm = T) * mltpl
+          mins <- apply(dis, 1, mean, na.rm = TRUE)
+          quo <- quantile(mins, 0.75, na.rm = TRUE)
+          flags <- mins > quo + IQR(mins, na.rm = TRUE) * mltpl
           # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl)
           # out <- k[out, "idf"]
         }
         
         # MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
         if (method == "mad") {
-          mins <- apply(dis, 1, mean, na.rm = T)
-          quo <- median(mins, na.rm = T)
-          tester <- mad(mins, na.rm = T)
+          mins <- apply(dis, 1, mean, na.rm = TRUE)
+          quo <- median(mins, na.rm = TRUE)
+          tester <- mad(mins, na.rm = TRUE)
           flags <- mins > quo + tester * mltpl
           # out <- which(mins > quo + tester * mltpl)
           # out <- k[out, "idf"]

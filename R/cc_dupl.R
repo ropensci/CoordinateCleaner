@@ -1,5 +1,6 @@
-cc_dupl <- function(x, lon = "decimallongitude", lat = "decimallatitude", species = "species",
-                    additions = NULL, value = "clean", verbose = T ){
+cc_dupl <- function(x, lon = "decimallongitude", lat = "decimallatitude",
+                    species = "species",
+                    additions = NULL, value = "clean", verbose = TRUE ){
   
   #check value argument
   match.arg(value, choices = c("clean", "flags"))

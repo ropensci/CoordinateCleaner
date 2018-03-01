@@ -9,7 +9,7 @@ Flags records with equal latitude and longitude coordinates, either exact or abs
 }
 \usage{
 cc_equ(x, lon = "decimallongitude", lat = "decimallatitude", 
-       test = "absolute", value = "clean", verbose = T)
+       test = "absolute", value = "clean", verbose = TRUE)
 }
 
 \arguments{

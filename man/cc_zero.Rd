@@ -9,7 +9,7 @@ Flags records with either zero longitude or latitude and a radius around the poi
 }
 \usage{
 cc_zero(x, lon = "decimallongitude", lat = "decimallatitude", 
-        buffer = 0.5, value = "clean", verbose = T)
+        buffer = 0.5, value = "clean", verbose = TRUE)
 }
 
 \arguments{

@@ -9,7 +9,7 @@ Flags duplicated records based on species name and coordinates, as well as user-
 }
 \usage{
 cc_dupl(x, lon = "decimallongitude", lat = "decimallatitude", 
-        species = "species", additions = NULL, value = "clean", verbose = T)
+        species = "species", additions = NULL, value = "clean", verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
