@@ -2,7 +2,7 @@ is.spatialvalid <- function(x){
   inherits(x, "spatialvalid")
 }
 
-plot.spatialvalid <- function(x, bgmap = NULL, clean = T, details = T, 
+plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE, 
                               pts.size = 1, font.size = 10, ...) {
   x <- data.frame(x)
   

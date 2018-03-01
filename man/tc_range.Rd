@@ -11,7 +11,7 @@ Flags record with an unexpectedly large temporal range, based on a quantile outl
 tc_range(x, lon = "lng", lat = "lat", 
          min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
          method = "quantile", mltpl = 5,  size.thresh = 7, max.range = 500,
-         uniq.loc = F, value = "clean", verbose = T)
+         uniq.loc = FALSE, value = "clean", verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

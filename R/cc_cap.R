@@ -27,7 +27,7 @@ cc_cap<- function(x, lon  = "decimallongitude", lat = "decimallatitude",
   if(is.null(ref)){ # incase no capitals are found in the study area
     out <- rep(TRUE, nrow(x))
   }else{
-    ref <- rgeos::gBuffer(ref, width = buffer, byid = T)
+    ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
     out <- is.na(sp::over(x = dat, y = ref))
   }
   

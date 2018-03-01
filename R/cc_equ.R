@@ -1,5 +1,5 @@
 cc_equ <- function(x, lon = "decimallongitude", lat = "decimallatitude",
-                   test = "absolute", value = "clean", verbose = T){
+                   test = "absolute", value = "clean", verbose = TRUE){
   
   #check value and test arguments
   match.arg(test, choices = c("absolute", "identical"))

@@ -10,7 +10,7 @@ This test identifies datasets where a significant fraction of records has been s
 \usage{
 dc_ddmm(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset", 
         pvalue = 0.025, diff = 1, mat.size = 1000, min.span = 2,
-        value = "clean", verbose = TRUE, diagnostic = F)
+        value = "clean", verbose = TRUE, diagnostic = FALSE)
 }
 
 \arguments{
