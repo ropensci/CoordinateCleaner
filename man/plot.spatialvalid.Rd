@@ -8,7 +8,7 @@ Plot Method for Class Spatialvalid
 A set of plots to explore objects of the class \code{spatialvalid}. A plot to visualize the flags from CleanCoordinates
 }
 \usage{
-\method{plot}{spatialvalid}(x, bgmap = NULL, clean = T, details = T, 
+\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE, details = TRUE, 
               pts.size = 1, font.size = 10, ...)}
 
 \arguments{

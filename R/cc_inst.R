@@ -19,13 +19,14 @@ cc_inst <- function(x, lon = "decimallongitude", lat = "decimallatitude",
   limits <- raster::extent(dat) + buffer
   
   # subset of testdatset according to limits
-  ref <- raster::crop(sp::SpatialPoints(ref[, c("decimallongitude", "decimallatitude")]), limits)
+  ref <- raster::crop(
+    sp::SpatialPoints(ref[, c("decimallongitude", "decimallatitude")]),limits)
   
   #test reference data after limiting and do test
   if(is.null(ref)){ # in case no bdinstitutions
     out <- rep(TRUE, nrow(x))
   }else{
-    ref <- rgeos::gBuffer(ref, width = buffer, byid = T)
+    ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
     out <- is.na(sp::over(x = dat, y = ref))
   }
   

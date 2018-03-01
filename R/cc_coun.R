@@ -1,5 +1,6 @@
-cc_coun <- function(x, lon = "decimallongitude", lat = "decimallatitude", iso3 = "countrycode",
-                          value = "clean", ref = NULL, verbose = TRUE) {
+cc_coun <- function(x, lon = "decimallongitude", lat = "decimallatitude", 
+                    iso3 = "countrycode",
+                    value = "clean", ref = NULL, verbose = TRUE) {
   
   #check function arguments for validity
   match.arg(value, choices = c("clean", "flags"))
@@ -12,7 +13,7 @@ cc_coun <- function(x, lon = "decimallongitude", lat = "decimallatitude", iso3 =
   #set reference and check for dependency
   if (is.null(ref)) {
     if (!requireNamespace("rnaturalearth", quietly = TRUE)) {
-      stop("Please install the 'rnaturalearth' package for the country test or provide a custom reference via ref", 
+      stop("Install the 'rnaturalearth' package or provide a custom reference", 
            call. = FALSE)
     }
     ref <- rnaturalearth::ne_countries(scale = "medium")

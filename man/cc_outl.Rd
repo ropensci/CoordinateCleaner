@@ -9,7 +9,7 @@ Flags records that are outliers in geographic space according to the method defi
 }
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude", species = "species", 
-        method = "quantile", mltpl = 3, tdi = 1000, value = "clean", verbose = T)
+        method = "quantile", mltpl = 3, tdi = 1000, value = "clean", verbose = TRUE)
 }
 
 \arguments{

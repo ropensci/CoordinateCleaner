@@ -1,5 +1,5 @@
 cc_val <- function(x, lon = "decimallongitude", lat = "decimallatitude", 
-                   value = "clean", verbose = T) {
+                   value = "clean", verbose = TRUE) {
   
   #check value argument
   match.arg(value, choices = c("clean", "flags"))

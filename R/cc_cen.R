@@ -28,13 +28,14 @@ cc_cen <- function(x, lon = "decimallongitude", lat = "decimallatitude",
   limits <- raster::extent(dat) + buffer
   
   # subset of testdatset according to speed up buffer
-  ref <- raster::crop(sp::SpatialPoints(ref[, c("longitude", "latitude")]), limits)
+  ref <- raster::crop(sp::SpatialPoints(ref[, c("longitude", "latitude")]), 
+                      limits)
   
   # run buffering
   if(is.null(ref)){ # incase no capitals are found in the study area
     out <- rep(TRUE, nrow(x))
   }else{
-    ref <- rgeos::gBuffer(ref, width = buffer, byid = T)
+    ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
     out <- is.na(sp::over(x = dat, y = ref))
   }
 

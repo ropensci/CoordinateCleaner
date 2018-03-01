@@ -1,5 +1,5 @@
 cc_urb <- function(x, lon = "decimallongitude", lat = "decimallatitude", 
-                   ref = NULL, value = "clean", verbose = T) {
+                   ref = NULL, value = "clean", verbose = TRUE) {
   
   #check value argument
   match.arg(value, choices = c("clean", "flags"))
@@ -8,7 +8,8 @@ cc_urb <- function(x, lon = "decimallongitude", lat = "decimallatitude",
     cat("Testing urban areas\n")
   }
 
-  #check for reference data. FOr this function reference hast to be supplied, availbel e.g. from the packages GitHub repository
+  #check for reference data. FOr this function reference hast to be supplied, 
+  #availble e.g. from the packages GitHub repository
   if (is.null(ref)) {
     stop("No referencepolygons found. Set 'urban.ref'")
   }else{

@@ -9,7 +9,7 @@ Flags records from inside urban areas, based on a geographic gazetteer. Often re
 }
 \usage{
 cc_urb(x, lon = "decimallongitude", lat = "decimallatitude", 
-       ref = NULL, value = "clean", verbose = T)
+       ref = NULL, value = "clean", verbose = TRUE)
 }
 
 \arguments{
