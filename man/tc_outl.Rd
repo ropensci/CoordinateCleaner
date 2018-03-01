@@ -12,7 +12,7 @@ tc_outl(x, lon = "lng", lat = "lat",
         min.age = "min_ma", max.age = "max_ma", taxon = "accepted_name", 
         method = "quantile", size.thresh = 7, mltpl = 5, 
         replicates = 5, flag.thresh = 0.5, 
-        uniq.loc = F, value = "clean", verbose = T)
+        uniq.loc = FALSE, value = "clean", verbose = TRUE)
 }
 
 \arguments{

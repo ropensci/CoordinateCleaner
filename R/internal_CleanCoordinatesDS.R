@@ -6,7 +6,7 @@
   data.units <- sort(abs(data))
   
   if (digit.round > 0){ # if set to 10 takes only units into account
-    data_units = data_units - round(floor(data.units / digit.round) * digit.round)
+    data_units <- data_units - round(floor(data.units / digit.round) * digit.round)
   }
   
   if(graphs){

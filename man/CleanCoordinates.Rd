@@ -12,18 +12,18 @@ Cleaning geographic coordinates by multiple empirical tests to flag potentially 
 \usage{
 CleanCoordinates(x, lon = "decimallongitude", lat = "decimallatitude", 
                 species = "species", countries = NULL, 
-                capitals = T, centroids = T, 
-                countrycheck = F, duplicates = F, equal = T, 
-                GBIF = T, institutions = T, outliers = F, seas = T,
-                urban = F, zeros = T, 
+                capitals = TRUE, centroids = TRUE, 
+                countrycheck = FALSE, duplicates = FALSE, equal = TRUE, 
+                GBIF = TRUE, institutions = TRUE, outliers = FALSE, seas = TRUE,
+                urban = FALSE, zeros = TRUE, 
                 capitals.rad = 0.05, centroids.rad = 0.01,
                 centroids.detail = "both", inst.rad = 0.001, 
                 outliers.method = "quantile", outliers.mtp = 3,
                 outliers.td = 1000, outliers.size = 7, zeros.rad = 0.5,
                 capitals.ref, centroids.ref, country.ref,
                 inst.ref, seas.ref, urban.ref,
-                value = "spatialvalid", verbose = T,
-                report = F)
+                value = "spatialvalid", verbose = TRUE,
+                report = FALSE)
 }
 
 \arguments{

@@ -1,5 +1,5 @@
 tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", 
-                    value = "clean", verbose = T){
+                    value = "clean", verbose = TRUE){
   match.arg(value, choices = c("clean", "flags"))
   
   

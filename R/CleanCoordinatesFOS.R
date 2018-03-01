@@ -2,15 +2,18 @@
 CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                                 min.age = "min_ma", max.age = "max_ma",
                                 taxon = "accepted_name", countries = "cc",
-                                centroids = T, countrycheck = T, 
-                                equal = T,  GBIF = T, institutions = T, 
-                                temp.range.outliers = T, spatio.temp.outliers = T, temp.ages.equal = T, 
-                                zeros = T, centroids.rad = 0.05,
+                                centroids = TRUE, countrycheck = TRUE, 
+                                equal = TRUE,  GBIF = TRUE, institutions = TRUE, 
+                                temp.range.outliers = TRUE, 
+                                spatio.temp.outliers = TRUE, temp.ages.equal = TRUE, 
+                                zeros = TRUE, centroids.rad = 0.05,
                                 centroids.detail = "both", inst.rad = 0.001, 
-                                outliers.method = "quantile", outliers.threshold = 5, outliers.size = 7,
+                                outliers.method = "quantile",
+                                outliers.threshold = 5, outliers.size = 7,
                                 outliers.replicates = 5,
                                 zeros.rad = 0.5, centroids.ref, country.ref,
-                                inst.ref, value = "spatialvalid", verbose = T, report = F){
+                                inst.ref, value = "spatialvalid", 
+                                verbose = TRUE, report = FALSE){
   
   
   #check function arguments
@@ -31,13 +34,13 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
       warning("countries missing, countrycheck set to FALSE")
     }
   }
-  if(is.null(taxon)){
-    if (spatio.temp.outliers) {
-      outliers <- FALSE
-      warning("is.null(taxon), outliers test skipped")
-    }
-    taxon <- NULL
-  }
+  # if(is.null(taxon)){
+  #   if (spatio.temp.outliers) {
+  #     outliers <- FALSE
+  #     warning("is.null(taxon), outliers test skipped")
+  #   }
+  #   taxon <- NULL
+  # }
   if(missing(centroids.ref)){
     centroids.ref <- NULL
   }
@@ -48,12 +51,14 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
     inst.ref <- NULL
   }
 
-  # Run tests Validity, check if coordinates fit to lat/long system, this has to be run all the time, as otherwise the other tests don't work
+  # Run tests Validity, check if coordinates fit to lat/long system, 
+  #this has to be run all the time, 
+  #as otherwise the other tests don't work
   val <- cc_val(x, lon = lon, lat = lat,
                 verbose = verbose, value = "flags")
   
   if (!all(val)) {
-    stop("invalid coordinates found in rows, clean dataset before proceeding:\n", 
+    stop("invalid coordinates found:\n", 
          paste(which(!val), "\n"))
   }
   
@@ -78,7 +83,9 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   ## Centroids
   if (centroids) {
     cen <- cc_cen(x, lon = lon, lat = lat, 
-                  buffer = centroids.rad, test = centroids.detail, ref = centroids.ref,
+                  buffer = centroids.rad, 
+                  test = centroids.detail, 
+                  ref = centroids.ref,
                   value = "flags", verbose = verbose)
   } else {
     cen <- rep(NA, nrow(x))
@@ -117,7 +124,10 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
       # otl.test <- x[x[[taxon]] %in% names(otl.test),]
       # otl.test <- otl.test[, c(taxon, lon, lat, min.age, max.age)]
       
-      otl.flag <- tc_outl(x = x, lon = lon, lat = lat,  min.age = min.age, max.age = max.age,
+      otl.flag <- tc_outl(x = x, lon = lon, 
+                          lat = lat,  
+                          min.age = min.age, 
+                          max.age = max.age,
                           taxon = taxon, size.thresh = outliers.size,
                           method = outliers.method, mltpl = outliers.threshold,
                           replicates = outliers.replicates,
@@ -133,11 +143,16 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   
   #Temporal, range size outliers
   if (temp.range.outliers) {
-    
     #always over entire dataset
-    ran.otl<- tc_range(x, taxon = "",  min.age = min.age, max.age = max.age,
-                             method = outliers.method, mltpl = outliers.threshold,
-                             value = "flags", verbose = verbose)
+    test <- x
+    ran.otl<- tc_range(x = test, taxon = "",  
+                       min.age = min.age, 
+                       max.age = max.age,
+                       lon = lon, 
+                       lat = lat,
+                       method = outliers.method,
+                       mltpl = outliers.threshold,
+                       value = "flags", verbose = verbose)
 
     #per taxon
     if(taxon != ""){
@@ -149,8 +164,13 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
       # ran.otl  <- rep(TRUE, nrow(x))
       # ran.otl[ran.otl.flag] <- FALSE
       
-      ran.otl.flag <- tc_range(ran.test, taxon = taxon,  min.age = min.age, max.age = max.age,
-                               method = outliers.method, mltpl = outliers.threshold,
+      ran.otl.flag <- tc_range(ran.test, taxon = taxon,  
+                               min.age = min.age, 
+                               max.age = max.age,
+                               lon = lon, 
+                               lat = lat,
+                               method = outliers.method, 
+                               mltpl = outliers.threshold,
                                value = "ids", verbose = verbose)
       
       ran.otl[ran.otl.flag] <- FALSE
@@ -161,8 +181,10 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
 
   # Temporal, Equal ages
   if (temp.ages.equal) {
-    age.equ <- tc_equal(x, min.age = min.age, max.age = max.age,
-                       value = "flags", verbose = verbose)
+    age.equ <- tc_equal(x, 
+                        min.age = min.age, 
+                        max.age = max.age,
+                        value = "flags", verbose = verbose)
   } else {
     age.equ <- rep(NA, dim(x)[1])
   }
@@ -198,11 +220,18 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
     }
   }
   if (value == "spatialvalid") {
-    inp <- data.frame(taxon = x[, taxon], decimallongitude = x[, lon], decimallatitude = x[, lat])
-    out <- data.frame(inp, validity = val, equal = equ, zeros = zer, centroids = cen, 
+    inp <- data.frame(taxon = x[, taxon], 
+                      decimallongitude = x[, lon], 
+                      decimallatitude = x[, lat])
+    out <- data.frame(inp, validity = val, 
+                      equal = equ, 
+                      zeros = zer, 
+                      centroids = cen, 
                       countrycheck = con,
                       gbif = gbf, institution = inst, 
-                      spatio.tmp.outl = otl, tmp.range.outl = ran.otl, equal.min.max.age = age.equ, 
+                      spatio.tmp.outl = otl, 
+                      tmp.range.outl = ran.otl, 
+                      equal.min.max.age = age.equ, 
                       summary = out)
     out <- Filter(function(x) !all(is.na(x)), out)
     class(out) <- c("spatialvalid", "data.frame", class(out))
@@ -211,10 +240,12 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
     }
     if (is.character(report)) {
       suma <- data.frame(Test = as.character(names(out[-(1:3)])), 
-                         Flagged.records = colSums(!out[-(1:3)]), stringsAsFactors = F)
+                         Flagged.records = colSums(!out[-(1:3)]), 
+                         stringsAsFactors = F)
       suma <- rbind(suma, c("Total number of records", length(out$summary)))
       suma <- rbind(suma, c("Error Quotient", 
-                            round(sum(!out$summary, na.rm = T)/length(out$summary), 2)))
+                            round(sum(!out$summary, na.rm = T)/
+                                    length(out$summary), 2)))
       
       write.table(suma, report, sep = "\t", row.names = F, quote = F)
     }
