@@ -12,3 +12,4 @@ Depends: R (>= 3.0.0), sp
 Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth, stats
 LazyData: true
 RoxygenNote: 6.0.1
+Suggests: testthat

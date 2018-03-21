@@ -193,8 +193,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
   
   if (verbose) {
     if (!is.null(out)) {
-      cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = T), 
-                  length(out), round(sum(!out, na.rm = T)/length(out), 2)))
+      cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = TRUE), 
+                  length(out), round(sum(!out, na.rm = TRUE)/length(out), 2)))
     } else {
       cat("flagged 0 records, EQ = 0 \n")
     }
@@ -216,12 +216,12 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     }
     if (is.character(report)) {
       suma <- data.frame(Test = as.character(names(out[-(1:3)])), 
-                         Flagged.records = colSums(!out[-(1:3)]), stringsAsFactors = F)
+                         Flagged.records = colSums(!out[-(1:3)]), stringsAsFactors = FALSE)
       suma <- rbind(suma, c("Total number of records", length(out$summary)))
       suma <- rbind(suma, c("Error Quotient", 
-                            round(sum(!out$summary, na.rm = T)/length(out$summary), 2)))
+                            round(sum(!out$summary, na.rm = TRUE)/length(out$summary), 2)))
 
-      write.table(suma, report, sep = "\t", row.names = F, quote = F)
+      write.table(suma, report, sep = "\t", row.names = FALSE, quote = FALSE)
     }
     
   }
