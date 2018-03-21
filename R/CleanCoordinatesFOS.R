@@ -213,8 +213,8 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
   
   if (verbose) {
     if (!is.null(out)) {
-      cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = T), 
-                  length(out), round(sum(!out, na.rm = T)/length(out), 2)))
+      cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = TRUE), 
+                  length(out), round(sum(!out, na.rm = TRUE)/length(out), 2)))
     } else {
       cat("flagged 0 records, EQ = 0 \n")
     }
@@ -244,10 +244,10 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat",
                          stringsAsFactors = F)
       suma <- rbind(suma, c("Total number of records", length(out$summary)))
       suma <- rbind(suma, c("Error Quotient", 
-                            round(sum(!out$summary, na.rm = T)/
+                            round(sum(!out$summary, na.rm = TRUE)/
                                     length(out$summary), 2)))
       
-      write.table(suma, report, sep = "\t", row.names = F, quote = F)
+      write.table(suma, report, sep = "\t", row.names = F, quote = FALSE)
     }
     
   }
