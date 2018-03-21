@@ -79,7 +79,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     
     } else {
     #create identifier
-    x$idf <- seq(1:nrow(x))
+    x$idf <- seq_len(nrow(x))
     # select relevant columns
     splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon, "idf")]
     #splist <- x[, c(lon, lat, min.age, max.age, "samplepoint", taxon)]
@@ -191,7 +191,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     if(any(!out) & uniq.loc){
       supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
       outp <- list()
-      for(j in 1:nrow(supp)){
+      for(j in seq_len(nrow(supp))){
         k <- supp[j,]
         outp[[j]] <- which(k[[taxon]]== x[[taxon]] & k[[lon]] == x[[lon]] & 
                         k[[lat]] == x[[lat]] & k[[min.age]] == x[[min.age]] & 
@@ -205,7 +205,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   
   # report to screen
   if (verbose) {
-      cat(sprintf("Flagged %s records. \n", sum(!out, na.rm = T)))
+      cat(sprintf("Flagged %s records. \n", sum(!out, na.rm = TRUE)))
   }
   
   switch(value, clean = return(x[out, ]), 

@@ -64,10 +64,10 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     dat[dat$min_age == 0,3] <- 0.001
 
     if (isTRUE(random)){
-      dat$new_age <- round(stats::runif(length(dat[,1]), min=apply(dat[,3:4], FUN = min,1),
+      dat$new_age <- round(stats::runif(length(dat[,1]), min=apply(dat[,3:4], FUN = min, 1),
                                         max=apply(dat[,3:4], FUN=max,1)), digits = 6)
     } else {
-      for (i in 1:length(dat[,1])){
+      for (i in seq_along(dat[,1])){
         dat$new_age[i] <- mean(c(dat[i,3], dat[i,4]))
       }				
     }
@@ -75,7 +75,7 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     dat2 <- subset(dat, select=c("Species","new_age"))
     taxa <- sort(unique(dat2$Species))
     
-    for (n in 1:length(taxa)){
+    for (n in seq_along(taxa)){
       times[[n]] <- dat2$new_age[dat2$Species == taxa[n]]
       if (toupper(splist$Status[splist$Species == taxa[n]]) == toupper("extant")){
         times[[n]] <- append(times[[n]], "0", after=length(times[[n]]))
@@ -85,13 +85,13 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     dat3 <- matrix(data=NA, nrow=length(times), ncol=max(sapply(times, length)))
     rownames(dat3) <- taxa
     
-    for (p in 1:length(times)){
-      dat3[p,1:length(times[[p]])] <- times[[p]]
+    for (p in seq_along(times)){
+      dat3[p,seq_along(times[[p]])] <- times[[p]]
     }
     
     cat(noquote(sprintf("\ndata_%s=[", j)), file=outfile, append=TRUE)
     
-    for (n in 1:(length(taxa)-1)){
+    for (n in seq_len(length(taxa)-1)){
       rec <- paste(dat3[n,!is.na(dat3[n,])], collapse=",")
       cat(noquote(sprintf("array([%s]),", rec)), file=outfile, append=TRUE, sep="\n")
     }
@@ -133,7 +133,7 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   if ("trait" %in% colnames(dat)){
     datBM <- dat[,1]
     splist$Trait <- NA
-    for (n in 1:length(splist[,1])){
+    for (n in seq_along(splist[,1])){
       splist$Trait[n] <- mean(dat$trait[datBM == splist[n,1]], na.rm=TRUE)
     }
     s1 <- "\ntrait1=array(["

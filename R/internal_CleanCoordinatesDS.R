@@ -1,5 +1,6 @@
 # 1. The autocorrelation function returning a gamma vector, paramters = nbins and roudning, the latter = 0 for now
-.CalcACT <- function(data, digit.round = 0, nc = 3000, graphs = T, graph.title = "Title", rarefy = F){
+.CalcACT <- function(data, digit.round = 0, nc = 3000, 
+                     graphs = T, graph.title = "Title", rarefy = FALSE){
   
   if(rarefy){data <- unique(data)}
   
@@ -12,7 +13,7 @@
   if(graphs){
     h <- hist(data.units, nclass = nc, main = graph.title)
   }else{
-    h <- hist(data.units, nclass = nc, plot = F)
+    h <- hist(data.units, nclass = nc, plot = FALSE)
   }
   
   f <- h$counts
@@ -44,7 +45,7 @@
 # 2.function to run a sliding window over the gamma vector, identifying outliers, using the interquantile range. Two parameters: window size (fixed at 10 points for now) and the outlier threshold (T1, this is the most important paramter for the function). The function returns the number of non-consecutive 1 (= outlier found) 
 .OutDetect <- function(x, T1 = 7, window.size = 10, 
                        detection.rounding = 2, detection.threshold = 6, 
-                       graphs = T){
+                       graphs = TRUE){
   max.range <- nrow(x) - window.size #The maximum range end for the sliding window
   
   out <- matrix(ncol = 2)
@@ -85,7 +86,7 @@
     if(graphs){abline(v = outl[,2], col = "green")}
     
     #calculate the distance between outliers
-    dist.m <- round(stats::dist(round(outl[,2, drop = F], detection.rounding), diag = F), detection.rounding)
+    dist.m <- round(stats::dist(round(outl[,2, drop = FALSE], detection.rounding), diag = FALSE), detection.rounding)
     dist.m[dist.m > 2] <- NA
     
     if(length(dist.m) == sum(is.na(dist.m))){
