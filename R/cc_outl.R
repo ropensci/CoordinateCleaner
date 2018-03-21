@@ -54,7 +54,7 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude",
         dist <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine)
         dist[dist == 0] <- NA
         
-        mins <- apply(dist, 1, mean, na.rm = T)
+        mins <- apply(dist, 1, mean, na.rm = TRUE)
         quo <- median(mins)
         tester <- mad(mins)
         out <- which(mins < quo - tester * mltpl | mins > quo + tester * mltpl)
