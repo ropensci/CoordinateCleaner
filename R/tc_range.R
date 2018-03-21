@@ -47,15 +47,15 @@ tc_range <- function(x, lon = "lng", lat = "lat",
     
     #Quantile based test, with mean interpoint distances
     if (method == "quantile") {
-      quo <- quantile(rang$range, 0.75, na.rm = T)
-      flags <- which(rang$range > (quo + IQR(rang$range, na.rm = T) * mltpl))
+      quo <- quantile(rang$range, 0.75, na.rm = TRUE)
+      flags <- which(rang$range > (quo + IQR(rang$range, na.rm = TRUE) * mltpl))
       flags <- rang[flags, "idf"]
     }
     
     #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
     if (method == "mad") {
       quo <- median(rang$range)
-      tester <- mad(rang$range, na.rm = T)
+      tester <- mad(rang$range, na.rm = TRUE)
       flags <- which(rang$range > quo + tester * mltpl)
       flags <- rang[flags, "idf"]
     }
@@ -105,7 +105,7 @@ tc_range <- function(x, lon = "lng", lat = "lat",
       #MAD (Median absolute deviation) based test, calculate the mean distance to all other points for each point, and then take the mad of this
       if (method == "mad") {
         quo <- median(rang)
-        tester <- mad(rang, na.rm = T)
+        tester <- mad(rang, na.rm = TRUE)
         out <- which(rang > quo + tester * mltpl)
         out <- k[out, "idf"]
       }

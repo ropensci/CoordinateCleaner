@@ -34,8 +34,8 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       dat.unique <- k[!duplicated(k[, c(lon, lat, ds)]),]
       
       ##Test geographic span
-      lon.span <- abs(max(dat.unique[,lon], na.rm = T) - min(dat.unique[,lon], na.rm = TRUE))
-      lat.span <- abs(max(dat.unique[,lat], na.rm = T) - min(dat.unique[,lat], na.rm = TRUE))
+      lon.span <- abs(max(dat.unique[,lon], na.rm = TRUE) - min(dat.unique[,lon], na.rm = TRUE))
+      lat.span <- abs(max(dat.unique[,lat], na.rm = TRUE) - min(dat.unique[,lat], na.rm = TRUE))
       
       if(lon.span >= min.span & lat.span >= min.span){
         #Assign decimals to a 100x100 matrix for binomial test
