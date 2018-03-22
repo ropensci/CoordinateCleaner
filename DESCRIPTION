@@ -2,7 +2,7 @@ Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
 Version: 1.0-7
-Date: 2018-03-01
+Date: 2018-03-23
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@bioenv.gu.se",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = c("ctb")))
@@ -12,4 +12,4 @@ Depends: R (>= 3.0.0), sp
 Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth, stats
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: testthat
+Suggests: testthat, covr
