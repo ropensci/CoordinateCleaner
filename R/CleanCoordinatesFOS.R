@@ -207,4 +207,3 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
     
     return(out)
 }
-80
