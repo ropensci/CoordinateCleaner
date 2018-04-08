@@ -5,7 +5,7 @@ cc_zero <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing zero coordinates\n")
+        message("Testing zero coordinates")
     }
     
     # plain zero in coordinates
@@ -21,9 +21,8 @@ cc_zero <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer
     out <- Reduce("&", list(t1, t2))
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))
 }
-80

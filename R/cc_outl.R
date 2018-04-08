@@ -6,7 +6,7 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
     match.arg(method, choices = c("distance", "quantile", "mad"))
     
     if (verbose) {
-        cat("Testing geographic outliers\n")
+        message("Testing geographic outliers")
     }
     
     # split up into species
@@ -75,13 +75,11 @@ cc_outl <- function(x, lon = "decimallongitude", lat = "decimallatitude", specie
     
     if (verbose) {
         if (value == "ids") {
-            cat(sprintf("Flagged %s records. \n", length(flags)))
+            message(sprintf("Flagged %s records.", length(flags)))
         } else {
-            cat(sprintf("Flagged %s records. \n", sum(!out)))
+            message(sprintf("Flagged %s records.", sum(!out)))
         }
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out), ids = return(flags))
 }
-
-80

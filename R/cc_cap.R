@@ -5,7 +5,7 @@ cc_cap <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer 
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing country capitals\n")
+        message("Testing country capitals")
     }
     
     # select relevant columns
@@ -34,9 +34,8 @@ cc_cap <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer 
     
     # create output based on value argument
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))
 }
-80
