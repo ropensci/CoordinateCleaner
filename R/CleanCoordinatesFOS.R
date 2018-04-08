@@ -165,10 +165,10 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
     
     if (verbose) {
         if (!is.null(out)) {
-            cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = TRUE), 
+            message(sprintf("Flagged %s of %s records, EQ = %s", sum(!out, na.rm = TRUE), 
                 length(out), round(sum(!out, na.rm = TRUE)/length(out), 2)))
         } else {
-            cat("flagged 0 records, EQ = 0 \n")
+            message("flagged 0 records, EQ = 0")
         }
     }
     if (value == "spatialvalid") {

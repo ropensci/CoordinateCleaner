@@ -9,9 +9,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     # report analyses step
     if (verbose) {
         if (taxon == "") {
-            cat("Testing spatio-temporal outliers on dataset level\n")
+            message("Testing spatio-temporal outliers on dataset level")
         } else {
-            cat("Testing spatio-temporal outliers on taxon level\n")
+            message("Testing spatio-temporal outliers on taxon level")
         }
     }
     
@@ -211,7 +211,7 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     
     # report to screen
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out, na.rm = TRUE)))
+        message(sprintf("Flagged %s records.", sum(!out, na.rm = TRUE)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out), ids = return(which(!out)))

@@ -8,7 +8,7 @@ cc_coun <- function(x, lon = "decimallongitude", lat = "decimallatitude", iso3 =
     }
     
     if (verbose) {
-        cat("Testing country identity\n")
+        message("Testing country identity")
     }
     
     # set reference and check for dependency
@@ -36,9 +36,8 @@ cc_coun <- function(x, lon = "decimallongitude", lat = "decimallatitude", iso3 =
     
     # return output
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))
 }
-80

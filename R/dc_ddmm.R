@@ -6,7 +6,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
     match.arg(value, choices = c("clean", "flags", "dataset"))
     
     if (verbose) {
-        cat("Testing datasets for dd.mm to dd.dd conversion errors\n")
+        message("Testing datasets for dd.mm to dd.dd conversion errors")
     }
     
     # prepare dataset for analyses
@@ -97,7 +97,7 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
     
     # return output dependent on value argument
     if (verbose) {
-        cat(sprintf("Flagged %s records\n", sum(!flags)))
+        message(sprintf("Flagged %s records", sum(!flags)))
     }
     
     switch(value, dataset = return(out.ds), clean = return(x[flags, ]), flags = return(flags))
