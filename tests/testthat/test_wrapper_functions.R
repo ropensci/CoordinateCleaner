@@ -40,17 +40,26 @@ test_that("dataset level cleaning works", {
 
 
 #Fossil wrapper function
+
+set.seed(1)
 minages <- runif(250, 0, 65)
+set.seed(1)
+lat <- runif(250, min = -26, max = -11)
+set.seed(1)
+lng <- runif(250, min = 42, max = 51)
+set.seed(1)
+age <- runif(250, 0.1, 65)
+
 exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
-                    lng = runif(250, min = 42, max = 51),
-                    lat = runif(250, min = -26, max = -11),
+                    lng = lng,
+                    lat = lat,
                     min_ma = minages,
-                    max_ma = minages + runif(250, 0.1, 65))
+                    max_ma = minages + age)
 
 
 test_that("fossil wrapper cleaning works", {
   skip_on_cran()
   expect_is(CleanCoordinatesFOS(exmpl), "spatialvalid")
-  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 1)
+  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 248)
 })
 
