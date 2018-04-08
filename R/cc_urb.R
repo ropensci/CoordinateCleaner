@@ -5,7 +5,7 @@ cc_urb <- function(x, lon = "decimallongitude", lat = "decimallatitude", ref = N
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing urban areas\n")
+        message("Testing urban areas")
     }
     
     # check for reference data. FOr this function reference hast to be supplied,
@@ -31,7 +31,7 @@ cc_urb <- function(x, lon = "decimallongitude", lat = "decimallatitude", ref = N
     }
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))

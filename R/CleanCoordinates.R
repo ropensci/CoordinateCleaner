@@ -155,7 +155,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     
     # exclude duplicates
     if (duplicates) {
-        cat("running duplicates test\n")
+        message("running duplicates test")
         if (is.null(species)) {
             dpl.test <- x
             warning("duplicates test without species id, assuming single species dataset")
@@ -164,7 +164,7 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
         }
         dpl <- !duplicated(dpl.test)
         if (verbose) {
-            cat(sprintf("flagged %s records \n", sum(!dpl)))
+            message(sprintf("flagged %s records.", sum(!dpl)))
         }
     } else {
         dpl <- rep(NA, dim(x)[1])
@@ -178,10 +178,10 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     
     if (verbose) {
         if (!is.null(out)) {
-            cat(sprintf("Flagged %s of %s records, EQ = %s \n", sum(!out, na.rm = TRUE), 
+            message(sprintf("Flagged %s of %s records, EQ = %s.", sum(!out, na.rm = TRUE), 
                 length(out), round(sum(!out, na.rm = TRUE)/length(out), 2)))
         } else {
-            cat("flagged 0 records, EQ = 0 \n")
+            message("flagged 0 records, EQ = 0")
         }
     }
     if (value == "spatialvalid") {

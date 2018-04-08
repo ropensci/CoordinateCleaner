@@ -4,7 +4,7 @@ tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
     
     
     if (verbose) {
-        cat("Testing age validity\n")
+        message("Testing age validity")
     }
     
     # min.age == max.age
@@ -21,10 +21,9 @@ tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
     out[flags] <- FALSE
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     # value
     switch(value, clean = return(x[out, ]), flags = return(out))
 }
-80
