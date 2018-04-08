@@ -82,7 +82,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
         out$summary <- out$pass.ddmm & out$summary
         out <- Filter(function(x) !all(is.na(x)), out)
         if (verbose) {
-            cat(sprintf("Flagged %s datasets\n", sum(!out$summary)))
+            message(sprintf("Flagged %s datasets.", sum(!out$summary)))
         }
     }
     if (value == "flags") {
@@ -91,7 +91,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
         out$summary <- Reduce("&", out)
         
         if (verbose) {
-            cat(sprintf("Flagged %s records\n", sum(!out$summary)))
+            message(sprintf("Flagged %s records.", sum(!out$summary)))
         }
     }
     if (value == "clean") {
@@ -99,7 +99,7 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
         out <- Filter(function(x) !all(is.na(x)), out)
         out$summary <- Reduce("&", out)
         if (verbose) {
-            cat(sprintf("Flagged %s records\n", sum(!out$summary)))
+            message(sprintf("Flagged %s records.", sum(!out$summary)))
         }
         out <- dat[out$summary, ]
     }
@@ -107,4 +107,3 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude", lat = "decimallatitu
     # return output
     return(out)
 }
-80

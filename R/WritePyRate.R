@@ -157,4 +157,3 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
     cat("\n\nPyRate input file was saved in: ", sprintf("%s", outfile), "\n\n")
     
 }
-80

@@ -6,7 +6,7 @@ cc_equ <- function(x, lon = "decimallongitude", lat = "decimallatitude", test = 
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing equal lat/lon\n")
+        message("Testing equal lat/lon")
     }
     
     switch(test, absolute = {
@@ -16,7 +16,7 @@ cc_equ <- function(x, lon = "decimallongitude", lat = "decimallatitude", test = 
     })
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))

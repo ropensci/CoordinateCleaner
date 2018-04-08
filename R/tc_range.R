@@ -18,7 +18,7 @@ tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = 
     
     if (taxon == "") {
         if (verbose) {
-            cat("Testing temporal range outliers on dataset level\n")
+            message("Testing temporal range outliers on dataset level")
         }
         
         # Get unique records
@@ -61,7 +61,7 @@ tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = 
         }
     } else {
         if (verbose) {
-            cat("Testing temporal range outliers on taxon level\n")
+            message("Testing temporal range outliers on taxon level\n")
         }
         if (uniq.loc) {
             # select relevant columns
@@ -140,13 +140,11 @@ tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = 
     
     if (verbose) {
         if (value == "ids") {
-            cat(sprintf("Flagged %s records. \n", length(flags)))
+            message(sprintf("Flagged %s records.", length(flags)))
         } else {
-            cat(sprintf("Flagged %s records. \n", sum(!out)))
+            message(sprintf("Flagged %s records.", sum(!out)))
         }
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out), ids = return(flags))
 }
-
-80
