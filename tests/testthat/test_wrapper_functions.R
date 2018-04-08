@@ -32,8 +32,25 @@ bias <- data.frame(dataset = rep("biased", 1000),
 test <- rbind(clean, bias)
 
 
-test_that("dataset levele cleaning works", {
+test_that("dataset level cleaning works", {
   skip_on_cran()
   expect_is(CleanCoordinatesDS(test), "data.frame")
   expect_equal(sum(CleanCoordinatesDS(test)$summary), 1)
 })
+
+
+#Fossil wrapper function
+minages <- runif(250, 0, 65)
+exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
+                    lng = runif(250, min = 42, max = 51),
+                    lat = runif(250, min = -26, max = -11),
+                    min_ma = minages,
+                    max_ma = minages + runif(250, 0.1, 65))
+
+
+test_that("fossil wrapper cleaning works", {
+  skip_on_cran()
+  expect_is(CleanCoordinatesFOS(exmpl), "spatialvalid")
+  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 1)
+})
+
