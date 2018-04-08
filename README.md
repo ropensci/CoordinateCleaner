@@ -2,8 +2,8 @@
 [![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 
-# CoordinateCleaner v1.0-7
-An R-package to flag of common spatial and temporal errors in biological and palaentological collection data, for the use in conservation, ecology and palentology. Specifically includes tests for
+# CoordinateCleaner v1.1-0
+An R-package to flag of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 
 * General coordinate validity
 * Country and province centroids
@@ -78,4 +78,4 @@ cl <- exmpl %>%
 ```
 
 # Documentation
-Pipelines for cleaning data from teh Global Biodiversity Information Facility and the Paleobiology Database are available in \Tutorials.
+Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in \Tutorials.

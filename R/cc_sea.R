@@ -5,7 +5,7 @@ cc_sea <- function(x, lon = "decimallongitude", lat = "decimallatitude", ref = N
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing sea coordinates\n")
+        message("Testing sea coordinates")
     }
     
     # select relevant columns
@@ -25,7 +25,7 @@ cc_sea <- function(x, lon = "decimallongitude", lat = "decimallatitude", ref = N
     out <- !is.na(out)
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))

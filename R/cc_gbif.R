@@ -5,7 +5,7 @@ cc_gbif <- function(x, lon = "decimallongitude", lat = "decimallatitude", value 
     match.arg(value, choices = c("clean", "flags"))
     
     if (verbose) {
-        cat("Testing GBIF headquarters\n")
+        message("Testing GBIF headquarters")
     }
     
     dat <- sp::SpatialPoints(x[, c(lon, lat)])
@@ -16,7 +16,7 @@ cc_gbif <- function(x, lon = "decimallongitude", lat = "decimallatitude", value 
     out <- is.na(out)
     
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))

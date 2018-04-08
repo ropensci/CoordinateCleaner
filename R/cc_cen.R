@@ -6,7 +6,7 @@ cc_cen <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer 
     match.arg(test, choices = c("both", "country", "provinces"))
     
     if (verbose) {
-        cat("Testing country centroids\n")
+        message("Testing country centroids")
     }
     
     # select relevant columns
@@ -42,7 +42,7 @@ cc_cen <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer 
     
     # create output based on value argument
     if (verbose) {
-        cat(sprintf("Flagged %s records. \n", sum(!out)))
+        message(sprintf("Flagged %s records.", sum(!out)))
     }
     
     switch(value, clean = return(x[out, ]), flags = return(out))
