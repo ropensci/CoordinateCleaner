@@ -37,7 +37,7 @@ test_that("cc_outl works", {
   expect_equal(sum(cc_outl(x = exmpl, value = "flags", mltpl = 1000)), 250)
   
   expect_equal(sum(cc_outl(x = exmpl, value = "flags", method = "distance", tdi = .001)), 31)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flags", method = "distance", tdi = 10000)), 300)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flags", method = "distance", tdi = 10000)), 250)
 
   expect_error(cc_dupl(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
 })
