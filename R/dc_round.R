@@ -374,12 +374,14 @@ dc_round <- function(x,
     }
   }
 
-  switch(value, dataset = return(out), clean = return({
-    test <- x[x[[ds]] %in% out[out$summary, "dataset"], ]
+  switch(value, 
+         dataset = return(out), 
+         clean = return({test <- x[x[[ds]] %in% out[out$summary, "dataset"], ]
     if (length(test) < 0) {
       test
     } else {
       NULL
     }
-  }), flags = return(x[[ds]] %in% out[out$summary, "dataset"]))
+  }), 
+  flags = return(x[[ds]] %in% out[out$summary, "dataset"]))
 }

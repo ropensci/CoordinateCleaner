@@ -22,7 +22,7 @@
 #' \dQuote{time}.  Default = \dQuote{quantile}.
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-#' 'mad'})to identify outliers. See details.  Default = 3.
+#' 'mad'}) to identify outliers. See details.  Default = 3.
 #' @param size.thresh numeric.  The minimum number of records needed for a
 #' dataset to be tested. Default = 10.
 #' @param max.range numeric. A absolute maximum time interval between min age

@@ -1,16 +1,27 @@
 library(CoordinateCleaner)
 context("Coordinate cleaning")
 
-set.seed(1)
-
 # Coordinate level cleaning
-exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11))
+set.seed(1)
+sp <- sample(letters, size = 250, replace = TRUE)
+set.seed(1)
+lon <- runif(250, min = 42, max = 51)
+set.seed(1)
+lat <- runif(250, min = -26, max = -11)
 
-test_that("cc_cap arguments work", {
-  expect_equal(ncol(CleanCoordinates(x = exmpl)), 12)
-  expect_equal(nrow(CleanCoordinates(x = exmpl)), 250)
+exmpl <- data.frame(species = sp,
+                    decimallongitude = lon,
+                    decimallatitude = lat,
+                    ISO3 = "RUS")
+
+test_that("CleanCoordinates produces correct output", {
+  t1 <- CleanCoordinates(x = exmpl)
+  expect_equal(ncol(t1), 12)
+  expect_equal(nrow(t1), 250)
+  expect_equal(sum(t1$summary), 187)
+  
+  expect_equal(sum(CleanCoordinates(x = exmpl, countries = "ISO3", countrycheck = T)$summary), 2)
+  
 })
 
 
@@ -40,7 +51,6 @@ test_that("dataset level cleaning works", {
 
 
 #Fossil wrapper function
-
 set.seed(1)
 minages <- runif(250, 0, 65)
 set.seed(1)

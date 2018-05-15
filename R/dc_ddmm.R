@@ -64,8 +64,8 @@
 #' dc_ddmm(x = clean, value = "flags")
 #' 
 #' #problematic dataset
-#' lon <- sample(-180:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
-#' lat <- sample(-90:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
+#' lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
+#' lat <- sample(0:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
 #' 
 #' prob <-  data.frame(species = letters[1:10], 
 #'                 decimallongitude = lon, 
