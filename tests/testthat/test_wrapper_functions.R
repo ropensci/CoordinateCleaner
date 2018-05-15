@@ -13,23 +13,34 @@ exmpl <- data.frame(species = sp,
                     decimallongitude = lon,
                     decimallatitude = lat,
                     ISO3 = "RUS")
+t1 <- CleanCoordinates(x = exmpl)
 
 test_that("CleanCoordinates produces correct output", {
-  t1 <- CleanCoordinates(x = exmpl)
   expect_equal(ncol(t1), 12)
   expect_equal(nrow(t1), 250)
   expect_equal(sum(t1$summary), 187)
   
   expect_equal(sum(CleanCoordinates(x = exmpl, countries = "ISO3", countrycheck = T)$summary), 2)
-  
 })
+
+test_that("CleanCoordinates S3 methods work", {
+  expect_is(plot(t1), "gg")
+  expect_is(plot(t1, clean = FALSE), "gg")
+  expect_is(plot(t1, details = FALSE), "gg")
+  expect_is(plot(t1, details = FALSE, clean = FALSE), "gg")
+  
+  expect_is(summary(t1), "integer")
+  
+  expect_equal(is(t1), "spatialvalid")
+})
+
 
 
 #Dataset level cleaning
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
-                    decimallongitude = runif(min = -42, max = -40, n = 1000),
-                    decimallatitude = runif(min = -12, max = -10, n = 1000))
+                    decimallongitude = runif(min = -43, max = -40, n = 1000),
+                    decimallatitude = runif(min = -13, max = -10, n = 1000))
 
 bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
                round(runif(min = -42, max = -40, n = 300), 0),
@@ -44,9 +55,18 @@ test <- rbind(clean, bias)
 
 
 test_that("dataset level cleaning works", {
-  skip_on_cran()
+  #test activated
   expect_is(CleanCoordinatesDS(test), "data.frame")
+  expect_is(CleanCoordinatesDS(test, periodicity = F), "data.frame")
+  expect_is(CleanCoordinatesDS(test, ddmm = F), "data.frame")
+  
+  #Output value
+  expect_is(CleanCoordinatesDS(test, value = "clean"), "data.frame")
+  expect_is(CleanCoordinatesDS(test, value = "flags"), "data.frame")
+  
   expect_equal(sum(CleanCoordinatesDS(test)$summary), 1)
+  
+
 })
 
 
@@ -68,7 +88,17 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 
 
 test_that("fossil wrapper cleaning works", {
-  skip_on_cran()
   expect_is(CleanCoordinatesFOS(exmpl), "spatialvalid")
   expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 248)
+})
+
+
+
+#Write Pyrate output
+
+test.str1 <- "test.pdf"
+
+test_that("WritePyRate interal functions work", {
+  expect_is(CoordinateCleaner:::.NoExtension(test.str1), "character")
+  expect_equal(CoordinateCleaner:::.NoExtension(test.str1), "test")
 })
