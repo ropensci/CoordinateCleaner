@@ -1,6 +1,14 @@
-dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "dataset",
-                    pvalue = 0.025, diff = 1, mat.size = 1000, min.span = 2, value = "clean",
-                    verbose = TRUE, diagnostic = FALSE) {
+dc_ddmm <- function(x, 
+                    lon = "decimallongitude", 
+                    lat = "decimallatitude", 
+                    ds = "dataset",
+                    pvalue = 0.025, 
+                    diff = 1, 
+                    mat.size = 1000, 
+                    min.span = 2, 
+                    value = "clean",
+                    verbose = TRUE, 
+                    diagnostic = FALSE) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flags", "dataset"))
@@ -11,7 +19,8 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
 
   # prepare dataset for analyses
   if (sum(!complete.cases(x[, c(lon, lat, ds)])) > 0) {
-    warning(sprintf("ignored %s cases with incomplete data", sum(!complete.cases(x))))
+    warning(sprintf("ignored %s cases with incomplete data", 
+                    sum(!complete.cases(x))))
   }
 
   # get function data
@@ -54,7 +63,10 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       dat.t1 <- mat
 
       # Binomial test, to see if more values are below 0.6 than expected
-      P_smaller_than_06 <- floor(0.599 * mat.size) * floor(0.599 * mat.size) / mat.size^2 # 0.3481
+      P_smaller_than_06 <- 
+        floor(0.599 * mat.size) * 
+        floor(0.599 * mat.size) /
+        mat.size^2 # 0.3481
 
       x.ind <- (mat.size - floor(0.599 * mat.size)):mat.size
       y.ind <- 1:floor(0.599 * mat.size)
@@ -63,7 +75,10 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
       p06 <- sum(subt >= 1)
       pAll <- sum(dat.t1 >= 1)
 
-      B <- stats::binom.test(p06, pAll, p = P_smaller_than_06, alternative = c("greater"))
+      B <- stats::binom.test(p06, 
+                             pAll, 
+                             p = P_smaller_than_06, 
+                             alternative = c("greater"))
 
       # P-VALUE
       v1 <- B$p.value
@@ -96,13 +111,16 @@ dc_ddmm <- function(x, lon = "decimallongitude", lat = "decimallatitude", ds = "
   rownames(out.ds) <- names(out)
   names(out.ds) <- c("binomial.pvalue", "perc.difference", "pass")
 
-  flags <- x[[ds]] %in% c(rownames(out.ds[out.ds$pass == 1, ]), rownames(out.ds[is.na(out.ds$pass), ]))
+  flags <- x[[ds]] %in% c(rownames(out.ds[out.ds$pass == 1, ]), 
+                          rownames(out.ds[is.na(out.ds$pass), ]))
 
   # return output dependent on value argument
   if (verbose) {
     message(sprintf("Flagged %s records", sum(!flags)))
   }
 
-  switch(value, dataset = return(out.ds), clean = return(x[flags, ]), flags = return(flags))
+  switch(value, 
+         dataset = return(out.ds), 
+         clean = return(x[flags, ]), 
+         flags = return(flags))
 }
-80

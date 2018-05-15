@@ -1,6 +1,14 @@
-WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age = "max_ma",
-                        status = NULL, trait = NULL, fname = NULL, path = getwd(), replicates = 1,
-                        cutoff = NULL, random = TRUE) {
+WritePyRate <- function(x, 
+                        taxon = "accepted_name", 
+                        min.age = "min_ma", 
+                        max.age = "max_ma",
+                        status = NULL, 
+                        trait = NULL, 
+                        fname = NULL, 
+                        path = getwd(), 
+                        replicates = 1,
+                        cutoff = NULL, 
+                        random = TRUE) {
   if (is.null(fname)) {
     stop("'fname' missing with no default")
   }
@@ -10,10 +18,10 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   }
 
   # adapt input data
-  dat1 <- data.frame(species = x[, taxon], Status = status, min_age = x[
-    ,
-    min.age
-  ], max_age = x[, max.age])
+  dat1 <- data.frame(species = x[, taxon], 
+                     Status = status, 
+                     min_age = x[, min.age], 
+                     max_age = x[, max.age])
 
   if (length(trait) > 0) {
     dat1 <- data.frame(dat1, trait)
@@ -28,16 +36,17 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   }
 
   if (any(is.na(dat1[, 1:4]))) {
-    print(c(which(is.na(dat1[, 1])), which(is.na(dat1[, 2])), which(is.na(dat1[
-      ,
-      3
-    ])), which(is.na(dat1[, 4]))))
-    stop("the input file contains missing data in species names, status or ages)\n")
+    print(c(which(is.na(dat1[, 1])), which(is.na(dat1[, 2])), 
+            which(is.na(dat1[, 3])), which(is.na(dat1[, 4]))))
+    stop(paste("the input file contains missing data",
+               "in species names, status or ages\n"))
   }
 
   if (!is.null(cutoff)) {
     dat <- dat1[!(dat1[, 4] - dat1[, 3] >= cutoff), ]
-    cat("\n\nExcluded ", 100 - round(100 * dim(dat)[1] / dim(dat1)[1]), "% occurrences")
+    cat("\n\nExcluded ", 
+        100 - round(100 * dim(dat)[1] / dim(dat1)[1]), 
+        "% occurrences")
     hist(dat1[, 4] - dat1[, 3])
   } else {
     dat <- dat1
@@ -53,10 +62,10 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   splist <- unique(dat[, c(1, 2)])[order(unique(dat[, c(1, 2)][, 1])), ]
 
 
-  if (any(is.element(splist$Species[splist$Status == "extant"], splist$Species[splist$Status ==
-    "extinct"]))) {
-    print(intersect(splist$Species[splist$Status == "extant"], splist$Species[splist$Status ==
-      "extinct"]))
+  if (any(is.element(splist$Species[splist$Status == "extant"], 
+                     splist$Species[splist$Status == "extinct"]))) {
+    print(intersect(splist$Species[splist$Status == "extant"], 
+                    splist$Species[splist$Status == "extinct"]))
     stop("at least one species is listed as both extinct and extant\n")
   }
 
@@ -89,15 +98,15 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
 
     for (n in seq_along(taxa)) {
       times[[n]] <- dat2$new_age[dat2$Species == taxa[n]]
-      if (toupper(splist$Status[splist$Species == taxa[n]]) == toupper("extant")) {
+      if (toupper(splist$Status[splist$Species == taxa[n]]) == 
+          toupper("extant")) {
         times[[n]] <- append(times[[n]], "0", after = length(times[[n]]))
       }
     }
 
-    dat3 <- matrix(data = NA, nrow = length(times), ncol = max(sapply(
-      times,
-      length
-    )))
+    dat3 <- matrix(data = NA, 
+                   nrow = length(times), 
+                   ncol = max(vapply(times, length, FUN.VALUE = numeric(1))))
     rownames(dat3) <- taxa
 
     for (p in seq_along(times)) {
@@ -150,7 +159,8 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
 
 
   tax_names <- paste(taxa, collapse = "','")
-  cat(noquote(sprintf("taxa_names=['%s']", tax_names)), "def get_taxa_names(): return taxa_names",
+  cat(noquote(sprintf("taxa_names=['%s']", tax_names)), 
+      "def get_taxa_names(): return taxa_names",
     file = outfile, append = TRUE, sep = "\n"
   )
 
@@ -172,6 +182,10 @@ WritePyRate <- function(x, taxon = "accepted_name", min.age = "min_ma", max.age 
   lookup <- as.data.frame(taxa)
   lookup$status <- "extinct"
 
-  write.table(splist, file = splistout, sep = "\t", row.names = FALSE, quote = FALSE)
+  write.table(splist, 
+              file = splistout, 
+              sep = "\t", 
+              row.names = FALSE, 
+              quote = FALSE)
   cat("\n\nPyRate input file was saved in: ", sprintf("%s", outfile), "\n\n")
 }

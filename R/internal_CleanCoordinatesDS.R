@@ -1,6 +1,10 @@
 # 1. The autocorrelation function returning a gamma vector, paramters =
 # nbins and roudning, the latter = 0 for now
-.CalcACT <- function(data, digit.round = 0, nc = 3000, graphs = TRUE, graph.title = "Title",
+.CalcACT <- function(data, 
+                     digit.round = 0, 
+                     nc = 3000, 
+                     graphs = TRUE, 
+                     graph.title = "Title",
                      rarefy = FALSE) {
   if (rarefy) {
     data <- unique(data)
@@ -10,7 +14,8 @@
 
   if (digit.round > 0) {
     # if set to 10 takes only units into account
-    data_units <- data_units - round(floor(data.units / digit.round) * digit.round)
+    data_units <- data_units - 
+      round(floor(data.units / digit.round) * digit.round)
   }
 
   if (graphs) {
@@ -52,9 +57,14 @@
 # (fixed at 10 points for now) and the outlier threshold (T1, this is the
 # most important paramter for the function). The function returns the number
 # of non-consecutive 1 (= outlier found)
-.OutDetect <- function(x, T1 = 7, window.size = 10, detection.rounding = 2,
-                       detection.threshold = 6, graphs = TRUE) {
-  max.range <- nrow(x) - window.size # The maximum range end for the sliding window
+.OutDetect <- function(x, T1 = 7, 
+                       window.size = 10, 
+                       detection.rounding = 2,
+                       detection.threshold = 6, 
+                       graphs = TRUE) {
+  
+  # The maximum range end for the sliding window
+  max.range <- nrow(x) - window.size 
 
   out <- matrix(ncol = 2)
 
@@ -65,7 +75,7 @@
     # interquantile range outlier detection
     quo <- stats::quantile(sub$gamma, c(0.25, 0.75), na.rm = TRUE)
     outl <- matrix(nrow = nrow(sub), ncol = 2)
-    outl[, 1] <- sub$gamma > (quo[2] + stats::IQR(sub$gamma) * T1) # what if more than one outlier are found?
+    outl[, 1] <- sub$gamma > (quo[2] + stats::IQR(sub$gamma) * T1) 
     outl[, 2] <- sub$coord
     out <- rbind(out, outl)
   }
@@ -73,7 +83,8 @@
   out <- stats::aggregate(out[, 1] ~ out[, 2], FUN = "sum")
   names(out) <- c("V1", "V2")
   out <- out[, c(2, 1)]
-  out[, 1] <- as.numeric(out[, 1] >= detection.threshold) # only 'outliers' that have at least been found by at least 6 sliding windows
+  # only 'outliers' that have at least been found by at least 6 sliding windows
+  out[, 1] <- as.numeric(out[, 1] >= detection.threshold) 
 
   # A distance matrix between the outliers we use euclidean space, because 1)
   # we are interest in regularity, not so much the absolute distance, 2) grids
@@ -82,13 +93,17 @@
   outl <- out[out[, 1] == 1, ]
 
   if (nrow(outl) == 0) {
-    out <- data.frame(n.outliers = 0, n.regular.outliers = 0, regular.distance = NA)
+    out <- data.frame(n.outliers = 0, 
+                      n.regular.outliers = 0, 
+                      regular.distance = NA)
   } else if (nrow(outl) == 1) {
     if (graphs) {
       abline(v = outl[, 2], col = "green")
     }
 
-    out <- data.frame(n.outliers = 1, n.regular.outliers = 0, regular.distance = NA)
+    out <- data.frame(n.outliers = 1, 
+                      n.regular.outliers = 0, 
+                      regular.distance = NA)
   } else {
     # add the identified outliers to the plot
     if (graphs) {
@@ -96,9 +111,10 @@
     }
 
     # calculate the distance between outliers
-    dist.m <- round(stats::dist(round(outl[, 2, drop = FALSE], detection.rounding),
-      diag = FALSE
-    ), detection.rounding)
+    dist.m <- round(stats::dist(round(outl[, 2, drop = FALSE], 
+                                      detection.rounding),
+                                diag = FALSE), 
+                    detection.rounding)
     dist.m[dist.m > 2] <- NA
 
     if (length(dist.m) == sum(is.na(dist.m))) {
@@ -115,10 +131,13 @@
       dist.m[row(dist.m) <= col(dist.m)] <- NA
 
       # select those with the most common distance
-      com.dist <- as.numeric(names(which(dists == max(dists)))) # find the most common distance between points
+      # find the most common distance between points
+      com.dist <- as.numeric(names(which(dists == max(dists)))) 
 
-      sel <- which(dist.m %in% com.dist[1]) # if there is more than one probably no bias
-      sel <- unique(arrayInd(sel, dim(dist.m))) # identify rows with at least one time the most common distance
+      # if there is more than one probably no bias
+      sel <- which(dist.m %in% com.dist[1])
+      # identify rows with at least one time the most common distance
+      sel <- unique(arrayInd(sel, dim(dist.m))) 
 
       # sel <- unique(as.numeric(colnames(dist.m)[sel[,1]]))
 
@@ -140,9 +159,6 @@
           col = "red"
         )
       }
-
-
-
       # output: number of outliers, number of outliers with the most common
       # distance, the most common distance
       out <- data.frame(
@@ -153,4 +169,3 @@
   }
   return(out)
 }
-80

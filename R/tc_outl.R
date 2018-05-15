@@ -1,6 +1,17 @@
-tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
-                    taxon = "accepted_name", method = "quantile", size.thresh = 7, mltpl = 5,
-                    replicates = 5, flag.thresh = 0.5, uniq.loc = FALSE, value = "clean", verbose = TRUE) {
+tc_outl <- function(x, 
+                    lon = "lng", 
+                    lat = "lat", 
+                    min.age = "min_ma", 
+                    max.age = "max_ma",
+                    taxon = "accepted_name", 
+                    method = "quantile", 
+                    size.thresh = 7, 
+                    mltpl = 5,
+                    replicates = 5, 
+                    flag.thresh = 0.5, 
+                    uniq.loc = FALSE, 
+                    value = "clean", 
+                    verbose = TRUE) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
@@ -43,10 +54,12 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
 
       # calculate geographic distance
       if (nrow(test) < 10000) {
-        dis.geo <- geosphere::distm(test[, c(lon, lat)], fun = geosphere::distHaversine) / 1000
+        dis.geo <- geosphere::distm(test[, c(lon, lat)], 
+                                    fun = geosphere::distHaversine) / 1000
       } else {
         dis.geo <- as.matrix(dist(test[, c(lon, lat)]))
-        warning("Large dataset, geographic space treated as euclidean for outlier test")
+        warning(paste("Large dataset, geographic space", 
+                "treated as euclidean for outlier test", sep = " "))
       }
 
       dis.geo[dis.geo == 0] <- NA
@@ -56,7 +69,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       dis.tmp[dis.tmp == 0] <- NA
 
       # scale distance to be comparable
-      dis.tmp <- dis.tmp * max(dis.geo, na.rm = TRUE) / max(dis.tmp, na.rm = TRUE)
+      dis.tmp <- dis.tmp * 
+        max(dis.geo, na.rm = TRUE) / 
+        max(dis.tmp, na.rm = TRUE)
 
       # sum time and space
       dis <- round(dis.tmp + dis.geo, 0)
@@ -66,11 +81,12 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
         mins <- apply(dis, 1, mean, na.rm = TRUE)
         quo <- quantile(mins, 0.75, na.rm = TRUE)
         flags <- mins > quo + IQR(mins, na.rm = TRUE) * mltpl
-        # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl) flags <- test[out,
-        # 'idf']
+        # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl) 
+        # flags <- test[out,'idf']
       }
 
-      # MAD (Median absolute deviation) based test, calculate the mean distance to
+      # MAD (Median absolute deviation) based test, 
+      # calculate the mean distance to
       # all other points for each point, and then take the mad of this
       if (method == "mad") {
         mins <- apply(dis, 1, mean, na.rm = TRUE)
@@ -115,10 +131,12 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
 
         # calculate geographic distance
         if (nrow(k) < 10000) {
-          dis.geo <- geosphere::distm(k[, c(lon, lat)], fun = geosphere::distHaversine) / 1000
+          dis.geo <- geosphere::distm(k[, c(lon, lat)], 
+                                      fun = geosphere::distHaversine) / 1000
         } else {
           dis.geo <- as.matrix(dist(k[, c(lon, lat)]))
-          warning("Large dataset, geographic treated as euclidean for outlier test")
+          warning("Large dataset, geographic treated as 
+                  euclidean for outlier test")
         }
 
         # calculate temporal distance
@@ -139,11 +157,12 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
             mins <- apply(dis, 1, mean, na.rm = TRUE)
             quo <- quantile(mins, 0.75, na.rm = TRUE)
             flags <- mins > quo + IQR(mins, na.rm = TRUE) * mltpl
-            # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl) out <- k[out,
-            # 'idf']
+            # out <- which(mins > quo + IQR(mins, na.rm = T) * mltpl) 
+            #out <- k[out,'idf']
           }
 
-          # MAD (Median absolute deviation) based test, calculate the mean distance to
+          # MAD (Median absolute deviation) based test, 
+          # calculate the mean distance to
           # all other points for each point, and then take the mad of this
           if (method == "mad") {
             mins <- apply(dis, 1, mean, na.rm = TRUE)
@@ -166,7 +185,8 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
         return(ret)
       })
 
-      # transform the identifiers into true/flas flags in the sam order as x; TRUE
+      # transform the identifiers into true/flas flags 
+      # in the same order as x; TRUE
       # means flagged
       flags <- rep(FALSE, nrow(x))
       flags[unlist(test)] <- TRUE
@@ -191,8 +211,10 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
   if (taxon == "" & any(!out) & uniq.loc) {
     supp <- x[!out, c(lon, lat, min.age, max.age)]
     test <- apply(supp, 1, function(k) {
-      outp <- which(k[[lon]] == x[[lon]] & k[[lat]] == x[[lat]] & k[[min.age]] ==
-        x[[min.age]] & k[[max.age]] == x[[max.age]])
+      outp <- which(k[[lon]] == x[[lon]] &
+                      k[[lat]] == x[[lat]] &
+                      k[[min.age]] == x[[min.age]] & 
+                      k[[max.age]] == x[[max.age]])
     })
     test <- unlist(test)
     test <- as.numeric(x[test, ]$idf)
@@ -203,9 +225,11 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
       outp <- list()
       for (j in seq_len(nrow(supp))) {
         k <- supp[j, ]
-        outp[[j]] <- which(k[[taxon]] == x[[taxon]] & k[[lon]] == x[[lon]] &
-          k[[lat]] == x[[lat]] & k[[min.age]] == x[[min.age]] & k[[max.age]] ==
-          x[[max.age]])
+        outp[[j]] <- which(k[[taxon]] == x[[taxon]] & 
+                             k[[lon]] == x[[lon]] &
+                             k[[lat]] == x[[lat]] & 
+                             k[[min.age]] == x[[min.age]] & 
+                             k[[max.age]] == x[[max.age]])
       }
       test <- unlist(outp)
       test <- as.numeric(x[test, ]$idf)
@@ -218,6 +242,9 @@ tc_outl <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "
     message(sprintf("Flagged %s records.", sum(!out, na.rm = TRUE)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out), ids = return(which(!out)))
+  switch(value, 
+         clean = return(x[out, ]), 
+         flags = return(out), 
+         ids = return(which(!out)))
 }
 80

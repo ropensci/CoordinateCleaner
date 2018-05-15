@@ -1,18 +1,33 @@
 # A function to clean fossil data
-CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
-                                max.age = "max_ma", taxon = "accepted_name", 
-                                countries = "cc", centroids = TRUE,
-                                countrycheck = TRUE, equal = TRUE, GBIF = TRUE, 
-                                institutions = TRUE, temp.range.outliers = TRUE,
+CleanCoordinatesFOS <- function(x, 
+                                lon = "lng", 
+                                lat = "lat", 
+                                min.age = "min_ma",
+                                max.age = "max_ma", 
+                                taxon = "accepted_name", 
+                                countries = "cc", 
+                                centroids = TRUE,
+                                countrycheck = TRUE, 
+                                equal = TRUE, 
+                                GBIF = TRUE, 
+                                institutions = TRUE, 
+                                temp.range.outliers = TRUE,
                                 spatio.temp.outliers = TRUE, 
                                 temp.ages.equal = TRUE, 
-                                zeros = TRUE, centroids.rad = 0.05,
-                                centroids.detail = "both", inst.rad = 0.001, 
+                                zeros = TRUE, 
+                                centroids.rad = 0.05,
+                                centroids.detail = "both", 
+                                inst.rad = 0.001, 
                                 outliers.method = "quantile",
-                                outliers.threshold = 5, outliers.size = 7, 
-                                outliers.replicates = 5, zeros.rad = 0.5,
-                                centroids.ref, country.ref, inst.ref, 
-                                value = "spatialvalid", verbose = TRUE,
+                                outliers.threshold = 5, 
+                                outliers.size = 7, 
+                                outliers.replicates = 5, 
+                                zeros.rad = 0.5,
+                                centroids.ref, 
+                                country.ref, 
+                                inst.ref, 
+                                value = "spatialvalid", 
+                                verbose = TRUE,
                                 report = FALSE) {
 
 
@@ -96,22 +111,29 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
 
   # Spatiotemporal
   if (spatio.temp.outliers) {
-    # if(nrow(x) < 10000){ otl.flag <- tc_outl(x, lon = lon, lat = lat, min.age
-    # = min.age, max.age = max.age, taxon = '', method = outliers.method, mltpl
-    # = outliers.threshold, replicates = outliers.replicates, value = 'ids',
-    # verbose = verbose) otl <- rep(TRUE, nrow(x)) otl[rownames(otl) %in%
-    # otl.flag] <- FALSE }else{ warning('Very large dataset skipped dataset
+    # if(nrow(x) < 10000){ 
+    # otl.flag <- tc_outl(x, lon = lon, lat = lat, min.age
+    # = min.age, max.age = max.age, taxon = '', 
+    # method = outliers.method, mltpl
+    # = outliers.threshold, 
+    #replicates = outliers.replicates, value = 'ids',
+    # verbose = verbose) 
+    #otl <- rep(TRUE, nrow(x)) otl[rownames(otl) %in%
+    # otl.flag] <- FALSE 
+    #}else{ warning('Very large dataset skipped dataset
     # level outlier test') otl <- rep(TRUE, nrow(x)) }
 
     if (taxon != "") {
-      # otl.test <- table(x[taxon]) otl.test <- otl.test[otl.test > outliers.size]
+      # otl.test <- table(x[taxon]) 
+      # otl.test <- otl.test[otl.test > outliers.size]
       # otl.test <- x[x[[taxon]] %in% names(otl.test),] otl.test <- otl.test[,
       # c(taxon, lon, lat, min.age, max.age)]
 
       otl.flag <- tc_outl(
         x = x, lon = lon, lat = lat, min.age = min.age,
         max.age = max.age, taxon = taxon, size.thresh = outliers.size,
-        method = outliers.method, mltpl = outliers.threshold, replicates = outliers.replicates,
+        method = outliers.method, mltpl = outliers.threshold, 
+        replicates = outliers.replicates,
         value = "ids", verbose = verbose
       )
 
@@ -129,7 +151,8 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
     test <- x
     ran.otl <- tc_range(
       x = test, taxon = "", min.age = min.age, max.age = max.age,
-      lon = lon, lat = lat, method = outliers.method, mltpl = outliers.threshold,
+      lon = lon, lat = lat, method = outliers.method, 
+      mltpl = outliers.threshold,
       value = "flags", verbose = verbose
     )
 
@@ -197,14 +220,19 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
     }
   }
   if (value == "spatialvalid") {
-    inp <- data.frame(taxon = x[, taxon], decimallongitude = x[, lon], decimallatitude = x[
-      ,
-      lat
-    ])
+    inp <- data.frame(taxon = x[, taxon], 
+                      decimallongitude = x[, lon], 
+                      decimallatitude = x[, lat])
     out <- data.frame(inp,
-      validity = val, equal = equ, zeros = zer, centroids = cen,
-      countrycheck = con, gbif = gbf, institution = inst, spatio.tmp.outl = otl,
-      tmp.range.outl = ran.otl, equal.min.max.age = age.equ, summary = out
+      validity = val, equal = equ, 
+      zeros = zer, 
+      centroids = cen,
+      countrycheck = con, gbif = gbf, 
+      institution = inst, 
+      spatio.tmp.outl = otl,
+      tmp.range.outl = ran.otl, 
+      equal.min.max.age = age.equ, 
+      summary = out
     )
     out <- Filter(function(x) !all(is.na(x)), out)
     class(out) <- c("spatialvalid", "data.frame", class(out))
@@ -213,7 +241,8 @@ CleanCoordinatesFOS <- function(x, lon = "lng", lat = "lat", min.age = "min_ma",
     }
     if (is.character(report)) {
       suma <- data.frame(
-        Test = as.character(names(out[-(1:3)])), Flagged.records = colSums(!out[-(1:3)]),
+        Test = as.character(names(out[-(1:3)])), 
+        Flagged.records = colSums(!out[-(1:3)]),
         stringsAsFactors = FALSE
       )
       suma <- rbind(suma, c("Total number of records", length(out$summary)))
