@@ -14,20 +14,23 @@ test_that("cc_cap works", {
   expect_equal(sum(cc_cap(x = exmpl, value = "flags")), 250)
   expect_equal(sum(cc_cap(x = exmpl, buffer = 250, value = "flags")), 0)
   
-  expect_error(cc_cap(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
+  expect_error(cc_cap(x = exmpl, lon = "longitude", value = "flags"), 
+               "undefined columns selected")
 })
 
 test_that("cc_cen works", {
   expect_equal(sum(cc_cen(x = exmpl, value = "flags")), 243)
   expect_equal(sum(cc_cen(x = exmpl, buffer = 250, value = "flags")), 0)
   
-  expect_error(cc_cen(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
+  expect_error(cc_cen(x = exmpl, lon = "longitude", value = "flags"), 
+               "undefined columns selected")
 })
 
 test_that("cc_coun works", {
   expect_equal(sum(cc_coun(x = exmpl, value = "flags")), 65)
   
-  expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
+  expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flags"), 
+               "undefined columns selected")
 })
 
 
@@ -36,14 +39,25 @@ test_that("cc_outl works", {
   expect_equal(sum(cc_outl(x = exmpl, value = "flags", mltpl = 0.1)), 181)
   expect_equal(sum(cc_outl(x = exmpl, value = "flags", mltpl = 1000)), 250)
   
-  expect_equal(sum(cc_outl(x = exmpl, value = "flags", method = "distance", tdi = .001)), 31)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flags", method = "distance", tdi = 10000)), 250)
+  expect_equal(sum(cc_outl(x = exmpl, 
+                           value = "flags", 
+                           method = "distance", 
+                           tdi = .001)), 31)
+  expect_equal(sum(cc_outl(x = exmpl, 
+                           value = "flags", 
+                           method = "distance", tdi = 10000)), 250)
 
-  expect_error(cc_dupl(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
+  expect_error(cc_dupl(x = exmpl, 
+                       lon = "longitude", 
+                       value = "flags"), 
+               "undefined columns selected")
 })
 
 #extend input data
-exmpl <- rbind(exmpl, data.frame(species = rep("a", 50), decimallongitude = rep( 50.25, 50), decimallatitude = rep(55.77), countrycode = "RUS"))
+exmpl <- rbind(exmpl, data.frame(species = rep("a", 50), 
+                                 decimallongitude = rep( 50.25, 50), 
+                                 decimallatitude = rep(55.77), 
+                                 countrycode = "RUS"))
 
 exmpl <- data.frame(exmpl, 
                     collector = "Bonpl",
@@ -53,7 +67,14 @@ exmpl <- data.frame(exmpl,
 
 test_that("cc_dupl works", {
   expect_equal(sum(cc_dupl(x = exmpl, value = "flags")), 251)
-  expect_equal(sum(cc_dupl(x = exmpl, additions = c("collector", "collector.number", "collection"), value = "flags")), 260)
+  expect_equal(sum(cc_dupl(x = exmpl, 
+                           additions = c("collector", 
+                                         "collector.number", 
+                                         "collection"), 
+                           value = "flags")), 260)
   
-  expect_error(cc_dupl(x = exmpl, lon = "longitude", value = "flags"), "undefined columns selected")
+  expect_error(cc_dupl(x = exmpl, 
+                       lon = "longitude", 
+                       value = "flags"), 
+               "undefined columns selected")
 })

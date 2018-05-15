@@ -2,13 +2,18 @@ is.spatialvalid <- function(x) {
   inherits(x, "spatialvalid")
 }
 
-plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE,
-                              pts.size = 1, font.size = 10, ...) {
+plot.spatialvalid <- function(x, 
+                              bgmap = NULL, 
+                              clean = TRUE, 
+                              details = TRUE,
+                              pts.size = 1, 
+                              font.size = 10, 
+                              ...) {
   x <- data.frame(x)
 
   # prepare background
-  e <- raster::extent(sp::SpatialPoints(x[, c("decimallongitude", "decimallatitude")])) +
-    1
+  e <- raster::extent(sp::SpatialPoints(
+    x[, c("decimallongitude", "decimallatitude")])) + 1
 
   if (is.null(bgmap)) {
     bgmap <- CoordinateCleaner::landmass
@@ -18,10 +23,13 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE,
   bgmap <- suppressWarnings(ggplot2::fortify(bgmap))
 
   # plot background
-  plo <- ggplot2::ggplot() + ggplot2::geom_polygon(data = bgmap, ggplot2::aes_string(
+  plo <- ggplot2::ggplot() + 
+    ggplot2::geom_polygon(data = bgmap, 
+                          ggplot2::aes_string(
     x = "long",
-    y = "lat", group = "group"
-  ), fill = "grey60") + ggplot2::coord_fixed() +
+    y = "lat", group = "group"), 
+    fill = "grey60") + 
+    ggplot2::coord_fixed() +
     ggplot2::theme_bw()
 
   # prepare occurence points
@@ -47,23 +55,27 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE,
   # add points to background
   if (!clean & !details) {
     pts <- occs[!occs$summary, ]
-    plo <- plo + ggplot2::geom_point(data = pts, ggplot2::aes_string(
-      x = "decimallongitude",
-      y = "decimallatitude"
-    ), colour = "#F8766D", size = pts.size) + ggplot2::theme(axis.title = ggplot2::element_text(size = font.size))
+    plo <- plo + 
+      ggplot2::geom_point(data = pts, ggplot2::aes_string(
+        x = "decimallongitude",
+        y = "decimallatitude"), 
+        colour = "#F8766D", 
+        size = pts.size) + 
+      ggplot2::theme(axis.title = ggplot2::element_text(size = font.size))
   }
 
   if (clean & !details) {
     pts <- occs
     plo <- plo + ggplot2::geom_point(data = pts, ggplot2::aes_string(
       x = "decimallongitude",
-      y = "decimallatitude", colour = "summary"
-    ), size = pts.size) + ggplot2::scale_colour_manual(values = c(
-      "#F8766D",
-      "#00BFC4"
-    ), labels = c("Flagged", "Clean")) + ggplot2::theme(
+      y = "decimallatitude", colour = "summary"), 
+      size = pts.size) + 
+      ggplot2::scale_colour_manual(values = c("#F8766D", "#00BFC4"), 
+                                   labels = c("Flagged", "Clean")) + 
+      ggplot2::theme(
       legend.title = ggplot2::element_blank(),
-      axis.title = ggplot2::element_text(size = font.size), legend.text = ggplot2::element_text(size = font.size)
+      axis.title = ggplot2::element_text(size = font.size), 
+      legend.text = ggplot2::element_text(size = font.size)
     )
   }
 
@@ -74,7 +86,8 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE,
       y = "decimallatitude", colour = "flag"
     ), size = pts.size) + ggplot2::theme(
       legend.title = ggplot2::element_blank(),
-      axis.title = ggplot2::element_text(size = font.size), legend.text = ggplot2::element_text(size = font.size)
+      axis.title = ggplot2::element_text(size = font.size), 
+      legend.text = ggplot2::element_text(size = font.size)
     )
   }
 
@@ -91,13 +104,14 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = TRUE, details = TRUE,
         )), breaks = sort(as.character(unique(pts$flag))),
         labels = c("clean", sort(as.character(unique(pts$flag)))[-1])
       ) +
-      ggplot2::scale_shape_manual(values = c(16, seq(15, 15 + (length(unique(pts$flag)) -
-        1))), breaks = sort(as.character(unique(pts$flag))), labels = c(
-        "clean",
-        sort(as.character(unique(pts$flag)))[-1]
-      )) + ggplot2::theme(
+      ggplot2::scale_shape_manual(
+        values = c(16, seq(15, 15 + (length(unique(pts$flag)) - 1))), 
+        breaks = sort(as.character(unique(pts$flag))), 
+        labels = c("clean", sort(as.character(unique(pts$flag)))[-1])) +
+      ggplot2::theme(
         legend.title = ggplot2::element_blank(),
-        axis.title = ggplot2::element_text(size = font.size), legend.text = ggplot2::element_text(size = font.size)
+        axis.title = ggplot2::element_text(size = font.size), 
+        legend.text = ggplot2::element_text(size = font.size)
       )
   }
   plo
@@ -108,4 +122,3 @@ summary.spatialvalid <- function(object, ...) {
   out <- apply(out, 2, "sum")
   return(out)
 }
-80
