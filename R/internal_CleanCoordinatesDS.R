@@ -1,5 +1,7 @@
 # 1. The autocorrelation function returning a gamma vector, paramters =
 # nbins and roudning, the latter = 0 for now
+#' @importFrom graphics hist plot abline segments
+#' @importFrom stats cov quantile aggregate
 .CalcACT <- function(data, 
                      digit.round = 0, 
                      nc = 3000, 
@@ -19,9 +21,9 @@
   }
 
   if (graphs) {
-    h <- hist(data.units, nclass = nc, main = graph.title)
+    h <- graphics::hist(data.units, nclass = nc, main = graph.title)
   } else {
-    h <- hist(data.units, nclass = nc, plot = FALSE)
+    h <- graphics::hist(data.units, nclass = nc, plot = FALSE)
   }
 
   f <- h$counts
@@ -98,7 +100,7 @@
                       regular.distance = NA)
   } else if (nrow(outl) == 1) {
     if (graphs) {
-      abline(v = outl[, 2], col = "green")
+      graphics::abline(v = outl[, 2], col = "green")
     }
 
     out <- data.frame(n.outliers = 1, 
@@ -107,7 +109,7 @@
   } else {
     # add the identified outliers to the plot
     if (graphs) {
-      abline(v = outl[, 2], col = "green")
+      graphics::abline(v = outl[, 2], col = "green")
     }
 
     # calculate the distance between outliers
