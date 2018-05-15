@@ -62,4 +62,3 @@ test_that("fossil wrapper cleaning works", {
   expect_is(CleanCoordinatesFOS(exmpl), "spatialvalid")
   expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 248)
 })
-
