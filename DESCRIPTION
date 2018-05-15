@@ -1,7 +1,7 @@
 Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
-Version: 1.1-0
+Version: 1.1-1
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@bioenv.gu.se",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = c("ctb")))
@@ -9,8 +9,8 @@ Description: Automated cleaning of geographic species occurrence records by auto
 License: GPL-3
 URL: https://github.com/azizka/CoordinateCleaner
 BugReports: https://github.com/azizka/CoordinateCleaner/issues
-Depends: R (>= 3.0.0), sp
-Imports: geosphere, ggplot2, methods, raster, rgeos, rnaturalearth, stats
+Depends: R (>= 3.0.0)
+Imports: geosphere, ggplot2, graphics, methods, raster, rgeos, rnaturalearth, stats, sp, utils
 LazyData: true
 RoxygenNote: 6.0.1
 Suggests: testthat, covr
