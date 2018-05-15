@@ -198,13 +198,14 @@ CleanCoordinatesDS <- function(x,
       min.unique.ds.size = periodicity.min.size,
       graphs = periodicity.diagnostics, 
       test = periodicity.target, 
-      value = value
+      value = value2
     )
   } else {
     if (value == "dataset") {
       out.t2 <- data.frame(
         pass.periodicity.com = rep(NA, length(test)),
-        pass.zero.com = rep(NA, length(test))
+        pass.zero.com = rep(NA, length(test)),
+        summary = NA
       )
     } else {
       out.t2 <- rep(NA, nrow(dat))
@@ -214,8 +215,15 @@ CleanCoordinatesDS <- function(x,
   # prepare output
   if (value == "dataset") {
     out <- data.frame(out.t1, out.t2)
-    out$summary <- out$pass.ddmm & out$summary
     out <- Filter(function(x) !all(is.na(x)), out)
+    if(periodicity & ddmm){
+      out$summary <- as.logical(out.t1$pass.ddmm) & as.logical(out.t2$summary)
+    }else if(periodicity & !ddmm){
+      out$summary <- out.t2$summary
+    }else if(!periodicity & ddmm){
+      out$summary <- as.logical(out.t1$pass.ddmm)
+    }
+
     if (verbose) {
       message(sprintf("Flagged %s datasets.", sum(!out$summary)))
     }
@@ -238,7 +246,6 @@ CleanCoordinatesDS <- function(x,
     }
     out <- dat[out$summary, ]
   }
-
   # return output
   return(out)
 }
