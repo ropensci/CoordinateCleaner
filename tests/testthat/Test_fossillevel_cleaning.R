@@ -1,5 +1,5 @@
 library(CoordinateCleaner)
-context("Fossil cleaning")
+context("Coordinate cleaning")
 
 set.seed(1)
 #tc_range
@@ -14,7 +14,6 @@ test <- data.frame(species = c(letters[1:10], "z"),
 
 
 test_that("tc_range identifies existing bias", {
-  
   #return value
   expect_is(tc_range(test, value = "flags", taxon = ""), "logical")
   expect_is(tc_range(test, value = "clean", taxon = ""), "data.frame")

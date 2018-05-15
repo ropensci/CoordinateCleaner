@@ -4,8 +4,8 @@ context("Coordinate cleaning")
 #Create test dataset
 set.seed(1)
 clean <- data.frame(dataset = rep("clean", 1000),
-                    decimallongitude = runif(min = -42, max = -40, n = 1000),
-                    decimallatitude = runif(min = -12, max = -10, n = 1000))
+                    decimallongitude = runif(min = -43, max = -40, n = 1000),
+                    decimallatitude = runif(min = -13, max = -10, n = 1000))
 bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
                round(runif(min = -42, max = -40, n = 300), 0),
                runif(min = -42, max = -40, n = 200))
@@ -19,8 +19,6 @@ test <- rbind(clean, bias)
 
 #dc_round
 test_that("dc_round identifies existing bias", {
-  skip_on_cran()
-  
   #test target
   expect_equal(mean(dc_round(test, value = "dataset", graphs = F, test = "both")$summary), 0.5)
   expect_equal(mean(dc_round(test, value = "dataset", graphs = F, test = "lat")$flag), 0.5)
@@ -64,7 +62,6 @@ prob <-  data.frame(species = letters[1:10],
 test <- rbind(prob,clean)
 
 test_that("dc_ddmm identifies existing bias", {
-  skip_on_cran()
   t1 <- dc_ddmm(test, value = "dataset")
   expect_is(t1, "data.frame")
   expect_equal(sum(t1$pass), 1)
