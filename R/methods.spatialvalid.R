@@ -1,7 +1,46 @@
+#' @method is spatialvalid
+#' @export
 is.spatialvalid <- function(x) {
   inherits(x, "spatialvalid")
 }
 
+
+
+#' Plot Method for Class Spatialvalid
+#' 
+#' A set of plots to explore objects of the class \code{spatialvalid}. A plot
+#' to visualize the flags from CleanCoordinates
+#' 
+#' 
+#' @param x an object of the class \code{spatialvalid} as from
+#' \code{\link{CleanCoordinates}}.
+#' @param bgmap an object of the class \code{SpatialPolygonsDataFrame} used as
+#' background map. Default = \code{\link{landmass}}
+#' @param clean logical.  If TRUE, non-flagged coordinates are included in the
+#' map.
+#' @param details logical. If TRUE, occurrences are colour-coded by the type of
+#' flag.
+#' @param pts.size numeric. The point size for the plot.
+#' @param font.size numeric. The font size for the legend and axes
+#' @param \dots additional arguments passed to other methods
+#' @return A plot of the records flagged as potentially erroneous by
+#' \code{\link{CleanCoordinates}}.
+#' @seealso \code{\link{CleanCoordinates}}
+#' @keywords Visualisation
+#' @examples
+#' 
+#' 
+#' exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
+#'                     decimallongitude = runif(250, min = 42, max = 51),
+#'                     decimallatitude = runif(250, min = -26, max = -11))
+#' 
+#' test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
+#' 
+#' summary(test)
+#' @export
+#' @method plot spatialvalid
+#' @importFrom raster crop
+#' @importFrom ggplot2 fortify aes_string geom_polygon coord_fixed theme_bw theme element_text geom_point scale_colour_manual scale_shape_manual element_blank
 plot.spatialvalid <- function(x, 
                               bgmap = NULL, 
                               clean = TRUE, 
@@ -117,6 +156,8 @@ plot.spatialvalid <- function(x,
   plo
 }
 
+#' @export
+#' @method summary spatialvalid
 summary.spatialvalid <- function(object, ...) {
   out <- apply(object[, -c(1, 2)], 2, "!")
   out <- apply(out, 2, "sum")
