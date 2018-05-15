@@ -35,7 +35,7 @@ selection.  See details. Either \dQuote{quantile} \dQuote{mad}, or
 
 \item{mltpl}{numeric. The multiplier of the interquartile range
 (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-'mad'})to identify outliers. See details.  Default = 3.}
+'mad'}) to identify outliers. See details.  Default = 3.}
 
 \item{size.thresh}{numeric.  The minimum number of records needed for a
 dataset to be tested. Default = 10.}
