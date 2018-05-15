@@ -1,5 +1,9 @@
-cc_urb <- function(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL,
-                   value = "clean", verbose = TRUE) {
+cc_urb <- function(x, 
+                   lon = "decimallongitude", 
+                   lat = "decimallatitude", 
+                   ref = NULL,
+                   value = "clean", 
+                   verbose = TRUE) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flags"))

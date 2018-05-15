@@ -1,17 +1,36 @@
-CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude",
-                             species = "species", countries = NULL, 
-                             capitals = TRUE, centroids = TRUE,
-                             countrycheck = FALSE, duplicates = FALSE, 
-                             equal = TRUE, GBIF = TRUE, institutions = TRUE,
-                             outliers = FALSE, seas = TRUE, urban = FALSE, 
-                             zeros = TRUE, capitals.rad = 0.05,
-                             centroids.rad = 0.01, centroids.detail = "both", 
-                             inst.rad = 0.001, outliers.method = "quantile",
-                             outliers.mtp = 3, outliers.td = 1000, 
-                             outliers.size = 7, zeros.rad = 0.5,
-                             capitals.ref, centroids.ref, country.ref, 
-                             inst.ref, seas.ref, urban.ref,
-                             value = "spatialvalid", verbose = TRUE, 
+CleanCoordinates <- function(x, 
+                             lon = "decimallongitude", 
+                             lat = "decimallatitude",
+                             species = "species", 
+                             countries = NULL, 
+                             capitals = TRUE, 
+                             centroids = TRUE,
+                             countrycheck = FALSE, 
+                             duplicates = FALSE, 
+                             equal = TRUE, 
+                             GBIF = TRUE, 
+                             institutions = TRUE,
+                             outliers = FALSE, 
+                             seas = TRUE, 
+                             urban = FALSE, 
+                             zeros = TRUE, 
+                             capitals.rad = 0.05,
+                             centroids.rad = 0.01, 
+                             centroids.detail = "both", 
+                             inst.rad = 0.001, 
+                             outliers.method = "quantile",
+                             outliers.mtp = 3, 
+                             outliers.td = 1000, 
+                             outliers.size = 7, 
+                             zeros.rad = 0.5,
+                             capitals.ref, 
+                             centroids.ref, 
+                             country.ref, 
+                             inst.ref, 
+                             seas.ref, 
+                             urban.ref,
+                             value = "spatialvalid", 
+                             verbose = TRUE, 
                              report = FALSE) {
   # check function arguments
   match.arg(value, choices = c("spatialvalid", "flags", "clean"))
@@ -179,7 +198,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     message("running duplicates test")
     if (is.null(species)) {
       dpl.test <- x
-      warning("duplicates test without species id, assuming single species dataset")
+      warning("duplicates test without species id, 
+              assuming single species dataset")
     } else {
       dpl.test <- data.frame(x, species)
     }
@@ -216,7 +236,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     )
     out <- data.frame(inp,
       validity = val, equal = equ, zeros = zer, capitals = cap,
-      centroids = cen, sea = sea, urban = urb, countrycheck = con, outliers = otl,
+      centroids = cen, sea = sea, urban = urb, 
+      countrycheck = con, outliers = otl,
       gbif = gbf, institution = inst, duplicates = dpl, summary = out
     )
     out <- Filter(function(x) !all(is.na(x)), out)
@@ -226,7 +247,8 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
     }
     if (is.character(report)) {
       suma <- data.frame(
-        Test = as.character(names(out[-(1:3)])), Flagged.records = colSums(!out[-(1:3)]),
+        Test = as.character(names(out[-(1:3)])), 
+        Flagged.records = colSums(!out[-(1:3)]),
         stringsAsFactors = FALSE
       )
       suma <- rbind(suma, c("Total number of records", length(out$summary)))
@@ -252,4 +274,3 @@ CleanCoordinates <- function(x, lon = "decimallongitude", lat = "decimallatitude
 
   return(out)
 }
-80
