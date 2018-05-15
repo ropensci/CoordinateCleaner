@@ -1,3 +1,38 @@
+#' Check Coordinate Validity in lat/lon
+#' 
+#' Checks if all coordinates in a data set are valid in a latitude/longitude
+#' coordinate reference system. That is non-numeric, not available coordinates
+#' and lat >90, la <-90, lon > 180 and lon < -180 are flagged.
+#' 
+#' This test is obligatory before running any further tests of
+#' CoordinateCleaner, as additional tests only run with valid coordinates.
+#' 
+#' @param x a data.frame. Containing geographical coordinates and species
+#' names.
+#' @param lon a character string. The column with the longitude coordinates.
+#' Default = \dQuote{decimallongitude}.
+#' @param lat a character string. The column with the longitude coordinates.
+#' Default = \dQuote{decimallatitude}.
+#' @param value a character string.  Defining the output value. See value.
+#' @param verbose logical. If TRUE reports the name of the test and the number
+#' of records flagged.
+#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
+#' containing the records considered correct by the test (\dQuote{clean}) or a
+#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
+#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+#' details and tutorials.
+#' @keywords Coordinate cleaning
+#' @examples
+#' 
+#' x <- data.frame(species = letters[1:10], 
+#'                 decimallongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
+#'                 decimallatitude = runif(110, -90,90))
+#'                 
+#' cc_val(x)
+#' cc_val(x, value = "flags")
+#' 
+#' @export
 cc_val <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
