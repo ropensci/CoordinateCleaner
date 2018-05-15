@@ -1,8 +1,13 @@
-CleanCoordinatesDS <- function(x, lon = "decimallongitude", 
+CleanCoordinatesDS <- function(x, 
+                               lon = "decimallongitude", 
                                lat = "decimallatitude",
-                               ds = "dataset", ddmm = TRUE, periodicity = TRUE, 
-                               ddmm.pvalue = 0.025, ddmm.diff = 0.2,
-                               periodicity.T1 = 7, periodicity.reg.thresh = 2, 
+                               ds = "dataset", 
+                               ddmm = TRUE, 
+                               periodicity = TRUE, 
+                               ddmm.pvalue = 0.025, 
+                               ddmm.diff = 0.2,
+                               periodicity.T1 = 7, 
+                               periodicity.reg.thresh = 2, 
                                periodicity.dist.min = 0.1,
                                periodicity.dist.max = 2, 
                                periodicity.min.size = 4, 
@@ -74,10 +79,17 @@ CleanCoordinatesDS <- function(x, lon = "decimallongitude",
   # Run periodicity test
   if (periodicity) {
     out.t2 <- dc_round(x,
-      lon = lon, lat = lat, ds = ds, T1 = periodicity.T1,
-      reg.out.thresh = periodicity.reg.thresh, reg.dist.min = periodicity.dist.min,
-      reg.dist.max = periodicity.dist.max, min.unique.ds.size = periodicity.min.size,
-      graphs = periodicity.diagnostics, test = periodicity.target, value = value
+      lon = lon, 
+      lat = lat, 
+      ds = ds, 
+      T1 = periodicity.T1,
+      reg.out.thresh = periodicity.reg.thresh, 
+      reg.dist.min = periodicity.dist.min,
+      reg.dist.max = periodicity.dist.max, 
+      min.unique.ds.size = periodicity.min.size,
+      graphs = periodicity.diagnostics, 
+      test = periodicity.target, 
+      value = value
     )
   } else {
     if (value == "dataset") {

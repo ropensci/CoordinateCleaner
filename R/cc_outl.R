@@ -53,7 +53,8 @@ cc_outl <- function(x,
           IQR(mins) * mltpl)
       }
 
-      # MAD (Median absolute deviation) based test, calculate the mean distance to
+      # MAD (Median absolute deviation) based test, 
+      # calculate the mean distance to
       # all other points for each point, and then take the mad of this
       if (method == "mad") {
         dist <- geosphere::distm(k[, c(lon, lat)], 

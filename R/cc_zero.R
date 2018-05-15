@@ -1,5 +1,9 @@
-cc_zero <- function(x, lon = "decimallongitude", lat = "decimallatitude", buffer = 0.5,
-                    value = "clean", verbose = TRUE) {
+cc_zero <- function(x, 
+                    lon = "decimallongitude", 
+                    lat = "decimallatitude",
+                    buffer = 0.5,
+                    value = "clean", 
+                    verbose = TRUE) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flags"))

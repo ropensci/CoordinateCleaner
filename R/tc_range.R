@@ -1,6 +1,16 @@
-tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = "max_ma",
-                     taxon = "accepted_name", method = "quantile", mltpl = 5, size.thresh = 7,
-                     max.range = 500, uniq.loc = FALSE, value = "clean", verbose = TRUE) {
+tc_range <- function(x, 
+                     lon = "lng", 
+                     lat = "lat", 
+                     min.age = "min_ma", 
+                     max.age = "max_ma",
+                     taxon = "accepted_name", 
+                     method = "quantile", 
+                     mltpl = 5, 
+                     size.thresh = 7,
+                     max.range = 500, 
+                     uniq.loc = FALSE, 
+                     value = "clean", 
+                     verbose = TRUE) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flags", "ids"))
@@ -103,7 +113,8 @@ tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = 
         out <- k[out, "idf"]
       }
 
-      # MAD (Median absolute deviation) based test, calculate the mean distance to
+      # MAD (Median absolute deviation) based test, 
+      # calculate the mean distance to
       # all other points for each point, and then take the mad of this
       if (method == "mad") {
         quo <- median(rang)
@@ -147,5 +158,7 @@ tc_range <- function(x, lon = "lng", lat = "lat", min.age = "min_ma", max.age = 
     }
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out), ids = return(flags))
+  switch(value, clean = return(x[out, ]), 
+         flags = return(out), 
+         ids = return(flags))
 }
