@@ -16,10 +16,15 @@ exmpl <- data.frame(species = sp,
 t1 <- CleanCoordinates(x = exmpl)
 
 test_that("CleanCoordinates produces correct output", {
+
   expect_equal(ncol(t1), 12)
   expect_equal(nrow(t1), 250)
   expect_equal(sum(t1$summary), 187)
-  
+
+})
+
+test_that("CleanCoordinates countries argument produces correct output", {
+  #skip_on_cran()
   expect_equal(sum(CleanCoordinates(x = exmpl, countries = "ISO3", countrycheck = T)$summary), 2)
 })
 
