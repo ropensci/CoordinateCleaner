@@ -1,0 +1,11 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+extra_gazetteers
+Readme.md
+CoordinateCleaner.Rcheck
+old
+.Rhistory
+.travis.yml
+Code.Rproj
+Tutorials
+NEWS.md
