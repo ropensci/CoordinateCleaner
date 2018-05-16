@@ -24,7 +24,7 @@ test_that("CleanCoordinates produces correct output", {
 })
 
 test_that("CleanCoordinates countries argument produces correct output", {
-  skip_on_cran()
+  #skip_on_cran()
   expect_equal(sum(CleanCoordinates(x = exmpl, countries = "ISO3", countrycheck = T)$summary), 2)
 })
 
