@@ -27,6 +27,7 @@ test_that("cc_cen works", {
 })
 
 test_that("cc_coun works", {
+  #skip_on_cran()
   expect_equal(sum(cc_coun(x = exmpl, value = "flags")), 65)
   
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flags"), 
