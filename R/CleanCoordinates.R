@@ -371,7 +371,8 @@ CleanCoordinates <- function(x,
   }
   if (value == "spatialvalid") {
     inp <- data.frame(
-      species = x[, species], decimallongitude = x[, lon],
+      species = x[, species], 
+      decimallongitude = x[, lon],
       decimallatitude = x[, lat]
     )
     out <- data.frame(inp,
