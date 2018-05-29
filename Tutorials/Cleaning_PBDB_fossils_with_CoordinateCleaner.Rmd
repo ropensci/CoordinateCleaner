@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 # Background
-The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using \emph{CoordinateCleaner} with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is "good data" depends entirely on your downstream analyses! We wrote this tutorial (and the whole \emph{CoordinateCleaner} package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.
+The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using \emph{CoordinateCleaner} with cleaning based on metadata. The proposed steps are by no means exhaustive, and keep in mind that what is "good data" depends entirely on your downstream analyses! We wrote this tutorial (and the whole \emph{CoordinateCleaner} package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.
 
 # Install `CoordinateCleaner`
 You can install the latest stable version of CoordinateCleaner (Currently 1.0-6) from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latset R version installed. In this tutorial, relevant R -code is shown in grey boxes, the resulting output lines are marked by ##. 
@@ -176,7 +176,7 @@ nrow(dat) - nrow(cl)
 
 All test combined have removed about `r nrow(dat) - nrow(cl)` records (`r round((1 - nrow(cl) / nrow(dat)) *100, 1)`%). If you want to identify all flagged records, to double check or correct them, take a look at the `CleanCoordinatesFOS` wrapper function below. 
 
-So far so good, we have significantly refined the data  for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run \emph{CoordinateCleaner}. You can  connect all functions directly in a row using the magrittr pipe (%>%) operator.
+So far so good, we have significantly refined the data  for our needs. In section 6 we will have a look at the metadata for further refinement, but before, note that there are two different ways to run \emph{CoordinateCleaner}. You can  connect all functions directly in a row using the magrittr pipe (%>%) operator.
 
 ```{r, eval = F}
 cl <- dat%>%
@@ -214,8 +214,8 @@ cl <- dat[flags$summary,] #the cleaned records
 fl.rec <- dat[!flags$summary,] # the flagged records for verification
 ```
 
-# Improving data quality using meta-data
-Usually, at least some type of meta-data are provided with fossil occurrences, as is the case in the paleobiology database. We'll now explore these and see if we can identify further problems.  
+# Improving data quality using metadata
+Usually, at least some type of metadata are provided with fossil occurrences, as is the case in the paleobiology database. We'll now explore these and see if we can identify further problems.  
 
 ## Basic taxonomy
 First we'll take a short look at taxonomy. Fossil taxonomy is very complex and composite databases often have taxonomic issues that are extremely difficult to resolve. Here we will only do some very basic checks to test if: 
@@ -264,7 +264,7 @@ ggplot(cl)+
 
 The minimum and maximum ages look unproblematic, but there are still some records with very large temporal uncertainties, and at least one case where the minimum and maximum age seem reversed. This might be informative in some cases, but for most analysis this might be problematic, so here we exclude all records with temporal uncertainty above `r quantile(cl$rang, prob = 0.95)` million years, which will retain 95% of the data. This is an arbitrary choice, and you'll have to choose a more suitable value based on your planned analyses.
 
-## Additional meta-data
+## Additional metadata
 If you download data using the paleobiology database web portal, there are some additional fields you can check to generally gauge data precision, namely basis and precision of the geo-reference, the year of publications (old publications are more likely to be imprecise), preservation quality (bad preservation increases taxonomic uncertainty) and plant organ (also taxonomic uncertainty) and collection type. You might need to adapt the column names, and not all columns will be relevant for all taxa (e.g. "plant organ").
 
 ```{r, eval = F}
