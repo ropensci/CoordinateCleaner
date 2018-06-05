@@ -4,8 +4,8 @@
 \alias{plot.spatialvalid}
 \title{Plot Method for Class Spatialvalid}
 \usage{
-\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE, details = TRUE,
-  pts.size = 1, font.size = 10, ...)
+\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE,
+  details = FALSE, pts.size = 1, font.size = 10, ...)
 }
 \arguments{
 \item{x}{an object of the class \code{spatialvalid} as from
@@ -44,6 +44,7 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
 
 summary(test)
+plot(test)
 }
 \seealso{
 \code{\link{CleanCoordinates}}

@@ -122,7 +122,7 @@ Depending on the output argument: \describe{
 \item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
 column for each test. TRUE = clean coordinate, FALSE = potentially
 problematic coordinates.  The summary column is FALSE if any test flagged
-the respective coordinate.} \item{list("flags")}{a logical vector with the
+the respective coordinate.} \item{list("flagged")}{a logical vector with the
 same order as the input data summarizing the results of all test. TRUE =
 clean coordinate, FALSE = potentially problematic (= at least one test
 failed).} \item{list("cleaned")}{a \code{data.frame} of cleaned coordinates

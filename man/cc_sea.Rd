@@ -29,8 +29,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flags coordinates outside the reference landmass. Can be used to restrict
@@ -57,7 +57,7 @@ x <- data.frame(species = letters[1:10],
                 decimallongitude = runif(10, -30, 30), 
                 decimallatitude = runif(10, -30, 30))
                 
-cc_sea(x, value = "flags")
+cc_sea(x, value = "flagged")
 
 }
 \keyword{Coordinate}

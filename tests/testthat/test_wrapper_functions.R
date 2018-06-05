@@ -1,4 +1,3 @@
-library(CoordinateCleaner)
 context("Coordinate cleaning")
 
 # Coordinate level cleaning
@@ -67,7 +66,7 @@ test_that("dataset level cleaning works", {
   
   #Output value
   expect_is(CleanCoordinatesDS(test, value = "clean"), "data.frame")
-  expect_is(CleanCoordinatesDS(test, value = "flags"), "data.frame")
+  expect_is(CleanCoordinatesDS(test, value = "flagged"), "data.frame")
   
   expect_equal(sum(CleanCoordinatesDS(test)$summary), 1)
   

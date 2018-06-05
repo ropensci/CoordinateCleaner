@@ -75,9 +75,9 @@ of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a summary per
-dataset \code{dataset}, a data.frame containing the records considered
-correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test
-passed and FALSE = test failed/potentially problematic (\dQuote{flags}).
+dataset \code{dataset}, a data.frame (\dQuote{clean}) containing the records considered
+correct by the test or a logical vector (\dQuote{flagged}), with TRUE = test
+passed and FALSE = test failed/potentially problematic .
 Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one
 row for each dataset in \code{x}.
 }

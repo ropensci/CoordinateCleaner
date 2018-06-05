@@ -25,8 +25,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flags records of fossil with equal minimum and maximum age.
@@ -41,7 +41,7 @@ x <- rbind(x, data.frame(species = "z",
                 min_ma = 5, 
                 max_ma = 5))
                 
-tc_equal(x, value = "flags")
+tc_equal(x, value = "flagged")
 
 }
 \keyword{Fossils}
