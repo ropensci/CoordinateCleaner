@@ -35,8 +35,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @keywords Fossil Temporal cleaning
 #' @examples
 #' 
@@ -47,7 +47,7 @@
 #'                 min_ma = minages, 
 #'                 max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
 #' 
-#' tc_range(x, value = "flags", taxon = "")
+#' tc_range(x, value = "flagged", taxon = "")
 #' 
 #' @export
 #' @importFrom stats median mad IQR quantile dist
@@ -66,7 +66,7 @@ tc_range <- function(x,
                      verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags", "ids"))
+  match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("quantile", "mad", "time"))
 
   # select relevant columns and calcualte age range
@@ -212,6 +212,6 @@ tc_range <- function(x,
   }
 
   switch(value, clean = return(x[out, ]), 
-         flags = return(out), 
+         flagged = return(out), 
          ids = return(flags))
 }

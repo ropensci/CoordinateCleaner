@@ -69,9 +69,9 @@
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a summary per
-#' dataset \code{dataset}, a data.frame containing the records considered
-#' correct by the test (\dQuote{clean}) or a logical vector, with TRUE = test
-#' passed and FALSE = test failed/potentially problematic (\dQuote{flags}).
+#' dataset \code{dataset}, a data.frame (\dQuote{clean}) containing the records considered
+#' correct by the test or a logical vector (\dQuote{flagged}), with TRUE = test
+#' passed and FALSE = test failed/potentially problematic .
 #' Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one
 #' row for each dataset in \code{x}.
 #' @seealso \code{\link{CleanCoordinates}}
@@ -126,7 +126,7 @@ CleanCoordinatesDS <- function(x,
                                verbose = TRUE) {
 
   # check input arguments
-  match.arg(value, choices = c("dataset", "flags", "clean"))
+  match.arg(value, choices = c("dataset", "flagged", "clean"))
   match.arg(periodicity.target, choices = c("lat", "lon", "both"))
 
   # check column names
@@ -152,7 +152,7 @@ CleanCoordinatesDS <- function(x,
 
   # perpare dummy value in case value == 'clean'
   if (value == "clean") {
-    value2 <- "flags"
+    value2 <- "flagged"
   } else {
     value2 <- value
   }
@@ -228,7 +228,7 @@ CleanCoordinatesDS <- function(x,
       message(sprintf("Flagged %s datasets.", sum(!out$summary)))
     }
   }
-  if (value == "flags") {
+  if (value == "flagged") {
     out <- data.frame(ddmm = out.t1, periodicity = out.t2)
     out <- Filter(function(x) !all(is.na(x)), out)
     out$summary <- Reduce("&", out)

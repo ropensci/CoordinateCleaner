@@ -33,8 +33,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic . Default = \dQuote{clean}.
 }
 \description{
 Flags records within a certain radius around country capitals. Poorly
@@ -56,7 +56,7 @@ x <- data.frame(species = letters[1:10],
                 decimallatitude = runif(100, -90,90))
 
 cc_cap(x)
-cc_cap(x, value = "flags")
+cc_cap(x, value = "flagged")
 
 }
 \keyword{Coordinate}

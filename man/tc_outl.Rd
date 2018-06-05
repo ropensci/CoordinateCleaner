@@ -58,8 +58,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flags records of fossils that are spatio-temporal outliers based on
@@ -94,7 +94,7 @@ x <- data.frame(species = c(letters[1:10], rep("z", 2)),
                 min_ma = minages, 
                 max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
 
-tc_outl(x, value = "flags", taxon = "")
+tc_outl(x, value = "flagged", taxon = "")
 
 }
 \keyword{Coordinate}
