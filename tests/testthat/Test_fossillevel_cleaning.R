@@ -1,4 +1,3 @@
-library(CoordinateCleaner)
 context("Coordinate cleaning")
 
 set.seed(1)
@@ -15,13 +14,13 @@ test <- data.frame(species = c(letters[1:10], "z"),
 
 test_that("tc_range identifies existing bias", {
   #return value
-  expect_is(tc_range(test, value = "flags", taxon = ""), "logical")
+  expect_is(tc_range(test, value = "flagged", taxon = ""), "logical")
   expect_is(tc_range(test, value = "clean", taxon = ""), "data.frame")
   
   #outlier method
-  expect_equal(sum(tc_range(test, value = "flags", method = "quantile", taxon = "")), 10)
-  expect_equal(sum(tc_range(test, value = "flags", method = "mad", taxon = "")), 10)
-  expect_equal(sum(tc_range(test, value = "flags", method = "time", taxon = "", max.range = 20, uniq.loc = F)), 10)
+  expect_equal(sum(tc_range(test, value = "flagged", method = "quantile", taxon = "")), 10)
+  expect_equal(sum(tc_range(test, value = "flagged", method = "mad", taxon = "")), 10)
+  expect_equal(sum(tc_range(test, value = "flagged", method = "time", taxon = "", max.range = 20, uniq.loc = F)), 10)
   
 })
 
@@ -38,13 +37,13 @@ test <- data.frame(species = c(letters[1:10], rep("z", 2)),
 
 test_that("tc_outl identifies existing bias", {
   #return value
-  expect_is(tc_outl(test, value = "flags", taxon = ""), "logical")
+  expect_is(tc_outl(test, value = "flagged", taxon = ""), "logical")
   expect_is(tc_outl(test, value = "clean", taxon = ""), "data.frame")
   
   #outlier method
-  expect_equal(sum(tc_outl(test, value = "flags", method = "quantile", taxon = "")), 10)
-  expect_equal(sum(tc_outl(test, value = "flags", method = "quantile", taxon = "", uniq.loc = F)), 10)
-  expect_equal(sum(tc_outl(test, value = "flags", method = "mad", taxon = "")), 10)
-  expect_equal(sum(tc_outl(test, value = "flags", method = "mad", taxon = "", uniq.loc = F)), 10)
+  expect_equal(sum(tc_outl(test, value = "flagged", method = "quantile", taxon = "")), 10)
+  expect_equal(sum(tc_outl(test, value = "flagged", method = "quantile", taxon = "", uniq.loc = F)), 10)
+  expect_equal(sum(tc_outl(test, value = "flagged", method = "mad", taxon = "")), 10)
+  expect_equal(sum(tc_outl(test, value = "flagged", method = "mad", taxon = "", uniq.loc = F)), 10)
   
 })

@@ -1,11 +1,11 @@
 Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
-Version: 1.1-1
+Version: 1.1-2
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@bioenv.gu.se",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = c("ctb")))
-Description: Automated cleaning of geographic species occurrence records by automated flagging of problems common to biodiversity data from biological collections. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://github.com/azizka/CoordinateCleaner/wiki> for more details and tutorials.
+Description: Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://github.com/azizka/CoordinateCleaner/wiki> for more details and tutorials.
 License: GPL-3
 URL: https://github.com/azizka/CoordinateCleaner
 BugReports: https://github.com/azizka/CoordinateCleaner/issues
@@ -13,4 +13,5 @@ Depends: R (>= 3.0.0)
 Imports: geosphere, ggplot2, graphics, methods, raster, rgeos, rnaturalearth, stats, sp, utils
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: testthat, covr
+Suggests: countrycode, covr, dplyr, knitr, maps, paleobioDB, rgbif, rmarkdown, tidyverse, testthat
+VignetteBuilder: knitr

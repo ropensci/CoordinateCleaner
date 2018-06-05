@@ -16,8 +16,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
@@ -28,7 +28,7 @@
 #'                 decimallatitude = c(55.67, 30.00))
 #'                 
 #' cc_gbif(x)
-#' cc_gbif(x, value = "flags")
+#' cc_gbif(x, value = "flagged")
 #' 
 #' @export
 #' @importFrom sp over SpatialPoints
@@ -40,7 +40,7 @@ cc_gbif <- function(x,
                     verbose = TRUE) {
 
   # check function argument validity
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
 
   if (verbose) {
     message("Testing GBIF headquarters")
@@ -48,7 +48,7 @@ cc_gbif <- function(x,
 
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
   ref <- rgeos::gBuffer(sp::SpatialPoints(cbind(12.58, 55.67)), width = 0.5)
-  warning("running GBIF test, flagging records around Copenhagen")
+  message("running GBIF test, flagging records around Copenhagen")
 
   out <- sp::over(x = dat, y = ref)
   out <- is.na(out)
@@ -57,5 +57,5 @@ cc_gbif <- function(x,
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 }

@@ -55,8 +55,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flags record with an unexpectedly large temporal range, based on a quantile
@@ -71,7 +71,7 @@ x <- data.frame(species = c(letters[1:10], "z"),
                 min_ma = minages, 
                 max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
 
-tc_range(x, value = "flags", taxon = "")
+tc_range(x, value = "flagged", taxon = "")
 
 }
 \keyword{Fossil}

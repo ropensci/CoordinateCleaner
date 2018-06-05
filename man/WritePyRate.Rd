@@ -4,13 +4,18 @@
 \alias{WritePyRate}
 \title{Create Input Files for PyRate}
 \usage{
-WritePyRate(x, taxon = "accepted_name", min.age = "min_ma",
-  max.age = "max_ma", status = NULL, trait = NULL, fname = NULL,
-  path = getwd(), replicates = 1, cutoff = NULL, random = TRUE)
+WritePyRate(x, status, fname, taxon = "accepted_name", min.age = "min_ma",
+  max.age = "max_ma", trait = NULL, path = getwd(), replicates = 1,
+  cutoff = NULL, random = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
 names.}
+
+\item{status}{a vector of character strings of length \code{nrow(x)}.
+Indicating for each record \dQuote{extinct} or \dQuote{extant}.}
+
+\item{fname}{a character string. The prefix to use for the output files.}
 
 \item{taxon}{a character string. The column with the taxon name. If
 \dQuote{}, searches for outliers over the entire dataset, otherwise per
@@ -22,13 +27,8 @@ specified taxon. Default = \dQuote{identified_name}.}
 \item{max.age}{a character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
-\item{status}{a vector of character strings of length \code{nrow(x)}.
-Indicating for each record \dQuote{extinct} or \dQuote{extant}.}
-
 \item{trait}{a numeric vector of length \code{nrow(x)}. Indicating trait
 values for each record. Optional.  Default = NULL.}
-
-\item{fname}{a character string. The prefix to use for the output files.}
 
 \item{path}{a character string. giving the absolute path to write the output
 files. Default is the working directory.}

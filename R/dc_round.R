@@ -41,8 +41,8 @@
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 #' \code{data.frame} containing the records considered correct by the test
-#' (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE =
-#' test failed/potentially problematic (\dQuote{flags}). Default =
+#' (\dQuote{clean}) or a logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE =
+#' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
@@ -108,7 +108,7 @@ dc_round <- function(x,
   nc <- 3000
   rarefy <- FALSE
 
-  match.arg(value, choices = c("flags", "clean", "dataset"))
+  match.arg(value, choices = c("flagged", "clean", "dataset"))
 
   if (length(unique(x[[ds]])) > 1) {
     dat <- split(x, f = x[[ds]])
@@ -383,5 +383,5 @@ dc_round <- function(x,
       NULL
     }
   }), 
-  flags = return(x[[ds]] %in% out[out$summary, "dataset"]))
+  flagged = return(x[[ds]] %in% out[out$summary, "dataset"]))
 }
