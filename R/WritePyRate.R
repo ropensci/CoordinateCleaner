@@ -72,22 +72,22 @@
 #' @export
 #' @importFrom stats runif 
 #' @importFrom utils write.table
-WritePyRate <- function(x, 
+WritePyRate <- function(x,
+                        status,
+                        fname, 
                         taxon = "accepted_name", 
                         min.age = "min_ma", 
                         max.age = "max_ma",
-                        status = NULL, 
                         trait = NULL, 
-                        fname = NULL, 
                         path = getwd(), 
                         replicates = 1,
                         cutoff = NULL, 
                         random = TRUE) {
-  if (is.null(fname)) {
+  if (missing(fname)) {
     stop("'fname' missing with no default")
   }
 
-  if (is.null(status)) {
+  if (missing(status)) {
     stop("'status' missing with no default.")
   }
 

@@ -33,8 +33,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flag records assigned to the location of zoos, botanical gardens, herbaria,
@@ -58,7 +58,7 @@ x <- data.frame(species = letters[1:10],
                 decimallatitude = runif(100, -90,90))
                 
 cc_inst(x, buffer = 5)#large buffer for demonstration
-cc_inst(x, value = "flags", buffer = 5)
+cc_inst(x, value = "flagged", buffer = 5)
 
 }
 \keyword{Coordinate}

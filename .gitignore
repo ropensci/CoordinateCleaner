@@ -6,3 +6,7 @@
 Code.Rproj
 XXX_TESTING.R
 old
+vignettes/CoordianteCleaner.bib
+vignettes/mammal_example.csv
+vignettes/tutorial_s3_example_input_data
+vignettes/apa.csl

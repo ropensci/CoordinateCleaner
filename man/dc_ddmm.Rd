@@ -51,8 +51,8 @@ dataset.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 \code{data.frame} containing the records considered correct by the test
-(\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE =
-test failed/potentially problematic (\dQuote{flags}). Default =
+(\dQuote{clean}) or a logical vector (\dQuote{flags}), with TRUE = test passed and FALSE =
+test failed/potentially problematic. Default =
 \dQuote{clean}.
 }
 \description{
@@ -86,7 +86,7 @@ clean <- data.frame(species = letters[1:10],
                 decimallatitude = runif(100, -90,90),
                 dataset = "FR")
                 
-dc_ddmm(x = clean, value = "flags")
+dc_ddmm(x = clean, value = "flagged")
 
 #problematic dataset
 lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
@@ -97,7 +97,7 @@ prob <-  data.frame(species = letters[1:10],
                 decimallatitude = lat,
                 dataset = "FR")
                 
-dc_ddmm(x = prob, value = "flags")
+dc_ddmm(x = prob, value = "flagged")
 
 }
 \keyword{"Coordinate}
