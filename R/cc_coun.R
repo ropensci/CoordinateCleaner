@@ -16,14 +16,14 @@
 #' each record in three letter ISO code. Default = \dQuote{countrycode}.
 #' @param ref a SpatialPolygonsDataframe. Providing the geographic gazetteer.
 #' Can be any SpatialPolygonsDataframe, but the structure must be identical to
-#' \code{\link{countryref}}.  Default = \code{\link{countryref}}
+#' \code{rnaturalearth::ne_countries(scale = "medium")}.  Default = \code{rnaturalearth::ne_countries(scale = "medium")}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @note Non-terrestrial records are ignored. Use \code{\link{cc_sea}} to flag
 #' these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
@@ -36,7 +36,7 @@
 #'                 decimallatitude = runif(100, 35,60),
 #'                 countrycode = "RUS")
 #' 
-#' cc_coun(x, value = "flags")#non-terrestrial records are not flagged! Use cc_sea for these
+#' cc_coun(x, value = "flagged")#non-terrestrial records are not flagged! Use cc_sea for these
 #' }
 #' 
 #' @export
@@ -51,7 +51,7 @@ cc_coun <- function(x,
                     verbose = TRUE) {
 
   # check function arguments for validity
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
   if (!iso3 %in% names(x)) {
     stop("iso3 argument missing, please specify")
   }
@@ -89,5 +89,5 @@ cc_coun <- function(x,
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 }

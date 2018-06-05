@@ -1,4 +1,3 @@
-library(CoordinateCleaner)
 context("Coordinate cleaning")
 
 #Create test dataset
@@ -30,12 +29,12 @@ test_that("dc_round identifies existing bias", {
   expect_equal(sum(t1$summary), 1)
   
   #flags output
-  t2 <- dc_round(test, value = "flags", graphs = F)
+  t2 <- dc_round(test, value = "flagged", graphs = F)
   expect_is(t2, "logical")
   expect_equal(mean(t2), 0.5)
   
   #graphs
-  expect_equal(mean(dc_round(test, value = "flags", graphs = T)), 0.5)
+  expect_equal(mean(dc_round(test, value = "flagged", graphs = T)), 0.5)
   
   #column specification
   expect_error(dc_round(x = test, lat = "latitude"))
@@ -66,11 +65,11 @@ test_that("dc_ddmm identifies existing bias", {
   expect_is(t1, "data.frame")
   expect_equal(sum(t1$pass), 1)
   
-  t2 <- dc_ddmm(test, value = "flags")
+  t2 <- dc_ddmm(test, value = "flagged")
   expect_is(t2, "logical")
   expect_equal(mean(t2), 0.5)
   
-  expect_equal(mean(dc_ddmm(test, value = "flags")), 0.5)
+  expect_equal(mean(dc_ddmm(test, value = "flagged")), 0.5)
   
   expect_error(dc_ddmm(x = test, lat = "latitude"))
   expect_error(dc_ddmm(x = test, lon = "longitude"))

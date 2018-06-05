@@ -57,8 +57,8 @@ Default = \dQuote{both}}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 \code{data.frame} containing the records considered correct by the test
-(\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE =
-test failed/potentially problematic (\dQuote{flags}). Default =
+(\dQuote{clean}) or a logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE =
+test failed/potentially problematic. Default =
 \dQuote{clean}.
 }
 \description{

@@ -112,7 +112,7 @@
 #' \item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
 #' column for each test. TRUE = clean coordinate, FALSE = potentially
 #' problematic coordinates.  The summary column is FALSE if any test flagged
-#' the respective coordinate.} \item{list("flags")}{a logical vector with the
+#' the respective coordinate.} \item{list("flagged")}{a logical vector with the
 #' same order as the input data summarizing the results of all test. TRUE =
 #' clean coordinate, FALSE = potentially problematic (= at least one test
 #' failed).} \item{list("cleaned")}{a \code{data.frame} of cleaned coordinates
@@ -174,7 +174,7 @@ CleanCoordinates <- function(x,
                              verbose = TRUE, 
                              report = FALSE) {
   # check function arguments
-  match.arg(value, choices = c("spatialvalid", "flags", "clean"))
+  match.arg(value, choices = c("spatialvalid", "flagged", "clean"))
   match.arg(centroids.detail, choices = c("both", "country", "provinces"))
   match.arg(outliers.method, choices = c("distance", "quantile", "mad"))
 
@@ -219,7 +219,7 @@ CleanCoordinates <- function(x,
 
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work
-  val <- cc_val(x, lon = lon, lat = lat, verbose = verbose, value = "flags")
+  val <- cc_val(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
 
   if (!all(val)) {
     stop(
@@ -231,7 +231,7 @@ CleanCoordinates <- function(x,
   ## Equal coordinates
   if (equal) {
     equ <- cc_equ(x,
-      lon = lon, lat = lat, verbose = verbose, value = "flags",
+      lon = lon, lat = lat, verbose = verbose, value = "flagged",
       test = "absolute"
     )
   } else {
@@ -242,7 +242,7 @@ CleanCoordinates <- function(x,
   if (zeros) {
     zer <- cc_zero(x,
       lon = lon, lat = lat, buffer = zeros.rad, verbose = verbose,
-      value = "flags"
+      value = "flagged"
     )
   } else {
     zer <- rep(NA, dim(x)[1])
@@ -252,7 +252,7 @@ CleanCoordinates <- function(x,
   if (capitals) {
     cap <- cc_cap(x,
       lon = lon, lat = lat, buffer = capitals.rad, ref = capitals.ref,
-      value = "flags", verbose = verbose
+      value = "flagged", verbose = verbose
     )
   } else {
     cap <- rep(NA, dim(x)[1])
@@ -262,7 +262,7 @@ CleanCoordinates <- function(x,
   if (centroids) {
     cen <- cc_cen(x,
       lon = lon, lat = lat, buffer = centroids.rad, test = centroids.detail,
-      ref = centroids.ref, value = "flags", verbose = verbose
+      ref = centroids.ref, value = "flagged", verbose = verbose
     )
   } else {
     cen <- rep(NA, nrow(x))
@@ -272,7 +272,7 @@ CleanCoordinates <- function(x,
   if (seas) {
     sea <- cc_sea(x,
       lon = lon, lat = lat, ref = seas.ref, verbose = verbose,
-      value = "flags"
+      value = "flagged"
     )
   } else {
     sea <- rep(NA, dim(x)[1])
@@ -282,7 +282,7 @@ CleanCoordinates <- function(x,
   if (urban) {
     urb <- cc_urb(x,
       lon = lon, lat = lat, ref = urban.ref, verbose = verbose,
-      value = "flags"
+      value = "flagged"
     )
   } else {
     urb <- rep(NA, dim(x)[1])
@@ -292,7 +292,7 @@ CleanCoordinates <- function(x,
   if (countrycheck) {
     con <- cc_coun(x,
       lon = lon, lat = lat, iso3 = countries, ref = country.ref,
-      verbose = verbose, value = "flags"
+      verbose = verbose, value = "flagged"
     )
   } else {
     con <- rep(NA, dim(x)[1])
@@ -319,7 +319,7 @@ CleanCoordinates <- function(x,
 
   # GBIF headquarters
   if (GBIF) {
-    gbf <- cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flags")
+    gbf <- cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
   } else {
     gbf <- rep(NA, dim(x)[1])
   }
@@ -328,7 +328,7 @@ CleanCoordinates <- function(x,
   if (institutions) {
     inst <- cc_inst(x,
       lon = lon, lat = lat, ref = inst.ref, buffer = inst.rad,
-      verbose = verbose, value = "flags"
+      verbose = verbose, value = "flagged"
     )
   } else {
     inst <- rep(NA, dim(x)[1])
@@ -406,7 +406,7 @@ CleanCoordinates <- function(x,
       warning("report only valid with value = 'spatialvalid'")
     }
   }
-  if (value == "flags") {
+  if (value == "flagged") {
     if (report | is.character(report)) {
       warning("report only valid with value = 'spatialvalid'")
     }

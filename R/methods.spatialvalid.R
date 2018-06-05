@@ -5,7 +5,6 @@ is.spatialvalid <- function(x) {
 }
 
 
-
 #' Plot Method for Class Spatialvalid
 #' 
 #' A set of plots to explore objects of the class \code{spatialvalid}. A plot
@@ -37,6 +36,7 @@ is.spatialvalid <- function(x) {
 #' test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
 #' 
 #' summary(test)
+#' plot(test)
 #' @export
 #' @method plot spatialvalid
 #' @importFrom raster crop
@@ -44,7 +44,7 @@ is.spatialvalid <- function(x) {
 plot.spatialvalid <- function(x, 
                               bgmap = NULL, 
                               clean = TRUE, 
-                              details = TRUE,
+                              details = FALSE,
                               pts.size = 1, 
                               font.size = 10, 
                               ...) {

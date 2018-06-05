@@ -48,8 +48,8 @@
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 #' \code{data.frame} containing the records considered correct by the test
-#' (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE =
-#' test failed/potentially problematic (\dQuote{flags}). Default =
+#' (\dQuote{clean}) or a logical vector (\dQuote{flags}), with TRUE = test passed and FALSE =
+#' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
@@ -61,7 +61,7 @@
 #'                 decimallatitude = runif(100, -90,90),
 #'                 dataset = "FR")
 #'                 
-#' dc_ddmm(x = clean, value = "flags")
+#' dc_ddmm(x = clean, value = "flagged")
 #' 
 #' #problematic dataset
 #' lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
@@ -72,7 +72,7 @@
 #'                 decimallatitude = lat,
 #'                 dataset = "FR")
 #'                 
-#' dc_ddmm(x = prob, value = "flags")
+#' dc_ddmm(x = prob, value = "flagged")
 #' 
 #' @export
 #' @importFrom stats complete.cases binom.test
@@ -90,7 +90,7 @@ dc_ddmm <- function(x,
                     diagnostic = FALSE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags", "dataset"))
+  match.arg(value, choices = c("clean", "flagged", "dataset"))
 
   if (verbose) {
     message("Testing datasets for dd.mm to dd.dd conversion errors")
@@ -201,5 +201,5 @@ dc_ddmm <- function(x,
   switch(value, 
          dataset = return(out.ds), 
          clean = return(x[flags, ]), 
-         flags = return(flags))
+         flagged = return(flags))
 }

@@ -55,8 +55,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @keywords Fossil Coordinate cleaning Temporal cleaning
 #' @examples
 #' 
@@ -67,7 +67,7 @@
 #'                 min_ma = minages, 
 #'                 max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
 #' 
-#' tc_outl(x, value = "flags", taxon = "")
+#' tc_outl(x, value = "flagged", taxon = "")
 #' 
 #' @export
 #' @importFrom stats runif
@@ -89,7 +89,7 @@ tc_outl <- function(x,
                     verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags", "ids"))
+  match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("quantile", "mad"))
 
   # report analyses step
@@ -319,7 +319,7 @@ tc_outl <- function(x,
 
   switch(value, 
          clean = return(x[out, ]), 
-         flags = return(out), 
+         flagged = return(out), 
          ids = return(which(!out)))
 }
 80

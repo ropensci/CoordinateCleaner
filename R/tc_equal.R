@@ -14,8 +14,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @keywords Temporal cleaning Fossils
 #' @examples
 #' 
@@ -27,12 +27,12 @@
 #'                 min_ma = 5, 
 #'                 max_ma = 5))
 #'                 
-#' tc_equal(x, value = "flags")
+#' tc_equal(x, value = "flagged")
 #' 
 #' @export
 tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
                      verbose = TRUE) {
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
 
 
   if (verbose) {
@@ -57,5 +57,5 @@ tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
   }
 
   # value
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 }
