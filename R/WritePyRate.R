@@ -48,7 +48,7 @@
 #' @examples
 #' 
 #' minages <- runif(250, 0, 65)
-#' exmpl <- data.frame(identified_name = sample(letters, size = 250, replace = TRUE),
+#' exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 #'                     lng = runif(250, min = 42, max = 51),
 #'                     lat = runif(250, min = -26, max = -11),
 #'                     min_ma = minages,
@@ -63,7 +63,7 @@
 #' #or from a list of species
 #' status <- sample(c("extinct", "extant"), size = length(letters), replace = TRUE)
 #' names(status) <- letters
-#' status <- status[exmpl$identified_name]
+#' status <- status[exmpl$accepted_name]
 #' 
 #' \dontrun{
 #' WritePyRate(x = exmpl,fname = "test", status = status)
