@@ -29,23 +29,27 @@ NULL
 
 #' Global Country and Province Centroids
 #' 
-#' A gazetteer of country and province centroids.
+#' A gazetteer of country and province centroids. 
+#' Centroids are derived from publically available datasets (see sources below).
 #' 
 #' 
 #' @name centroids
 #' @docType data
-#' @format A data frame with 5142 observations on the following 6 variables.
+#' @format A data frame with 5142 observations on the following 6 variables. 
 #' \describe{ \item{adm1_code}{a factor; province code.}
 #' \item{iso3}{a factor; country ISO-3 code.} \item{name}{a
 #' factor; name of the country or province.} \item{type}{a character
 #' vector; country or province.} \item{longitude}{a numeric vector}
 #' \item{latitude}{a numeric vector} }
-#' @source \url{http://www.naturalearthdata.com/}
+#' @source 
+#' \url{http://www.naturalearthdata.com/}
+#' \url{http://thematicmapping.org/downloads/world_borders.php}
 #' 
 #' CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook}, Washington,
 #' DC.
-#' 
 #' \url{https://www.cia.gov/library/publications/the-world-factbook/fields/2011.html}
+#' 
+#' 
 #' @keywords gazetteers
 #' @examples
 #' 
@@ -89,7 +93,7 @@ NULL
 #' Country Centroids and Country Capitals
 #' 
 #' A \code{data.frame} with coordinates of country centroids and country
-#' capitals as reference for the \code{\link{CleanCoordinates}} function.
+#' capitals as reference for the \code{\link{clean_coordinates}} function.
 #' Coordinates are based on the Central Intelligence Agency World Factbook as
 #' provided at \url{http://opengeocode.org/download/cow.php}.
 #' 

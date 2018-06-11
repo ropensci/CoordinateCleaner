@@ -1,7 +1,7 @@
 #' Create Input Files for PyRate
 #' 
 #' Creates the input necessary to run Pyrate, based on a data.frame with fossil
-#' ages (as derived e.g. from CleanCoordinatesFOS) and a vector of the
+#' ages (as derived e.g. from clean_fossils) and a vector of the
 #' extinction status for each sample. Creates files in the working directory!
 #' 
 #' The replicate option allows the user to generate several replicates of the
@@ -18,9 +18,9 @@
 #' @param taxon a character string. The column with the taxon name. If
 #' \dQuote{}, searches for outliers over the entire dataset, otherwise per
 #' specified taxon. Default = \dQuote{identified_name}.
-#' @param min.age a character string. The column with the minimum age. Default
+#' @param min_age a character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max.age a character string. The column with the maximum age. Default
+#' @param max_age a character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
 #' @param status a vector of character strings of length \code{nrow(x)}.
 #' Indicating for each record \dQuote{extinct} or \dQuote{extant}.
@@ -33,7 +33,7 @@
 #' age generation. See details. Default = 1.
 #' @param cutoff a numerical. Specify a threshold to exclude fossil occurrences
 #' with a high temporal uncertainty, i.e. with a wide temporal range between
-#' min.age and max.age. Examples: cutoff=NULL (default; all occurrences are
+#' min_age and max_age. Examples: cutoff=NULL (default; all occurrences are
 #' kept in the data set) cutoff=5 (all occurrences with a temporal range of 5
 #' Myr or higher are excluded from the data set)
 #' @param random logical. Specify whether to take a random age (between MinT
@@ -66,18 +66,18 @@
 #' status <- status[exmpl$accepted_name]
 #' 
 #' \dontrun{
-#' WritePyRate(x = exmpl,fname = "test", status = status)
+#' write_pyrate(x = exmpl,fname = "test", status = status)
 #' }
 #' 
 #' @export
 #' @importFrom stats runif 
 #' @importFrom utils write.table
-WritePyRate <- function(x,
+write_pyrate <- function(x,
                         status,
                         fname, 
                         taxon = "accepted_name", 
-                        min.age = "min_ma", 
-                        max.age = "max_ma",
+                        min_age = "min_ma", 
+                        max_age = "max_ma",
                         trait = NULL, 
                         path = getwd(), 
                         replicates = 1,
@@ -94,8 +94,8 @@ WritePyRate <- function(x,
   # adapt input data
   dat1 <- data.frame(species = x[, taxon], 
                      Status = status, 
-                     min_age = x[, min.age], 
-                     max_age = x[, max.age])
+                     min_age = x[, min_age], 
+                     max_age = x[, max_age])
 
   if (length(trait) > 0) {
     dat1 <- data.frame(dat1, trait)
