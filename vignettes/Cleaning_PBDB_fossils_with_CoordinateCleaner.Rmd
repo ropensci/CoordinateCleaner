@@ -88,28 +88,28 @@ For the purpose of the tutorial, we will always exclude flagged records. If you 
 fl <- cc_equ(dat, value = "flagged", lat = "lat", lon = "lng")
 
 # extract and check the flagged records
-fl.rec <- dat[!fl,] 
-head(fl.rec)
+fl_rec <- dat[!fl,] 
+head(fl_rec)
 ```
 
 We'll also test if the records are identical, or in close vicinity to the centroids of political units. You can modify the buffer around each centroid using the `buffer` argument and the level of testing (country centroids, province centroids, or both) using the `test argument`. In case you have a list of geographic coordinates you consider problematic, for instance a list of cities you can provide them as custom gazetteer using the `ref` argument.
 
 ```{r, collapse = T}
 fl <- cc_cen(cl, lat = "lat", lon = "lng", value = "flagged")
-fl.rec <- cl[!fl,]
-unique(fl.rec$cc)
-cl <- cl[fl,]
+fl_rec <- cl[!fl, ]
+unique(fl_rec$cc)
+cl <- cl[fl, ]
 ```
 
 Next we will test if the coordinates are within the country they are assigned to. This test is a bit more tricky, as it will also flag records, if the country name in the country column is not following ISO3 or if the records have been assigned during a different political landscape. For instance records from former Western and Eastern Germany. Here we need to convert the country annotation in column cc from ISO2 to ISO3; it is advisable to double check which records have be flagged, to avoid unnecessary data loss (see above).
 
 ```{r}
 #adapt country code to ISO3, for country test
-cs.ma <- "GBR"
-names(cs.ma) <- "UK"
-cl$cc.iso3 <- countrycode(cl$cc, origin = "iso2c", destination = "iso3c", custom_match = cs.ma)
+cs_ma <- "GBR"
+names(cs_ma) <- "UK"
+cl$cc_iso3 <- countrycode(cl$cc, origin = "iso2c", destination = "iso3c", custom_match = cs_ma)
 
-cl <- cc_coun(cl, lat = "lat", lon = "lng", iso3 = "cc.iso3")
+cl <- cc_coun(cl, lat = "lat", lon = "lng", iso3 = "cc_iso3")
 ```
 
 Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the `institutions` database of \emph{CoordinateCleaner}. As for the country centroid test you can change the buffer around the institutions with the `buffer` argument.
@@ -132,7 +132,7 @@ The spatial cleaning above is mostly identical with steps from recent geographic
 ```{r}
 cl <- cl[!is.na(cl$late_age),]
 cl <- cl[!is.na(cl$early_age),]
-cl <- tc_equal(cl, min.age = "late_age", max.age = "early_age")
+cl <- cf_equal(cl, min_age = "late_age", max_age = "early_age")
 ```
 
 Next we will look at the age range (= max age - min age) of each record. The age range is the dating precision and can vary considerably, depending on the data available for dating. For many analyses, for instance in PyRate, very imprecisely dated records are not suitable. Lets first have a look at the age ranges in our test dataset.
@@ -146,30 +146,30 @@ Some individual records are dated with a precision of more than 60 milion years!
 
 ```{r}
 # Outlier dataset
-cl <- tc_range(cl, taxon = "", min.age = "late_age", max.age = "early_age")
+cl <- cf_range(cl, taxon = "", min_age = "late_age", max_age = "early_age")
 
 # Outlier per taxon
-cl <- tc_range(cl, taxon = "taxon_name", min.age = "late_age", max.age = "early_age")
+cl <- cf_range(cl, taxon = "taxon_name", min_age = "late_age", max_age = "early_age")
 
 # Absolute age limit
-cl <- tc_range(cl, taxon = "taxon_name", min.age = "late_age", 
-               max.age = "early_age", method = "time", max.range = 35)
+cl <- cf_range(cl, taxon = "taxon_name", min_age = "late_age", 
+               max_age = "early_age", method = "time", max_range = 35)
 
 rang <- cl$early_age - cl$late_age
 hist(rang, breaks = 40, xlab = "Date range [max age - min age]", main = "")
 
 ```
 
-Finally we will test for outliers in space-time, that is records that are either very distant in space or in time from all other records (1) in the dataset (2) per taxon. The test is again based on quantile outlier detection and can be modified using  various arguments. Here it is important to carefully consider the desired test sensitivity. See `?tc_outl` for help.
+Finally we will test for outliers in space-time, that is records that are either very distant in space or in time from all other records (1) in the dataset (2) per taxon. The test is again based on quantile outlier detection and can be modified using  various arguments. Here it is important to carefully consider the desired test sensitivity. See `?cf_outl` for help.
 
 ```{r}
 # Outlier dataset
-cl <- tc_outl(cl, taxon = "", lat = "lat", lon = "lng",
-              min.age = "late_age", max.age = "early_age")
+cl <- cf_outl(cl, taxon = "", lat = "lat", lon = "lng",
+              min_age = "late_age", max_age = "early_age")
 
 # Outlier taxon
-cl <- tc_outl(cl, taxon = "taxon_name", lat = "lat", lon = "lng",
-              min.age = "late_age", max.age = "early_age")
+cl <- cf_outl(cl, taxon = "taxon_name", lat = "lat", lon = "lng",
+              min_age = "late_age", max_age = "early_age")
 ```
 
 Done! To check how many records have been flagged in total, you can compare the two datasets.
@@ -179,7 +179,7 @@ nrow(dat) - nrow(cl)
 ```
 
 
-All test combined have removed about `r nrow(dat) - nrow(cl)` records (`r round((1 - nrow(cl) / nrow(dat)) *100, 1)`%). If you want to identify all flagged records, to double check or correct them, take a look at the `CleanCoordinatesFOS` wrapper function below. 
+All test combined have removed about `r nrow(dat) - nrow(cl)` records (`r round((1 - nrow(cl) / nrow(dat)) *100, 1)`%). If you want to identify all flagged records, to double check or correct them, take a look at the `clean_fossils` wrapper function below. 
 
 So far so good, we have significantly refined the data  for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run \emph{CoordinateCleaner}. You can  connect all functions directly in a row using the magrittr pipe (%>%) operator.
 
@@ -192,31 +192,31 @@ cl <- dat%>%
   cc_gbif(lat = "lat", lon = "lng")%>%
   cc_inst(lat = "lat", lon = "lng")%>%
   cc_zero(lat = "lat", lon = "lng")%>%
-  tc_equal(min.age = "late_age", max.age = "early_age")%>%
-  tc_range(taxon = "taxon_name",
-           min.age = "late_age", max.age = "early_age")%>%
-  tc_outl(taxon = "taxon_name", 
+  cf_equal(min_age = "late_age", max_age = "early_age")%>%
+  cf_range(taxon = "taxon_name",
+           min_age = "late_age", max_age = "early_age")%>%
+  cf_outl(taxon = "taxon_name", 
           lat = "lat", lon = "lng",
-          min.age = "late_age", max.age = "early_age")
+          min_age = "late_age", max_age = "early_age")
 ```
 
-Alternatively you can use `CleanCoordinatesFOS`, a wrapper around all quality tests provided by \emph{CoordinateCleaner} relevant for fossil data. See `?CleanCoordiantesFOS` for help.
+Alternatively you can use `clean_fossils`, a wrapper around all quality tests provided by \emph{CoordinateCleaner} relevant for fossil data. See `?CleanCoordiantesFOS` for help.
 
 ```{r, eval = F}
 #adapt country code to ISO3, for country test
-cs.ma <- "GBR"
-names(cs.ma) <- "UK"
-dat$cc <- countrycode(dat$cc, origin = "iso2c", destination = "iso3c", custom_match = cs.ma)
+cs_ma <- "GBR"
+names(cs_ma) <- "UK"
+dat$cc <- countrycode(dat$cc, origin = "iso2c", destination = "iso3c", custom_match = cs_ma)
 
 #run automated testing
-flags <- CleanCoordinatesFOS(x = dat, 
+flags <- clean_fossils(x = dat, 
                              taxon = "taxon_name",
-                             min.age = "late_age", max.age = "early_age", 
+                             min_age = "late_age", max_age = "early_age", 
                              value = "spatialvalid")
 
 head(flags)
 cl <- dat[flags$summary,] #the cleaned records
-fl.rec <- dat[!flags$summary,] # the flagged records for verification
+fl_rec <- dat[!flags$summary,] # the flagged records for verification
 ```
 
 # Improving data quality using meta-data
@@ -308,22 +308,22 @@ ggplot()+ coord_fixed()+ wm +
 
 #Writing the result to disk in PyRate format
 
-If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, PyRate (https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `WritePyrateOut` function of \emph{CoordinateCleaner} to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `WritePyRate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
+If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, PyRate (https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of \emph{CoordinateCleaner} to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
 
 ```{r, message = F, warning = F, eval = F}
 # replace  blanks in taxon names
 cl$taxon_name <- gsub("[[:blank:]]{1,}","_", cl$taxon_name)
 
 #simulated current status, soley for demonstration purposes, replace with your own data
-mock.status <- data.frame(taxon_name = unique(cl$taxon_name),
+mock_status <- data.frame(taxon_name = unique(cl$taxon_name),
                           status = sample(c("extinct", "extant"), 
                                           size = length(unique(cl$taxon_name)), 
                                           replace = TRUE))
 
 #add current status to fossils
-cl2 <- inner_join(cl, mock.status, by = "taxon_name")
+cl2 <- inner_join(cl, mock_status, by = "taxon_name")
 
 #Write PyRate input to disk
-WritePyRate(cl, fname = "paleobioDB_angiosperms", status = cl2$status,
-            taxon = "taxon_name", min.age = "late_age", max.age = "early_age")
+write_pyrate(cl, fname = "paleobioDB_angiosperms", status = cl2$status,
+            taxon = "taxon_name", min_age = "late_age", max_age = "early_age")
 ```

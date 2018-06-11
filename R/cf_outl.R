@@ -15,7 +15,7 @@
 #' $x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
 #' times, to account for temporal uncertainty. Records are flagged as outliers
 #' if they are flagged by a fraction of more than \sQuote{flag.thres}
-#' replicates. Only datasets/taxa comprising more than \sQuote{size.thresh}
+#' replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
 #' records are tested. Note that geographic distances are calculated as
 #' geospheric distances for datasets (or taxa) with less than 10,000 records
 #' and approximated as Euclidean distances for datasets/taxa with 10,000 to
@@ -28,9 +28,9 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}.
-#' @param min.age a character string. The column with the minimum age. Default
+#' @param min_age a character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max.age a character string. The column with the maximum age. Default
+#' @param max_age a character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
 #' @param taxon a character string. The column with the taxon name. If
 #' \dQuote{}, searches for outliers over the entire dataset, otherwise per
@@ -38,16 +38,16 @@
 #' @param method a character string.  Defining the method for outlier
 #' selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default
 #' = \dQuote{quantile}.
-#' @param size.thresh numeric.  The minimum number of records needed for a
+#' @param size_thresh numeric.  The minimum number of records needed for a
 #' dataset to be tested. Default = 10.
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
 #' 'mad'}) to identify outliers. See details.  Default = 3.
 #' @param replicates numeric. The number of replications for the distance
 #' matrix calculation. See details.  Default = 5.
-#' @param flag.thresh numeric.  The fraction of replicates necessary to flag a
+#' @param flag_thresh numeric.  The fraction of replicates necessary to flag a
 #' record. See details. Default = 0.5.
-#' @param uniq.loc logical.  If TRUE only single records per location and time
+#' @param uniq_loc logical.  If TRUE only single records per location and time
 #' point (and taxon if \code{taxon} != "") are used for the outlier testing.
 #' Default = T.
 #' @param value a character string.  Defining the output value. See value.
@@ -67,24 +67,24 @@
 #'                 min_ma = minages, 
 #'                 max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
 #' 
-#' tc_outl(x, value = "flagged", taxon = "")
+#' cf_outl(x, value = "flagged", taxon = "")
 #' 
 #' @export
 #' @importFrom stats runif
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats median mad IQR quantile dist
-tc_outl <- function(x, 
+cf_outl <- function(x, 
                     lon = "lng", 
                     lat = "lat", 
-                    min.age = "min_ma", 
-                    max.age = "max_ma",
+                    min_age = "min_ma", 
+                    max_age = "max_ma",
                     taxon = "accepted_name", 
                     method = "quantile", 
-                    size.thresh = 7, 
+                    size_thresh = 7, 
                     mltpl = 5,
                     replicates = 5, 
-                    flag.thresh = 0.5, 
-                    uniq.loc = FALSE, 
+                    flag_thresh = 0.5, 
+                    uniq_loc = FALSE, 
                     value = "clean", 
                     verbose = TRUE) {
 
@@ -107,49 +107,49 @@ tc_outl <- function(x,
     # individal method fossil
     x$samplepoint <- apply(X = x, 1, FUN = function(k) {
       stats::runif(
-        n = 1, min = as.numeric(k[[min.age]], na.rm = TRUE),
-        max = as.numeric(k[[max.age]], na.rm = TRUE)
+        n = 1, min = as.numeric(k[[min_age]], na.rm = TRUE),
+        max = as.numeric(k[[max_age]], na.rm = TRUE)
       )
     })
     x$samplepoint <- round(x$samplepoint, 2)
 
 
     if (taxon == "") {
-      # select relevant columns test <- x[, c(lon, lat, min.age, max.age,
+      # select relevant columns test <- x[, c(lon, lat, min_age, max_age,
       # 'samplepoint', 'idf')]
-      test <- x[, c(lon, lat, min.age, max.age, "samplepoint")]
+      test <- x[, c(lon, lat, min_age, max_age, "samplepoint")]
       # round coordinates to one decimal
       test[, lon] <- round(test[, lon], 1)
       test[, lat] <- round(test[, lat], 1)
 
       # remove duplicates
-      if (uniq.loc) {
-        test <- test[!duplicated(test[, c(lon, lat, min.age, max.age)]), ]
+      if (uniq_loc) {
+        test <- test[!duplicated(test[, c(lon, lat, min_age, max_age)]), ]
       }
 
       # calculate geographic distance
       if (nrow(test) < 10000) {
-        dis.geo <- geosphere::distm(test[, c(lon, lat)], 
+        dis_geo <- geosphere::distm(test[, c(lon, lat)], 
                                     fun = geosphere::distHaversine) / 1000
       } else {
-        dis.geo <- as.matrix(dist(test[, c(lon, lat)]))
+        dis_geo <- as.matrix(dist(test[, c(lon, lat)]))
         warning(paste("Large dataset, geographic space", 
                 "treated as euclidean for outlier test", sep = " "))
       }
 
-      dis.geo[dis.geo == 0] <- NA
+      dis_geo[dis_geo == 0] <- NA
 
       # calculate temporal distance
-      dis.tmp <- as.matrix(dist(test[, c("samplepoint")]))
-      dis.tmp[dis.tmp == 0] <- NA
+      dis_tmp <- as.matrix(dist(test[, c("samplepoint")]))
+      dis_tmp[dis_tmp == 0] <- NA
 
       # scale distance to be comparable
-      dis.tmp <- dis.tmp * 
-        max(dis.geo, na.rm = TRUE) / 
-        max(dis.tmp, na.rm = TRUE)
+      dis_tmp <- dis_tmp * 
+        max(dis_geo, na.rm = TRUE) / 
+        max(dis_tmp, na.rm = TRUE)
 
       # sum time and space
-      dis <- round(dis.tmp + dis.geo, 0)
+      dis <- round(dis_tmp + dis_geo, 0)
 
       # quantile based method
       if (method == "quantile") {
@@ -175,10 +175,10 @@ tc_outl <- function(x,
       x$idf <- seq_len(nrow(x))
       # select relevant columns
       splist <- x[, c(
-        lon, lat, min.age, max.age, "samplepoint", taxon,
+        lon, lat, min_age, max_age, "samplepoint", taxon,
         "idf"
       )]
-      # splist <- x[, c(lon, lat, min.age, max.age, 'samplepoint', taxon)]
+      # splist <- x[, c(lon, lat, min_age, max_age, 'samplepoint', taxon)]
 
       # remove identifier column
       x <- x[, names(x) != "idf"]
@@ -188,10 +188,10 @@ tc_outl <- function(x,
       splist[, lat] <- round(splist[, lat], 1)
 
       # get unique occurrences
-      if (uniq.loc) {
+      if (uniq_loc) {
         splist <- splist[!duplicated(splist[, c(
-          taxon, lon, lat, min.age,
-          max.age
+          taxon, lon, lat, min_age,
+          max_age
         )]), ]
       }
       # split up into taxon
@@ -199,32 +199,32 @@ tc_outl <- function(x,
 
       # only test taxa with a minimum number of records
       test <- as.vector(unlist(lapply(splist, "nrow")))
-      splist <- splist[test >= size.thresh]
+      splist <- splist[test >= size_thresh]
 
       # loop over taxon and run outlier test
       test <- lapply(splist, function(k) {
 
         # calculate geographic distance
         if (nrow(k) < 10000) {
-          dis.geo <- geosphere::distm(k[, c(lon, lat)], 
+          dis_geo <- geosphere::distm(k[, c(lon, lat)], 
                                       fun = geosphere::distHaversine) / 1000
         } else {
-          dis.geo <- as.matrix(dist(k[, c(lon, lat)]))
+          dis_geo <- as.matrix(dist(k[, c(lon, lat)]))
           warning("Large dataset, geographic treated as 
                   euclidean for outlier test")
         }
 
         # calculate temporal distance
-        dis.tmp <- as.matrix(dist(k[, c("samplepoint")]))
+        dis_tmp <- as.matrix(dist(k[, c("samplepoint")]))
 
         # scale distance to be comparable
-        dis.tmp <- dis.tmp * max(dis.geo, na.rm = TRUE) / max(dis.tmp,
+        dis_tmp <- dis_tmp * max(dis_geo, na.rm = TRUE) / max(dis_tmp,
           na.rm = TRUE
         )
-        dis.tmp[is.na(dis.tmp)] <- 0
+        dis_tmp[is.na(dis_tmp)] <- 0
 
         # sum time and space
-        dis <- round(dis.tmp + dis.geo, 0)
+        dis <- round(dis_tmp + dis_geo, 0)
 
         # test if there are distances other than 0
         if (sum(!is.na(dis)) > 0) {
@@ -279,32 +279,32 @@ tc_outl <- function(x,
 
   frac <- apply(out, 1, "mean")
 
-  out <- frac >= flag.thresh
+  out <- frac >= flag_thresh
 
   # also mark records that might not have been flagged due to the duplicate
   # removal above
-  if (taxon == "" & any(!out) & uniq.loc) {
-    supp <- x[!out, c(lon, lat, min.age, max.age)]
+  if (taxon == "" & any(!out) & uniq_loc) {
+    supp <- x[!out, c(lon, lat, min_age, max_age)]
     test <- apply(supp, 1, function(k) {
       outp <- which(k[[lon]] == x[[lon]] &
                       k[[lat]] == x[[lat]] &
-                      k[[min.age]] == x[[min.age]] & 
-                      k[[max.age]] == x[[max.age]])
+                      k[[min_age]] == x[[min_age]] & 
+                      k[[max_age]] == x[[max_age]])
     })
     test <- unlist(test)
     test <- as.numeric(x[test, ]$idf)
     out[test] <- FALSE
   } else {
-    if (any(!out) & uniq.loc) {
-      supp <- x[!out, c(taxon, lon, lat, min.age, max.age)]
+    if (any(!out) & uniq_loc) {
+      supp <- x[!out, c(taxon, lon, lat, min_age, max_age)]
       outp <- list()
       for (j in seq_len(nrow(supp))) {
         k <- supp[j, ]
         outp[[j]] <- which(k[[taxon]] == x[[taxon]] & 
                              k[[lon]] == x[[lon]] &
                              k[[lat]] == x[[lat]] & 
-                             k[[min.age]] == x[[min.age]] & 
-                             k[[max.age]] == x[[max.age]])
+                             k[[min_age]] == x[[min_age]] & 
+                             k[[max_age]] == x[[max_age]])
       }
       test <- unlist(outp)
       test <- as.numeric(x[test, ]$idf)
