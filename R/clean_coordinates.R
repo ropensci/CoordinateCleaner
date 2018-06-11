@@ -1,0 +1,358 @@
+#' Geographic Cleaning of Coordinates from Biologic Collections
+#' 
+#' Cleaning geographic coordinates by multiple empirical tests to flag
+#' potentially erroneous coordinates, addressing issues common in biological
+#' collection databases.
+#' 
+#' The function needs all coordinates to be formally valid according to WGS84.
+#' If the data contains invalid coordinates, the function will stop and return
+#' a vector flagging the invalid records. TRUE = non-problematic coordinate,
+#' FALSE = potentially problematic coordinates. A reference gazetteer for the
+#' urban test is available at at
+#' \url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
+#' * capitals tests a radius around adm-0 capitals. The
+#' radius is \code{capitals_rad}.
+#' * centroids tests a radius around country centroids.
+#' The radius is \code{centroids_rad}.
+#' * countries tests if coordinates are from the
+#' country indicated in the country column.  *Switched off by default.*
+#' * duplicates tests for duplicate records. This
+#' checks for identical coordinates or if a species vector is provided for
+#' identical coordinates within a species. All but the first records are
+#' flagged as duplicates. *Switched off by default.*
+#' * equal tests for equal absolute longitude and latitude.
+#' * gbif tests a one-degree radius around the GBIF
+#' headquarters in Copenhagen, Denmark.
+#' * institutions tests a radius around known
+#' biodiversity institutions from \code{instiutions}. The radius is
+#' \code{inst_rad}.
+#' * outliers tests each species for outlier records.
+#' Depending on the \code{outliers_mtp} and \code{outliers.td} arguments either
+#' flags records that are a minimum distance away from all other records of
+#' this species (\code{outliers_td}) or records that are outside a multiple of
+#' the interquartile range of minimum distances to the next neighbour of this
+#' species (\code{outliers_mtp}). Three different methods are available 
+#' for the outlier test: "If
+#' \dQuote{outlier} a boxplot method is used and records are flagged as
+#' outliers if their \emph{mean} distance to all other records of the same
+#' species is larger than mltpl * the interquartile range of the mean distance
+#' of all records of this species. If \dQuote{mad} the median absolute
+#' deviation is used. In this case a record is flagged as outlier, if the
+#' \emph{mean} distance to all other records of the same species is larger than
+#' the median of the mean distance of all points plus/minus the mad of the mean
+#' distances of all records of the species * mltpl. If \dQuote{distance}
+#' records are flagged as outliers, if the \emph{minimum} distance to the next
+#' record of the species is > \code{tdi}.
+#' * seas tests if coordinates fall into the ocean.
+#' * urban tests if coordinates are from urban areas. 
+#' *Switched off by default*
+#' * validity checks if coordinates correspond to a lat/lon coordinate reference system.
+#' This test is always on, since all records need to pass for any other test to run.
+#' * zeros tests for plain zeros, equal latitude and
+#' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
+#' @aliases CleanCoordinates summary.spatialvalid is.spatialvalid
+#' @param x a data.frame. Containing geographical coordinates and species
+#' names.
+#' @param lon a character string. The column with the longitude coordinates.
+#' Default = \dQuote{decimallongitude}.
+#' @param lat a character string. The column with the longitude coordinates.
+#' Default = \dQuote{decimallatitude}.
+#' @param species a character string. A vector of the same length as rows in x,
+#' with the species identity for each record.  If missing, the outliers test is
+#' skipped.
+#' @param countries a character string. A vector of the same length as rows in
+#' x, with country information for each record in ISO3 format.  If missing, the
+#' countries test is skipped.
+#' @param tests a vector of character strings, indicating which tests to run. 
+#' See details for all tests available. Default = c("capitals", "centroids", 
+#' "equal", "gbif", "institutions", "outliers",
+#' "seas", "zeros")
+#' @param capitals_rad numeric. The radius around capital coordinates in
+#' degrees. Default = 0.1.
+#' @param centroids_rad numeric. The side length of the rectangle around
+#' country centroids in degrees. Default = 0.01.
+#' @param centroids_detail a \code{character string}. If set to
+#' \sQuote{country} only country (adm-0) centroids are tested, if set to
+#' \sQuote{provinces} only province (adm-1) centroids are tested.  Default =
+#' \sQuote{both}.
+#' @param inst_rad numeric. The radius around biodiversity institutions
+#' coordinates in degrees. Default = 0.001.
+#' @param outliers_method The method used for outlier testing. See details.
+#' @param outliers_mtp numeric. The multiplier for the interquartile range of
+#' the outlier test.  If NULL \code{outliers.td} is used.  Default = 3.
+#' @param outliers_td numeric.  The minimum distance of a record to all other
+#' records of a species to be identified as outlier, in km. Default = 1000.
+#' @param outliers_size numerical.  The minimum number of records in a dataset
+#' to run the taxon-specific outlier test.  Default = 7.
+#' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
+#' @param capitals_ref a \code{data.frame} with alternative reference data for
+#' the country capitals test. If missing, the \code{capitals} dataset is used.
+#' Alternatives must be identical in structure.
+#' @param centroids_ref a \code{data.frame} with alternative reference data for
+#' the centroid test. If NULL, the \code{centroids} dataset is used.
+#' Alternatives must be identical in structure.
+#' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
+#' reference for the countries test. If NULL, the
+#' \code{rnaturalearth:ne_countries('medium')} dataset is used.
+#' @param inst_ref a \code{data.frame} with alternative reference data for the
+#' biodiversity institution test. If NULL, the \code{institutions} dataset
+#' is used.  Alternatives must be identical in structure.
+#' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#' for the seas test. If NULL, the \code{\link{landmass}} dataset is used.
+#' @param urban_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#' for the urban test. If NULL, the test is skipped. See details for a
+#' reference gazetteers.
+#' @param value a character string defining the output value. See the value
+#' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
+#' \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.
+#' @param verbose logical. If TRUE reports the name of the test and the number
+#' of records flagged
+#' @param report logical or character.  If TRUE a report file is written to the
+#' working directory, summarizing the cleaning results. If a character, the
+#' path to which the file should be written.  Default = FALSE.
+#' 
+#' @return Depending on the output argument: \describe{
+#' \item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
+#' column for each test. TRUE = clean coordinate, FALSE = potentially
+#' problematic coordinates.  The summary column is FALSE if any test flagged
+#' the respective coordinate.} \item{list("flagged")}{a logical vector with the
+#' same order as the input data summarizing the results of all test. TRUE =
+#' clean coordinate, FALSE = potentially problematic (= at least one test
+#' failed).} \item{list("clean")}{a \code{data.frame} of cleaned coordinates
+#' if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and
+#' species ID otherwise} }
+#' @note Always tests for coordinate validity: non-numeric or missing
+#' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
+#' 
+#' See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details
+#' and tutorials.
+#' @keywords Coordinate cleaning wrapper
+#' @examples
+#' 
+#' 
+#' exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
+#'                     decimallongitude = runif(250, min = 42, max = 51),
+#'                     decimallatitude = runif(250, min = -26, max = -11))
+#' 
+#' test <- clean_coordinates(x = exmpl)
+#' 
+#' summary(test)
+#' 
+#' @export
+#' @importFrom methods as is
+#' @importFrom utils write.table
+#' @md
+clean_coordinates <- function(x, 
+                             lon = "decimallongitude", 
+                             lat = "decimallatitude",
+                             species = "species", 
+                             countries = NULL, 
+                             tests = c("capitals", "centroids",
+                                       "equal", "gbif", "institutions", "outliers",
+                                       "seas", "zeros"),
+                             capitals_rad = 0.05,
+                             centroids_rad = 0.01, 
+                             centroids_detail = "both", 
+                             inst_rad = 0.001, 
+                             outliers_method = "quantile",
+                             outliers_mtp = 3, 
+                             outliers_td = 1000, 
+                             outliers_size = 7, 
+                             zeros_rad = 0.5,
+                             capitals_ref = NULL, 
+                             centroids_ref = NULL, 
+                             country_ref = NULL, 
+                             inst_ref = NULL, 
+                             seas_ref = NULL, 
+                             urban_ref = NULL,
+                             value = "spatialvalid", 
+                             verbose = TRUE, 
+                             report = FALSE) {
+  # check function arguments
+  match.arg(value, choices = c("spatialvalid", "flagged", "clean"))
+  match.arg(centroids_detail, choices = c("both", "country", "provinces"))
+  match.arg(outliers_method, choices = c("distance", "quantile", "mad"))
+
+  # check column names
+  nams <- c(lon, lat, species, countries)
+  if (!all(nams %in% names(x))) {
+    stop(sprintf("%s column not found\n", nams[which(!nams %in% names(x))]))
+  }
+
+  if (is.null(countries) & "countries" %in% tests) {
+    stop("provide countries column or remove countries test")
+  }
+  if (is.null(species)) {
+    if ("outliers" %in% tests) {
+      stop("provide species column or remove outliers test")
+    }
+    if ("duplicates" %in% tests) {
+      stop("provide species column or remove duplicates test")
+    }
+  }
+
+  # Initiate output 
+  out <- data.frame(matrix(NA, nrow = nrow(x), ncol = 12))
+  colnames(out) <- c("val", "equ", "zer", "cap", "cen", "sea", "urb", "con",
+                    "otl", "gbf", "inst", "dpl")
+
+  # Run tests Validity, check if coordinates fit to lat/long system, this has
+  # to be run all the time, as otherwise the other tests don't work
+  val <- cc_val(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
+
+  if (!all(val)) {
+    stop(
+      "invalid coordinates found in rows, clean dataset before proceeding:\n",
+      paste(which(!val), "\n")
+    )
+  }
+
+  ## Equal coordinates
+  if ("equal" %in% tests) {
+    out$equ <- cc_equ(x,
+      lon = lon, lat = lat, verbose = verbose, value = "flagged",
+      test = "absolute"
+    )
+  }
+
+  ## Zero coordinates
+  if ("zeros" %in% tests) {
+    out$zer <- cc_zero(x,
+      lon = lon, lat = lat, buffer = zeros_rad, verbose = verbose,
+      value = "flagged"
+    )
+  }
+
+  ## Capitals
+  if ("capitals" %in% tests) {
+    out$cap <- cc_cap(x,
+      lon = lon, lat = lat, buffer = capitals_rad, ref = capitals_ref,
+      value = "flagged", verbose = verbose
+    )
+  }
+
+  ## Centroids
+  if ("centroids" %in% tests) {
+    out$cen <- cc_cen(x,
+      lon = lon, lat = lat, buffer = centroids_rad, test = centroids_detail,
+      ref = centroids_ref, value = "flagged", verbose = verbose
+    )
+  }
+
+  ## Seas
+  if ("seas" %in% tests) {
+    out$sea <- cc_sea(x,
+      lon = lon, lat = lat, ref = seas_ref, verbose = verbose,
+      value = "flagged"
+    )
+  }
+
+  ## Urban Coordinates
+  if ("urban" %in% tests) {
+    out$urb <- cc_urb(x,
+      lon = lon, lat = lat, ref = urban_ref, verbose = verbose,
+      value = "flagged"
+    )
+  }
+
+  ## Country check
+  if ("countries" %in% tests) {
+    out$con <- cc_coun(x,
+      lon = lon, lat = lat, iso3 = countries, ref = country_ref,
+      verbose = verbose, value = "flagged"
+    )
+  }
+
+  ## Outliers
+  if ("outliers" %in% tests) {
+    # select species with more than threshold species
+    otl_test <- table(x[species])
+    otl_test <- otl_test[otl_test > outliers_size]
+    otl_test <- x[x[[species]] %in% names(otl_test), ]
+    otl_test <- otl_test[, c(species, lon, lat)]
+
+    otl_flag <- cc_outl(otl_test,
+      lon = lon, lat = lat, species = species,
+      method = outliers_method, mltpl = outliers_mtp, tdi = outliers_td,
+      value = "ids", verbose = verbose
+    )
+    otl <- rep(TRUE, nrow(x))
+    otl[otl_flag] <- FALSE
+    out$otl <- otl
+  }
+
+  ## GBIF headquarters
+  if ("gbif" %in% tests) {
+    out$gbf <- cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
+  }
+
+  ## Biodiversity institution
+  if ("institutions" %in% tests) {
+    out$inst <- cc_inst(x,
+      lon = lon, lat = lat, ref = inst_ref, buffer = inst_rad,
+      verbose = verbose, value = "flagged"
+    )
+  }
+
+  ## exclude duplicates
+  if ("duplicates" %in% tests) {
+    out$dpl <- cc_dupl(x, lon = lon, lat = lat, species = species, 
+                       value = "flagged")
+  }
+
+  # prepare output data
+  out <- Filter(function(x) !all(is.na(x)), out)
+  suma <- as.vector(Reduce("&", out))
+
+  if (verbose) {
+    if (!is.null(suma)) {
+      message(sprintf("Flagged %s of %s records, EQ = %s.", sum(!suma,
+        na.rm = TRUE
+      ), length(suma), round(
+        sum(!suma, na.rm = TRUE) / length(suma), 2
+      )))
+    } else {
+      message("flagged 0 records, EQ = 0")
+    }
+  }
+  if (value == "spatialvalid") {
+    inp <- data.frame(
+      species = x[, species], 
+      decimallongitude = x[, lon],
+      decimallatitude = x[, lat]
+    )
+    
+    out <- data.frame(inp, out, summary = suma)
+    class(out) <- c("spatialvalid", "data.frame", class(out))
+    
+    if (report) {
+      report <- "clean_coordinates_report.txt"
+    }
+    if (is.character(report)) {
+      repo <- data.frame(
+        Test = as.character(names(out[-(1:3)])), 
+        Flagged.records = colSums(!out[-(1:3)]),
+        stringsAsFactors = FALSE
+      )
+      repo <- rbind(repo, c("Total number of records", length(out$summary)))
+      repo <- rbind(repo, c("Error Quotient", round(sum(!out$summary,
+        na.rm = TRUE
+      ) / length(out$summary), 2)))
+
+      write.table(repo, report, sep = "\t", row.names = FALSE, quote = FALSE)
+    }
+  }
+  if (value == "clean") {
+    out <- x[suma, ]
+    if (report | is.character(report)) {
+      warning("report only valid with value = 'spatialvalid'")
+    }
+  }
+  if (value == "flagged") {
+    out <- suma
+    if (report | is.character(report)) {
+      warning("report only valid with value = 'spatialvalid'")
+    }
+  }
+  return(out)
+}

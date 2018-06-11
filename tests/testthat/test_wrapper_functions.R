@@ -1,4 +1,4 @@
-context("Coordinate cleaning")
+context("Wrapper functions")
 
 # Coordinate level cleaning
 set.seed(1)
@@ -12,22 +12,23 @@ exmpl <- data.frame(species = sp,
                     decimallongitude = lon,
                     decimallatitude = lat,
                     ISO3 = "RUS")
-t1 <- CleanCoordinates(x = exmpl)
+t1 <- clean_coordinates(x = exmpl)
 
-test_that("CleanCoordinates produces correct output", {
+test_that("clean_coordinates produces correct output", {
 
   expect_equal(ncol(t1), 12)
   expect_equal(nrow(t1), 250)
-  expect_equal(sum(t1$summary), 187)
+  expect_equal(sum(t1$summary), 183)
 
 })
 
-test_that("CleanCoordinates countries argument produces correct output", {
+test_that("clean_coordinates countries argument produces correct output", {
   #skip_on_cran()
-  expect_equal(sum(CleanCoordinates(x = exmpl, countries = "ISO3", countrycheck = T)$summary), 2)
+  expect_equal(sum(clean_coordinates(x = exmpl, countries = "ISO3", 
+                                     tests = c("countries", "seas"))$summary), 0)
 })
 
-test_that("CleanCoordinates S3 methods work", {
+test_that("clean_coordinates S3 methods work", {
   expect_is(plot(t1), "gg")
   expect_is(plot(t1, clean = FALSE), "gg")
   expect_is(plot(t1, details = FALSE), "gg")
@@ -60,17 +61,15 @@ test <- rbind(clean, bias)
 
 test_that("dataset level cleaning works", {
   #test activated
-  expect_is(CleanCoordinatesDS(test), "data.frame")
-  expect_is(CleanCoordinatesDS(test, periodicity = F), "data.frame")
-  expect_is(CleanCoordinatesDS(test, ddmm = F), "data.frame")
+  expect_is(clean_dataset(test), "data.frame")
+  expect_is(clean_dataset(test, tests = c("ddmm")), "data.frame")
+  expect_is(clean_dataset(test, tests = c("periodicity")), "data.frame")
   
   #Output value
-  expect_is(CleanCoordinatesDS(test, value = "clean"), "data.frame")
-  expect_is(CleanCoordinatesDS(test, value = "flagged"), "data.frame")
+  expect_is(clean_dataset(test, value = "clean"), "data.frame")
+  expect_is(clean_dataset(test, value = "flagged"), "data.frame")
   
-  expect_equal(sum(CleanCoordinatesDS(test)$summary), 1)
-  
-
+  expect_equal(sum(clean_dataset(test)$summary), 1)
 })
 
 
@@ -92,8 +91,8 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 
 
 test_that("fossil wrapper cleaning works", {
-  expect_is(CleanCoordinatesFOS(exmpl), "spatialvalid")
-  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 248)
+  expect_is(clean_fossils(exmpl), "spatialvalid")
+  expect_equal(sum(clean_fossils(exmpl)$summary), 248)
 })
 
 
