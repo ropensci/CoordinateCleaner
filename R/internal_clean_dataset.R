@@ -3,53 +3,53 @@
 #' @importFrom graphics hist plot abline segments
 #' @importFrom stats cov quantile aggregate
 .CalcACT <- function(data, 
-                     digit.round = 0, 
+                     digit_round = 0, 
                      nc = 3000, 
                      graphs = TRUE, 
-                     graph.title = "Title",
+                     graph_title = "Title",
                      rarefy = FALSE) {
   if (rarefy) {
     data <- unique(data)
   }
 
-  data.units <- sort(abs(data))
+  data_units <- sort(abs(data))
 
-  if (digit.round > 0) {
+  if (digit_round > 0) {
     # if set to 10 takes only units into account
     data_units <- data_units - 
-      round(floor(data.units / digit.round) * digit.round)
+      round(floor(data_units / digit_round) * digit_round)
   }
 
   if (graphs) {
-    h <- graphics::hist(data.units, nclass = nc, main = graph.title)
+    h <- graphics::hist(data_units, nclass = nc, main = graph_title)
   } else {
-    h <- graphics::hist(data.units, nclass = nc, plot = FALSE)
+    h <- graphics::hist(data_units, nclass = nc, plot = FALSE)
   }
 
   f <- h$counts
-  max.range <- round(length(f) * 0.9)
-  gamma.0 <- stats::cov(f[1:max.range], f[1:max.range])
+  max_range <- round(length(f) * 0.9)
+  gamma_0 <- stats::cov(f[1:max_range], f[1:max_range])
 
-  gamma.vec <- c()
+  gamma_vec <- c()
 
-  for (k in 1:max.range) {
-    f.0 <- f[-(1:k)]
-    f.k <- f[-((length(f) - k + 1):(length(f)))]
-    gamma.vec <- c(gamma.vec, stats::cov(f.0, f.k) / gamma.0)
+  for (k in 1:max_range) {
+    f_0 <- f[-(1:k)]
+    f_k <- f[-((length(f) - k + 1):(length(f)))]
+    gamma_vec <- c(gamma_vec, stats::cov(f_0, f_k) / gamma_0)
   }
 
   # add coordinates
-  coords <- h$mids[1:max.range]
+  coords <- h$mids[1:max_range]
 
   # plot outlier bins vs coordinates
   if (graphs) {
-    plot(coords, gamma.vec)
+    plot(coords, gamma_vec)
   }
 
   # create output data.frame, with the gamma vector and the respective
   # coordinates
 
-  out <- data.frame(gamma = gamma.vec, coords = coords)
+  out <- data.frame(gamma = gamma_vec, coords = coords)
 
   return(out)
 }
@@ -60,19 +60,19 @@
 # most important paramter for the function). The function returns the number
 # of non-consecutive 1 (= outlier found)
 .OutDetect <- function(x, T1 = 7, 
-                       window.size = 10, 
-                       detection.rounding = 2,
-                       detection.threshold = 6, 
+                       window_size = 10, 
+                       detection_rounding = 2,
+                       detection_threshold = 6, 
                        graphs = TRUE) {
   
   # The maximum range end for the sliding window
-  max.range <- nrow(x) - window.size 
+  max_range <- nrow(x) - window_size 
 
   out <- matrix(ncol = 2)
 
-  for (k in 1:max.range) {
+  for (k in 1:max_range) {
     # sliding window
-    sub <- x[k:(k + window.size), ] # sliding window
+    sub <- x[k:(k + window_size), ] # sliding window
 
     # interquantile range outlier detection
     quo <- stats::quantile(sub$gamma, c(0.25, 0.75), na.rm = TRUE)
@@ -86,7 +86,7 @@
   names(out) <- c("V1", "V2")
   out <- out[, c(2, 1)]
   # only 'outliers' that have at least been found by at least 6 sliding windows
-  out[, 1] <- as.numeric(out[, 1] >= detection.threshold) 
+  out[, 1] <- as.numeric(out[, 1] >= detection_threshold) 
 
   # A distance matrix between the outliers we use euclidean space, because 1)
   # we are interest in regularity, not so much the absolute distance, 2) grids
@@ -113,59 +113,59 @@
     }
 
     # calculate the distance between outliers
-    dist.m <- round(stats::dist(round(outl[, 2, drop = FALSE], 
-                                      detection.rounding),
+    dist_m <- round(stats::dist(round(outl[, 2, drop = FALSE], 
+                                      detection_rounding),
                                 diag = FALSE), 
-                    detection.rounding)
-    dist.m[dist.m > 2] <- NA
+                    detection_rounding)
+    dist_m[dist_m > 2] <- NA
 
-    if (length(dist.m) == sum(is.na(dist.m))) {
+    if (length(dist_m) == sum(is.na(dist_m))) {
       out <- data.frame(
         n.outliers = nrow(outl), n.regular.outliers = 0,
         regular.distance = NA
       )
     } else {
       # process distance matrix
-      dist.m[dist.m < 10^(-detection.rounding)] <- NA
-      dists <- c(dist.m)
+      dist_m[dist_m < 10^(-detection_rounding)] <- NA
+      dists <- c(dist_m)
       dists <- sort(table(dists))
-      dist.m <- as.matrix(dist.m)
-      dist.m[row(dist.m) <= col(dist.m)] <- NA
+      dist_m <- as.matrix(dist_m)
+      dist_m[row(dist_m) <= col(dist_m)] <- NA
 
       # select those with the most common distance
       # find the most common distance between points
-      com.dist <- as.numeric(names(which(dists == max(dists)))) 
+      com_dist <- as.numeric(names(which(dists == max(dists)))) 
 
       # if there is more than one probably no bias
-      sel <- which(dist.m %in% com.dist[1])
+      sel <- which(dist_m %in% com_dist[1])
       # identify rows with at least one time the most common distance
-      sel <- unique(arrayInd(sel, dim(dist.m))) 
+      sel <- unique(arrayInd(sel, dim(dist_m))) 
 
-      # sel <- unique(as.numeric(colnames(dist.m)[sel[,1]]))
+      # sel <- unique(as.numeric(colnames(dist_m)[sel[,1]]))
 
-      reg.outl <- cbind(outl[sel[, 1], 2], outl[sel[, 2], 2])
+      reg_outl <- cbind(outl[sel[, 1], 2], outl[sel[, 2], 2])
 
       if (graphs) {
         # find the right y to plot the segments
         y0 <- max(x$gamma)
 
         if (y0 < 0.3 | y0 > 2) {
-          y1 <- max(x$gamma) - max(x$gamma) / nrow(reg.outl)
+          y1 <- max(x$gamma) - max(x$gamma) / nrow(reg_outl)
         } else {
           y1 <- max(x$gamma) - 0.1
         }
-        ys <- seq(y0, y1, by = -((y0 - y1) / (nrow(reg.outl) - 1)))
+        ys <- seq(y0, y1, by = -((y0 - y1) / (nrow(reg_outl) - 1)))
 
         segments(
-          x0 = reg.outl[, 1], x1 = reg.outl[, 2], y0 = ys, y1 = ys,
+          x0 = reg_outl[, 1], x1 = reg_outl[, 2], y0 = ys, y1 = ys,
           col = "red"
         )
       }
       # output: number of outliers, number of outliers with the most common
       # distance, the most common distance
       out <- data.frame(
-        n.outliers = nrow(outl), n.regular.outliers = nrow(reg.outl),
-        regular.distance = com.dist[1]
+        n.outliers = nrow(outl), n.regular.outliers = nrow(reg_outl),
+        regular.distance = com_dist[1]
       )
     }
   }

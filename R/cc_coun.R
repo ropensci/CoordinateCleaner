@@ -82,7 +82,7 @@ cc_coun <- function(x,
   # get country from coordinates and compare with provided country
   country <- sp::over(x = dat, y = ref)[, "iso_a3"]
   out <- as.character(country) == as.character(unlist(x[, iso3]))
-  out[is.na(out)] <- TRUE # marine records are ignored / not tested
+  out[is.na(out)] <- FALSE # marine records are ignored / not tested
 
   # return output
   if (verbose) {
