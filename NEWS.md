@@ -1,3 +1,20 @@
+CoordinateCleaner 1.2-1 (2018-06-08)
+=========================
+
+### MAJOR IMPROVEMENTS
+
+  * Adapted function and argument names consistently to underscore_case
+  * Simplified internal code structure of wrapper functions
+  
+### MINOR IMPROVEMENTS
+  * adapted package to Ropensci reviews
+  
+### DEPRECATED AND DEFUNCT
+  * CleanCoordinates deprecated, replaced by clean_coordinates
+  * CleanCoordinatesDS deprecated, replaced by clean_dataset
+  * CleanCoordinatesFOS deprecated, replaced by clean_fossils
+  * WritePyrate deprecated, replaced by writ_pyrate
+
 CoordinateCleaner 1.1-1 (2018-05-15)
 =========================
 

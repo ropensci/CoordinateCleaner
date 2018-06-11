@@ -15,7 +15,7 @@
 #' For datasets between 5,000 and 100,000 geographic unique records \code{diff
 #' = 0.01} is recommended, for datasets between 100,000 and 1 M records diff =
 #' 0.001, and so on.  See
-#' \url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-CleanCoordinatesDS}
+#' \url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-clean_dataset}
 #' for explanation and simulation results.
 #' 
 #' @param x a data.frame. Containing geographical coordinates and species
@@ -32,9 +32,9 @@
 #' @param diff numeric. The threshold difference for the ddmm test. Indicates
 #' by which fraction the records with decimals below 0.6 must outnumber the
 #' records with decimals above 0.6. Default = 1
-#' @param min.span numeric. The minimum geographic extent of datasets to be
+#' @param min_span numeric. The minimum geographic extent of datasets to be
 #' tested. Default = 2.
-#' @param mat.size numeric. The size of the matrix for the binomial test. Must
+#' @param mat_size numeric. The size of the matrix for the binomial test. Must
 #' be changed in decimals (e.g. 100, 1000, 10000). Adapt to dataset size,
 #' generally 100 is better for datasets < 10000 records, 1000 is better for
 #' datasets with 10000 - 1M records. Higher values also work reasonably well
@@ -61,7 +61,7 @@
 #'                 decimallatitude = runif(100, -90,90),
 #'                 dataset = "FR")
 #'                 
-#' dc_ddmm(x = clean, value = "flagged")
+#' cd_ddmm(x = clean, value = "flagged")
 #' 
 #' #problematic dataset
 #' lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
@@ -72,19 +72,19 @@
 #'                 decimallatitude = lat,
 #'                 dataset = "FR")
 #'                 
-#' dc_ddmm(x = prob, value = "flagged")
+#' cd_ddmm(x = prob, value = "flagged")
 #' 
 #' @export
 #' @importFrom stats complete.cases binom.test
 #' @importFrom raster plot raster
-dc_ddmm <- function(x, 
+cd_ddmm <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude", 
                     ds = "dataset",
                     pvalue = 0.025, 
                     diff = 1, 
-                    mat.size = 1000, 
-                    min.span = 2, 
+                    mat_size = 1000, 
+                    min_span = 2, 
                     value = "clean",
                     verbose = TRUE, 
                     diagnostic = FALSE) {
@@ -93,7 +93,7 @@ dc_ddmm <- function(x,
   match.arg(value, choices = c("clean", "flagged", "dataset"))
 
   if (verbose) {
-    message("Testing datasets for dd.mm to dd.dd conversion errors")
+    message("Testing for dd.mm to dd.dd conversion errors")
   }
 
   # prepare dataset for analyses
@@ -119,40 +119,40 @@ dc_ddmm <- function(x,
   # run ddmm to dd.dd conversion test error at 0.6
   out <- lapply(test, function(k) {
     ## create test datasets
-    dat.unique <- k[!duplicated(k[, c(lon, lat, ds)]), ]
+    dat_unique <- k[!duplicated(k[, c(lon, lat, ds)]), ]
 
     ## Test geographic span
-    lon.span <- abs(max(dat.unique[, lon], na.rm = TRUE) - min(dat.unique[
+    lon_span <- abs(max(dat_unique[, lon], na.rm = TRUE) - min(dat_unique[
       ,
       lon
     ], na.rm = TRUE))
-    lat.span <- abs(max(dat.unique[, lat], na.rm = TRUE) - min(dat.unique[
+    lat_span <- abs(max(dat_unique[, lat], na.rm = TRUE) - min(dat_unique[
       ,
       lat
     ], na.rm = TRUE))
 
-    if (lon.span >= min.span & lat.span >= min.span) {
+    if (lon_span >= min_span & lat_span >= min_span) {
       # Assign decimals to a 100x100 matrix for binomial test
-      cl <- ceiling(dat.unique[, c("lon.test", "lat.test")] * mat.size)
-      cl$lat.test <- mat.size - cl$lat.test
+      cl <- ceiling(dat_unique[, c("lon.test", "lat.test")] * mat_size)
+      cl$lat.test <- mat_size - cl$lat.test
 
-      mat <- matrix(ncol = mat.size, nrow = mat.size)
+      mat <- matrix(ncol = mat_size, nrow = mat_size)
       mat[cbind(cl$lat.test, cl$lon.test)] <- 1
       mat[is.na(mat)] <- 0
-      dat.t1 <- mat
+      dat_t1 <- mat
 
       # Binomial test, to see if more values are below 0.6 than expected
       P_smaller_than_06 <- 
-        floor(0.599 * mat.size) * 
-        floor(0.599 * mat.size) /
-        mat.size^2 # 0.3481
+        floor(0.599 * mat_size) * 
+        floor(0.599 * mat_size) /
+        mat_size^2 # 0.3481
 
-      x.ind <- (mat.size - floor(0.599 * mat.size)):mat.size
-      y.ind <- 1:floor(0.599 * mat.size)
+      x_ind <- (mat_size - floor(0.599 * mat_size)):mat_size
+      y_ind <- 1:floor(0.599 * mat_size)
 
-      subt <- dat.t1[x.ind, y.ind] # subset tbl
+      subt <- dat_t1[x_ind, y_ind] # subset tbl
       p06 <- sum(subt >= 1)
-      pAll <- sum(dat.t1 >= 1)
+      pAll <- sum(dat_t1 >= 1)
 
       B <- stats::binom.test(p06, 
                              pAll, 
@@ -166,32 +166,32 @@ dc_ddmm <- function(x,
 
       # These two thresholds could be changed
       if (v1 < pvalue & v2 > diff) {
-        flag.t1 <- FALSE
+        flag_t1 <- FALSE
       } else {
-        flag.t1 <- TRUE
+        flag_t1 <- TRUE
       }
 
-      outp <- c(round(v1, 4), round(v2, 3), flag.t1)
+      outp <- c(round(v1, 4), round(v2, 3), flag_t1)
 
       # diagnostic plot of the decimal matrix
       if (diagnostic) {
-        plo <- raster(dat.t1)
+        plo <- raster(dat_t1)
         raster::plot(plo)
       }
     } else {
       outp <- rep(NA, 3)
-      warning("Geographic spann to small, check 'min.span'")
+      warning("Geographic spann to small, check 'min_span'")
     }
     return(outp)
   })
 
   # Create output objects Reduce output to data.frame
-  out.ds <- do.call("rbind.data.frame", out)
-  rownames(out.ds) <- names(out)
-  names(out.ds) <- c("binomial.pvalue", "perc.difference", "pass")
+  out_ds <- do.call("rbind.data.frame", out)
+  rownames(out_ds) <- names(out)
+  names(out_ds) <- c("binomial.pvalue", "perc.difference", "pass")
 
-  flags <- x[[ds]] %in% c(rownames(out.ds[out.ds$pass == 1, ]), 
-                          rownames(out.ds[is.na(out.ds$pass), ]))
+  flags <- x[[ds]] %in% c(rownames(out_ds[out_ds$pass == 1, ]), 
+                          rownames(out_ds[is.na(out_ds$pass), ]))
 
   # return output dependent on value argument
   if (verbose) {
@@ -199,7 +199,7 @@ dc_ddmm <- function(x,
   }
 
   switch(value, 
-         dataset = return(out.ds), 
+         dataset = return(out_ds), 
          clean = return(x[flags, ]), 
          flagged = return(flags))
 }

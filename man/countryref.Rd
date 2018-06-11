@@ -13,7 +13,7 @@ Washington, DC.
 }
 \description{
 A \code{data.frame} with coordinates of country centroids and country
-capitals as reference for the \code{\link{CleanCoordinates}} function.
+capitals as reference for the \code{\link{clean_coordinates}} function.
 Coordinates are based on the Central Intelligence Agency World Factbook as
 provided at \url{http://opengeocode.org/download/cow.php}.
 }

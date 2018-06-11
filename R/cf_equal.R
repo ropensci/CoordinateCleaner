@@ -5,9 +5,9 @@
 #' 
 #' @param x a data.frame. Containing geographical coordinates and species
 #' names.
-#' @param min.age a character string. The column with the minimum age. Default
+#' @param min_age a character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max.age a character string. The column with the maximum age. Default
+#' @param max_age a character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
@@ -27,10 +27,10 @@
 #'                 min_ma = 5, 
 #'                 max_ma = 5))
 #'                 
-#' tc_equal(x, value = "flagged")
+#' cf_equal(x, value = "flagged")
 #' 
 #' @export
-tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
+cf_equal <- function(x, min_age = "min_ma", max_age = "max_ma", value = "clean",
                      verbose = TRUE) {
   match.arg(value, choices = c("clean", "flagged"))
 
@@ -39,12 +39,12 @@ tc_equal <- function(x, min.age = "min_ma", max.age = "max_ma", value = "clean",
     message("Testing age validity")
   }
 
-  # min.age == max.age
-  t1 <- x[[max.age]] == x[[min.age]]
+  # min_age == max_age
+  t1 <- x[[max_age]] == x[[min_age]]
 
-  # min.age > max.age
+  # min_age > max_age
 
-  t2 <- x[[min.age]] > x[[max.age]]
+  t2 <- x[[min_age]] > x[[max_age]]
 
   flags <- t1 | t2
 

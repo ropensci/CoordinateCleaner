@@ -1,4 +1,4 @@
-context("Coordinate cleaning")
+context("Individual coordinate functions cc_*")
 
 set.seed(1)
 lon <- runif(250, min = 42, max = 51)
@@ -27,8 +27,7 @@ test_that("cc_cen works", {
 
 test_that("cc_coun works", {
   #skip_on_cran()
-  expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 65)
-  
+  expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
 })
