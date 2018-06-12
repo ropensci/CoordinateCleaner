@@ -15,9 +15,9 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-local <- T # this defines if the vignette is build locally using a largelocal dataset or not, in which case the compilation will take very long
+```{r, echo = F, eval = T}
+#LOCAL <- identical(Sys.getenv("TRUE"), "TRUE") # this defines if the vignette is build TRUEly using a large TRUE dataset or not, in which case the compilation will take very long
+knitr::opts_chunk$set(fig.width = 7)
 ```
 
 # Background
@@ -48,7 +48,7 @@ install_github("azizka/CoordinateCleaner")
 
 ## Set up libraries and data
 You might need to confirm to install the rnaturalearth package when loading `CoordinateCleaner`
-```{r, echo = T, eval = -10, warning = F, message = F}
+```{r, echo = T, eval = TRUE, warning = F, message = F}
 library(tidyverse)
 library(rgbif)
 library(countrycode)
@@ -60,7 +60,7 @@ library(rgbif)
 dat <- occ_search(scientificName = "Panthera leo", limit = 20000, 
                   return = "data", hasCoordinate = T)
 
-names(dat) #a lot of columns
+# names(dat) #a lot of columns
 
 #select columns of interest
 dat <- dat %>%
@@ -70,7 +70,7 @@ dat <- dat %>%
 ```
 
 ## Visualize the data on a map
-```{r, message = F, warning = F, fig.cap = "\\label{fig:al}Occurrence records for Panthera leo obtained from GBIF."}
+```{r, eval = TRUE, message = F, warning = F, fig.cap = "\\label{fig:al}Occurrence records for Panthera leo obtained from GBIF."}
 #plot data to get an overview
 wm <- borders("world", colour="gray50", fill="gray50")
 ggplot()+ coord_fixed()+ wm +
@@ -87,7 +87,7 @@ This map clearly indicates, that we need to prepare the data further, if we want
 ### Option A) Using the `clean_coordinates` wrapper function
 As a first step we will run the automatic cleaning algorithm of CoordinateCleaner. The `clean_coordinates` function is a wrapper around a large set of automated cleaning steps to flag errors that are common to biological collections, including: sea coordinates, zero coordinates, coordinate - country mismatches, coordinates assigned to country and province centroids, coordinates within city areas, outlier coordinates and coordinates assigned to biodiversity institutions. You can switch on each test individually using logical flags, modify the sensitivity of most individual tests using the ".rad" arguments, and provide custom gazetteers using the ".ref" arguments. See `?clean_coordinates` for help. To use the country - coordinate mismatch test we need to convert the country from ISO2 to ISO3 format.
 
-```{r, warning = F, results = 'hold', collapse = T, fig.cap = "\\label{fig:automated}Records flagged by the automated cleaning."}
+```{r, eval = TRUE, warning = F, results = 'hold', collapse = T, fig.cap = "\\label{fig:automated}Records flagged by the automated cleaning."}
 #convert country code from ISO2c to ISO3c
 dat$countryCode <-  countrycode(dat$countryCode, origin =  'iso2c', destination = 'iso3c')
 
@@ -105,7 +105,7 @@ plot(flags)
 
 The automatic test flagged `r round(sum(!flags$summary) / nrow(dat) * 100, 1)`% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.
 
-```{r}
+```{r, eval = TRUE}
 #Exclude problematic records
 dat.cl <- dat[flags$summary,]
 
@@ -137,7 +137,7 @@ clean <- dat%>%
 # Improving data quality using GBIF meta-data
 That helped a lot, but unfortunately some unwanted records remain, especially within Europe (Fig. \ref{fig:automated}). This is mostly because we have used the occurrence records uncritically and ignored the meta-data. GBIF offers a whole lot of useful meta-data which we will use now to further refine quality of our dataset. First we'll remove coordinates with very low precision and from unsuitable data sources. We will remove all records with a precision below 100 km as this represent the grain size of our downstream analysis, but we recommend you to chose it based on your downstream analyses. We also exclude fossils as we are interested in recent distributions; and records from unknown sources, as we deem them not reliable enough.
 
-```{r, collapse = T, fig.cap = "\\label{fig:automated}A histogram of the coordinate precision in the dataset.."}
+```{r, eval = TRUE, collapse = T, fig.cap = "\\label{fig:automated}A histogram of the coordinate precision in the dataset.."}
 #Remove records with low coordinate precision
 hist(dat.cl$coordinateUncertaintyInMeters/1000, breaks = 20)
 
@@ -154,7 +154,7 @@ dat.cl <- filter(dat.cl, basisOfRecord == "HUMAN_OBSERVATION" |
 ```
 
 In the next step we will remove records with suspicious individual counts. GBIF includes few records of absence (individual count = 0) and suspiciously high occurrence counts, which might indicate inappropriate data or data entry problems. 
-```{r}
+```{r, eval = TRUE}
 #Individual count
 table(dat.cl$individualCount)
 
@@ -165,7 +165,7 @@ dat.cl <- dat.cl%>%
 
 We might also want to exclude very old records, as they are more likely to be unreliable. For instance, records from before the second world war are often very imprecise, especially if they were geo-referenced based on political entities. Additionally old records might be likely from areas where species went extinct (for example due to land-use change).
 
-```{r}
+```{r, eval = TRUE}
 #Age of records
 table(dat.cl$year)
 
@@ -175,7 +175,7 @@ dat.cl <- dat.cl%>%
 
 On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the taxize R package (\url{https://ropensci.org/tutorials/taxize_tutorial.html}) or the taxonomic name resolution service (plants only, \url{http://tnrs.iplantcollaborative.org/}).
 
-```{r, collapse = T}
+```{r, collapse = T, eval = TRUE}
 table(dat.cl$family) #that looks good
 dat.cl <- dat.cl%>%
   filter(family == 'Felidae')
@@ -192,12 +192,12 @@ We have, however, also lost quite a number of records. In general, there is no "
 Figure \ref{fig:final} shows the success of automated cleaning. However, three records within Europe remain. A short inspection of the data suggests that these are a dubious human observation and five specimens, potentially assigned to their specimen location, or fossils with misclassified meta-data. One option to automatically flag these records is to rerun the outlier test on the cleaned data. However, this would most likely also flag the isolated Indian population (which is a true presence) as problematic. Another alternative is to use additional knowledge or the study outline for additional cleaning, using species defined ranges (for animals for example the IUCN range maps, \url{http://www.iucnredlist.org/technical-documents/spatial-data} or for plants the botanical countries of the World Checklist of selected plant families, \url{http://wcsp.science.kew.org/home.do}). A third alternative is to exclude records outside a certain study extent. In our example the latter is the easiest solution because we know that lions do not occur in high latitudes any more.
 
 
-```{r}
+```{r, eval = TRUE}
 #exclude based on study area
 dat.fin <- filter(dat.cl, decimalLatitude < 40)
 ```
 
-```{r, echo = F, warning = F, fig.height = 10, fig.cap = "\\label{fig:final}The dataset of occurrence of lions after different cleaning phases."}
+```{r, eval = TRUE, echo = F, warning = F, fig.height = 10, fig.cap = "\\label{fig:final}The dataset of occurrence of lions after different cleaning phases."}
 dat$cleaning = "Raw data"
 dat.cl$cleaning = "Automatic cleaning"
 dat.fin$cleaning = "Manual polishing"
@@ -226,7 +226,7 @@ Some types of potentially problematic coordinates can cause bias, but are not id
 ## Identify dataset with ddmm to dd.dd conversion error
 We will first run the test for erroneous data conversion due to the misinterpretation of the degree sign as decimal delimiter. We will use the `cd_ddmm` function, alternatively, you can use the `clean_dataset` wrapper. See supplementary material S1 for a detailed description of the algorithm and implementation of the test. You can control the output of the function via the `value` argument.
 
-```{r, warnings = F, message = F}
+```{r, eval = TRUE, warnings = F, message = F}
 out.ddmm <- cd_ddmm(dat.cl, lon = "decimalLongitude", lat = "decimalLatitude", 
                     ds = "species", diagnostic = T, diff = 1,
                     value = "dataset")
@@ -238,7 +238,7 @@ This looks good. The test indicates a slightly higher fraction of records with d
 ## Test for rasterized sampling
 As a second step we will use the `cd_round` function to identify datasets with a significant proportion of coordinates that have been collected in large scale lattice designs. These records might have a low precision and might therefore be problematic for some analyses. For instance presence derived from a 1 degree grid of a national atlas might be to coarse for small scale species distribution models. 
 
-```{r, echo = T, warning = F, eval = T, collapse = T, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
+```{r, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
 par(mfrow = c(2,2), mar = rep(2, 4))
 out.round <- cd_round(dat.fin, lon = "decimalLongitude", 
                       lat = "decimalLatitude", 
@@ -255,7 +255,7 @@ The lion dataset is relatively small and consistent, at least in the way that it
 <!-- # Testing larger databses comprised from multiple datasets -->
 <!-- ## Load data -->
 <!-- First we will download a larger example database that includes multiple contributing datasets with a sufficient number of records each. Here will use records from all African mammals as example. The download takes some time, alternatively, you can download the data via \url{www.gbif.org}. Based on the assumptions of the dataset-level tests (See supplementary material S1), we will exclude very small datasets with less than 100 individual records or less than 50 unique locations or spanning less than 2 degrees from the analyses. -->
-<!-- ```{r, echo = F, eval = local, warning = F, message = F} -->
+<!-- ```{r, echo = F, eval = TRUE, warning = F, message = F} -->
 <!-- dat <- read_csv("mammal_example.csv", guess_max = 100000) -->
 
 <!-- #identify datasets with < 100 records and  -->
