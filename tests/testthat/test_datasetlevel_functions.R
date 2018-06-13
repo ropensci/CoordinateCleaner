@@ -1,5 +1,4 @@
-library(CoordinateCleaner)
-context("Coordinate cleaning")
+context("Dataset level functions ds_*")
 
 #Create test dataset
 set.seed(1)
@@ -17,34 +16,34 @@ bias <- data.frame(dataset = rep("biased", 1000),
                    decimallatitude = bias.lat)
 test <- rbind(clean, bias)
 
-#dc_round
-test_that("dc_round identifies existing bias", {
+#cd_round
+test_that("cd_round identifies existing bias", {
   #test target
-  expect_equal(mean(dc_round(test, value = "dataset", graphs = F, test = "both")$summary), 0.5)
-  expect_equal(mean(dc_round(test, value = "dataset", graphs = F, test = "lat")$flag), 0.5)
-  expect_equal(mean(dc_round(test, value = "dataset", graphs = F, test = "lon")$flag), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "both")$summary), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "lat")$flag), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "lon")$flag), 0.5)
   
   #dataset output
-  t1 <- dc_round(test, value = "dataset", graphs = F)
+  t1 <- cd_round(test, value = "dataset", graphs = F)
   expect_is(t1, "data.frame")
   expect_equal(sum(t1$summary), 1)
   
   #flags output
-  t2 <- dc_round(test, value = "flags", graphs = F)
+  t2 <- cd_round(test, value = "flagged", graphs = F)
   expect_is(t2, "logical")
   expect_equal(mean(t2), 0.5)
   
   #graphs
-  expect_equal(mean(dc_round(test, value = "flags", graphs = T)), 0.5)
+  expect_equal(mean(cd_round(test, value = "flagged", graphs = T)), 0.5)
   
   #column specification
-  expect_error(dc_round(x = test, lat = "latitude"))
-  expect_error(dc_round(x = test, lon = "longitude"))
-  expect_error(dc_round(x = test, ds = "source"))
+  expect_error(cd_round(x = test, lat = "latitude"))
+  expect_error(cd_round(x = test, lon = "longitude"))
+  expect_error(cd_round(x = test, ds = "source"))
 })
 
 
-# dc_ddmm
+# cd_ddmm
 set.seed(1)
 clean <- data.frame(species = letters[1:10], 
                     decimallongitude = runif(100, -180, 180), 
@@ -61,18 +60,18 @@ prob <-  data.frame(species = letters[1:10],
 
 test <- rbind(prob,clean)
 
-test_that("dc_ddmm identifies existing bias", {
-  t1 <- dc_ddmm(test, value = "dataset")
+test_that("cd_ddmm identifies existing bias", {
+  t1 <- cd_ddmm(test, value = "dataset")
   expect_is(t1, "data.frame")
   expect_equal(sum(t1$pass), 1)
   
-  t2 <- dc_ddmm(test, value = "flags")
+  t2 <- cd_ddmm(test, value = "flagged")
   expect_is(t2, "logical")
   expect_equal(mean(t2), 0.5)
   
-  expect_equal(mean(dc_ddmm(test, value = "flags")), 0.5)
+  expect_equal(mean(cd_ddmm(test, value = "flagged")), 0.5)
   
-  expect_error(dc_ddmm(x = test, lat = "latitude"))
-  expect_error(dc_ddmm(x = test, lon = "longitude"))
-  expect_error(dc_ddmm(x = test, ds = "source"))
+  expect_error(cd_ddmm(x = test, lat = "latitude"))
+  expect_error(cd_ddmm(x = test, lon = "longitude"))
+  expect_error(cd_ddmm(x = test, ds = "source"))
 })

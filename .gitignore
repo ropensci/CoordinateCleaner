@@ -6,3 +6,6 @@
 Code.Rproj
 XXX_TESTING.R
 old
+vignettes/mammal_example.csv
+vignettes/tutorial_s3_example_input_data
+
