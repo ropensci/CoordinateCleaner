@@ -4,12 +4,12 @@
 \alias{plot.spatialvalid}
 \title{Plot Method for Class Spatialvalid}
 \usage{
-\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE, details = TRUE,
-  pts.size = 1, font.size = 10, ...)
+\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE,
+  details = FALSE, pts_size = 1, font_size = 10, ...)
 }
 \arguments{
 \item{x}{an object of the class \code{spatialvalid} as from
-\code{\link{CleanCoordinates}}.}
+\code{\link{clean_coordinates}}.}
 
 \item{bgmap}{an object of the class \code{SpatialPolygonsDataFrame} used as
 background map. Default = \code{\link{landmass}}}
@@ -20,19 +20,19 @@ map.}
 \item{details}{logical. If TRUE, occurrences are colour-coded by the type of
 flag.}
 
-\item{pts.size}{numeric. The point size for the plot.}
+\item{pts_size}{numeric. The point size for the plot.}
 
-\item{font.size}{numeric. The font size for the legend and axes}
+\item{font_size}{numeric. The font size for the legend and axes}
 
 \item{\dots}{additional arguments passed to other methods}
 }
 \value{
 A plot of the records flagged as potentially erroneous by
-\code{\link{CleanCoordinates}}.
+\code{\link{clean_coordinates}}.
 }
 \description{
 A set of plots to explore objects of the class \code{spatialvalid}. A plot
-to visualize the flags from CleanCoordinates
+to visualize the flags from clean_coordinates
 }
 \examples{
 
@@ -41,11 +41,12 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
                     decimallongitude = runif(250, min = 42, max = 51),
                     decimallatitude = runif(250, min = -26, max = -11))
 
-test <- CleanCoordinates(exmpl, species = "species", verbose = FALSE)
+test <- clean_coordinates(exmpl, species = "species", verbose = FALSE)
 
 summary(test)
+plot(test)
 }
 \seealso{
-\code{\link{CleanCoordinates}}
+\code{\link{clean_coordinates}}
 }
 \keyword{Visualisation}

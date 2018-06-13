@@ -18,8 +18,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
@@ -30,7 +30,7 @@
 #'                 decimallatitude = runif(110, -90,90))
 #'                 
 #' cc_val(x)
-#' cc_val(x, value = "flags")
+#' cc_val(x, value = "flagged")
 #' 
 #' @export
 cc_val <- function(x, 
@@ -40,22 +40,22 @@ cc_val <- function(x,
                    verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
 
   if (verbose) {
     message("Testing coordinate validity")
   }
 
-
+  x[[lon]] <- suppressWarnings(as.numeric(as.character(x[[lon]])))
+  x[[lat]] <- suppressWarnings(as.numeric(as.character(x[[lat]])))
+  
   out <- list(
     is.na(x[[lon]]), 
     is.na(x[[lat]]), 
-    suppressWarnings(is.na(as.numeric(as.character(x[[lon]])))),
-    suppressWarnings(is.na(as.numeric(as.character(x[[lat]])))), 
-    suppressWarnings(as.numeric(as.character(x[[lon]]))) < -180, 
-    suppressWarnings(as.numeric(as.character(x[[lon]]))) > 180,
-    suppressWarnings(as.numeric(as.character(x[[lat]]))) < -90, 
-    suppressWarnings(as.numeric(as.character(x[[lat]]))) > 90
+    x[[lon]] < -180, 
+    x[[lon]] > 180,
+    x[[lat]] < -90, 
+    x[[lat]] > 90
   )
 
   out <- !Reduce("|", out)
@@ -64,7 +64,7 @@ cc_val <- function(x,
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 
   return(out)
 }

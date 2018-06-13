@@ -20,15 +20,15 @@
 #' interquantile range based test. This is the major parameter to specify the
 #' sensitivity of the test: lower values, equal higher detection rate. Values
 #' between 7-11 are recommended. Default = 7.
-#' @param reg.out.thresh numeric. Threshold on the number of equal distances
+#' @param reg_out_thresh numeric. Threshold on the number of equal distances
 #' between outlier points.  See details.  Default = 2.
-#' @param reg.dist.min numeric.  The minimum detection distance between
+#' @param reg_dist_min numeric.  The minimum detection distance between
 #' outliers in degrees (the minimum resolution of grids that will be flagged).
 #' Default = 0.1.
-#' @param reg.dist.max numeric.  The maximum detection distance between
+#' @param reg_dist_max numeric.  The maximum detection distance between
 #' outliers in degrees (the maximum resolution of grids that will be flagged).
 #' Default = 2.
-#' @param min.unique.ds.size numeric.  The minimum number of unique locations
+#' @param min_unique_ds_size numeric.  The minimum number of unique locations
 #' (values in the tested column) for datasets to be included in the test.
 #' Default = 4.
 #' @param graphs logical. If TRUE, diagnostic plots are produced.  Default =
@@ -38,11 +38,13 @@
 #' both.  In the latter case datasets are only flagged if both test are failed.
 #' Default = \dQuote{both}
 #' @param value a character string.  Defining the output value. See value.
+#' @param verbose logical. If TRUE reports the name of the test and the number
+#' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 #' \code{data.frame} containing the records considered correct by the test
-#' (\dQuote{clean}) or a logical vector, with TRUE = test passed and FALSE =
-#' test failed/potentially problematic (\dQuote{flags}). Default =
+#' (\dQuote{clean}) or a logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE =
+#' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
@@ -82,41 +84,46 @@
 #'           
 #'   #run test
 #'   
-#'   dc_round(inp, value = "dataset")
+#'   cd_round(inp, value = "dataset")
 #' 
 #' @export
 #' @importFrom stats complete.cases
 #' @importFrom graphics title
-dc_round <- function(x, 
+cd_round <- function(x, 
                      lon = "decimallongitude", 
                      lat = "decimallatitude", 
                      ds = "dataset",
                      T1 = 7, 
-                     reg.out.thresh = 2, 
-                     reg.dist.min = 0.1, 
-                     reg.dist.max = 2, 
-                     min.unique.ds.size = 4,
+                     reg_out_thresh = 2, 
+                     reg_dist_min = 0.1, 
+                     reg_dist_max = 2, 
+                     min_unique_ds_size = 4,
                      graphs = TRUE, 
                      test = "both", 
-                     value = "clean") {
+                     value = "clean",
+                     verbose = TRUE) {
 
   # fix operators which are tuned and people most likely do not want to change
-  window.size <- 10
-  detection.rounding <- 2
-  detection.threshold <- 6
-  digit.round <- 0
+  window_size <- 10
+  detection_rounding <- 2
+  detection_threshold <- 6
+  digit_round <- 0
   nc <- 3000
   rarefy <- FALSE
 
-  match.arg(value, choices = c("flags", "clean", "dataset"))
+  match.arg(value, choices = c("flagged", "clean", "dataset"))
 
+  if (verbose) {
+    message("Testing for rasterized collection")
+  }
+  
   if (length(unique(x[[ds]])) > 1) {
     dat <- split(x, f = x[[ds]])
 
     out <- lapply(dat, function(k) {
       tester <- k[complete.cases(k[, c(lon, lat)]), ]
       if (nrow(tester[!duplicated(tester[, c(lon, lat)]), ]) < 
-          min.unique.ds.size) {
+          min_unique_ds_size) {
         warning("Dataset smaller than minimum test size")
         out <- data.frame(
           dataset = unique(x[[ds]]), n.outliers = NA,
@@ -126,97 +133,97 @@ dc_round <- function(x,
         if (test == "lon") {
           # calculate autocorrelation
           gvec <- .CalcACT(
-            data = k[[lon]], digit.round = digit.round,
-            nc = nc, graphs = graphs, graph.title = unique(k[[ds]])
+            data = k[[lon]], digit_round = digit_round,
+            nc = nc, graphs = graphs, graph_title = unique(k[[ds]])
           )
           # run the sliding window outlier detection
-          n.outl <- .OutDetect(gvec,
-            T1 = T1, window.size = window.size,
-            detection.rounding = detection.rounding, 
-            detection.threshold = detection.threshold,
+          n_outl <- .OutDetect(gvec,
+            T1 = T1, window_size = window_size,
+            detection_rounding = detection_rounding, 
+            detection_threshold = detection_threshold,
             graphs = graphs
           )
 
-          n.outl$flag <- !all(n.outl$n.outliers > 0, 
-                              n.outl$regular.distance >= reg.dist.min, 
-                              n.outl$regular.distance <= reg.dist.max, 
-                              n.outl$n.regular.outliers >= reg.out.thresh)
+          n_outl$flag <- !all(n_outl$n.outliers > 0, 
+                              n_outl$regular.distance >= reg_dist_min, 
+                              n_outl$regular.distance <= reg_dist_max, 
+                              n_outl$n.regular.outliers >= reg_out_thresh)
 
           if (graphs) {
-            title(paste(unique(k[[ds]]), n.outl$flag, sep = " - "))
+            title(paste(unique(k[[ds]]), n_outl$flag, sep = " - "))
           }
         }
 
         if (test == "lat") {
           gvec <- .CalcACT(
             data = k[[lat]], 
-            digit.round = digit.round,
+            digit_round = digit_round,
             nc = nc, graphs = graphs, 
-            graph.title = unique(k[[ds]])
+            graph_title = unique(k[[ds]])
           )
           # run the sliding window outlier detection
-          n.outl <- .OutDetect(gvec,
-            T1 = T1, window.size = window.size,
-            detection.rounding = detection.rounding, 
-            detection.threshold = detection.threshold,
+          n_outl <- .OutDetect(gvec,
+            T1 = T1, window_size = window_size,
+            detection_rounding = detection_rounding, 
+            detection_threshold = detection_threshold,
             graphs = graphs
           )
 
-          n.outl$flag <- !all(n.outl$n.outliers > 0, 
-                              n.outl$regular.distance >= reg.dist.min, 
-                              n.outl$regular.distance <= reg.dist.max, 
-                              n.outl$n.regular.outliers >= reg.out.thresh)
+          n_outl$flag <- !all(n_outl$n.outliers > 0, 
+                              n_outl$regular.distance >= reg_dist_min, 
+                              n_outl$regular.distance <= reg_dist_max, 
+                              n_outl$n.regular.outliers >= reg_out_thresh)
 
           if (graphs) {
-            title(paste(unique(k[[ds]]), n.outl$flag, sep = " - "))
+            title(paste(unique(k[[ds]]), n_outl$flag, sep = " - "))
           }
         }
 
         if (test == "both") {
           gvec1 <- .CalcACT(
-            data = k[[lon]], digit.round = digit.round,
-            nc = nc, graphs = graphs, graph.title = unique(k[[ds]])
+            data = k[[lon]], digit_round = digit_round,
+            nc = nc, graphs = graphs, graph_title = unique(k[[ds]])
           )
-          n.outl.lon <- .OutDetect(gvec1,
-            T1 = T1, window.size = window.size,
-            detection.rounding = detection.rounding, 
-            detection.threshold = detection.threshold,
+          n_outl_lon <- .OutDetect(gvec1,
+            T1 = T1, window_size = window_size,
+            detection_rounding = detection_rounding, 
+            detection_threshold = detection_threshold,
             graphs = graphs
           )
 
-          n.outl.lon$flag <- !all(
-            n.outl.lon$n.outliers > 0, n.outl.lon$regular.distance >=
-              reg.dist.min, n.outl.lon$regular.distance <= reg.dist.max,
-            n.outl.lon$n.regular.outliers >= reg.out.thresh
+          n_outl_lon$flag <- !all(
+            n_outl_lon$n.outliers > 0, n_outl_lon$regular.distance >=
+              reg_dist_min, n_outl_lon$regular.distance <= reg_dist_max,
+            n_outl_lon$n.regular.outliers >= reg_out_thresh
           )
 
           if (graphs) {
-            title(paste(unique(k[[ds]]), n.outl.lon$flag, sep = " - "))
+            title(paste(unique(k[[ds]]), n_outl_lon$flag, sep = " - "))
           }
 
           gvec2 <- .CalcACT(
-            data = k[[lat]], digit.round = digit.round,
-            nc = nc, graphs = graphs, graph.title = unique(k[[ds]])
+            data = k[[lat]], digit_round = digit_round,
+            nc = nc, graphs = graphs, graph_title = unique(k[[ds]])
           )
-          n.outl.lat <- .OutDetect(gvec2,
-            T1 = T1, window.size = window.size,
-            detection.rounding = detection.rounding, 
-            detection.threshold = detection.threshold,
+          n_outl_lat <- .OutDetect(gvec2,
+            T1 = T1, window_size = window_size,
+            detection_rounding = detection_rounding, 
+            detection_threshold = detection_threshold,
             graphs = graphs
           )
 
-          n.outl.lat$flag <- !all(
-            n.outl.lat$n.outliers > 0, n.outl.lat$regular.distance >=
-              reg.dist.min, n.outl.lat$regular.distance <= reg.dist.max,
-            n.outl.lat$n.regular.outliers >= reg.out.thresh
+          n_outl_lat$flag <- !all(
+            n_outl_lat$n.outliers > 0, n_outl_lat$regular.distance >=
+              reg_dist_min, n_outl_lat$regular.distance <= reg_dist_max,
+            n_outl_lat$n.regular.outliers >= reg_out_thresh
           )
 
           if (graphs) {
-            title(paste(unique(k[[ds]]), n.outl.lat$flag, sep = " - "))
+            title(paste(unique(k[[ds]]), n_outl_lat$flag, sep = " - "))
           }
 
-          n.outl <- cbind(unique(k[[ds]]), n.outl.lon, n.outl.lat)
-          names(n.outl) <- c(
+          n_outl <- cbind(unique(k[[ds]]), n_outl_lon, n_outl_lat)
+          names(n_outl) <- c(
             "dataset", 
             "lon.n.outliers", 
             "lon.n.regular.outliers",
@@ -227,17 +234,17 @@ dc_round <- function(x,
             "lat.regular.distance", "lat.flag"
           )
 
-          n.outl$summary <- n.outl$lon.flag | 
-            n.outl$lat.flag # only flag if both are flagged
+          n_outl$summary <- n_outl$lon.flag | 
+            n_outl$lat.flag # only flag if both are flagged
         }
 
-        return(n.outl)
+        return(n_outl)
       }
     })
 
     out <- do.call("rbind.data.frame", out)
   } else {
-    if (nrow(x[!duplicated(x[, c(lon, lat)]), ]) < min.unique.ds.size) {
+    if (nrow(x[!duplicated(x[, c(lon, lat)]), ]) < min_unique_ds_size) {
       warning("Dataset smaller than minimum test size")
       out <- data.frame(
         dataset = unique(x[[ds]]), 
@@ -250,30 +257,30 @@ dc_round <- function(x,
         # calculate autocorrelation
         gvec <- .CalcACT(
           data = x[[lon]], 
-          digit.round = digit.round,
+          digit_round = digit_round,
           nc = nc, 
           graphs = graphs, 
-          graph.title = unique(x[[ds]])
+          graph_title = unique(x[[ds]])
         )
         # run the sliding window outlier detection
-        n.outl <- .OutDetect(gvec,
-          T1 = T1, window.size = window.size,
-          detection.rounding = detection.rounding, 
-          detection.threshold = detection.threshold,
+        n_outl <- .OutDetect(gvec,
+          T1 = T1, window_size = window_size,
+          detection_rounding = detection_rounding, 
+          detection_threshold = detection_threshold,
           graphs = graphs
         )
 
-        n.outl$flag <- !all(n.outl$n.outliers > 0, 
-                            n.outl$regular.distance >= reg.dist.min, 
-                            n.outl$regular.distance <= reg.dist.max, 
-                            n.outl$n.regular.outliers >= reg.out.thresh)
+        n_outl$flag <- !all(n_outl$n.outliers > 0, 
+                            n_outl$regular.distance >= reg_dist_min, 
+                            n_outl$regular.distance <= reg_dist_max, 
+                            n_outl$n.regular.outliers >= reg_out_thresh)
 
         if (graphs) {
-          title(paste(unique(x[[ds]]), n.outl$flag, sep = " - "))
+          title(paste(unique(x[[ds]]), n_outl$flag, sep = " - "))
         }
 
-        n.outl <- data.frame(unique(x[[ds]]), n.outl)
-        names(n.outl) <- c(
+        n_outl <- data.frame(unique(x[[ds]]), n_outl)
+        names(n_outl) <- c(
           "dataset", "lon.n.outliers", "lon.n.regular.distance",
           "lon.regular.distance", "summary"
         )
@@ -281,28 +288,28 @@ dc_round <- function(x,
 
       if (test == "lat") {
         gvec <- .CalcACT(
-          data = x[[lat]], digit.round = digit.round,
-          nc = nc, graphs = graphs, graph.title = unique(x[[ds]])
+          data = x[[lat]], digit_round = digit_round,
+          nc = nc, graphs = graphs, graph_title = unique(x[[ds]])
         )
         # run the sliding window outlier detection
-        n.outl <- .OutDetect(gvec,
-          T1 = T1, window.size = window.size,
-          detection.rounding = detection.rounding, 
-          detection.threshold = detection.threshold,
+        n_outl <- .OutDetect(gvec,
+          T1 = T1, window_size = window_size,
+          detection_rounding = detection_rounding, 
+          detection_threshold = detection_threshold,
           graphs = graphs
         )
 
-        n.outl$flag <- !all(n.outl$n.outliers > 0, 
-                            n.outl$regular.distance >= reg.dist.min, 
-                            n.outl$regular.distance <= reg.dist.max, 
-          n.outl$n.regular.outliers >= reg.out.thresh)
+        n_outl$flag <- !all(n_outl$n.outliers > 0, 
+                            n_outl$regular.distance >= reg_dist_min, 
+                            n_outl$regular.distance <= reg_dist_max, 
+          n_outl$n.regular.outliers >= reg_out_thresh)
 
         if (graphs) {
-          title(paste(unique(x[[ds]]), n.outl$flag, sep = " - "))
+          title(paste(unique(x[[ds]]), n_outl$flag, sep = " - "))
         }
 
-        n.outl <- data.frame(unique(x[[ds]]), n.outl)
-        names(n.outl) <- c(
+        n_outl <- data.frame(unique(x[[ds]]), n_outl)
+        names(n_outl) <- c(
           "dataset", "lat.n.outliers", "lat.n.regular.distance",
           "lat.regular.distance", "summary"
         )
@@ -310,53 +317,53 @@ dc_round <- function(x,
 
       if (test == "both") {
         gvec1 <- .CalcACT(
-          data = x[[lon]], digit.round = digit.round,
-          nc = nc, graphs = graphs, graph.title = unique(x[[ds]])
+          data = x[[lon]], digit_round = digit_round,
+          nc = nc, graphs = graphs, graph_title = unique(x[[ds]])
         )
 
-        n.outl.lon <- .OutDetect(gvec1,
-          T1 = T1, window.size = window.size,
-          detection.rounding = detection.rounding, 
-          detection.threshold = detection.threshold,
+        n_outl_lon <- .OutDetect(gvec1,
+          T1 = T1, window_size = window_size,
+          detection_rounding = detection_rounding, 
+          detection_threshold = detection_threshold,
           graphs = graphs
         )
 
-        n.outl.lon$flag <- !all(
-          n.outl.lon$n.outliers > 0, n.outl.lon$regular.distance >=
-            reg.dist.min, n.outl.lon$regular.distance <= reg.dist.max,
-          n.outl.lon$n.regular.outliers >= reg.out.thresh
+        n_outl_lon$flag <- !all(
+          n_outl_lon$n.outliers > 0, n_outl_lon$regular.distance >=
+            reg_dist_min, n_outl_lon$regular.distance <= reg_dist_max,
+          n_outl_lon$n.regular.outliers >= reg_out_thresh
         )
 
         if (graphs) {
-          title(paste(unique(x[[ds]]), n.outl.lon$flag, sep = " - "))
+          title(paste(unique(x[[ds]]), n_outl_lon$flag, sep = " - "))
         }
 
 
         gvec2 <- .CalcACT(
-          data = x[[lat]], digit.round = digit.round,
-          nc = nc, graphs = graphs, graph.title = unique(x[[ds]])
+          data = x[[lat]], digit_round = digit_round,
+          nc = nc, graphs = graphs, graph_title = unique(x[[ds]])
         )
 
-        n.outl.lat <- .OutDetect(gvec2,
-          T1 = T1, window.size = window.size,
-          detection.rounding = detection.rounding, 
-          detection.threshold = detection.threshold,
+        n_outl_lat <- .OutDetect(gvec2,
+          T1 = T1, window_size = window_size,
+          detection_rounding = detection_rounding, 
+          detection_threshold = detection_threshold,
           graphs = graphs
         )
 
 
-        n.outl.lat$flag <- !all(
-          n.outl.lat$n.outliers > 0, n.outl.lat$regular.distance >=
-            reg.dist.min, n.outl.lat$regular.distance <= reg.dist.max,
-          n.outl.lat$n.regular.outliers >= reg.out.thresh
+        n_outl_lat$flag <- !all(
+          n_outl_lat$n.outliers > 0, n_outl_lat$regular.distance >=
+            reg_dist_min, n_outl_lat$regular.distance <= reg_dist_max,
+          n_outl_lat$n.regular.outliers >= reg_out_thresh
         )
 
         if (graphs) {
-          title(paste(unique(x[[ds]]), n.outl.lat$flag, sep = " - "))
+          title(paste(unique(x[[ds]]), n_outl_lat$flag, sep = " - "))
         }
 
-        n.outl <- data.frame(unique(x[[ds]]), n.outl.lon, n.outl.lat)
-        names(n.outl) <- c(
+        n_outl <- data.frame(unique(x[[ds]]), n_outl_lon, n_outl_lat)
+        names(n_outl) <- c(
           "dataset", "lon.n.outliers", 
           "lon.n.regular.distance",
           "lon.regular.distance", 
@@ -367,10 +374,10 @@ dc_round <- function(x,
           "lat.flag"
         )
 
-        n.outl$summary <- n.outl$lon.flag | 
-          n.outl$lat.flag # only flag if both are flagged
+        n_outl$summary <- n_outl$lon.flag | 
+          n_outl$lat.flag # only flag if both are flagged
       }
-      out <- n.outl
+      out <- n_outl
     }
   }
 
@@ -383,5 +390,5 @@ dc_round <- function(x,
       NULL
     }
   }), 
-  flags = return(x[[ds]] %in% out[out$summary, "dataset"]))
+  flagged = return(x[[ds]] %in% out[out$summary, "dataset"]))
 }

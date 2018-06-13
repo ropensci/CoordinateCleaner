@@ -28,8 +28,8 @@ of records flagged.}
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector, with TRUE = test passed and FALSE = test failed/potentially
-problematic (\dQuote{flags}). Default = \dQuote{clean}.
+logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+problematic. Default = \dQuote{clean}.
 }
 \description{
 Flags records from inside urban areas, based on a geographic gazetteer.
@@ -60,7 +60,7 @@ x <- data.frame(species = letters[1:10],
                 decimallatitude = runif(100, -90,90))
                 
 cc_urb(x, ref = urbanareas)
-cc_urb(x, value = "flags", ref = urbanareas)
+cc_urb(x, value = "flagged", ref = urbanareas)
 }
 
 }

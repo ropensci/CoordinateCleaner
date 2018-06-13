@@ -23,8 +23,8 @@
 #' of records flagged
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
@@ -37,7 +37,7 @@
 #'                 collector.number = c(1001, 354),
 #'                 collection = rep(c("K", "WAG","FR", "P", "S"), 20))
 #' 
-#' cc_dupl(x, value = "flags")
+#' cc_dupl(x, value = "flagged")
 #' cc_dupl(x, additions = c("collector", "collector.number"))
 #' 
 #' @export
@@ -50,7 +50,7 @@ cc_dupl <- function(x,
                     verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
 
   if (verbose) {
     message("Testing duplicates")
@@ -63,5 +63,5 @@ cc_dupl <- function(x,
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 }
