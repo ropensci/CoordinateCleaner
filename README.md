@@ -1,9 +1,13 @@
+# CoordinateCleaner v2.0-1
 [![Build Status](https://travis-ci.org/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/azizka/CoordianteCleaner)
 [![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
+![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 
-# CoordinateCleaner v1.1-1
-An R-package to flag of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
+***Note: the latest release of CoordinateCleaner (2.0), might cause compatibility issues with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.***
+
+
+Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 
 * General coordinate validity
 * Country and province centroids
@@ -22,6 +26,7 @@ An R-package to flag of common spatial and temporal errors in biological and pal
 * Large temporal uncertainty (fossils)
 * Equal minimum and maximum ages (fossils)
 * Spatio-temporal outliers (fossils)
+
 
 # Installation
 ## Stable from CRAN
@@ -51,15 +56,15 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
                     dataset = "clean")
 
 # Run record-level tests
-rl <- CleanCoordinates(x = exmpl)
+rl <- clean_coordinates(x = exmpl)
 summary(rl)
 plot(rl)
 
 # Dataset level 
-dsl <- CleanCoordinatesDS(exmpl)
+dsl <- clean_coordinatesDS(exmpl)
 
 # For fossils
-fl <- CleanCoordinatesFOS(x = exmpl,
+fl <- clean_coordinatesFOS(x = exmpl,
                           taxon = "species",
                           lon = "decimallongitude", 
                           lat = "decimallatitude")
@@ -78,4 +83,13 @@ cl <- exmpl %>%
 ```
 
 # Documentation
-Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in \Tutorials.
+Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in \vignettes.
+
+
+# Contributing
+See the CONTRIBUTING document.
+
+# Citation
+Zizka, A, Silvestro, D & Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. https://github.com/azizka/CoordinateCleaner
+
+

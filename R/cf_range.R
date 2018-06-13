@@ -10,9 +10,9 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}.
-#' @param min.age a character string. The column with the minimum age. Default
+#' @param min_age a character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max.age a character string. The column with the maximum age. Default
+#' @param max_age a character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
 #' @param taxon a character string. The column with the taxon name. If
 #' \dQuote{}, searches for outliers over the entire dataset, otherwise per
@@ -23,11 +23,11 @@
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
 #' 'mad'}) to identify outliers. See details.  Default = 3.
-#' @param size.thresh numeric.  The minimum number of records needed for a
+#' @param size_thresh  numeric.  The minimum number of records needed for a
 #' dataset to be tested. Default = 10.
-#' @param max.range numeric. A absolute maximum time interval between min age
+#' @param max_range numeric. A absolute maximum time interval between min age
 #' and max age. Only relevant for \code{method} = \dQuote{time}.
-#' @param uniq.loc logical.  If TRUE only single records per location and time
+#' @param uniq_loc logical.  If TRUE only single records per location and time
 #' point (and taxon if \code{taxon} != "") are used for the outlier testing.
 #' Default = T.
 #' @param value a character string.  Defining the output value. See value.
@@ -35,8 +35,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @keywords Fossil Temporal cleaning
 #' @examples
 #' 
@@ -47,36 +47,36 @@
 #'                 min_ma = minages, 
 #'                 max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
 #' 
-#' tc_range(x, value = "flags", taxon = "")
+#' cf_range(x, value = "flagged", taxon = "")
 #' 
 #' @export
 #' @importFrom stats median mad IQR quantile dist
-tc_range <- function(x, 
+cf_range <- function(x, 
                      lon = "lng", 
                      lat = "lat", 
-                     min.age = "min_ma", 
-                     max.age = "max_ma",
+                     min_age = "min_ma", 
+                     max_age = "max_ma",
                      taxon = "accepted_name", 
                      method = "quantile", 
                      mltpl = 5, 
-                     size.thresh = 7,
-                     max.range = 500, 
-                     uniq.loc = FALSE, 
+                     size_thresh  = 7,
+                     max_range = 500, 
+                     uniq_loc = FALSE, 
                      value = "clean", 
                      verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags", "ids"))
+  match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("quantile", "mad", "time"))
 
   # select relevant columns and calcualte age range
-  x$range <- x[[max.age]] - x[[min.age]]
+  x$range <- x[[max_age]] - x[[min_age]]
   x$idf <- rownames(x)
 
   # time and uniq loc do not work together
   if (method == "time") {
     unig.loc <- FALSE
-    warning("Using method = 'time', set 'uniq.loc' to FALSE")
+    warning("Using method = 'time', set 'uniq_loc' to FALSE")
   }
 
   if (taxon == "") {
@@ -85,23 +85,23 @@ tc_range <- function(x,
     }
 
     # Get unique records
-    if (uniq.loc) {
+    if (uniq_loc) {
       # select relevant columns
-      rang <- x[, c(lon, lat, min.age, max.age, "idf", "range")]
+      rang <- x[, c(lon, lat, min_age, max_age, "idf", "range")]
 
       # round coordinates to one decimal
       rang[, lon] <- round(rang[, lon], 1)
       rang[, lat] <- round(rang[, lat], 1)
 
       # get unique occurrences
-      rang <- rang[!duplicated(rang[, c(lon, lat, min.age, max.age)]), ]
+      rang <- rang[!duplicated(rang[, c(lon, lat, min_age, max_age)]), ]
     } else {
-      rang <- x[, c(lon, lat, min.age, max.age, "idf", "range")]
+      rang <- x[, c(lon, lat, min_age, max_age, "idf", "range")]
     }
 
     # Are there points with outlier min or max ages
     if (method == "time") {
-      flags <- which(rang$range > max.range)
+      flags <- which(rang$range > max_range)
       flags <- rang[flags, "idf"]
     }
 
@@ -123,11 +123,11 @@ tc_range <- function(x,
     }
   } else {
     if (verbose) {
-      message("Testing temporal range outliers on taxon level\n")
+      message("Testing temporal range outliers on taxon level")
     }
-    if (uniq.loc) {
+    if (uniq_loc) {
       # select relevant columns
-      splist <- x[, c(lon, lat, min.age, max.age, taxon, "idf", "range")]
+      splist <- x[, c(lon, lat, min_age, max_age, taxon, "idf", "range")]
 
       # round coordinates to one decimal
       splist[, lon] <- round(splist[, lon], 1)
@@ -135,19 +135,19 @@ tc_range <- function(x,
 
       # get unique occurrences
       splist <- splist[!duplicated(splist[, c(
-        taxon, lon, lat, min.age,
-        max.age
+        taxon, lon, lat, min_age,
+        max_age
       )]), ]
     } else {
-      splist <- x[, c(lon, lat, min.age, max.age, taxon, "idf", "range")]
+      splist <- x[, c(lon, lat, min_age, max_age, taxon, "idf", "range")]
     }
 
     # split up into taxon range <- 'range'
     splist <- split(splist, f = as.character(splist[[taxon]]))
 
-    # only keep taxa with at least size.thresh taxa leftleft
+    # only keep taxa with at least size_thresh  taxa leftleft
     test <- as.vector(unlist(lapply(splist, "nrow")))
-    splist <- splist[test >= size.thresh]
+    splist <- splist[test >= size_thresh ]
 
     # loop over taxon and run outlier test
     flags <- lapply(splist, function(k) {
@@ -155,7 +155,7 @@ tc_range <- function(x,
 
       # Are there points with outlier min or max ages
       if (method == "time") {
-        out <- which(rang > max.range)
+        out <- which(rang > max_range)
         out <- k[out, "idf"]
       }
 
@@ -193,10 +193,10 @@ tc_range <- function(x,
 
   # also mark records that might not have been flagged due to the duplicate
   # removal above
-  if (uniq.loc & any(!out)) {
-    sel <- x[rownames(x) %in% flags, c(min.age, max.age)]
-    sel <- unique(sel[[max.age]] - sel[[min.age]])
-    tar <- x[[max.age]] - x[[min.age]]
+  if (uniq_loc & any(!out)) {
+    sel <- x[rownames(x) %in% flags, c(min_age, max_age)]
+    sel <- unique(sel[[max_age]] - sel[[min_age]])
+    tar <- x[[max_age]] - x[[min_age]]
     out[as.numeric(x[tar %in% sel, ]$idf)] <- FALSE
   }
 
@@ -212,6 +212,6 @@ tc_range <- function(x,
   }
 
   switch(value, clean = return(x[out, ]), 
-         flags = return(out), 
+         flagged = return(out), 
          ids = return(flags))
 }

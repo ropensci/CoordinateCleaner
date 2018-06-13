@@ -4,7 +4,7 @@
 \name{centroids}
 \alias{centroids}
 \title{Global Country and Province Centroids}
-\format{A data frame with 5142 observations on the following 6 variables.
+\format{A data frame with 5142 observations on the following 6 variables. 
 \describe{ \item{adm1_code}{a factor; province code.}
 \item{iso3}{a factor; country ISO-3 code.} \item{name}{a
 factor; name of the country or province.} \item{type}{a character
@@ -12,14 +12,15 @@ vector; country or province.} \item{longitude}{a numeric vector}
 \item{latitude}{a numeric vector} }}
 \source{
 \url{http://www.naturalearthdata.com/}
+\url{http://thematicmapping.org/downloads/world_borders.php}
 
 CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook}, Washington,
 DC.
-
 \url{https://www.cia.gov/library/publications/the-world-factbook/fields/2011.html}
 }
 \description{
-A gazetteer of country and province centroids.
+A gazetteer of country and province centroids. 
+Centroids are derived from publically available datasets (see sources below).
 }
 \examples{
 

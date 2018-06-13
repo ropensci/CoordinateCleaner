@@ -27,8 +27,8 @@
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector, with TRUE = test passed and FALSE = test failed/potentially
-#' problematic (\dQuote{flags}). Default = \dQuote{clean}.
+#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
+#' problematic. Default = \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
@@ -39,7 +39,7 @@
 #'                 decimallatitude = runif(100, -90,90))
 #'                 
 #' cc_cen(x)
-#' cc_cen(x, value = "flags")
+#' cc_cen(x, value = "flagged")
 #' 
 #' @export
 #' @importFrom sp SpatialPoints "proj4string<-" over proj4string
@@ -55,7 +55,7 @@ cc_cen <- function(x,
                    verbose = TRUE) {
 
   # check value argument
-  match.arg(value, choices = c("clean", "flags"))
+  match.arg(value, choices = c("clean", "flagged"))
   match.arg(test, choices = c("both", "country", "provinces"))
 
   if (verbose) {
@@ -99,5 +99,5 @@ cc_cen <- function(x,
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
-  switch(value, clean = return(x[out, ]), flags = return(out))
+  switch(value, clean = return(x[out, ]), flagged = return(out))
 }
