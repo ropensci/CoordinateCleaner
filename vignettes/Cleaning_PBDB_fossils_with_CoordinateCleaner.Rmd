@@ -304,7 +304,6 @@ ggplot()+ coord_fixed()+ wm +
   geom_point(data = cl, aes(x = lng, y = lat),
              colour = "darkgreen", size = 0.5)+
   theme_bw()
-
 ```
 
 #Writing the result to disk in PyRate format
