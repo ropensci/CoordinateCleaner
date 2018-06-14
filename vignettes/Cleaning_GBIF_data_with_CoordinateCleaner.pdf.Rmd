@@ -97,8 +97,8 @@ flags <- clean_coordinates(x = dat, lon = "decimalLongitude", lat = "decimalLati
                           countries = "countryCode", 
                           species = "species",
                           c("capitals", "centroids", "equal",
-                            "gbif", "institutions", "outliers",
-                            "seas", "zeros", "countries")) # most test are on by default
+                            "gbif", "institutions",
+                            "zeros", "countries")) # most test are on by default
 summary(flags)
 plot(flags)
 ```
