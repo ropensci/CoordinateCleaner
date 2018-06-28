@@ -57,7 +57,7 @@ library(dplyr)
 library(rgbif)
 
 #obtain data from GBIF via rgbif
-dat <- occ_search(scientificName = "Panthera leo", limit = 10000, 
+dat <- occ_search(scientificName = "Panthera leo", limit = 5000, 
                   return = "data", hasCoordinate = T)
 
 # names(dat) #a lot of columns
