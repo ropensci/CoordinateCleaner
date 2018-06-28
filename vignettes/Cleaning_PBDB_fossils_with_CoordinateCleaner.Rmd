@@ -45,7 +45,7 @@ For this tutorial we will use a dataset of vascular plant fossils from the last 
 
 ```{r, eval = TRUE, collapse = T}
 #load data
-dat <- pbdb_occurrences(base_name = "Magnoliopsida", vocab = "pbdb", limit = 10000,
+dat <- pbdb_occurrences(base_name = "Magnoliopsida", vocab = "pbdb", limit = 5000,
                         show = c("coords", "phylo", "attr", "loc", "time", "rem"))
 rownames(dat) <- NULL
 ```
