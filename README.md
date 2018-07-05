@@ -63,7 +63,7 @@ summary(rl)
 plot(rl)
 
 # Dataset level 
-dsl <- clean_coordinatesDS(exmpl)
+dsl <- clean_dataset(exmpl)
 
 # For fossils
 fl <- clean_coordinatesFOS(x = exmpl,
