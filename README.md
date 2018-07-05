@@ -66,7 +66,7 @@ plot(rl)
 dsl <- clean_dataset(exmpl)
 
 # For fossils
-fl <- clean_coordinatesFOS(x = exmpl,
+fl <- clean_fossils(x = exmpl,
                           taxon = "species",
                           lon = "decimallongitude", 
                           lat = "decimallatitude")
