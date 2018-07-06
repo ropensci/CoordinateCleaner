@@ -1,16 +1,16 @@
 #' Flag Records Inside Urban Areas
-#' 
+#'
 #' Flags records from inside urban areas, based on a geographic gazetteer.
 #' Often records from large databases span substantial time periods (centuries)
 #' and old records might represent habitats which today are replaced by city
 #' area.
-#' 
+#'
 #' No default reference is provided with the package due to the large file size
 #' of such (global) gazetteers. You can download an example here:
 #' \url{https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda}.
 #' Can be any \code{SpatialPolygonsDataframe}, but the structure must be
 #' identical to \code{urbanareas}.
-#' 
+#'
 #' @param x a data.frame. Containing geographical coordinates and species
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
@@ -30,28 +30,28 @@
 #' details and tutorials.
 #' @keywords Coordinate cleaning
 #' @examples
-#' 
+#'
 #' \dontrun{
-#' # load reference 
+#' # load reference
 #' #See details section on where to download the reference data
 #' load("extra_gazetteers/urbanareas.rda")
-#' 
-#' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(100, -180, 180), 
+#'
+#' x <- data.frame(species = letters[1:10],
+#'                 decimallongitude = runif(100, -180, 180),
 #'                 decimallatitude = runif(100, -90,90))
-#'                 
+#'
 #' cc_urb(x, ref = urbanareas)
 #' cc_urb(x, value = "flagged", ref = urbanareas)
 #' }
-#' 
+#'
 #' @export
 #' @importFrom sp SpatialPoints "proj4string<-" over proj4string
 #' @importFrom raster extent crop
-cc_urb <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+cc_urb <- function(x,
+                   lon = "decimallongitude",
+                   lat = "decimallatitude",
                    ref = NULL,
-                   value = "clean", 
+                   value = "clean",
                    verbose = TRUE) {
 
   # check value argument
@@ -64,10 +64,10 @@ cc_urb <- function(x,
   # check for reference data. FOr this function reference hast to be supplied,
   # availble e.g. from the packages GitHub repository
   if (is.null(ref)) {
-    stop("No referencepolygons found. Set 'urban.ref'")
+    stop("No reference polygons found. Set 'urban.ref'")
   } else {
     sp::proj4string(ref) <- ""
-    warning("assumning lat/lon for ref")
+    warning("assuming lat/lon for ref")
   }
 
   # Prepare input points and extent
