@@ -1,5 +1,5 @@
 # CoordinateCleaner v2.0-1
-[![Build Status](https://travis-ci.org/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/azizka/CoordianteCleaner)
+[![Build Status](https://travis-ci.org/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/azizka/CoordinateCleaner)
 [![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 ![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
@@ -27,7 +27,7 @@ Automated flagging of common spatial and temporal errors in biological and palae
 * Equal minimum and maximum ages (fossils)
 * Spatio-temporal outliers (fossils)
 
-CoordinateCleaner can be particularly useful to ensure geographic data quality when using data from GBIF (e.g. obtained with [rgbif]( https://github.com/ropensci/rgbif)) for historical biogeography (e.g. with [BioGeoBEARS]( https://cran.r-project.org/web/packages/BioGeoBEARS/index.html) or [phytools]( https://cran.r-project.org/web/packages/phytools/index.html)), automated conservation assessment (e.g. with[speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/wiki) or [conR]( https://cran.r-project.org/web/packages/ConR/index.html)) or species distribution modelling (e.g. with [dismo]( https://cran.r-project.org/web/packages/dismo/index.html) or [sdm](https://cran.r-project.org/web/packages/sdm/index.html). See [scrubr](https://github.com/ropensci/scrubr) and [taxize]( https://github.com/ropensci/taxize) for complementary taxonomic cleaning.
+CoordinateCleaner can be particularly useful to ensure geographic data quality when using data from GBIF (e.g. obtained with [rgbif]( https://github.com/ropensci/rgbif)) for historical biogeography (e.g. with [BioGeoBEARS](https://cran.r-project.org/web/packages/BioGeoBEARS/index.html) or [phytools](https://cran.r-project.org/web/packages/phytools/index.html)), automated conservation assessment (e.g. with [speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/wiki) or [conR](https://cran.r-project.org/web/packages/ConR/index.html)) or species distribution modelling (e.g. with [dismo](https://cran.r-project.org/web/packages/dismo/index.html) or [sdm](https://cran.r-project.org/web/packages/sdm/index.html). See [scrubr](https://github.com/ropensci/scrubr) and [taxize](https://github.com/ropensci/taxize) for complementary taxonomic cleaning.
 
 
 # Installation
@@ -63,10 +63,10 @@ summary(rl)
 plot(rl)
 
 # Dataset level 
-dsl <- clean_coordinatesDS(exmpl)
+dsl <- clean_dataset(exmpl)
 
 # For fossils
-fl <- clean_coordinatesFOS(x = exmpl,
+fl <- clean_fossils(x = exmpl,
                           taxon = "species",
                           lon = "decimallongitude", 
                           lat = "decimallatitude")
