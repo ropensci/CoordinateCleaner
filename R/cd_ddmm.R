@@ -180,7 +180,7 @@ cd_ddmm <- function(x,
       }
     } else {
       outp <- rep(NA, 3)
-      warning("Geographic spann to small, check 'min_span'")
+      warning("Geographic span too small, check 'min_span'")
     }
     return(outp)
   })
