@@ -29,25 +29,26 @@ Automated flagging of common spatial and temporal errors in biological and palae
 
 CoordinateCleaner can be particularly useful to ensure geographic data quality when using data from GBIF (e.g. obtained with [rgbif]( https://github.com/ropensci/rgbif)) for historical biogeography (e.g. with [BioGeoBEARS](https://cran.r-project.org/web/packages/BioGeoBEARS/index.html) or [phytools](https://cran.r-project.org/web/packages/phytools/index.html)), automated conservation assessment (e.g. with [speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/wiki) or [conR](https://cran.r-project.org/web/packages/ConR/index.html)) or species distribution modelling (e.g. with [dismo](https://cran.r-project.org/web/packages/dismo/index.html) or [sdm](https://cran.r-project.org/web/packages/sdm/index.html). See [scrubr](https://github.com/ropensci/scrubr) and [taxize](https://github.com/ropensci/taxize) for complementary taxonomic cleaning.
 
+See [News](https://github.com/azizka/CoordinateCleaner/blob/master/NEWS.md) for update information.
 
 # Installation
 ## Stable from CRAN
 
-```
+```{r, evaluate = F}
 install.packages("CoordinateCleaner")
 library(CoordinateCleaner)
 ```
 
 ## Developmental using devtools
-```
+```{r, evaluate = F}
 devtools::install_github("azizka/CoordinateCleaner")
 library(CoordinateCleaner)
-````
+```
 
 # Usage
 A simple example:
 
-```
+```{r}
 # Simulate example data
 minages <- runif(250, 0, 65)
 exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
@@ -78,18 +79,18 @@ library(tidyverse)
 cl <- exmpl %>%
   cc_val()%>%
   cc_cap()%>%
-  dc_ddmm()%>%
-  tc_range(lon = "decimallongitude", 
+  cd_ddmm()%>%
+  cf_range(lon = "decimallongitude", 
            lat = "decimallatitude", 
            taxon  ="species")
 ```
 
 # Documentation
-Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in \vignettes.
+Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in [vignettes](https://github.com/azizka/CoordinateCleaner/tree/master/vignettes).
 
 
 # Contributing
-See the CONTRIBUTING document.
+See the [CONTRIBUTING](https://github.com/azizka/CoordinateCleaner/blob/master/CONTRIBUTING.md) document.
 
 # Citation
 Zizka, A, Silvestro, D & Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. https://github.com/azizka/CoordinateCleaner
