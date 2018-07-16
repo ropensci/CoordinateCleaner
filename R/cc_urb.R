@@ -5,11 +5,9 @@
 #' and old records might represent habitats which today are replaced by city
 #' area.
 #'
-#' No default reference is provided with the package due to the large file size
-#' of such (global) gazetteers. You can download an example here:
-#' \url{https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda}.
-#' Can be any \code{SpatialPolygonsDataframe}, but the structure must be
-#' identical to \code{urbanareas}.
+#' By default rnaturalearth::ne_download will be used to download reference data, if no reference is provided by the user.
+#' User-provided references can be any \code{SpatialPolygonsDataframe}, but the structure must be
+#' identical to \code{rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')}.
 #'
 #' @param x a data.frame. Containing geographical coordinates and species
 #' names.
@@ -32,16 +30,12 @@
 #' @examples
 #'
 #' \dontrun{
-#' # load reference
-#' #See details section on where to download the reference data
-#' load("extra_gazetteers/urbanareas.rda")
-#'
 #' x <- data.frame(species = letters[1:10],
 #'                 decimallongitude = runif(100, -180, 180),
 #'                 decimallatitude = runif(100, -90,90))
 #'
-#' cc_urb(x, ref = urbanareas)
-#' cc_urb(x, value = "flagged", ref = urbanareas)
+#' cc_urb(x)
+#' cc_urb(x, value = "flagged")
 #' }
 #'
 #' @export
@@ -61,10 +55,11 @@ cc_urb <- function(x,
     message("Testing urban areas")
   }
 
-  # check for reference data. FOr this function reference hast to be supplied,
-  # availble e.g. from the packages GitHub repository
+  # check for reference data. 
   if (is.null(ref)) {
-    stop("No reference polygons found. Set 'urban.ref'")
+    message("No reference for urban areas found. Using rnaturalearth to download.")
+    ref <- rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')
+    sp::proj4string(ref) <- ""
   } else {
     sp::proj4string(ref) <- ""
     warning("assuming lat/lon for ref")
