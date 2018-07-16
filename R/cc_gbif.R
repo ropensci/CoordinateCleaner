@@ -42,10 +42,6 @@ cc_gbif <- function(x,
   # check function argument validity
   match.arg(value, choices = c("clean", "flagged"))
 
-  if (verbose) {
-    message("Testing GBIF headquarters, flagging records around Copenhagen")
-  }
-
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
   ref <- rgeos::gBuffer(sp::SpatialPoints(cbind(12.58, 55.67)), width = 0.5)
 
@@ -53,6 +49,7 @@ cc_gbif <- function(x,
   out <- is.na(out)
 
   if (verbose) {
+    message("Testing GBIF headquarters, flagging records around Copenhagen")
     message(sprintf("Flagged %s records.", sum(!out)))
   }
 
