@@ -51,14 +51,14 @@ details and tutorials.
 \examples{
 
 \dontrun{
-# load reference 
+# load reference
 #See details section on where to download the reference data
 load("extra_gazetteers/urbanareas.rda")
 
-x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
+x <- data.frame(species = letters[1:10],
+                decimallongitude = runif(100, -180, 180),
                 decimallatitude = runif(100, -90,90))
-                
+
 cc_urb(x, ref = urbanareas)
 cc_urb(x, value = "flagged", ref = urbanareas)
 }
