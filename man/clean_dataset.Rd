@@ -56,7 +56,7 @@ which can indicate imprecise coordinates, due to rounding or rasterization.
 }
 }
 \details{
-Thiese tests are based on the statistical distribution of coordinates and
+These tests are based on the statistical distribution of coordinates and
 their decimals within
 datasets of geographic distribution records to identify datasets with
 potential errors/biases. Three potential error sources can be identified.
@@ -65,8 +65,8 @@ coordinates in a degree minute annotation are transferred into decimal
 degrees, simply replacing the degree symbol with the decimal point. This
 kind of problem has been observed by in older datasets first recorded on
 paper using typewriters, where e.g. a floating point was used as symbol for
-degrees. The function uses a binomial test to check if more records then
-expected have decimals blow 0.6 (which is the maximum that can be obtained
+degrees. The function uses a binomial test to check if more records than
+expected have decimals below 0.6 (which is the maximum that can be obtained
 in minutes, as one degree has 60 minutes) and if the number of these records
 is higher than those above 0.59 by a certain proportion. The periodicity
 test uses rate estimation in a poison process to estimate if there is
