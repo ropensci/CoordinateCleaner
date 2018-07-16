@@ -38,11 +38,9 @@ and old records might represent habitats which today are replaced by city
 area.
 }
 \details{
-No default reference is provided with the package due to the large file size
-of such (global) gazetteers. You can download an example here:
-\url{https://github.com/azizka/CoordinateCleaner/blob/master/extra_gazetteers/urbanareas.rda}.
-Can be any \code{SpatialPolygonsDataframe}, but the structure must be
-identical to \code{urbanareas}.
+By default rnaturalearth::ne_download will be used to download reference data, if no reference is provided by the user.
+User-provided references can be any \code{SpatialPolygonsDataframe}, but the structure must be
+identical to \code{rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')}.
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
@@ -51,16 +49,12 @@ details and tutorials.
 \examples{
 
 \dontrun{
-# load reference
-#See details section on where to download the reference data
-load("extra_gazetteers/urbanareas.rda")
-
 x <- data.frame(species = letters[1:10],
                 decimallongitude = runif(100, -180, 180),
                 decimallatitude = runif(100, -90,90))
 
-cc_urb(x, ref = urbanareas)
-cc_urb(x, value = "flagged", ref = urbanareas)
+cc_urb(x)
+cc_urb(x, value = "flagged")
 }
 
 }

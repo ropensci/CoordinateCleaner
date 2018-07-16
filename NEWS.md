@@ -1,3 +1,18 @@
+CoordinateCleaner 2.0-1 (2018-06-08)
+=========================
+
+### MAJOR IMPROVEMENTS
+
+  * changed and more consistent naming scheme for the functions
+  
+### MINOR IMPROVEMENTS
+  * fixed typos in Readme
+  * set a download from naturalearth as defualt for cc_urb
+  * reduced vignette memory use and size
+  
+### DEPRECATED AND DEFUNCT
+
+
 CoordinateCleaner 1.2-1 (2018-06-08)
 =========================
 
