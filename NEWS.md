@@ -11,6 +11,7 @@ CoordinateCleaner 2.0-1 (2018-06-08)
   * reduced vignette memory use and size
   * enables sf format for sustom references
   * added speedup option for cc_sea
+  * added webpage (https://azizka.github.io/CoordinateCleaner/)
 
 
 CoordinateCleaner 1.2-1 (2018-06-08)
