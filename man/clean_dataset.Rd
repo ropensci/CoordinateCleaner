@@ -79,8 +79,8 @@ empirically optimized by with GBIF data, but should probably be adapted.
 \examples{
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
-                    decimallongitude = runif(min = -42, max = -40, n = 1000),
-                    decimallatitude = runif(min = -12, max = -10, n = 1000))
+                    decimallongitude = runif(min = -43, max = -40, n = 1000),
+                    decimallatitude = runif(min = -13, max = -10, n = 1000))
                     
 bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
                round(runif(min = -42, max = -40, n = 300), 0),

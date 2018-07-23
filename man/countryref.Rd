@@ -4,22 +4,32 @@
 \name{countryref}
 \alias{countryref}
 \title{Country Centroids and Country Capitals}
-\format{A data frame with 249 observations on 7 variables.}
+\format{A data frame with 5142 observations on 10 variables.
+#' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also refering to the country.}
+\item{iso2}{ISO-2 code for each country, in case of provinces also refering to the country.} \item{name}{a
+factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
+\item{type}{identifying if the entry referes to a country or province level.} 
+\item{centroid.lon}{Longitude of the country centroid}
+\item{centroid.lat}{Latitude of the country centroid}
+\item{capital}{Name of the country capital, empty for provinces}
+\item{capital.lon}{Longitude of the country capital}
+\item{capital.lat}{Latitude of the country capital}}}
 \source{
 CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 Washington, DC.
 
 \url{http://opengeocode.org/download/cow.php}
+\url{http://thematicmapping.org/downloads/world_borders.php}
 }
 \description{
-A \code{data.frame} with coordinates of country centroids and country
-capitals as reference for the \code{\link{clean_coordinates}} function.
+A \code{data.frame} with coordinates of country and province centroids and country
+capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
 Coordinates are based on the Central Intelligence Agency World Factbook as
-provided at \url{http://opengeocode.org/download/cow.php}.
+provided at \url{http://opengeocode.org/download/cow.php} and \url{http://thematicmapping.org/downloads/world_borders.php}.
 }
 \examples{
 
 data(countryref)
-
+head(countryref)
 }
 \keyword{gazetteers}

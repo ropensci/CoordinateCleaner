@@ -24,8 +24,9 @@
 #' containing the records considered correct by the test (\dQuote{clean}) or a
 #' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
 #' problematic. Default = \dQuote{clean}.
-#' @note Non-terrestrial records are ignored. Use \code{\link{cc_sea}} to flag
-#' these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+#' @note With the default reference, records are flaggeed if they fall 
+#' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
+#' See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
 #' @examples
@@ -36,11 +37,11 @@
 #'                 decimallatitude = runif(100, 35,60),
 #'                 countrycode = "RUS")
 #' 
-#' cc_coun(x, value = "flagged")#non-terrestrial records are not flagged! Use cc_sea for these
+#' cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong. 
 #' }
 #' 
 #' @export
-#' @importFrom sp SpatialPoints "proj4string<-" over
+#' @importFrom sp CRS SpatialPoints "proj4string<-" over
 #' @importFrom raster crop
 cc_coun <- function(x, 
                     lon = "decimallongitude", 
@@ -70,9 +71,23 @@ cc_coun <- function(x,
     ref <- rnaturalearth::ne_countries(scale = "medium")
     sp::proj4string(ref) <- ""
   } else {
-    sp::proj4string(ref) <- ""
-    warning("assuming lat/lon for country.ref")
+    #Enable sf formatted custom references
+    ref <- as(ref, "Spatial")
+    
+    #Check projection of custom reference and reproject if necessary
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+    
+    if(is.na(sp::proj4string(ref))){
+      warning("no projection information for reference found, 
+              assuming '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+    }else if(sp::proj4string(ref) == wgs84){
+      sp::proj4string(ref) <- ""
+    }else{
+      ref <- sp::spTransform(ref, sp::CRS(wgs84))
+      warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+    }
   }
+  
 
   # prepare data
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
@@ -82,7 +97,7 @@ cc_coun <- function(x,
   # get country from coordinates and compare with provided country
   country <- sp::over(x = dat, y = ref)[, "iso_a3"]
   out <- as.character(country) == as.character(unlist(x[, iso3]))
-  out[is.na(out)] <- FALSE # marine records are ignored / not tested
+  out[is.na(out)] <- FALSE # marine records are set to False
 
   # return output
   if (verbose) {

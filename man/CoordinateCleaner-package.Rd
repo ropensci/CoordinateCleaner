@@ -4,24 +4,15 @@
 \name{CoordinateCleaner-package}
 \alias{CoordinateCleaner-package}
 \alias{CoordinateCleaner}
-\title{c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_title("CoordinateCleaner")}}
+\title{CoordinateCleaner}
 \description{
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_description("CoordinateCleaner")}
+Automated Cleaning of Occurrence Records from Biological Collections
 }
 \details{
-The DESCRIPTION file:
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_DESCRIPTION(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_DESCRIPTION("CoordinateCleaner")}
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_indices("CoordinateCleaner")}
+Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://github.com/azizka/CoordinateCleaner/wiki> for more details and tutorials.
 }
 \author{
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_author("CoordinateCleaner")}
-
-Maintainer:
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-"CoordinateCleaner")\Sexpr{tools:::Rd_package_maintainer("CoordinateCleaner")}
+Alexander ZIzka, Daniele Silvestro, Tobias Andermann, Josue Azevedo, 
+Camila Duarte Ritter, Daniel Edler, Harith Farooq, Andrei Herdean, Maria Ariza, 
+Ruud Scharn, Sten Svantesson, Niklas Wengstrom, Vera Zizka
 }

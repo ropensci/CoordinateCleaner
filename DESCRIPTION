@@ -26,5 +26,5 @@ Depends: R (>= 3.0.0)
 Imports: geosphere, ggplot2, graphics, methods, raster, rgeos, rnaturalearth, stats, sp, utils
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: countrycode, covr, dplyr, knitr, maps, paleobioDB, rgbif, rmarkdown, tidyverse, testthat
+Suggests: countrycode, covr, dplyr, knitr, maps, paleobioDB, rgbif, rmarkdown, testthat
 VignetteBuilder: knitr
