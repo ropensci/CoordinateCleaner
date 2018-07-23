@@ -27,7 +27,7 @@ country and province centroids.}
 
 \item{ref}{a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 be any SpatialPointsDataframe, but the structure must be identical to
-\code{\link{centroids}}.  Default = \code{\link{centroids}}}
+\code{\link{countryref}}.  Default = \code{\link{countryref}}}
 
 \item{value}{a character string.  Defining the output value. See value.}
 

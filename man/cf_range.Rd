@@ -4,10 +4,10 @@
 \alias{cf_range}
 \title{Flag Fossils with Extreme Age Ranges}
 \usage{
-cf_range(x, lon = "lng", lat = "lat", min_age = "min_ma",
-  max_age = "max_ma", taxon = "accepted_name", method = "quantile",
-  mltpl = 5, size_thresh = 7, max_range = 500, uniq_loc = FALSE,
-  value = "clean", verbose = TRUE)
+cf_range(x, lon = "decimallongitude", lat = "decimallatitude",
+  min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
+  method = "quantile", mltpl = 5, size_thresh = 7, max_range = 500,
+  uniq_loc = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

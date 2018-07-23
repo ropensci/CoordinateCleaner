@@ -20,7 +20,7 @@ knitr::opts_chunk$set(warning = FALSE, fig.width = 7)
 The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using \emph{CoordinateCleaner} with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is "good data" depends entirely on your downstream analyses! We wrote this tutorial (and the whole \emph{CoordinateCleaner} package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.
 
 # Install `CoordinateCleaner`
-You can install the latest stable version of CoordinateCleaner (Currently 1.0-6) from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latset R version installed. In this tutorial, relevant R-code is shown in grey boxes, the resulting output lines are marked by ##. 
+You can install the latest stable version of CoordinateCleaner (Currently 1.0-6) from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed. In this tutorial, relevant R-code is shown in grey boxes, the resulting output lines are marked by ##. 
 
 ```{r, eval = F}
 install.packages("devtools")
@@ -33,11 +33,11 @@ install_github("azizka/CoordinateCleaner")
 As a first step we will load the R libraries required for the tutorial. You might need to install some of them using `install.packages`. 
 
 ```{r, echo = T, warning = F, message = F, eval = TRUE}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(CoordinateCleaner)
 library(countrycode)
 library(paleobioDB)
-library(dplyr)
 ```
 
 # Load test dataset
@@ -83,7 +83,7 @@ Looks good, then we will test for coordinates with equal longitude and latitude.
 cl <- cc_equ(cl, lat = "lat", lon = "lng")
 ```
 
-For the purpose of the tutorial, we will always exclude flagged records. If you want to further explore them use the `value = "flagged"` argument, valid for all functions. In that case the output value will be a vector of logical values with the same length as dat, where TRUE = valid record, FALSE = flagged record. It is generally advisable to check flagged records whenever possible, to avoid data-loss and false flags.
+For the purpose of the tutorial, we will always exclude flagged records. If you want to further explore them use the `value = "flagged"` argument, valid for all functions. In that case the output value will be a vector of logical values with the same length as `dat`, where TRUE = valid record, FALSE = flagged record. It is generally advisable to check flagged records whenever possible, to avoid data-loss and false flags.
 
 ```{r, eval = TRUE, collapse = T}
 fl <- cc_equ(dat, value = "flagged", lat = "lat", lon = "lng")
@@ -143,7 +143,7 @@ rang <- cl$early_age - cl$late_age
 hist(rang, breaks = 40, xlab = "Date range [max age - min age]", main = "")
 ```
 
-Some individual records are dated with a precision of more than 60 milion years! \emph{CoordinateCleaner} offers two ways to flag records based on their age range (1) based on absolute age, e.g. age range > 35 million years or (2) based on age range outlier detection in the entire dataset (e.g. if few records are much less precisely dated than the rest of all records) and (3) based on age range outlier detection on taxon level (e.g. all \emph{Quercus} records that are much less precisely dated than the other \emph{Quercus} records. The second and third approach can be combined and offer some more flexibility over the absolute age limit, but need some consideration on the desired sensitivity. Here, we will run all three variants for illustration, if you use your own data you should decide which one is more suitable depending on your downstream analyses. In the case of (2) and (3) you can tweak the test sensitivity using the `mltpl` argument.
+Some individual records are dated with a precision of more than 60 million years! \emph{CoordinateCleaner} offers two ways to flag records based on their age range (1) based on absolute age, e.g. age range > 35 million years or (2) based on age range outlier detection in the entire dataset (e.g. if few records are much less precisely dated than the rest of all records) and (3) based on age range outlier detection on taxon level (e.g. all \emph{Quercus} records that are much less precisely dated than the other \emph{Quercus} records. The second and third approach can be combined and offer some more flexibility over the absolute age limit, but need some consideration on the desired sensitivity. Here, we will run all three variants for illustration, if you use your own data you should decide which one is more suitable depending on your downstream analyses. In the case of (2) and (3) you can tweak the test sensitivity using the `mltpl` argument.
 
 ```{r, eval = TRUE, collapse = T}
 # Outlier dataset
@@ -308,7 +308,7 @@ ggplot()+ coord_fixed()+ wm +
 
 #Writing the result to disk in PyRate format
 
-If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, PyRate (https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of \emph{CoordinateCleaner} to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
+If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, [PyRate](https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of \emph{CoordinateCleaner} to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
 
 ```{r, message = F, warning = F, eval = F}
 # replace  blanks in taxon names

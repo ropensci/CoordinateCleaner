@@ -5,7 +5,7 @@
 \title{Flag Non-terrestrial Coordinates}
 \usage{
 cc_sea(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL,
-  value = "clean", verbose = TRUE)
+  value = "clean", speedup = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -23,8 +23,11 @@ Can be any SpatialPolygonsDataframe, but the structure must be identical to
 
 \item{value}{a character string.  Defining the output value. See value.}
 
+\item{speedup}{logical. USing heuristic to speed up the analysis for large datsets
+with many records per location.}
+
 \item{verbose}{logical. If TRUE reports the name of the test and the number
-of records flagged.}
+of records flagged. Default = TRUE.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -44,8 +47,7 @@ In some cases flagging records close of the coastline is not recommendable,
 because of the low precision of the reference dataset, minor GPS imprecision
 or because a dataset might include coast or marshland species. If you only
 want to flag records in the open ocean, consider using a buffered landmass
-reference, e.g.:
-\url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
+reference, e.g.: \code{\link{buffland}}.
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more

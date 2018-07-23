@@ -32,7 +32,7 @@ CleanCoordinatesFOS <- function(x,
                                 verbose = TRUE,
                                 report = FALSE) {
   
-  .Deprecated("clean_fossils")
+  .Deprecated(new = "clean_fossils")
   
   if(missing(centroids.ref)){centroids.ref <- NULL}
   if(missing(country.ref)){country.ref <- NULL}

@@ -18,7 +18,7 @@
 #' Default = 0.1.
 #' @param ref a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataframe, but the structure must be identical to
-#' \code{\link{capitals}}.  Default = \code{\link{capitals}}
+#' \code{\link{countryref}}.  Default = \code{\link{countryref}}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
@@ -62,15 +62,12 @@ cc_cap <- function(x,
 
   # check for reference data and adapt projection of custom reference data
   if (is.null(ref)) {
-    ref <- CoordinateCleaner::capitals
-  } else {
-    sp::proj4string(ref) <- ""
-    warning("assuming lat/lon WGS84 for ref")
+    ref <- CoordinateCleaner::countryref
+    ref <- ref[!is.na(ref$capital),]
   }
-
   # subset reference data to data window to spead up the test
   limits <- raster::extent(dat) + buffer
-  ref <- raster::crop(SpatialPoints(ref[, c("longitude", "latitude")]), limits)
+  ref <- raster::crop(SpatialPoints(ref[, c("capital.lon", "capital.lat")]), limits)
 
   # test if any points fall within the buffer incase no capitals are found in
   # the study area

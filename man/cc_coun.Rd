@@ -42,8 +42,9 @@ Such a mismatch can occur for example, if latitude and longitude are
 switched.
 }
 \note{
-Non-terrestrial records are ignored. Use \code{\link{cc_sea}} to flag
-these. See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+With the default reference, records are flaggeed if they fall 
+outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
+See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 details and tutorials.
 }
 \examples{
@@ -54,7 +55,7 @@ x <- data.frame(species = letters[1:10],
                 decimallatitude = runif(100, 35,60),
                 countrycode = "RUS")
 
-cc_coun(x, value = "flagged")#non-terrestrial records are not flagged! Use cc_sea for these
+cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong. 
 }
 
 }
