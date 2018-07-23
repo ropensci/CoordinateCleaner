@@ -1,0 +1,7 @@
+pandoc: 1.19.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  Cleaning_GBIF_data_with_CoordinateCleaner: Cleaning_GBIF_data_with_CoordinateCleaner.html
+  Cleaning_PBDB_fossils_with_CoordinateCleaner: Cleaning_PBDB_fossils_with_CoordinateCleaner.html
+
