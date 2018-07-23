@@ -74,8 +74,8 @@
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats median mad IQR quantile dist
 cf_outl <- function(x, 
-                    lon = "lng", 
-                    lat = "lat", 
+                    lon = "decimallongitude", 
+                    lat = "decimallatitude", 
                     min_age = "min_ma", 
                     max_age = "max_ma",
                     taxon = "accepted_name", 
@@ -99,6 +99,17 @@ cf_outl <- function(x,
     } else {
       message("Testing spatio-temporal outliers on taxon level")
     }
+  }
+  
+  #Also allow PBDB standard names
+  if("lat" %in% names(x) & !("decimallatitude" %in% names(x))){
+    lat <- "lat"
+    warning("decimallatitude not found. Using lat instead.")
+  }
+  
+  if("lng" %in% names(x) & !("decimallongitude" %in% names(x))){
+    lon <- "lng"
+    warning("decimallongitude not found. Using lng instead.")
   }
 
   out <- replicate(replicates, expr = {

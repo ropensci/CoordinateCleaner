@@ -39,7 +39,7 @@
 #' }
 #'
 #' @export
-#' @importFrom sp SpatialPoints "proj4string<-" over proj4string
+#' @importFrom sp CRS SpatialPoints "proj4string<-" over proj4string
 #' @importFrom raster extent crop
 cc_urb <- function(x,
                    lon = "decimallongitude",
@@ -61,16 +61,30 @@ cc_urb <- function(x,
     ref <- rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')
     sp::proj4string(ref) <- ""
   } else {
-    sp::proj4string(ref) <- ""
-    warning("assuming lat/lon for ref")
+    #Enable sf formatted custom references
+    ref <- as(ref, "Spatial")
+    
+    #Check projection of custom reference and reproject if necessary
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+    
+    if(is.na(sp::proj4string(ref))){
+      warning("no projection information for reference found, 
+              assuming '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+    }else if(sp::proj4string(ref) == wgs84){
+      sp::proj4string(ref) <- ""
+    }else{
+      ref <- sp::spTransform(ref, sp::CRS(wgs84))
+      warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+    }
   }
+  
 
   # Prepare input points and extent
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
   limits <- raster::extent(dat) + 1
   ref <- raster::crop(ref, limits)
 
-  # test if any points fall within the buffer incase no capitals are found in
+  # test if any points fall within the buffer incase no urabna areas are found in
   # the study area
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))

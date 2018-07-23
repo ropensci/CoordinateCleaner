@@ -23,7 +23,7 @@ Default = 0.1.}
 
 \item{ref}{a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 be any SpatialPointsDataframe, but the structure must be identical to
-\code{\link{capitals}}.  Default = \code{\link{capitals}}}
+\code{\link{countryref}}.  Default = \code{\link{countryref}}}
 
 \item{value}{a character string.  Defining the output value. See value.}
 

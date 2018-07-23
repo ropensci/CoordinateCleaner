@@ -86,10 +86,10 @@
 #' to run the taxon-specific outlier test.  Default = 7.
 #' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
 #' @param capitals_ref a \code{data.frame} with alternative reference data for
-#' the country capitals test. If missing, the \code{capitals} dataset is used.
+#' the country capitals test. If missing, the \code{countryref} dataset is used.
 #' Alternatives must be identical in structure.
 #' @param centroids_ref a \code{data.frame} with alternative reference data for
-#' the centroid test. If NULL, the \code{centroids} dataset is used.
+#' the centroid test. If NULL, the \code{countryref} dataset is used.
 #' Alternatives must be identical in structure.
 #' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
 #' reference for the countries test. If NULL, the

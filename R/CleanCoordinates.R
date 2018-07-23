@@ -37,7 +37,7 @@ CleanCoordinates <- function(x,
                              verbose = TRUE, 
                              report = FALSE) {
  
-  .Deprecated("clean_coordinates")
+  .Deprecated(new = "clean_coordinates")
   
   if(missing(capitals.ref)){capitals.ref <- NULL} 
   if(missing(centroids.ref)){centroids.ref <- NULL} 

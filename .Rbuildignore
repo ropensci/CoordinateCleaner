@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 extra_gazetteers
-Readme.md
+README.Rmd
 CoordinateCleaner.Rcheck
 old
 .Rhistory
@@ -12,3 +12,4 @@ NEWS.md
 vignettes/mammal_example.csv
 vignettes/tutorial_s3_example_input_data
 CONTRIBUTING.md
+docs/
