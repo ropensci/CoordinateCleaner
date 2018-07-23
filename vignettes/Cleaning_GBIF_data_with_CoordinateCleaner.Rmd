@@ -34,10 +34,10 @@ With this tutorial you will be able to:
 
 # Identifying erroneous coordinates using \emph{CoordinateCleaner}
 
-The `clean_coordinates` function is a wrapper function around all record-level tests of \emph{CoordinateCleaner}. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases (see for example [@Maldonado]), including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the package wiki:  \url{https://github.com/azizka/CoordinateCleaner/wiki}. This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
+The `clean_coordinates` function is a wrapper function around all record-level tests of \emph{CoordinateCleaner}. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases (see for example [@Maldonado]), including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the [package wiki](https://github.com/azizka/CoordinateCleaner/wiki). This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
 
 ## Install `CoordinateCleaner`
-You can install the latest stable version of CoordinateCleaner (Currently 1.0-6) from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. ALso, make sure to have the latset R version installed.
+You can install the latest stable version of CoordinateCleaner from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed.
 
 ```{r, eval = F}
 install.packages("devtools")
@@ -49,12 +49,11 @@ install_github("azizka/CoordinateCleaner")
 ## Set up libraries and data
 You might need to confirm to install the rnaturalearth package when loading `CoordinateCleaner`
 ```{r, echo = T, eval = TRUE, warning = F, message = F}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(rgbif)
 library(countrycode)
 library(CoordinateCleaner)
-library(dplyr)
-library(rgbif)
 
 #obtain data from GBIF via rgbif
 dat <- occ_search(scientificName = "Panthera leo", limit = 5000, 
@@ -173,7 +172,7 @@ dat.cl <- dat.cl%>%
   filter(year > 1945) # remove records from before second world war
 ```
 
-On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the taxize R package (\url{https://ropensci.org/tutorials/taxize_tutorial.html}) or the taxonomic name resolution service (plants only, \url{http://tnrs.iplantcollaborative.org/}).
+On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the [taxize R package](https://ropensci.org/tutorials/taxize_tutorial.html) or the [taxonomic name resolution service](http://tnrs.iplantcollaborative.org/) (plants only).
 
 ```{r, collapse = T, eval = TRUE}
 table(dat.cl$family) #that looks good
@@ -189,7 +188,7 @@ We excluded almost 50% of the initial data points with the data cleaning, and th
 We have, however, also lost quite a number of records. In general, there is no "one-size-fits-it-all" for data quality of geographic species occurrence records. Of course highest coordinate precision is desirable, but what is acceptable will strongly depend on the downstream analyses. For species distribution modelling, usually high precision is necessary e.g. 1-10 km, but for other analyses such as biogeographic reconstructions using tectonic plates, a record might be considered good enough quality, as long as it is on the right continent. As another example for conservation purposes it might be sufficient to know that a species is present within a certain country.
 
 # Improving data quality using external information
-Figure \ref{fig:final} shows the success of automated cleaning. However, three records within Europe remain. A short inspection of the data suggests that these are a dubious human observation and five specimens, potentially assigned to their specimen location, or fossils with misclassified meta-data. One option to automatically flag these records is to rerun the outlier test on the cleaned data. However, this would most likely also flag the isolated Indian population (which is a true presence) as problematic. Another alternative is to use additional knowledge or the study outline for additional cleaning, using species defined ranges (for animals for example the IUCN range maps, \url{http://www.iucnredlist.org/technical-documents/spatial-data} or for plants the botanical countries of the World Checklist of selected plant families, \url{http://wcsp.science.kew.org/home.do}). A third alternative is to exclude records outside a certain study extent. In our example the latter is the easiest solution because we know that lions do not occur in high latitudes any more.
+Figure \ref{fig:final} shows the success of automated cleaning. However, three records within Europe remain. A short inspection of the data suggests that these are a dubious human observation and five specimens, potentially assigned to their specimen location, or fossils with misclassified meta-data. One option to automatically flag these records is to rerun the outlier test on the cleaned data. However, this would most likely also flag the isolated Indian population (which is a true presence) as problematic. Another alternative is to use additional knowledge or the study outline for additional cleaning, using species defined ranges (for animals for example the [IUCN range maps](http://www.iucnredlist.org/technical-documents/spatial-data) or for plants the botanical countries of the [World Checklist of selected plant families](http://wcsp.science.kew.org/home.do). A third alternative is to exclude records outside a certain study extent. In our example the latter is the easiest solution because we know that lions do not occur in high latitudes any more.
 
 
 ```{r, eval = TRUE}
@@ -251,6 +250,8 @@ out.round <- cd_round(dat.fin, lon = "decimalLongitude",
 These results look good. The dataset does not show rasterized collection schemes (see Supplementary material S1 for examples of biased datasets). The test has detected and flagged some small scale and low intensity periodicity in the longitude coordinates, however, the entire dataset is only flagged if both longitude and latitude show a pattern (as expected from rasterized sampling). You can modify the test sensitivity using various arguments. See `?cd_round` for more information.
 
 The lion dataset is relatively small and consistent, at least in the way that it only comprises on species. For larger scale analyses you might need to deal with larger datasets, composed from a larger variety of sources.
+
+## References
 
 <!-- # Testing larger databses comprised from multiple datasets -->
 <!-- ## Load data -->

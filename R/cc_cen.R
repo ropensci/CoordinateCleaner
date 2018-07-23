@@ -21,7 +21,7 @@
 #' country and province centroids.
 #' @param ref a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataframe, but the structure must be identical to
-#' \code{\link{centroids}}.  Default = \code{\link{centroids}}
+#' \code{\link{countryref}}.  Default = \code{\link{countryref}}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
@@ -66,7 +66,7 @@ cc_cen <- function(x,
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
 
   if (is.null(ref)) {
-    ref <- CoordinateCleaner::centroids
+    ref <- CoordinateCleaner::countryref
 
     switch(test, country = {
       ref <- ref[ref$type == "country", ]
@@ -82,11 +82,11 @@ cc_cen <- function(x,
 
   # subset of testdatset according to speed up buffer
   ref <- raster::crop(
-    sp::SpatialPoints(ref[, c("longitude", "latitude")]),
+    sp::SpatialPoints(ref[, c("centroid.lon", "centroid.lat")]),
     limits
   )
 
-  # run buffering incase no capitals are found in the study area
+  # run buffering incase no centroids are found in the study area
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {

@@ -17,7 +17,7 @@ CleanCoordinatesDS <- function(x,
                                periodicity.diagnostics = TRUE, 
                                value = "dataset",
                                verbose = TRUE) {
- .Deprecated("clean_dataset") 
+ .Deprecated(new = "clean_dataset") 
   
   tests <- vector()
   if(ddmm){tests <- c(tests, "ddmm")}

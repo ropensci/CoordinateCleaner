@@ -1,89 +1,32 @@
 
-
-#' Global Capital Locations
-#' 
-#' A gazetteer of global capital coordinates.
-#' 
-#' 
-#' @name capitals
+#'Global Coastlines buffered by 1 degree
+#'
+#'  A \code{SpatialPolygonsDataFrame} with global coastlines, with a 1 degree buffer to extent coastlines as alternative refernce for \code{\link{cc_sea}}. Can be useful to identify species in the sea, without flagging records in mangroves, marshes, etc.
+#'
+#' @name buffland
 #' @docType data
-#' @format A data frame with 225 observations on the following 4 variables.
-#' \describe{\item{ISO3}{a factor, ISO-3 country code.}
-#' \item{capital}{a factor, capital names.} \item{longitude}{a
-#' numeric vector.} \item{latitude}{a numeric vector.} }
-#' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
-#' Washington, DC.
-#' 
-#' \url{https://www.cia.gov/library/publications/the-world-factbook/}
-#' @keywords gazetteers
-#' @examples
-#' 
-#' data(capitals)
-#' str(capitals)
-#' 
-NULL
-
-
-
-
-
-#' Global Country and Province Centroids
-#' 
-#' A gazetteer of country and province centroids. 
-#' Centroids are derived from publically available datasets (see sources below).
-#' 
-#' 
-#' @name centroids
-#' @docType data
-#' @format A data frame with 5142 observations on the following 6 variables. 
-#' \describe{ \item{adm1_code}{a factor; province code.}
-#' \item{iso3}{a factor; country ISO-3 code.} \item{name}{a
-#' factor; name of the country or province.} \item{type}{a character
-#' vector; country or province.} \item{longitude}{a numeric vector}
-#' \item{latitude}{a numeric vector} }
 #' @source 
-#' \url{http://www.naturalearthdata.com/}
-#' \url{http://thematicmapping.org/downloads/world_borders.php}
-#' 
-#' CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook}, Washington,
-#' DC.
-#' \url{https://www.cia.gov/library/publications/the-world-factbook/fields/2011.html}
-#' 
-#' 
+#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
 #' @keywords gazetteers
 #' @examples
 #' 
-#' data(centroids)
-#' str(centroids)
-#' 
+#' data("buffland")
 NULL
 
 
-
-
-
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_title("CoordinateCleaner")}
+#' CoordinateCleaner
 #' 
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_description("CoordinateCleaner")}
+#' Automated Cleaning of Occurrence Records from Biological Collections
 #' 
-#' The DESCRIPTION file:
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_DESCRIPTION(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_DESCRIPTION("CoordinateCleaner")}
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_indices("CoordinateCleaner")}
+#' Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://github.com/azizka/CoordinateCleaner/wiki> for more details and tutorials.
 #' 
 #' @name CoordinateCleaner-package
 #' @aliases CoordinateCleaner-package CoordinateCleaner
 #' @docType package
-#' @author
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_author("CoordinateCleaner")}
+#' @author Alexander ZIzka, Daniele Silvestro, Tobias Andermann, Josue Azevedo, 
+#' Camila Duarte Ritter, Daniel Edler, Harith Farooq, Andrei Herdean, Maria Ariza, 
+#' Ruud Scharn, Sten Svantesson, Niklas Wengstrom, Vera Zizka 
 #' 
-#' Maintainer:
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-#' "CoordinateCleaner")\Sexpr{tools:::Rd_package_maintainer("CoordinateCleaner")}
 NULL
 
 
@@ -92,27 +35,54 @@ NULL
 
 #' Country Centroids and Country Capitals
 #' 
-#' A \code{data.frame} with coordinates of country centroids and country
-#' capitals as reference for the \code{\link{clean_coordinates}} function.
+#' A \code{data.frame} with coordinates of country and province centroids and country
+#' capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
 #' Coordinates are based on the Central Intelligence Agency World Factbook as
-#' provided at \url{http://opengeocode.org/download/cow.php}.
+#' provided at \url{http://opengeocode.org/download/cow.php} and \url{http://thematicmapping.org/downloads/world_borders.php}.
 #' 
 #' 
 #' @name countryref
 #' @docType data
-#' @format A data frame with 249 observations on 7 variables.
+#' @format A data frame with 5142 observations on 10 variables.
+#' #' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also refering to the country.}
+#' \item{iso2}{ISO-2 code for each country, in case of provinces also refering to the country.} \item{name}{a
+#' factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
+#' \item{type}{identifying if the entry referes to a country or province level.} 
+#' \item{centroid.lon}{Longitude of the country centroid}
+#' \item{centroid.lat}{Latitude of the country centroid}
+#' \item{capital}{Name of the country capital, empty for provinces}
+#' \item{capital.lon}{Longitude of the country capital}
+#' \item{capital.lat}{Latitude of the country capital}}
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
 #' \url{http://opengeocode.org/download/cow.php}
+#' \url{http://thematicmapping.org/downloads/world_borders.php}
 #' @keywords gazetteers
 #' @examples
 #' 
 #' data(countryref)
-#' 
+#' head(countryref)
 NULL
 
-
+#' Deprecated functions in CoordinateCleaener
+#' 
+#' These functions still work but will be removed (defunct) in the next version.
+#' 
+#' \itemize{
+#'  \item \code{\link{CleanCoordinates}}: This function is deprecated, and will
+#'  be removed in the next version of this package. Use \code{\link{clean_coordinates}}
+#'  instead
+#'  \item \code{\link{CleanCoordinatesDS}}: This function is deprecated, and will
+#'  be removed in the next version of this package. Use \code{\link{clean_dataset}}
+#'  instead
+#'  \item \code{\link{CleanCoordinatesFOS}}: This function is deprecated, and will
+#'  be removed in the next version of this package. Use \code{\link{clean_fossils}}
+#'  instead
+#' }
+#' 
+#' @name Coordinatecleaner-deprecated
+NULL
 
 
 

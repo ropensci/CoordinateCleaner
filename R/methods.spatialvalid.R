@@ -51,25 +51,39 @@ plot.spatialvalid <- function(x,
   x <- data.frame(x)
 
   # prepare background
-  e <- raster::extent(sp::SpatialPoints(
-    x[, c("decimallongitude", "decimallatitude")])) + 1
 
   if (is.null(bgmap)) {
-    bgmap <- CoordinateCleaner::landmass
-    bgmap <- raster::crop(bgmap, e)
-  }
 
-  bgmap <- suppressWarnings(ggplot2::fortify(bgmap))
+    plo <- ggplot2::ggplot() + 
+      ggplot2::borders(fill = "grey60", 
+                       xlim = range(x["decimallongitude"]), 
+                       ylim = range(x["decimallatitude"])) +
+      ggplot2::coord_fixed() +
+      ggplot2::theme_bw()
+    
+  }else{
+    e <- raster::extent(sp::SpatialPoints(
+      x[, c("decimallongitude", "decimallatitude")])) + 1
+    bgmap <- raster::crop(bgmap, e)
+    
+    bgmap <- suppressWarnings(ggplot2::fortify(bgmap))
+    
+    plo <- ggplot2::ggplot() + 
+      ggplot2::geom_polygon(data = bgmap, 
+                            ggplot2::aes_string(
+                              x = "long",
+                              y = "lat", group = "group"), 
+                            fill = "grey60") + 
+      ggplot2::coord_fixed() +
+      ggplot2::theme_bw()
+    
+  }
+  
+
+  
 
   # plot background
-  plo <- ggplot2::ggplot() + 
-    ggplot2::geom_polygon(data = bgmap, 
-                          ggplot2::aes_string(
-    x = "long",
-    y = "lat", group = "group"), 
-    fill = "grey60") + 
-    ggplot2::coord_fixed() +
-    ggplot2::theme_bw()
+
 
   # prepare occurence points
   inv <- x

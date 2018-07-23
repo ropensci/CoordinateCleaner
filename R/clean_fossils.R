@@ -83,7 +83,7 @@
 #' distance matrix calculation. See details.  Default = 5.
 #' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
 #' @param centroids_ref a \code{data.frame} with alternative reference data for
-#' the centroid test. If missing, the \code{centroids} dataset is used.
+#' the centroid test. If missing, the \code{countryref} dataset is used.
 #' Alternatives must be identical in structure.
 #' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
 #' reference for the countries test. If missing, the
