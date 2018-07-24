@@ -112,9 +112,6 @@ NULL
 NULL
 
 
-
-
-
 #' Global Coastlines
 #' 
 #' A \code{SpatialPolygonsDataFrame} with global coastlines.
