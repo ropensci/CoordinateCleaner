@@ -1,0 +1,52 @@
+---
+title: "Quick start - How to run CoordinateCleaner"
+author: "Alex Zizka"
+date: "24 July 2018"
+output: html_document
+---
+
+CoordinateCleaner implements three wrapper functions to identify errors common in biological collections. The `clean_coordinates` function compares coordinates to geographic gazetters to identify potentially problematic records, the `clean_dataset` function uses dataset properties to test if rasterized collection might be an issue and `clean_fossils` includes a temporal dimension to clean fossils. 
+
+***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
+
+You can run Coordinate cleaner with few lines of R code:
+
+```{r}
+library(CoordinateCleaner)
+
+#create example dataset
+exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
+                    decimallongitude = runif(250, min = 42, max = 51),
+                    decimallatitude = runif(250, min = -26, max = -11),
+                    dataset = "clean")
+
+#run wrapper function
+cord.flags <- clean_coordinates(x = exmpl)
+
+#summarize and visualize results
+summary(cord.flags)
+plot(cord.flags)
+
+#run dataset-level cleaning
+ds.flags <- clean_dataset(exmpl)
+
+```
+
+Alternatively, you can run the individual functions in a pipe compatible way:
+```{r}
+library(tidyverse)
+
+cleaned <-  exmpl%>%
+  cc_val()%>%
+  cc_cap()%>%
+  cc_cen()%>%
+  cc_dupl()%>%
+  cc_equ()%>%
+  cc_gbif()%>%
+  cc_inst()%>%
+  cc_outl()%>%
+  cc_sea()%>%
+  cc_zero()%>%
+  cd_ddmm()%>%
+  cd_round()
+```

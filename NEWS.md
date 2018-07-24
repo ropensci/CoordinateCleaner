@@ -7,7 +7,7 @@ CoordinateCleaner 2.0-1 (2018-06-08)
   
 ### MINOR IMPROVEMENTS
   * fixed typos in Readme
-  * set a download from naturalearth as defualt for cc_urb
+  * set a download from naturalearth as default for cc_urb
   * reduced vignette memory use and size
   * enables sf format for sustom references
   * added speedup option for cc_sea

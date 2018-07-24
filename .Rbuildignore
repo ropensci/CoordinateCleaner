@@ -13,3 +13,8 @@ vignettes/mammal_example.csv
 vignettes/tutorial_s3_example_input_data
 CONTRIBUTING.md
 docs/
+vignettes/qs_how_to_run
+vignettes/qs_clean_coordinates
+vignettes/qs_clean_dataset
+vignettes/qs_clean_fossils
+vignettes/comparison_other_software
