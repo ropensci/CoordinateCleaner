@@ -33,6 +33,7 @@ install_github("azizka/CoordinateCleaner")
 As a first step we will load the R libraries required for the tutorial. You might need to install some of them using `install.packages`. 
 
 ```{r, echo = T, warning = F, message = F, eval = TRUE}
+install.packages("paleobiodb")
 library(dplyr)
 library(ggplot2)
 library(CoordinateCleaner)
