@@ -36,7 +36,7 @@ dat <- clean_coordinates(exmpl, tests = c(""))
 |centroids|radius around country and province centroids|geo-referenced from description|on|
 |countries|coordinates in the right country |switched lon/lat, data entry errors|off|
 |duplicates|records from one species with identical coordinates|repetitive observation of identical individual, same voucher from multiple data sources, genetic data|off|
-|gbif|radius around GBIF headquaters|data entry errors, falsely geo-referenced|on|
+|gbif|radius around GBIF headquarters|data entry errors, falsely geo-referenced|on|
 |institutions|radius around biodiversity institutions|falsely geo-referenced, zoo or garden records |on|
 |outliers|records far away from all other records of this species|various|off|
 |seas| in the sea|switched lon/lat|on|
