@@ -1,7 +1,7 @@
 
 #'Global Coastlines buffered by 1 degree
 #'
-#'  A \code{SpatialPolygonsDataFrame} with global coastlines, with a 1 degree buffer to extent coastlines as alternative refernce for \code{\link{cc_sea}}. Can be useful to identify species in the sea, without flagging records in mangroves, marshes, etc.
+#'  A \code{SpatialPolygonsDataFrame} with global coastlines, with a 1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify species in the sea, without flagging records in mangroves, marshes, etc.
 #'
 #' @name buffland
 #' @docType data
@@ -23,7 +23,7 @@ NULL
 #' @name CoordinateCleaner-package
 #' @aliases CoordinateCleaner-package CoordinateCleaner
 #' @docType package
-#' @author Alexander ZIzka, Daniele Silvestro, Tobias Andermann, Josue Azevedo, 
+#' @author Alexander Zizka, Daniele Silvestro, Tobias Andermann, Josue Azevedo, 
 #' Camila Duarte Ritter, Daniel Edler, Harith Farooq, Andrei Herdean, Maria Ariza, 
 #' Ruud Scharn, Sten Svantesson, Niklas Wengstrom, Vera Zizka 
 #' 
@@ -43,11 +43,11 @@ NULL
 #' 
 #' @name countryref
 #' @docType data
-#' @format A data frame with 5142 observations on 10 variables.
+#' @format A data frame with 5,142 observations on 10 variables.
 #' #' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also refering to the country.}
 #' \item{iso2}{ISO-2 code for each country, in case of provinces also refering to the country.} \item{name}{a
 #' factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
-#' \item{type}{identifying if the entry referes to a country or province level.} 
+#' \item{type}{identifying if the entry refers to a country or province level.} 
 #' \item{centroid.lon}{Longitude of the country centroid}
 #' \item{centroid.lat}{Latitude of the country centroid}
 #' \item{capital}{Name of the country capital, empty for provinces}

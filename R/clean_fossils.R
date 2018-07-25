@@ -294,7 +294,8 @@ clean_fossils <- function(x,
 
   # GBIF headquarters
   if ("gbif" %in% tests) {
-    out$gbf <- cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
+    out$gbf <- cc_gbif(x, lon = lon, lat = lat, 
+                       verbose = verbose, value = "flagged")
   }
   
   # Biodiversity institution

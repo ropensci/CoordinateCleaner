@@ -92,6 +92,18 @@ provided at http://opengeocode.org/download/cow.php and http://thematicmapping.o
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
+    <li>
+      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+    </li>
+    <li>
+      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -100,12 +112,7 @@ provided at http://opengeocode.org/download/cow.php and http://thematicmapping.o
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/azizka/CoordinateCleaner">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,7 +126,7 @@ provided at http://opengeocode.org/download/cow.php and http://thematicmapping.o
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Country Centroids and Country Capitals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/azizka/CoordinateCleaner/blob/master/R/CoordinateCleaner-package.R'><code>R/CoordinateCleaner-package.R</code></a></small>
+    
     <div class="hidden name"><code>countryref.Rd</code></div>
     </div>
 
@@ -135,12 +142,12 @@ provided at <a href='http://opengeocode.org/download/cow.php'>http://opengeocode
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 5142 observations on 10 variables.
+    <p>A data frame with 5,142 observations on 10 variables.
 #'</p><dl class='dl-horizontal'>
 <dt>iso3</dt><dd><p>ISO-3 code for each country, in case of provinces also refering to the country.</p></dd>
 <dt>iso2</dt><dd><p>ISO-2 code for each country, in case of provinces also refering to the country.</p></dd> <dt>name</dt><dd><p>a
 factor; name of the country or province.</p></dd> <dt>adm1_code</dt><dd><p>adm code for countries and provinces</p></dd> 
-<dt>type</dt><dd><p>identifying if the entry referes to a country or province level.</p></dd> 
+<dt>type</dt><dd><p>identifying if the entry refers to a country or province level.</p></dd> 
 <dt>centroid.lon</dt><dd><p>Longitude of the country centroid</p></dd>
 <dt>centroid.lat</dt><dd><p>Latitude of the country centroid</p></dd>
 <dt>capital</dt><dd><p>Name of the country capital, empty for provinces</p></dd>

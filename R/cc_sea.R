@@ -22,7 +22,7 @@
 #' Can be any SpatialPolygonsDataframe, but the structure must be identical to
 #' \code{\link{landmass}}. See details.  Default = \code{\link{landmass}}
 #' @param value a character string.  Defining the output value. See value.
-#' @param speedup logical. USing heuristic to speed up the analysis for large datsets
+#' @param speedup logical. Using heuristic to speed up the analysis for large data sets
 #'  with many records per location.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged. Default = TRUE.
@@ -78,16 +78,17 @@ cc_sea <- function(x,
       
       if(is.na(sp::proj4string(ref))){
         warning("no projection information for reference found, 
-                assuming '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+                assuming '+proj=longlat +datum=WGS84 +no_defs 
+                +ellps=WGS84 +towgs84=0,0,0'")
       }else if(sp::proj4string(ref) == wgs84){
         sp::proj4string(ref) <- ""
       }else{
         ref <- sp::spTransform(ref, sp::CRS(wgs84))
-        warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+        warning("reprojecting reference to '+proj=longlat +datum=WGS84 
+                +no_defs +ellps=WGS84 +towgs84=0,0,0'")
       }
     }
-    
-   
+
     ## point-in-polygon test
     out <- sp::over(x = pts, y = ref)[, 1]
     out <- !is.na(out)
@@ -95,7 +96,7 @@ cc_sea <- function(x,
     
     ## remerge with coordinates
     dum <- x
-    dum$order <- 1:nrow(dum)
+    dum$order <- seq_len(nrow(dum))
     out <- merge(dum, out, by = c(lat,lon), sort = FALSE)
     out <- out[order(out$order),]
     out <- out$out

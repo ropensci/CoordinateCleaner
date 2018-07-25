@@ -57,20 +57,25 @@
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
+    <li>
+      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+    </li>
+    <li>
+      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/azizka/CoordinateCleaner">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -85,9 +90,9 @@
       <h1>Tutorial - Cleaning GBIF data for the use in biogeography</h1>
                         <h4 class="author">Alexander Zizka</h4>
             
-            <h4 class="date">2018-07-23</h4>
+            <h4 class="date">2018-07-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/azizka/CoordinateCleaner/blob/master/vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.Rmd"><code>vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.Rmd</code></a></small>
+      
       <div class="hidden name"><code>Cleaning_GBIF_data_with_CoordinateCleaner.Rmd</code></div>
 
     </div>
@@ -201,12 +206,12 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 Records flagged by the automated cleaning.
 </p>
 </div>
-<pre><code>## decimallatitude             equ             zer             cap 
-##              13              15              14               6 
-##             cen             con             gbf            inst 
-##              12             173               0               0 
-##         summary 
-##             183</code></pre>
+<pre><code>## decimallatitude             val             equ             zer 
+##              13               0              15              14 
+##             cap             cen             con             gbf 
+##               6              12             173               0 
+##            inst         summary 
+##               0             183</code></pre>
 <p>The automatic test flagged 8% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Exclude problematic records</span>
 dat.cl &lt;-<span class="st"> </span>dat[flags<span class="op">$</span>summary,]

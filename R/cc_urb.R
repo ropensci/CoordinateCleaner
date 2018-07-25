@@ -57,7 +57,8 @@ cc_urb <- function(x,
 
   # check for reference data. 
   if (is.null(ref)) {
-    message("No reference for urban areas found. Using rnaturalearth to download.")
+    message("No reference for urban areas found. 
+            Using rnaturalearth to download.")
     ref <- rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')
     sp::proj4string(ref) <- ""
   } else {
@@ -65,16 +66,19 @@ cc_urb <- function(x,
     ref <- as(ref, "Spatial")
     
     #Check projection of custom reference and reproject if necessary
-    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs 
+    +ellps=WGS84 +towgs84=0,0,0"
     
     if(is.na(sp::proj4string(ref))){
       warning("no projection information for reference found, 
-              assuming '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+              assuming '+proj=longlat +datum=WGS84 
+              +no_defs +ellps=WGS84 +towgs84=0,0,0'")
     }else if(sp::proj4string(ref) == wgs84){
       sp::proj4string(ref) <- ""
     }else{
       ref <- sp::spTransform(ref, sp::CRS(wgs84))
-      warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+      warning("reprojecting reference to '+proj=longlat 
+              +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
     }
   }
   
@@ -84,7 +88,7 @@ cc_urb <- function(x,
   limits <- raster::extent(dat) + 1
   ref <- raster::crop(ref, limits)
 
-  # test if any points fall within the buffer incase no urabna areas are found in
+  # test if any points fall within the buffer incase no urban areas are found in
   # the study area
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))

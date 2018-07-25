@@ -16,7 +16,7 @@ t1 <- clean_coordinates(x = exmpl)
 
 test_that("clean_coordinates produces correct output", {
 
-  expect_equal(ncol(t1), 12)
+  expect_equal(ncol(t1), 13)
   expect_equal(nrow(t1), 250)
   expect_equal(sum(t1$summary), 183)
 
@@ -24,8 +24,9 @@ test_that("clean_coordinates produces correct output", {
 
 test_that("clean_coordinates countries argument produces correct output", {
   #skip_on_cran()
-  expect_equal(sum(clean_coordinates(x = exmpl, countries = "ISO3", 
-                                     tests = c("countries", "seas"))$summary), 0)
+  expect_equal(sum(
+    clean_coordinates(x = exmpl, countries = "ISO3", 
+                      tests = c("countries", "seas"))$summary), 0)
 })
 
 test_that("clean_coordinates S3 methods work", {

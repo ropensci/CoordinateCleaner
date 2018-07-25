@@ -25,9 +25,12 @@ CleanCoordinatesDS <- function(x,
   
   out <- clean_dataset(x = x, lat = lat, lon = lon, ds = ds, tests = tests,
                 pvalue = ddmm.pvalue, diff = ddmm.diff,
-                T1 = periodicity.T1, reg_out_thresh = periodicity.reg.thresh,
-                reg_dist_min = periodicity.dist.min, reg_dist_max = periodicity.dist.max,
-                min_unique_ds_size = periodicity.min.size, test = periodicity.target,
+                T1 = periodicity.T1, 
+                reg_out_thresh = periodicity.reg.thresh,
+                reg_dist_min = periodicity.dist.min, 
+                reg_dist_max = periodicity.dist.max,
+                min_unique_ds_size = periodicity.min.size, 
+                test = periodicity.target,
                 graphs = periodicity.diagnostics,
                 value = value, verbose = verbose)
   return(out)

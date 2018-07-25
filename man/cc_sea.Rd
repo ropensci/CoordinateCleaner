@@ -23,7 +23,7 @@ Can be any SpatialPolygonsDataframe, but the structure must be identical to
 
 \item{value}{a character string.  Defining the output value. See value.}
 
-\item{speedup}{logical. USing heuristic to speed up the analysis for large datsets
+\item{speedup}{logical. Using heuristic to speed up the analysis for large data sets
 with many records per location.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number

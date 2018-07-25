@@ -9,7 +9,9 @@ output: html_document
 
 ***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
 
-```{r}
+```{r, collapse = T, tidy = T}
+library(CoordinateCleaner)
+
 # Simulate example data
 minages <- runif(250, 0, 65)
 exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),

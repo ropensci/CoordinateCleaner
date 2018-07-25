@@ -67,7 +67,8 @@ cc_cap <- function(x,
   }
   # subset reference data to data window to spead up the test
   limits <- raster::extent(dat) + buffer
-  ref <- raster::crop(SpatialPoints(ref[, c("capital.lon", "capital.lat")]), limits)
+  ref <- raster::crop(SpatialPoints(ref[, c("capital.lon", "capital.lat")]), 
+                      limits)
 
   # test if any points fall within the buffer incase no capitals are found in
   # the study area

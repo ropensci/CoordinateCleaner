@@ -79,16 +79,17 @@ cc_coun <- function(x,
     
     if(is.na(sp::proj4string(ref))){
       warning("no projection information for reference found, 
-              assuming '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+              assuming '+proj=longlat +datum=WGS84 +no_defs 
+              +ellps=WGS84 +towgs84=0,0,0'")
     }else if(sp::proj4string(ref) == wgs84){
       sp::proj4string(ref) <- ""
     }else{
       ref <- sp::spTransform(ref, sp::CRS(wgs84))
-      warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+      warning("reprojecting reference to '+proj=longlat +datum=WGS84 
+              +no_defs +ellps=WGS84 +towgs84=0,0,0'")
     }
   }
   
-
   # prepare data
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
   sp::proj4string(ref) <- ""

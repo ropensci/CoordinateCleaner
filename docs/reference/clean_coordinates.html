@@ -91,6 +91,18 @@ collection databases." />
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
+    <li>
+      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+    </li>
+    <li>
+      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -99,12 +111,7 @@ collection databases." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/azizka/CoordinateCleaner">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,7 +125,7 @@ collection databases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Geographic Cleaning of Coordinates from Biologic Collections</h1>
-    <small class="dont-index">Source: <a href='https://github.com/azizka/CoordinateCleaner/blob/master/R/clean_coordinates.R'><code>R/clean_coordinates.R</code></a></small>
+    
     <div class="hidden name"><code>clean_coordinates.Rd</code></div>
     </div>
 
@@ -356,10 +363,12 @@ and tutorials.</p>
                     <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>26</span>, <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>11</span>))
 
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>clean_coordinates</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>exmpl</span>)</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing sea coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 152 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 2 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing GBIF headquarters, flagging records around Copenhagen</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing biodiversity institutions</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 152 of 250 records, EQ = 0.61.</span></div><div class='input'>
-<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             equ             zer             cap             cen 
+<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             val             equ             zer             cap 
 #&gt;               0               0               0               0               0 
-#&gt;             sea             otl             gbf            inst         summary 
-#&gt;             152               2               0               0             152 </div><div class='input'>
+#&gt;             cen             sea             otl             gbf            inst 
+#&gt;               0             152               2               0               0 
+#&gt;         summary 
+#&gt;             152 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

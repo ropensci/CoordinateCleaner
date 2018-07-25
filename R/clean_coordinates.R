@@ -148,7 +148,9 @@ clean_coordinates <- function(x,
                              species = "species", 
                              countries = NULL, 
                              tests = c("capitals", "centroids",
-                                       "equal", "gbif", "institutions", "outliers",
+                                       "equal", "gbif", 
+                                       "institutions", 
+                                       "outliers",
                                        "seas", "zeros"),
                              capitals_rad = 0.05,
                              centroids_rad = 0.01, 
@@ -198,12 +200,13 @@ clean_coordinates <- function(x,
 
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work
-  val <- cc_val(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
+  out$val <- cc_val(x, lon = lon, lat = lat, 
+                    verbose = verbose, value = "flagged")
 
-  if (!all(val)) {
+  if (!all(out$val)) {
     stop(
       "invalid coordinates found in rows, clean dataset before proceeding:\n",
-      paste(which(!val), "\n")
+      paste(which(!out$val), "\n")
     )
   }
 
@@ -283,7 +286,8 @@ clean_coordinates <- function(x,
 
   ## GBIF headquarters
   if ("gbif" %in% tests) {
-    out$gbf <- cc_gbif(x, lon = lon, lat = lat, verbose = verbose, value = "flagged")
+    out$gbf <- cc_gbif(x, lon = lon, lat = lat, 
+                       verbose = verbose, value = "flagged")
   }
 
   ## Biodiversity institution

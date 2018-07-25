@@ -19,9 +19,12 @@ test <- rbind(clean, bias)
 #cd_round
 test_that("cd_round identifies existing bias", {
   #test target
-  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "both")$summary), 0.5)
-  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "lat")$flag), 0.5)
-  expect_equal(mean(cd_round(test, value = "dataset", graphs = F, test = "lon")$flag), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", 
+                             graphs = F, test = "both")$summary), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", 
+                             graphs = F, test = "lat")$flag), 0.5)
+  expect_equal(mean(cd_round(test, value = "dataset", 
+                             graphs = F, test = "lon")$flag), 0.5)
   
   #dataset output
   t1 <- cd_round(test, value = "dataset", graphs = F)

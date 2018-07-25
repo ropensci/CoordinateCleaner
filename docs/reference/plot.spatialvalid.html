@@ -90,6 +90,18 @@ to visualize the flags from clean_coordinates" />
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
+    <li>
+      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+    </li>
+    <li>
+      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+    </li>
+    <li>
+      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -98,12 +110,7 @@ to visualize the flags from clean_coordinates" />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/azizka/CoordinateCleaner">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -117,7 +124,7 @@ to visualize the flags from clean_coordinates" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Method for Class Spatialvalid</h1>
-    <small class="dont-index">Source: <a href='https://github.com/azizka/CoordinateCleaner/blob/master/R/methods.spatialvalid.R'><code>R/methods.spatialvalid.R</code></a></small>
+    
     <div class="hidden name"><code>plot.spatialvalid.Rd</code></div>
     </div>
 
@@ -188,10 +195,12 @@ flag.</p></td>
 
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean_coordinates.html'>clean_coordinates</a></span>(<span class='no'>exmpl</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             equ             zer             cap             cen 
+<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             val             equ             zer             cap 
 #&gt;               0               0               0               0               0 
-#&gt;             sea             otl             gbf            inst         summary 
-#&gt;             149               1               0               0             150 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;             cen             sea             otl             gbf            inst 
+#&gt;               0             149               1               0               0 
+#&gt;         summary 
+#&gt;             150 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

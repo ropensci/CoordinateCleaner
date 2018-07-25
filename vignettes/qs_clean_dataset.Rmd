@@ -17,7 +17,9 @@ Numbers 2 and 3 represent low precision rather than errors, but can also be fata
 ## Running `clean_dataset`
 The `clean_dataset` function implements tests to identify these problems on a data set level. A data set can in this context can be any meaningful cluster of occurrence records, i.e from the same museum, or the same collector, etc. Output is a summary data.frame with summarizing flags for each test and dataset (note that you can change the level of detail in the output with the `output` flag). We generally recommend to double check the results, in particular of the periodicity test. IN general power of the test increases with data set size and geographic extent. The test can be made more conservative using the `periodicity.thresh` argument.
 
-```{r}
+```{r, collapse = T, tidy = T}
+library(CoordinateCleaner)
+
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
                     decimallongitude = runif(min = -42, max = -40, n = 1000),

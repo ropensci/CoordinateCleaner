@@ -11,7 +11,7 @@ CoordinateCleaner implements three wrapper functions to identify errors common i
 
 You can run Coordinate cleaner with few lines of R code:
 
-```{r}
+```{r, collapse = T, tidy = T}
 library(CoordinateCleaner)
 
 #create example dataset
@@ -33,7 +33,7 @@ ds.flags <- clean_dataset(exmpl)
 ```
 
 Alternatively, you can run the individual functions in a pipe compatible way:
-```{r}
+```{r, collapse = T, tidy = T}
 library(tidyverse)
 
 cleaned <-  exmpl%>%

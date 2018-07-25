@@ -18,13 +18,15 @@ test_that("cf_range identifies existing bias", {
   expect_is(cf_range(test, value = "clean", taxon = ""), "data.frame")
   
   #outlier method
-  expect_equal(sum(cf_range(test, value = "flagged", method = "quantile", taxon = "")), 10)
-  expect_equal(sum(cf_range(test, value = "flagged", method = "mad", taxon = "")), 10)
-  expect_equal(sum(cf_range(test, value = "flagged", method = "time", taxon = "", 
+  expect_equal(sum(cf_range(test, value = "flagged", 
+                            method = "quantile", taxon = "")), 10)
+  expect_equal(sum(cf_range(test, value = "flagged", 
+                            method = "mad", taxon = "")), 10)
+  expect_equal(sum(cf_range(test, value = "flagged", 
+                            method = "time", taxon = "", 
                             max_range = 20, uniq_loc = F)), 10)
   
 })
-
 
 #cf_outl
 set.seed(1)
@@ -33,8 +35,8 @@ test <- data.frame(species = c(letters[1:10], rep("z", 2)),
                 lng = c(runif(n = 10, min = 4, max = 16), 75, 7),
                 lat = c(runif(n = 12, min = -5, max = 5)),
                 min_ma = minages, 
-                max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
-
+                max_ma = c(minages[1:11] + 
+                             runif(n = 11, min = 0, max = 5), 65))
 
 test_that("cf_outl identifies existing bias", {
   #return value
@@ -42,9 +44,13 @@ test_that("cf_outl identifies existing bias", {
   expect_is(cf_outl(test, value = "clean", taxon = ""), "data.frame")
   
   #outlier method
-  expect_equal(sum(cf_outl(test, value = "flagged", method = "quantile", taxon = "")), 10)
-  expect_equal(sum(cf_outl(test, value = "flagged", method = "quantile", taxon = "", uniq_loc = F)), 10)
-  expect_equal(sum(cf_outl(test, value = "flagged", method = "mad", taxon = "")), 10)
-  expect_equal(sum(cf_outl(test, value = "flagged", method = "mad", taxon = "", uniq_loc = F)), 10)
+  expect_equal(sum(cf_outl(test, value = "flagged", 
+                           method = "quantile", taxon = "")), 10)
+  expect_equal(sum(cf_outl(test, value = "flagged", 
+                           method = "quantile", taxon = "", uniq_loc = F)), 10)
+  expect_equal(sum(cf_outl(test, value = "flagged", 
+                           method = "mad", taxon = "")), 10)
+  expect_equal(sum(cf_outl(test, value = "flagged", 
+                           method = "mad", taxon = "", uniq_loc = F)), 10)
   
 })
