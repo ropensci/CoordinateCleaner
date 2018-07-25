@@ -58,6 +58,9 @@
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
+      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+    </li>
+    <li>
       <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
@@ -126,27 +129,27 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 ## Testing country capitals
 ## Flagged 0 records.
 ## Testing country centroids
-## Flagged 1 records.
+## Flagged 0 records.
 ## Testing sea coordinates
-## Flagged 151 records.
+## Flagged 138 records.
 ## Testing urban areas
 ## No reference for urban areas found. 
 ##             Using rnaturalearth to download.
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\ALEXAN~1.ZIZ\AppData\Local\Temp\RtmpIN4cDp", layer: "ne_50m_urban_areas"
+## Source: "C:\Users\ALEXAN~1.ZIZ\AppData\Local\Temp\RtmpOyS6Uz", layer: "ne_50m_urban_areas"
 ## with 2143 features
 ## It has 4 fields
 ## Integer64 fields read as strings:  scalerank
-## Flagged 0 records.
+## Flagged 1 records.
 ## Testing country identity
-## Flagged 151 records.
+## Flagged 138 records.
 ## Testing geographic outliers
-## Flagged 2 records.
+## Flagged 3 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 153 of 250 records, EQ = 0.61.
+## Flagged 140 of 250 records, EQ = 0.56.
 
 <span class="co"># only run the validity test</span>
 dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">tests =</span> <span class="kw">c</span>(<span class="st">""</span>))
@@ -249,363 +252,363 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 <pre><code>## Testing zero coordinates</code></pre>
 <pre><code>## Flagged 0 records.</code></pre>
 <pre><code>## Testing country capitals</code></pre>
-<pre><code>## Flagged 0 records.</code></pre>
-<pre><code>## Testing country centroids</code></pre>
 <pre><code>## Flagged 1 records.</code></pre>
+<pre><code>## Testing country centroids</code></pre>
+<pre><code>## Flagged 0 records.</code></pre>
 <pre><code>## Testing sea coordinates</code></pre>
-<pre><code>## Flagged 151 records.</code></pre>
+<pre><code>## Flagged 138 records.</code></pre>
 <pre><code>## Testing geographic outliers</code></pre>
-<pre><code>## Flagged 2 records.</code></pre>
+<pre><code>## Flagged 3 records.</code></pre>
 <pre><code>## Testing GBIF headquarters, flagging records around Copenhagen</code></pre>
 <pre><code>## Flagged 0 records.</code></pre>
 <pre><code>## Testing biodiversity institutions</code></pre>
 <pre><code>## Flagged 0 records.</code></pre>
-<pre><code>## Flagged 152 of 250 records, EQ = 0.61.</code></pre>
-<pre><code>##     species decimallongitude decimallatitude  val  equ  zer  cap   cen
-## 1         b         45.09138       -17.68297 TRUE TRUE TRUE TRUE  TRUE
-## 2         x         42.34308       -17.95897 TRUE TRUE TRUE TRUE  TRUE
-## 3         e         45.45671       -14.12981 TRUE TRUE TRUE TRUE  TRUE
-## 4         x         46.96602       -19.31692 TRUE TRUE TRUE TRUE  TRUE
-## 5         l         49.12454       -21.80155 TRUE TRUE TRUE TRUE  TRUE
-## 6         b         46.15480       -18.49784 TRUE TRUE TRUE TRUE  TRUE
-## 7         r         44.63509       -13.30687 TRUE TRUE TRUE TRUE  TRUE
-## 8         y         43.34972       -15.15906 TRUE TRUE TRUE TRUE  TRUE
-## 9         m         42.92006       -15.89130 TRUE TRUE TRUE TRUE  TRUE
-## 10        p         47.24551       -11.72621 TRUE TRUE TRUE TRUE  TRUE
-## 11        g         44.18873       -22.28297 TRUE TRUE TRUE TRUE  TRUE
-## 12        g         47.11689       -19.36785 TRUE TRUE TRUE TRUE  TRUE
-## 13        u         46.63086       -16.74564 TRUE TRUE TRUE TRUE  TRUE
-## 14        p         46.03566       -25.92483 TRUE TRUE TRUE TRUE  TRUE
-## 15        q         42.48066       -14.45217 TRUE TRUE TRUE TRUE  TRUE
-## 16        w         48.82651       -24.26510 TRUE TRUE TRUE TRUE  TRUE
-## 17        l         42.52315       -15.15499 TRUE TRUE TRUE TRUE  TRUE
-## 18        r         46.01144       -22.10857 TRUE TRUE TRUE TRUE  TRUE
-## 19        u         49.33811       -24.84654 TRUE TRUE TRUE TRUE  TRUE
-## 20        l         47.27809       -22.45667 TRUE TRUE TRUE TRUE  TRUE
-## 21        q         50.62711       -13.31383 TRUE TRUE TRUE TRUE  TRUE
-## 22        f         49.53760       -13.97081 TRUE TRUE TRUE TRUE  TRUE
-## 23        f         48.86339       -14.79223 TRUE TRUE TRUE TRUE  TRUE
-## 24        b         44.88436       -13.41109 TRUE TRUE TRUE TRUE  TRUE
-## 25        u         44.70683       -25.94869 TRUE TRUE TRUE TRUE  TRUE
-## 26        h         44.16076       -18.61162 TRUE TRUE TRUE TRUE  TRUE
-## 27        g         42.20989       -14.99541 TRUE TRUE TRUE TRUE  TRUE
-## 28        m         49.45666       -21.69203 TRUE TRUE TRUE TRUE  TRUE
-## 29        c         47.59101       -12.91020 TRUE TRUE TRUE TRUE  TRUE
-## 30        f         43.99869       -17.92900 TRUE TRUE TRUE TRUE  TRUE
-## 31        a         44.23529       -24.55593 TRUE TRUE TRUE TRUE  TRUE
-## 32        q         46.72599       -13.56355 TRUE TRUE TRUE TRUE  TRUE
-## 33        t         46.86337       -12.74555 TRUE TRUE TRUE TRUE  TRUE
-## 34        x         42.40569       -18.38481 TRUE TRUE TRUE TRUE  TRUE
-## 35        a         45.83601       -13.78474 TRUE TRUE TRUE TRUE  TRUE
-## 36        b         42.56539       -21.76124 TRUE TRUE TRUE TRUE  TRUE
-## 37        n         47.07179       -12.47984 TRUE TRUE TRUE TRUE  TRUE
-## 38        i         44.46245       -12.68361 TRUE TRUE TRUE TRUE  TRUE
-## 39        v         47.02371       -12.47542 TRUE TRUE TRUE TRUE  TRUE
-## 40        n         43.67668       -18.61945 TRUE TRUE TRUE TRUE  TRUE
-## 41        z         44.83169       -16.02012 TRUE TRUE TRUE TRUE  TRUE
-## 42        h         49.08245       -15.24085 TRUE TRUE TRUE TRUE  TRUE
-## 43        u         44.37162       -12.67584 TRUE TRUE TRUE TRUE  TRUE
-## 44        x         47.11133       -16.44422 TRUE TRUE TRUE TRUE  TRUE
-## 45        d         42.37818       -15.52501 TRUE TRUE TRUE TRUE  TRUE
-## 46        u         43.58114       -12.80250 TRUE TRUE TRUE TRUE  TRUE
-## 47        h         45.59821       -13.62908 TRUE TRUE TRUE TRUE  TRUE
-## 48        h         47.38958       -13.58104 TRUE TRUE TRUE TRUE  TRUE
-## 49        f         43.31228       -24.11213 TRUE TRUE TRUE TRUE  TRUE
-## 50        i         43.22888       -15.50875 TRUE TRUE TRUE TRUE  TRUE
-## 51        v         44.46684       -18.64354 TRUE TRUE TRUE TRUE  TRUE
-## 52        z         50.78689       -15.48036 TRUE TRUE TRUE TRUE  TRUE
-## 53        n         47.53343       -23.30959 TRUE TRUE TRUE TRUE  TRUE
-## 54        s         45.01429       -12.32254 TRUE TRUE TRUE TRUE  TRUE
-## 55        w         48.98331       -20.88702 TRUE TRUE TRUE TRUE  TRUE
-## 56        k         46.78875       -19.44960 TRUE TRUE TRUE TRUE  TRUE
-## 57        i         44.49236       -13.83863 TRUE TRUE TRUE TRUE  TRUE
-## 58        j         46.47247       -18.83792 TRUE TRUE TRUE TRUE  TRUE
-## 59        o         45.55979       -25.57651 TRUE TRUE TRUE TRUE  TRUE
-## 60        u         45.57418       -25.22662 TRUE TRUE TRUE TRUE  TRUE
-## 61        r         42.28671       -19.96579 TRUE TRUE TRUE TRUE  TRUE
-## 62        c         50.25467       -16.69565 TRUE TRUE TRUE TRUE  TRUE
-## 63        l         42.20637       -12.72299 TRUE TRUE TRUE TRUE  TRUE
-## 64        o         48.25686       -24.30720 TRUE TRUE TRUE TRUE  TRUE
-## 65        w         48.17053       -23.47437 TRUE TRUE TRUE TRUE  TRUE
-## 66        b         47.23498       -11.97238 TRUE TRUE TRUE TRUE  TRUE
-## 67        b         46.51940       -16.02133 TRUE TRUE TRUE TRUE  TRUE
-## 68        v         44.55599       -12.72875 TRUE TRUE TRUE TRUE  TRUE
-## 69        a         49.38516       -19.92578 TRUE TRUE TRUE TRUE  TRUE
-## 70        o         48.32114       -18.35424 TRUE TRUE TRUE TRUE  TRUE
-## 71        o         45.95484       -17.87911 TRUE TRUE TRUE TRUE  TRUE
-## 72        c         45.89563       -25.38624 TRUE TRUE TRUE TRUE  TRUE
-## 73        s         48.58618       -19.32137 TRUE TRUE TRUE TRUE  TRUE
-## 74        f         42.60896       -22.78749 TRUE TRUE TRUE TRUE  TRUE
-## 75        c         49.92166       -16.35872 TRUE TRUE TRUE TRUE  TRUE
-## 76        g         43.00483       -14.08926 TRUE TRUE TRUE TRUE  TRUE
-## 77        g         49.30041       -12.12283 TRUE TRUE TRUE TRUE  TRUE
-## 78        q         44.15635       -11.99016 TRUE TRUE TRUE TRUE  TRUE
-## 79        d         50.02471       -17.12595 TRUE TRUE TRUE TRUE  TRUE
-## 80        m         45.32174       -17.70149 TRUE TRUE TRUE TRUE  TRUE
-## 81        d         50.45246       -18.90264 TRUE TRUE TRUE TRUE  TRUE
-## 82        z         44.04364       -24.18325 TRUE TRUE TRUE TRUE  TRUE
-## 83        k         46.70310       -18.39162 TRUE TRUE TRUE TRUE  TRUE
-## 84        c         44.41501       -19.82331 TRUE TRUE TRUE TRUE  TRUE
-## 85        k         50.10288       -16.78436 TRUE TRUE TRUE TRUE  TRUE
-## 86        h         50.56792       -12.05372 TRUE TRUE TRUE TRUE  TRUE
-## 87        h         43.02261       -19.63683 TRUE TRUE TRUE TRUE  TRUE
-## 88        q         49.52034       -17.44168 TRUE TRUE TRUE TRUE  TRUE
-## 89        k         49.67086       -18.76290 TRUE TRUE TRUE TRUE  TRUE
-## 90        a         46.17437       -12.08546 TRUE TRUE TRUE TRUE  TRUE
-## 91        t         46.07333       -17.41282 TRUE TRUE TRUE TRUE  TRUE
-## 92        u         44.16770       -20.20794 TRUE TRUE TRUE TRUE  TRUE
-## 93        w         43.48471       -13.08404 TRUE TRUE TRUE TRUE  TRUE
-## 94        h         46.81551       -12.42793 TRUE TRUE TRUE TRUE  TRUE
-## 95        w         47.97896       -12.61153 TRUE TRUE TRUE TRUE  TRUE
-## 96        b         50.07052       -17.27559 TRUE TRUE TRUE TRUE  TRUE
-## 97        c         45.37764       -13.06743 TRUE TRUE TRUE TRUE  TRUE
-## 98        h         47.94491       -21.57389 TRUE TRUE TRUE TRUE  TRUE
-## 99        l         50.25834       -11.33279 TRUE TRUE TRUE TRUE  TRUE
-## 100       a         42.02248       -23.69568 TRUE TRUE TRUE TRUE  TRUE
-## 101       i         46.63453       -18.59539 TRUE TRUE TRUE TRUE  TRUE
-## 102       i         45.19129       -25.71638 TRUE TRUE TRUE TRUE  TRUE
-## 103       p         49.45536       -24.69949 TRUE TRUE TRUE TRUE  TRUE
-## 104       f         42.10562       -21.59000 TRUE TRUE TRUE TRUE  TRUE
-## 105       a         49.75160       -17.08958 TRUE TRUE TRUE TRUE  TRUE
-## 106       c         47.50501       -23.72275 TRUE TRUE TRUE TRUE  TRUE
-## 107       m         46.68049       -22.58731 TRUE TRUE TRUE TRUE  TRUE
-## 108       m         43.55084       -14.76289 TRUE TRUE TRUE TRUE  TRUE
-## 109       f         46.55296       -22.92302 TRUE TRUE TRUE TRUE  TRUE
-## 110       k         45.77282       -23.83883 TRUE TRUE TRUE TRUE  TRUE
-## 111       p         42.72050       -16.71436 TRUE TRUE TRUE TRUE  TRUE
-## 112       j         45.92190       -25.94536 TRUE TRUE TRUE TRUE  TRUE
-## 113       o         46.38523       -20.70692 TRUE TRUE TRUE TRUE  TRUE
-## 114       z         46.47444       -19.75156 TRUE TRUE TRUE TRUE  TRUE
-## 115       l         48.14546       -18.65577 TRUE TRUE TRUE TRUE  TRUE
-## 116       p         42.17742       -15.57988 TRUE TRUE TRUE TRUE  TRUE
-## 117       v         46.05411       -19.05733 TRUE TRUE TRUE TRUE  TRUE
-## 118       l         43.91812       -20.19815 TRUE TRUE TRUE TRUE  TRUE
-## 119       z         48.64035       -24.05479 TRUE TRUE TRUE TRUE  TRUE
-## 120       c         49.00099       -21.83525 TRUE TRUE TRUE TRUE  TRUE
-## 121       a         43.48422       -25.53842 TRUE TRUE TRUE TRUE  TRUE
-## 122       a         46.67761       -22.02524 TRUE TRUE TRUE TRUE  TRUE
-## 123       s         45.15068       -24.57390 TRUE TRUE TRUE TRUE  TRUE
-## 124       b         46.53791       -25.84916 TRUE TRUE TRUE TRUE  TRUE
-## 125       o         45.33162       -22.20159 TRUE TRUE TRUE TRUE  TRUE
-## 126       e         42.42790       -21.27127 TRUE TRUE TRUE TRUE  TRUE
-## 127       f         43.44336       -12.30480 TRUE TRUE TRUE TRUE  TRUE
-## 128       j         46.69942       -16.25398 TRUE TRUE TRUE TRUE  TRUE
-## 129       l         44.31159       -11.41617 TRUE TRUE TRUE TRUE  TRUE
-## 130       i         44.47926       -21.43176 TRUE TRUE TRUE TRUE  TRUE
-## 131       a         46.99393       -15.22391 TRUE TRUE TRUE TRUE  TRUE
-## 132       z         46.29938       -16.81290 TRUE TRUE TRUE TRUE  TRUE
-## 133       o         43.47648       -21.18780 TRUE TRUE TRUE TRUE  TRUE
-## 134       c         48.00346       -15.79253 TRUE TRUE TRUE TRUE  TRUE
-## 135       b         47.69928       -14.47926 TRUE TRUE TRUE TRUE  TRUE
-## 136       h         43.94598       -21.60568 TRUE TRUE TRUE TRUE  TRUE
-## 137       a         43.04995       -16.18979 TRUE TRUE TRUE TRUE  TRUE
-## 138       k         43.33320       -23.04272 TRUE TRUE TRUE TRUE  TRUE
-## 139       y         48.20905       -19.32487 TRUE TRUE TRUE TRUE  TRUE
-## 140       x         49.57054       -16.77498 TRUE TRUE TRUE TRUE  TRUE
-## 141       z         48.28919       -14.86731 TRUE TRUE TRUE TRUE  TRUE
-## 142       m         47.95861       -19.62383 TRUE TRUE TRUE TRUE  TRUE
-## 143       e         42.09244       -13.36186 TRUE TRUE TRUE TRUE  TRUE
-## 144       z         42.43351       -12.31958 TRUE TRUE TRUE TRUE  TRUE
-## 145       q         43.66288       -18.46687 TRUE TRUE TRUE TRUE  TRUE
-## 146       d         48.64494       -20.36121 TRUE TRUE TRUE TRUE  TRUE
-## 147       l         43.20081       -17.70937 TRUE TRUE TRUE TRUE  TRUE
-## 148       u         42.16345       -21.62606 TRUE TRUE TRUE TRUE  TRUE
-## 149       u         44.62126       -18.81736 TRUE TRUE TRUE TRUE  TRUE
-## 150       r         47.43791       -20.97381 TRUE TRUE TRUE TRUE  TRUE
-## 151       v         48.27175       -16.56668 TRUE TRUE TRUE TRUE  TRUE
-## 152       h         45.97360       -22.11384 TRUE TRUE TRUE TRUE  TRUE
-## 153       d         49.01682       -23.90080 TRUE TRUE TRUE TRUE  TRUE
-## 154       g         48.46246       -21.51685 TRUE TRUE TRUE TRUE  TRUE
-## 155       l         48.96447       -22.57310 TRUE TRUE TRUE TRUE  TRUE
-## 156       s         44.50753       -14.03961 TRUE TRUE TRUE TRUE  TRUE
-## 157       x         44.63463       -15.09034 TRUE TRUE TRUE TRUE  TRUE
-## 158       v         49.22855       -23.80829 TRUE TRUE TRUE TRUE  TRUE
-## 159       c         45.82683       -14.64599 TRUE TRUE TRUE TRUE  TRUE
-## 160       l         49.62045       -11.38774 TRUE TRUE TRUE TRUE  TRUE
-## 161       a         45.16800       -24.74546 TRUE TRUE TRUE TRUE  TRUE
-## 162       y         43.64995       -22.39881 TRUE TRUE TRUE TRUE  TRUE
-## 163       b         49.03021       -11.96421 TRUE TRUE TRUE TRUE  TRUE
-## 164       o         44.81796       -17.57534 TRUE TRUE TRUE TRUE  TRUE
-## 165       k         42.70561       -11.17832 TRUE TRUE TRUE TRUE  TRUE
-## 166       f         43.96538       -18.57108 TRUE TRUE TRUE TRUE  TRUE
-## 167       d         43.47515       -16.23426 TRUE TRUE TRUE TRUE  TRUE
-## 168       j         46.67602       -15.38962 TRUE TRUE TRUE TRUE  TRUE
-## 169       l         49.37439       -20.83805 TRUE TRUE TRUE TRUE  TRUE
-## 170       h         44.81932       -14.95203 TRUE TRUE TRUE TRUE  TRUE
-## 171       p         49.35323       -23.69583 TRUE TRUE TRUE TRUE  TRUE
-## 172       f         49.00823       -18.74952 TRUE TRUE TRUE TRUE  TRUE
-## 173       c         49.76646       -19.94345 TRUE TRUE TRUE TRUE  TRUE
-## 174       q         48.57175       -18.93734 TRUE TRUE TRUE TRUE  TRUE
-## 175       i         44.56100       -23.39842 TRUE TRUE TRUE TRUE  TRUE
-## 176       d         50.33462       -19.01923 TRUE TRUE TRUE TRUE  TRUE
-## 177       a         49.67645       -15.00487 TRUE TRUE TRUE TRUE  TRUE
-## 178       n         45.14897       -19.18364 TRUE TRUE TRUE TRUE  TRUE
-## 179       g         47.04522       -23.88210 TRUE TRUE TRUE TRUE  TRUE
-## 180       w         47.47655       -14.03393 TRUE TRUE TRUE TRUE  TRUE
-## 181       l         46.59944       -24.74322 TRUE TRUE TRUE TRUE  TRUE
-## 182       d         44.45345       -23.20580 TRUE TRUE TRUE TRUE  TRUE
-## 183       c         48.13024       -13.41902 TRUE TRUE TRUE TRUE  TRUE
-## 184       a         43.23558       -23.61762 TRUE TRUE TRUE TRUE  TRUE
-## 185       j         42.43970       -13.74178 TRUE TRUE TRUE TRUE  TRUE
-## 186       q         42.39974       -17.23046 TRUE TRUE TRUE TRUE  TRUE
-## 187       h         43.77953       -24.62427 TRUE TRUE TRUE TRUE  TRUE
-## 188       p         45.27692       -16.44848 TRUE TRUE TRUE TRUE  TRUE
-## 189       o         46.37737       -19.32985 TRUE TRUE TRUE TRUE  TRUE
-## 190       l         46.48575       -22.13110 TRUE TRUE TRUE TRUE  TRUE
-## 191       z         45.25955       -16.90442 TRUE TRUE TRUE TRUE  TRUE
-## 192       a         50.89330       -13.34909 TRUE TRUE TRUE TRUE  TRUE
-## 193       m         46.32969       -13.42966 TRUE TRUE TRUE TRUE  TRUE
-## 194       b         50.29390       -11.67810 TRUE TRUE TRUE TRUE  TRUE
-## 195       a         44.77108       -25.32653 TRUE TRUE TRUE TRUE  TRUE
-## 196       t         44.84068       -25.88050 TRUE TRUE TRUE TRUE  TRUE
-## 197       o         49.08605       -13.59585 TRUE TRUE TRUE TRUE FALSE
-## 198       p         48.25990       -15.18489 TRUE TRUE TRUE TRUE  TRUE
-## 199       q         46.29540       -16.06657 TRUE TRUE TRUE TRUE  TRUE
-## 200       f         48.00977       -14.88955 TRUE TRUE TRUE TRUE  TRUE
-## 201       n         50.87946       -12.16019 TRUE TRUE TRUE TRUE  TRUE
-## 202       q         50.44715       -11.19154 TRUE TRUE TRUE TRUE  TRUE
-## 203       x         42.26707       -16.15787 TRUE TRUE TRUE TRUE  TRUE
-## 204       u         45.70422       -24.39661 TRUE TRUE TRUE TRUE  TRUE
-## 205       q         46.12363       -22.69876 TRUE TRUE TRUE TRUE  TRUE
-## 206       x         47.28550       -23.57850 TRUE TRUE TRUE TRUE  TRUE
-## 207       i         44.05837       -22.03511 TRUE TRUE TRUE TRUE  TRUE
-## 208       h         45.38692       -21.96471 TRUE TRUE TRUE TRUE  TRUE
-## 209       q         46.38496       -22.99419 TRUE TRUE TRUE TRUE  TRUE
-## 210       g         44.88465       -24.42313 TRUE TRUE TRUE TRUE  TRUE
-## 211       r         42.41152       -12.56276 TRUE TRUE TRUE TRUE  TRUE
-## 212       c         50.46947       -24.80323 TRUE TRUE TRUE TRUE  TRUE
-## 213       g         49.51077       -13.42883 TRUE TRUE TRUE TRUE  TRUE
-## 214       b         45.20359       -16.65242 TRUE TRUE TRUE TRUE  TRUE
-## 215       b         50.55415       -16.85948 TRUE TRUE TRUE TRUE  TRUE
-## 216       n         46.29607       -21.36537 TRUE TRUE TRUE TRUE  TRUE
-## 217       x         46.62430       -18.98953 TRUE TRUE TRUE TRUE  TRUE
-## 218       c         42.13063       -11.72477 TRUE TRUE TRUE TRUE  TRUE
-## 219       l         48.37585       -14.70659 TRUE TRUE TRUE TRUE  TRUE
-## 220       k         45.38659       -20.17300 TRUE TRUE TRUE TRUE  TRUE
-## 221       l         50.66623       -23.84228 TRUE TRUE TRUE TRUE  TRUE
-## 222       g         48.57648       -12.34493 TRUE TRUE TRUE TRUE  TRUE
-## 223       b         44.19307       -17.24620 TRUE TRUE TRUE TRUE  TRUE
-## 224       h         45.31422       -17.38397 TRUE TRUE TRUE TRUE  TRUE
-## 225       t         43.46802       -25.17349 TRUE TRUE TRUE TRUE  TRUE
-## 226       s         50.63920       -25.07156 TRUE TRUE TRUE TRUE  TRUE
-## 227       b         44.33365       -23.33031 TRUE TRUE TRUE TRUE  TRUE
-## 228       c         45.64084       -18.12247 TRUE TRUE TRUE TRUE  TRUE
-## 229       v         44.92592       -15.22015 TRUE TRUE TRUE TRUE  TRUE
-## 230       x         47.56925       -17.39276 TRUE TRUE TRUE TRUE  TRUE
-## 231       p         50.08041       -15.10815 TRUE TRUE TRUE TRUE  TRUE
-## 232       d         48.31163       -11.33071 TRUE TRUE TRUE TRUE  TRUE
-## 233       g         48.38540       -20.88244 TRUE TRUE TRUE TRUE  TRUE
-## 234       a         44.18480       -17.95389 TRUE TRUE TRUE TRUE  TRUE
-## 235       d         45.31468       -15.19320 TRUE TRUE TRUE TRUE  TRUE
-## 236       c         48.75406       -22.85689 TRUE TRUE TRUE TRUE  TRUE
-## 237       h         48.33651       -23.07088 TRUE TRUE TRUE TRUE  TRUE
-## 238       s         42.33222       -21.76042 TRUE TRUE TRUE TRUE  TRUE
-## 239       z         49.91295       -19.31552 TRUE TRUE TRUE TRUE  TRUE
-## 240       s         50.99581       -19.05382 TRUE TRUE TRUE TRUE  TRUE
-## 241       f         49.78651       -11.77604 TRUE TRUE TRUE TRUE  TRUE
-## 242       i         44.36071       -15.45006 TRUE TRUE TRUE TRUE  TRUE
-## 243       j         49.12743       -12.45539 TRUE TRUE TRUE TRUE  TRUE
-## 244       u         50.02487       -15.54471 TRUE TRUE TRUE TRUE  TRUE
-## 245       l         49.42424       -16.92955 TRUE TRUE TRUE TRUE  TRUE
-## 246       a         49.87702       -22.67622 TRUE TRUE TRUE TRUE  TRUE
-## 247       a         44.63213       -13.33414 TRUE TRUE TRUE TRUE  TRUE
-## 248       p         42.49870       -13.99975 TRUE TRUE TRUE TRUE  TRUE
-## 249       h         47.21939       -13.57920 TRUE TRUE TRUE TRUE  TRUE
-## 250       k         46.59380       -22.30188 TRUE TRUE TRUE TRUE  TRUE
+<pre><code>## Flagged 140 of 250 records, EQ = 0.56.</code></pre>
+<pre><code>##     species decimallongitude decimallatitude  val  equ  zer   cap  cen
+## 1         u         46.70326       -19.90533 TRUE TRUE TRUE  TRUE TRUE
+## 2         v         47.13837       -19.65149 TRUE TRUE TRUE  TRUE TRUE
+## 3         c         44.14682       -17.37579 TRUE TRUE TRUE  TRUE TRUE
+## 4         j         43.37814       -23.71656 TRUE TRUE TRUE  TRUE TRUE
+## 5         y         43.93181       -15.10470 TRUE TRUE TRUE  TRUE TRUE
+## 6         w         50.60270       -19.27766 TRUE TRUE TRUE  TRUE TRUE
+## 7         u         49.51216       -20.98608 TRUE TRUE TRUE  TRUE TRUE
+## 8         i         43.20894       -24.63593 TRUE TRUE TRUE  TRUE TRUE
+## 9         b         46.40861       -13.70985 TRUE TRUE TRUE  TRUE TRUE
+## 10        h         42.99021       -12.77422 TRUE TRUE TRUE  TRUE TRUE
+## 11        p         43.08159       -21.95884 TRUE TRUE TRUE  TRUE TRUE
+## 12        v         49.51248       -23.17081 TRUE TRUE TRUE  TRUE TRUE
+## 13        y         49.69826       -15.26749 TRUE TRUE TRUE  TRUE TRUE
+## 14        d         49.93343       -23.05978 TRUE TRUE TRUE  TRUE TRUE
+## 15        k         50.03343       -17.44933 TRUE TRUE TRUE  TRUE TRUE
+## 16        s         46.72015       -22.75928 TRUE TRUE TRUE  TRUE TRUE
+## 17        j         49.04151       -16.90426 TRUE TRUE TRUE  TRUE TRUE
+## 18        d         43.24562       -14.33481 TRUE TRUE TRUE  TRUE TRUE
+## 19        r         45.78866       -11.26713 TRUE TRUE TRUE  TRUE TRUE
+## 20        j         42.63868       -22.09800 TRUE TRUE TRUE  TRUE TRUE
+## 21        j         48.87851       -22.81561 TRUE TRUE TRUE  TRUE TRUE
+## 22        e         48.87832       -11.43315 TRUE TRUE TRUE  TRUE TRUE
+## 23        k         50.57706       -13.65339 TRUE TRUE TRUE  TRUE TRUE
+## 24        j         48.70143       -16.87725 TRUE TRUE TRUE  TRUE TRUE
+## 25        m         47.49361       -23.54668 TRUE TRUE TRUE  TRUE TRUE
+## 26        s         42.63367       -19.31218 TRUE TRUE TRUE  TRUE TRUE
+## 27        i         43.86512       -12.25335 TRUE TRUE TRUE  TRUE TRUE
+## 28        k         42.19534       -12.76977 TRUE TRUE TRUE  TRUE TRUE
+## 29        q         49.35383       -23.37641 TRUE TRUE TRUE  TRUE TRUE
+## 30        q         43.07546       -18.34443 TRUE TRUE TRUE  TRUE TRUE
+## 31        a         44.47999       -12.36547 TRUE TRUE TRUE  TRUE TRUE
+## 32        g         45.12703       -21.28185 TRUE TRUE TRUE  TRUE TRUE
+## 33        c         47.64832       -16.31604 TRUE TRUE TRUE  TRUE TRUE
+## 34        h         44.00116       -21.60612 TRUE TRUE TRUE  TRUE TRUE
+## 35        j         47.05178       -21.90474 TRUE TRUE TRUE  TRUE TRUE
+## 36        b         44.22349       -22.37765 TRUE TRUE TRUE  TRUE TRUE
+## 37        q         42.79290       -21.27919 TRUE TRUE TRUE  TRUE TRUE
+## 38        a         49.87078       -15.15268 TRUE TRUE TRUE  TRUE TRUE
+## 39        i         45.83590       -16.57533 TRUE TRUE TRUE  TRUE TRUE
+## 40        y         50.02626       -16.45206 TRUE TRUE TRUE  TRUE TRUE
+## 41        w         46.57113       -17.13561 TRUE TRUE TRUE  TRUE TRUE
+## 42        i         47.40387       -18.76754 TRUE TRUE TRUE  TRUE TRUE
+## 43        s         45.40979       -19.85556 TRUE TRUE TRUE  TRUE TRUE
+## 44        g         45.13990       -13.72666 TRUE TRUE TRUE  TRUE TRUE
+## 45        d         50.60803       -22.09456 TRUE TRUE TRUE  TRUE TRUE
+## 46        u         43.87149       -11.43903 TRUE TRUE TRUE  TRUE TRUE
+## 47        r         44.48676       -23.89275 TRUE TRUE TRUE  TRUE TRUE
+## 48        n         46.69917       -12.24957 TRUE TRUE TRUE  TRUE TRUE
+## 49        r         46.61147       -17.55585 TRUE TRUE TRUE  TRUE TRUE
+## 50        v         47.67198       -18.13698 TRUE TRUE TRUE  TRUE TRUE
+## 51        n         43.10081       -22.94684 TRUE TRUE TRUE  TRUE TRUE
+## 52        s         49.73896       -24.44815 TRUE TRUE TRUE  TRUE TRUE
+## 53        p         48.17530       -17.49100 TRUE TRUE TRUE  TRUE TRUE
+## 54        u         48.89601       -11.17017 TRUE TRUE TRUE  TRUE TRUE
+## 55        j         45.63360       -20.53349 TRUE TRUE TRUE  TRUE TRUE
+## 56        b         50.87510       -25.92867 TRUE TRUE TRUE  TRUE TRUE
+## 57        s         44.18118       -15.57222 TRUE TRUE TRUE  TRUE TRUE
+## 58        h         48.52411       -14.18048 TRUE TRUE TRUE  TRUE TRUE
+## 59        s         43.18022       -13.28629 TRUE TRUE TRUE  TRUE TRUE
+## 60        s         48.33598       -25.68108 TRUE TRUE TRUE  TRUE TRUE
+## 61        p         49.86991       -11.97969 TRUE TRUE TRUE  TRUE TRUE
+## 62        b         49.15710       -14.64106 TRUE TRUE TRUE  TRUE TRUE
+## 63        i         45.66132       -17.40285 TRUE TRUE TRUE  TRUE TRUE
+## 64        o         50.75063       -22.58686 TRUE TRUE TRUE  TRUE TRUE
+## 65        l         46.29980       -25.80940 TRUE TRUE TRUE  TRUE TRUE
+## 66        p         46.55212       -12.25712 TRUE TRUE TRUE  TRUE TRUE
+## 67        u         47.03506       -13.17563 TRUE TRUE TRUE  TRUE TRUE
+## 68        n         45.38716       -22.96681 TRUE TRUE TRUE  TRUE TRUE
+## 69        l         50.32148       -13.20693 TRUE TRUE TRUE  TRUE TRUE
+## 70        n         42.84800       -11.24957 TRUE TRUE TRUE  TRUE TRUE
+## 71        a         49.11373       -18.90812 TRUE TRUE TRUE  TRUE TRUE
+## 72        s         47.07000       -18.85769 TRUE TRUE TRUE  TRUE TRUE
+## 73        g         48.74837       -25.30741 TRUE TRUE TRUE  TRUE TRUE
+## 74        s         43.90375       -14.68243 TRUE TRUE TRUE  TRUE TRUE
+## 75        p         46.70932       -15.38271 TRUE TRUE TRUE  TRUE TRUE
+## 76        i         43.36586       -14.49237 TRUE TRUE TRUE  TRUE TRUE
+## 77        h         44.83021       -22.17887 TRUE TRUE TRUE  TRUE TRUE
+## 78        z         45.24369       -16.29173 TRUE TRUE TRUE  TRUE TRUE
+## 79        r         45.14161       -22.16690 TRUE TRUE TRUE  TRUE TRUE
+## 80        c         48.32657       -13.33154 TRUE TRUE TRUE  TRUE TRUE
+## 81        x         49.99542       -20.45093 TRUE TRUE TRUE  TRUE TRUE
+## 82        m         46.97509       -24.95979 TRUE TRUE TRUE  TRUE TRUE
+## 83        g         46.32388       -18.51113 TRUE TRUE TRUE  TRUE TRUE
+## 84        e         45.33138       -21.94156 TRUE TRUE TRUE  TRUE TRUE
+## 85        u         42.35106       -15.27338 TRUE TRUE TRUE  TRUE TRUE
+## 86        h         46.32397       -21.77251 TRUE TRUE TRUE  TRUE TRUE
+## 87        r         45.53440       -19.69265 TRUE TRUE TRUE  TRUE TRUE
+## 88        d         44.76090       -21.17660 TRUE TRUE TRUE  TRUE TRUE
+## 89        f         42.18058       -14.84397 TRUE TRUE TRUE  TRUE TRUE
+## 90        q         47.12182       -17.91098 TRUE TRUE TRUE  TRUE TRUE
+## 91        x         47.07465       -25.81430 TRUE TRUE TRUE  TRUE TRUE
+## 92        s         47.86819       -20.18165 TRUE TRUE TRUE  TRUE TRUE
+## 93        t         47.44853       -18.96335 TRUE TRUE TRUE FALSE TRUE
+## 94        r         43.51482       -20.78501 TRUE TRUE TRUE  TRUE TRUE
+## 95        k         43.77826       -13.21505 TRUE TRUE TRUE  TRUE TRUE
+## 96        b         42.60912       -16.56533 TRUE TRUE TRUE  TRUE TRUE
+## 97        e         50.83182       -14.92301 TRUE TRUE TRUE  TRUE TRUE
+## 98        p         44.04206       -17.87727 TRUE TRUE TRUE  TRUE TRUE
+## 99        c         50.45442       -23.00251 TRUE TRUE TRUE  TRUE TRUE
+## 100       f         44.42473       -25.87367 TRUE TRUE TRUE  TRUE TRUE
+## 101       b         43.79763       -16.71994 TRUE TRUE TRUE  TRUE TRUE
+## 102       r         43.86818       -24.23004 TRUE TRUE TRUE  TRUE TRUE
+## 103       d         42.77637       -14.66001 TRUE TRUE TRUE  TRUE TRUE
+## 104       r         49.62677       -20.56047 TRUE TRUE TRUE  TRUE TRUE
+## 105       v         47.76168       -15.68149 TRUE TRUE TRUE  TRUE TRUE
+## 106       b         50.79802       -19.91986 TRUE TRUE TRUE  TRUE TRUE
+## 107       u         49.84098       -12.44864 TRUE TRUE TRUE  TRUE TRUE
+## 108       i         48.33527       -16.87726 TRUE TRUE TRUE  TRUE TRUE
+## 109       g         48.39654       -14.32079 TRUE TRUE TRUE  TRUE TRUE
+## 110       b         49.96338       -13.90468 TRUE TRUE TRUE  TRUE TRUE
+## 111       d         46.21985       -14.03572 TRUE TRUE TRUE  TRUE TRUE
+## 112       m         50.32954       -17.48400 TRUE TRUE TRUE  TRUE TRUE
+## 113       k         47.16591       -19.00958 TRUE TRUE TRUE  TRUE TRUE
+## 114       v         48.75536       -14.36160 TRUE TRUE TRUE  TRUE TRUE
+## 115       x         46.29354       -13.61075 TRUE TRUE TRUE  TRUE TRUE
+## 116       i         49.69402       -18.72934 TRUE TRUE TRUE  TRUE TRUE
+## 117       h         47.91304       -13.50961 TRUE TRUE TRUE  TRUE TRUE
+## 118       w         50.75387       -24.33521 TRUE TRUE TRUE  TRUE TRUE
+## 119       e         46.88986       -16.05897 TRUE TRUE TRUE  TRUE TRUE
+## 120       d         47.25599       -14.51604 TRUE TRUE TRUE  TRUE TRUE
+## 121       w         47.63079       -17.55855 TRUE TRUE TRUE  TRUE TRUE
+## 122       b         42.52480       -11.96553 TRUE TRUE TRUE  TRUE TRUE
+## 123       o         49.38485       -22.08289 TRUE TRUE TRUE  TRUE TRUE
+## 124       v         48.55259       -20.92827 TRUE TRUE TRUE  TRUE TRUE
+## 125       e         48.93360       -11.55589 TRUE TRUE TRUE  TRUE TRUE
+## 126       a         47.27271       -11.03585 TRUE TRUE TRUE  TRUE TRUE
+## 127       m         45.53835       -23.16950 TRUE TRUE TRUE  TRUE TRUE
+## 128       k         46.95877       -11.39913 TRUE TRUE TRUE  TRUE TRUE
+## 129       w         46.47658       -16.76636 TRUE TRUE TRUE  TRUE TRUE
+## 130       t         46.04745       -12.76557 TRUE TRUE TRUE  TRUE TRUE
+## 131       j         43.05463       -14.73313 TRUE TRUE TRUE  TRUE TRUE
+## 132       o         44.73826       -17.62988 TRUE TRUE TRUE  TRUE TRUE
+## 133       s         47.35273       -16.22938 TRUE TRUE TRUE  TRUE TRUE
+## 134       g         45.95489       -24.94330 TRUE TRUE TRUE  TRUE TRUE
+## 135       g         49.09128       -15.62174 TRUE TRUE TRUE  TRUE TRUE
+## 136       q         50.69397       -17.40438 TRUE TRUE TRUE  TRUE TRUE
+## 137       u         48.19088       -19.61241 TRUE TRUE TRUE  TRUE TRUE
+## 138       p         44.14309       -24.86610 TRUE TRUE TRUE  TRUE TRUE
+## 139       k         50.12041       -23.22731 TRUE TRUE TRUE  TRUE TRUE
+## 140       a         50.53293       -16.51207 TRUE TRUE TRUE  TRUE TRUE
+## 141       d         50.75159       -11.14353 TRUE TRUE TRUE  TRUE TRUE
+## 142       g         49.67376       -14.65841 TRUE TRUE TRUE  TRUE TRUE
+## 143       c         42.05968       -20.63437 TRUE TRUE TRUE  TRUE TRUE
+## 144       j         47.41530       -17.49395 TRUE TRUE TRUE  TRUE TRUE
+## 145       j         45.55006       -13.28811 TRUE TRUE TRUE  TRUE TRUE
+## 146       t         45.40481       -16.10319 TRUE TRUE TRUE  TRUE TRUE
+## 147       c         47.33721       -21.07080 TRUE TRUE TRUE  TRUE TRUE
+## 148       a         50.56787       -12.34148 TRUE TRUE TRUE  TRUE TRUE
+## 149       s         44.51232       -20.39891 TRUE TRUE TRUE  TRUE TRUE
+## 150       e         49.86640       -24.77268 TRUE TRUE TRUE  TRUE TRUE
+## 151       o         47.13428       -19.51938 TRUE TRUE TRUE  TRUE TRUE
+## 152       c         50.36158       -21.75996 TRUE TRUE TRUE  TRUE TRUE
+## 153       p         48.71729       -16.55643 TRUE TRUE TRUE  TRUE TRUE
+## 154       o         49.88920       -21.30955 TRUE TRUE TRUE  TRUE TRUE
+## 155       g         47.37311       -18.38780 TRUE TRUE TRUE  TRUE TRUE
+## 156       b         43.33623       -13.17471 TRUE TRUE TRUE  TRUE TRUE
+## 157       c         45.57114       -14.80987 TRUE TRUE TRUE  TRUE TRUE
+## 158       v         50.05977       -21.47916 TRUE TRUE TRUE  TRUE TRUE
+## 159       w         45.44728       -11.30912 TRUE TRUE TRUE  TRUE TRUE
+## 160       j         49.37285       -12.15666 TRUE TRUE TRUE  TRUE TRUE
+## 161       u         48.83683       -15.91766 TRUE TRUE TRUE  TRUE TRUE
+## 162       w         49.46700       -24.61143 TRUE TRUE TRUE  TRUE TRUE
+## 163       o         43.31246       -21.55716 TRUE TRUE TRUE  TRUE TRUE
+## 164       a         46.86586       -13.43476 TRUE TRUE TRUE  TRUE TRUE
+## 165       f         46.88071       -17.02428 TRUE TRUE TRUE  TRUE TRUE
+## 166       b         44.11841       -19.13987 TRUE TRUE TRUE  TRUE TRUE
+## 167       m         50.00484       -11.77546 TRUE TRUE TRUE  TRUE TRUE
+## 168       r         47.35172       -21.44082 TRUE TRUE TRUE  TRUE TRUE
+## 169       p         43.18503       -20.71185 TRUE TRUE TRUE  TRUE TRUE
+## 170       y         45.00498       -25.97253 TRUE TRUE TRUE  TRUE TRUE
+## 171       p         50.63508       -17.13724 TRUE TRUE TRUE  TRUE TRUE
+## 172       z         47.52738       -16.66612 TRUE TRUE TRUE  TRUE TRUE
+## 173       t         42.57842       -19.32888 TRUE TRUE TRUE  TRUE TRUE
+## 174       u         45.92552       -20.54476 TRUE TRUE TRUE  TRUE TRUE
+## 175       z         44.54714       -22.43959 TRUE TRUE TRUE  TRUE TRUE
+## 176       y         50.53653       -17.36704 TRUE TRUE TRUE  TRUE TRUE
+## 177       w         42.84591       -21.66209 TRUE TRUE TRUE  TRUE TRUE
+## 178       a         50.30650       -12.60645 TRUE TRUE TRUE  TRUE TRUE
+## 179       y         43.11050       -14.03654 TRUE TRUE TRUE  TRUE TRUE
+## 180       g         45.03124       -22.38811 TRUE TRUE TRUE  TRUE TRUE
+## 181       e         49.36973       -22.94368 TRUE TRUE TRUE  TRUE TRUE
+## 182       c         45.85230       -18.29358 TRUE TRUE TRUE  TRUE TRUE
+## 183       x         45.78698       -14.61237 TRUE TRUE TRUE  TRUE TRUE
+## 184       i         44.84045       -12.67065 TRUE TRUE TRUE  TRUE TRUE
+## 185       d         44.25270       -17.72533 TRUE TRUE TRUE  TRUE TRUE
+## 186       w         44.10390       -15.90020 TRUE TRUE TRUE  TRUE TRUE
+## 187       y         49.50959       -20.42399 TRUE TRUE TRUE  TRUE TRUE
+## 188       t         50.04247       -22.03324 TRUE TRUE TRUE  TRUE TRUE
+## 189       a         44.46690       -24.65687 TRUE TRUE TRUE  TRUE TRUE
+## 190       q         46.09989       -17.50129 TRUE TRUE TRUE  TRUE TRUE
+## 191       l         50.45139       -21.95298 TRUE TRUE TRUE  TRUE TRUE
+## 192       z         43.51700       -22.83051 TRUE TRUE TRUE  TRUE TRUE
+## 193       q         45.79081       -16.92975 TRUE TRUE TRUE  TRUE TRUE
+## 194       p         43.38335       -22.40424 TRUE TRUE TRUE  TRUE TRUE
+## 195       t         44.66062       -12.83456 TRUE TRUE TRUE  TRUE TRUE
+## 196       j         44.52107       -16.34142 TRUE TRUE TRUE  TRUE TRUE
+## 197       q         43.34810       -24.95518 TRUE TRUE TRUE  TRUE TRUE
+## 198       y         46.53616       -15.86772 TRUE TRUE TRUE  TRUE TRUE
+## 199       k         43.31167       -25.80253 TRUE TRUE TRUE  TRUE TRUE
+## 200       l         45.29116       -12.42412 TRUE TRUE TRUE  TRUE TRUE
+## 201       q         43.34107       -13.76236 TRUE TRUE TRUE  TRUE TRUE
+## 202       f         44.87612       -21.15702 TRUE TRUE TRUE  TRUE TRUE
+## 203       p         49.34730       -11.71211 TRUE TRUE TRUE  TRUE TRUE
+## 204       b         49.64360       -17.25387 TRUE TRUE TRUE  TRUE TRUE
+## 205       p         44.91589       -21.31205 TRUE TRUE TRUE  TRUE TRUE
+## 206       m         45.24676       -18.75648 TRUE TRUE TRUE  TRUE TRUE
+## 207       h         50.15529       -25.24457 TRUE TRUE TRUE  TRUE TRUE
+## 208       c         44.76553       -21.18473 TRUE TRUE TRUE  TRUE TRUE
+## 209       j         44.32171       -11.94832 TRUE TRUE TRUE  TRUE TRUE
+## 210       v         43.99711       -18.77708 TRUE TRUE TRUE  TRUE TRUE
+## 211       c         49.31085       -23.10433 TRUE TRUE TRUE  TRUE TRUE
+## 212       w         47.58335       -14.49749 TRUE TRUE TRUE  TRUE TRUE
+## 213       u         43.39434       -17.08205 TRUE TRUE TRUE  TRUE TRUE
+## 214       c         47.97985       -17.98556 TRUE TRUE TRUE  TRUE TRUE
+## 215       y         48.12249       -20.82648 TRUE TRUE TRUE  TRUE TRUE
+## 216       x         48.67358       -18.06003 TRUE TRUE TRUE  TRUE TRUE
+## 217       r         49.01720       -19.62874 TRUE TRUE TRUE  TRUE TRUE
+## 218       f         44.16895       -21.87141 TRUE TRUE TRUE  TRUE TRUE
+## 219       a         42.56061       -23.17308 TRUE TRUE TRUE  TRUE TRUE
+## 220       w         45.84148       -16.98621 TRUE TRUE TRUE  TRUE TRUE
+## 221       a         43.26367       -15.14112 TRUE TRUE TRUE  TRUE TRUE
+## 222       l         44.10349       -23.00880 TRUE TRUE TRUE  TRUE TRUE
+## 223       t         45.77031       -20.39802 TRUE TRUE TRUE  TRUE TRUE
+## 224       d         43.53602       -22.32016 TRUE TRUE TRUE  TRUE TRUE
+## 225       w         49.40769       -19.75848 TRUE TRUE TRUE  TRUE TRUE
+## 226       g         50.58125       -22.74249 TRUE TRUE TRUE  TRUE TRUE
+## 227       v         43.91599       -18.90848 TRUE TRUE TRUE  TRUE TRUE
+## 228       q         49.07363       -18.06905 TRUE TRUE TRUE  TRUE TRUE
+## 229       x         47.35102       -23.70629 TRUE TRUE TRUE  TRUE TRUE
+## 230       p         44.32393       -22.05099 TRUE TRUE TRUE  TRUE TRUE
+## 231       t         43.25480       -23.86696 TRUE TRUE TRUE  TRUE TRUE
+## 232       t         48.68552       -14.28757 TRUE TRUE TRUE  TRUE TRUE
+## 233       v         45.54405       -21.39224 TRUE TRUE TRUE  TRUE TRUE
+## 234       o         49.78538       -20.78234 TRUE TRUE TRUE  TRUE TRUE
+## 235       t         46.58679       -20.73236 TRUE TRUE TRUE  TRUE TRUE
+## 236       n         49.41855       -15.61746 TRUE TRUE TRUE  TRUE TRUE
+## 237       y         45.10327       -22.42427 TRUE TRUE TRUE  TRUE TRUE
+## 238       m         46.47491       -16.53016 TRUE TRUE TRUE  TRUE TRUE
+## 239       q         49.78397       -15.14576 TRUE TRUE TRUE  TRUE TRUE
+## 240       m         44.69568       -21.36566 TRUE TRUE TRUE  TRUE TRUE
+## 241       n         45.69824       -23.89342 TRUE TRUE TRUE  TRUE TRUE
+## 242       i         43.63472       -24.14535 TRUE TRUE TRUE  TRUE TRUE
+## 243       p         42.74042       -13.33960 TRUE TRUE TRUE  TRUE TRUE
+## 244       o         42.90960       -20.07940 TRUE TRUE TRUE  TRUE TRUE
+## 245       z         45.10911       -18.10203 TRUE TRUE TRUE  TRUE TRUE
+## 246       m         48.85495       -15.62681 TRUE TRUE TRUE  TRUE TRUE
+## 247       r         50.39708       -12.02048 TRUE TRUE TRUE  TRUE TRUE
+## 248       g         44.54807       -13.78881 TRUE TRUE TRUE  TRUE TRUE
+## 249       n         43.48774       -13.71141 TRUE TRUE TRUE  TRUE TRUE
+## 250       j         47.14905       -21.06671 TRUE TRUE TRUE  TRUE TRUE
 ##       sea   otl  gbf inst summary
 ## 1    TRUE  TRUE TRUE TRUE    TRUE
-## 2   FALSE  TRUE TRUE TRUE   FALSE
-## 3   FALSE  TRUE TRUE TRUE   FALSE
-## 4    TRUE  TRUE TRUE TRUE    TRUE
+## 2    TRUE  TRUE TRUE TRUE    TRUE
+## 3    TRUE  TRUE TRUE TRUE    TRUE
+## 4   FALSE  TRUE TRUE TRUE   FALSE
 ## 5   FALSE  TRUE TRUE TRUE   FALSE
-## 6    TRUE  TRUE TRUE TRUE    TRUE
+## 6   FALSE  TRUE TRUE TRUE   FALSE
 ## 7   FALSE  TRUE TRUE TRUE   FALSE
 ## 8   FALSE  TRUE TRUE TRUE   FALSE
 ## 9   FALSE  TRUE TRUE TRUE   FALSE
 ## 10  FALSE  TRUE TRUE TRUE   FALSE
-## 11   TRUE  TRUE TRUE TRUE    TRUE
-## 12   TRUE  TRUE TRUE TRUE    TRUE
+## 11  FALSE  TRUE TRUE TRUE   FALSE
+## 12  FALSE  TRUE TRUE TRUE   FALSE
 ## 13   TRUE  TRUE TRUE TRUE    TRUE
 ## 14  FALSE  TRUE TRUE TRUE   FALSE
 ## 15  FALSE  TRUE TRUE TRUE   FALSE
-## 16  FALSE  TRUE TRUE TRUE   FALSE
-## 17  FALSE  TRUE TRUE TRUE   FALSE
-## 18   TRUE  TRUE TRUE TRUE    TRUE
+## 16   TRUE  TRUE TRUE TRUE    TRUE
+## 17   TRUE  TRUE TRUE TRUE    TRUE
+## 18  FALSE  TRUE TRUE TRUE   FALSE
 ## 19  FALSE  TRUE TRUE TRUE   FALSE
-## 20   TRUE  TRUE TRUE TRUE    TRUE
+## 20  FALSE  TRUE TRUE TRUE   FALSE
 ## 21  FALSE  TRUE TRUE TRUE   FALSE
-## 22   TRUE  TRUE TRUE TRUE    TRUE
-## 23   TRUE  TRUE TRUE TRUE    TRUE
-## 24  FALSE  TRUE TRUE TRUE   FALSE
-## 25  FALSE  TRUE TRUE TRUE   FALSE
+## 22  FALSE  TRUE TRUE TRUE   FALSE
+## 23  FALSE  TRUE TRUE TRUE   FALSE
+## 24   TRUE  TRUE TRUE TRUE    TRUE
+## 25   TRUE  TRUE TRUE TRUE    TRUE
 ## 26  FALSE  TRUE TRUE TRUE   FALSE
 ## 27  FALSE  TRUE TRUE TRUE   FALSE
 ## 28  FALSE  TRUE TRUE TRUE   FALSE
 ## 29  FALSE  TRUE TRUE TRUE   FALSE
 ## 30  FALSE  TRUE TRUE TRUE   FALSE
-## 31   TRUE  TRUE TRUE TRUE    TRUE
-## 32  FALSE  TRUE TRUE TRUE   FALSE
-## 33  FALSE  TRUE TRUE TRUE   FALSE
-## 34  FALSE  TRUE TRUE TRUE   FALSE
-## 35  FALSE  TRUE TRUE TRUE   FALSE
-## 36  FALSE  TRUE TRUE TRUE   FALSE
+## 31  FALSE  TRUE TRUE TRUE   FALSE
+## 32   TRUE  TRUE TRUE TRUE    TRUE
+## 33   TRUE  TRUE TRUE TRUE    TRUE
+## 34   TRUE  TRUE TRUE TRUE    TRUE
+## 35   TRUE  TRUE TRUE TRUE    TRUE
+## 36   TRUE  TRUE TRUE TRUE    TRUE
 ## 37  FALSE  TRUE TRUE TRUE   FALSE
-## 38  FALSE  TRUE TRUE TRUE   FALSE
-## 39  FALSE  TRUE TRUE TRUE   FALSE
+## 38   TRUE  TRUE TRUE TRUE    TRUE
+## 39   TRUE  TRUE TRUE TRUE    TRUE
 ## 40  FALSE  TRUE TRUE TRUE   FALSE
-## 41  FALSE  TRUE TRUE TRUE   FALSE
+## 41   TRUE  TRUE TRUE TRUE    TRUE
 ## 42   TRUE  TRUE TRUE TRUE    TRUE
-## 43  FALSE  TRUE TRUE TRUE   FALSE
-## 44   TRUE  TRUE TRUE TRUE    TRUE
+## 43   TRUE  TRUE TRUE TRUE    TRUE
+## 44  FALSE  TRUE TRUE TRUE   FALSE
 ## 45  FALSE  TRUE TRUE TRUE   FALSE
 ## 46  FALSE  TRUE TRUE TRUE   FALSE
-## 47  FALSE  TRUE TRUE TRUE   FALSE
+## 47   TRUE  TRUE TRUE TRUE    TRUE
 ## 48  FALSE  TRUE TRUE TRUE   FALSE
-## 49  FALSE  TRUE TRUE TRUE   FALSE
-## 50  FALSE  TRUE TRUE TRUE   FALSE
-## 51   TRUE  TRUE TRUE TRUE    TRUE
+## 49   TRUE  TRUE TRUE TRUE    TRUE
+## 50   TRUE  TRUE TRUE TRUE    TRUE
+## 51  FALSE  TRUE TRUE TRUE   FALSE
 ## 52  FALSE  TRUE TRUE TRUE   FALSE
 ## 53   TRUE  TRUE TRUE TRUE    TRUE
 ## 54  FALSE  TRUE TRUE TRUE   FALSE
-## 55  FALSE  TRUE TRUE TRUE   FALSE
-## 56   TRUE  TRUE TRUE TRUE    TRUE
+## 55   TRUE  TRUE TRUE TRUE    TRUE
+## 56  FALSE  TRUE TRUE TRUE   FALSE
 ## 57  FALSE  TRUE TRUE TRUE   FALSE
 ## 58   TRUE  TRUE TRUE TRUE    TRUE
 ## 59  FALSE  TRUE TRUE TRUE   FALSE
-## 60   TRUE  TRUE TRUE TRUE    TRUE
+## 60  FALSE  TRUE TRUE TRUE   FALSE
 ## 61  FALSE  TRUE TRUE TRUE   FALSE
-## 62  FALSE  TRUE TRUE TRUE   FALSE
-## 63  FALSE  TRUE TRUE TRUE   FALSE
+## 62   TRUE  TRUE TRUE TRUE    TRUE
+## 63   TRUE  TRUE TRUE TRUE    TRUE
 ## 64  FALSE  TRUE TRUE TRUE   FALSE
 ## 65  FALSE  TRUE TRUE TRUE   FALSE
 ## 66  FALSE  TRUE TRUE TRUE   FALSE
-## 67   TRUE  TRUE TRUE TRUE    TRUE
-## 68  FALSE  TRUE TRUE TRUE   FALSE
+## 67  FALSE  TRUE TRUE TRUE   FALSE
+## 68   TRUE  TRUE TRUE TRUE    TRUE
 ## 69  FALSE  TRUE TRUE TRUE   FALSE
-## 70   TRUE  TRUE TRUE TRUE    TRUE
+## 70  FALSE  TRUE TRUE TRUE   FALSE
 ## 71   TRUE  TRUE TRUE TRUE    TRUE
-## 72  FALSE  TRUE TRUE TRUE   FALSE
-## 73   TRUE  TRUE TRUE TRUE    TRUE
+## 72   TRUE  TRUE TRUE TRUE    TRUE
+## 73  FALSE  TRUE TRUE TRUE   FALSE
 ## 74  FALSE  TRUE TRUE TRUE   FALSE
-## 75  FALSE  TRUE TRUE TRUE   FALSE
+## 75   TRUE  TRUE TRUE TRUE    TRUE
 ## 76  FALSE  TRUE TRUE TRUE   FALSE
 ## 77   TRUE  TRUE TRUE TRUE    TRUE
-## 78  FALSE  TRUE TRUE TRUE   FALSE
-## 79  FALSE  TRUE TRUE TRUE   FALSE
+## 78   TRUE  TRUE TRUE TRUE    TRUE
+## 79   TRUE  TRUE TRUE TRUE    TRUE
 ## 80   TRUE  TRUE TRUE TRUE    TRUE
 ## 81  FALSE  TRUE TRUE TRUE   FALSE
 ## 82   TRUE  TRUE TRUE TRUE    TRUE
 ## 83   TRUE  TRUE TRUE TRUE    TRUE
 ## 84   TRUE  TRUE TRUE TRUE    TRUE
 ## 85  FALSE  TRUE TRUE TRUE   FALSE
-## 86  FALSE FALSE TRUE TRUE   FALSE
-## 87  FALSE  TRUE TRUE TRUE   FALSE
-## 88  FALSE  TRUE TRUE TRUE   FALSE
+## 86   TRUE  TRUE TRUE TRUE    TRUE
+## 87   TRUE  TRUE TRUE TRUE    TRUE
+## 88   TRUE  TRUE TRUE TRUE    TRUE
 ## 89  FALSE  TRUE TRUE TRUE   FALSE
-## 90  FALSE  TRUE TRUE TRUE   FALSE
-## 91   TRUE  TRUE TRUE TRUE    TRUE
-## 92  FALSE  TRUE TRUE TRUE   FALSE
-## 93  FALSE  TRUE TRUE TRUE   FALSE
+## 90   TRUE  TRUE TRUE TRUE    TRUE
+## 91  FALSE  TRUE TRUE TRUE   FALSE
+## 92   TRUE  TRUE TRUE TRUE    TRUE
+## 93   TRUE  TRUE TRUE TRUE   FALSE
 ## 94  FALSE  TRUE TRUE TRUE   FALSE
 ## 95  FALSE  TRUE TRUE TRUE   FALSE
 ## 96  FALSE  TRUE TRUE TRUE   FALSE
@@ -613,73 +616,73 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 ## 98   TRUE  TRUE TRUE TRUE    TRUE
 ## 99  FALSE  TRUE TRUE TRUE   FALSE
 ## 100 FALSE  TRUE TRUE TRUE   FALSE
-## 101  TRUE  TRUE TRUE TRUE    TRUE
-## 102 FALSE  TRUE TRUE TRUE   FALSE
+## 101 FALSE  TRUE TRUE TRUE   FALSE
+## 102  TRUE  TRUE TRUE TRUE    TRUE
 ## 103 FALSE  TRUE TRUE TRUE   FALSE
 ## 104 FALSE  TRUE TRUE TRUE   FALSE
-## 105 FALSE  TRUE TRUE TRUE   FALSE
-## 106  TRUE  TRUE TRUE TRUE    TRUE
-## 107  TRUE  TRUE TRUE TRUE    TRUE
-## 108 FALSE  TRUE TRUE TRUE   FALSE
+## 105  TRUE  TRUE TRUE TRUE    TRUE
+## 106 FALSE  TRUE TRUE TRUE   FALSE
+## 107 FALSE  TRUE TRUE TRUE   FALSE
+## 108  TRUE  TRUE TRUE TRUE    TRUE
 ## 109  TRUE  TRUE TRUE TRUE    TRUE
 ## 110  TRUE  TRUE TRUE TRUE    TRUE
 ## 111 FALSE  TRUE TRUE TRUE   FALSE
 ## 112 FALSE  TRUE TRUE TRUE   FALSE
 ## 113  TRUE  TRUE TRUE TRUE    TRUE
 ## 114  TRUE  TRUE TRUE TRUE    TRUE
-## 115  TRUE  TRUE TRUE TRUE    TRUE
+## 115 FALSE  TRUE TRUE TRUE   FALSE
 ## 116 FALSE  TRUE TRUE TRUE   FALSE
-## 117  TRUE  TRUE TRUE TRUE    TRUE
+## 117 FALSE  TRUE TRUE TRUE   FALSE
 ## 118 FALSE  TRUE TRUE TRUE   FALSE
-## 119 FALSE  TRUE TRUE TRUE   FALSE
+## 119  TRUE  TRUE TRUE TRUE    TRUE
 ## 120 FALSE  TRUE TRUE TRUE   FALSE
-## 121 FALSE  TRUE TRUE TRUE   FALSE
-## 122  TRUE  TRUE TRUE TRUE    TRUE
-## 123  TRUE  TRUE TRUE TRUE    TRUE
+## 121  TRUE  TRUE TRUE TRUE    TRUE
+## 122 FALSE  TRUE TRUE TRUE   FALSE
+## 123 FALSE  TRUE TRUE TRUE   FALSE
 ## 124 FALSE  TRUE TRUE TRUE   FALSE
-## 125  TRUE  TRUE TRUE TRUE    TRUE
+## 125 FALSE  TRUE TRUE TRUE   FALSE
 ## 126 FALSE  TRUE TRUE TRUE   FALSE
-## 127 FALSE  TRUE TRUE TRUE   FALSE
-## 128  TRUE  TRUE TRUE TRUE    TRUE
-## 129 FALSE  TRUE TRUE TRUE   FALSE
-## 130  TRUE  TRUE TRUE TRUE    TRUE
+## 127  TRUE  TRUE TRUE TRUE    TRUE
+## 128 FALSE  TRUE TRUE TRUE   FALSE
+## 129  TRUE  TRUE TRUE TRUE    TRUE
+## 130 FALSE  TRUE TRUE TRUE   FALSE
 ## 131 FALSE  TRUE TRUE TRUE   FALSE
 ## 132  TRUE  TRUE TRUE TRUE    TRUE
-## 133 FALSE  TRUE TRUE TRUE   FALSE
+## 133  TRUE  TRUE TRUE TRUE    TRUE
 ## 134  TRUE  TRUE TRUE TRUE    TRUE
-## 135 FALSE  TRUE TRUE TRUE   FALSE
-## 136  TRUE  TRUE TRUE TRUE    TRUE
-## 137 FALSE  TRUE TRUE TRUE   FALSE
-## 138 FALSE  TRUE TRUE TRUE   FALSE
-## 139  TRUE  TRUE TRUE TRUE    TRUE
-## 140  TRUE  TRUE TRUE TRUE    TRUE
-## 141  TRUE  TRUE TRUE TRUE    TRUE
+## 135  TRUE  TRUE TRUE TRUE    TRUE
+## 136 FALSE  TRUE TRUE TRUE   FALSE
+## 137  TRUE  TRUE TRUE TRUE    TRUE
+## 138  TRUE  TRUE TRUE TRUE    TRUE
+## 139 FALSE  TRUE TRUE TRUE   FALSE
+## 140 FALSE  TRUE TRUE TRUE   FALSE
+## 141 FALSE  TRUE TRUE TRUE   FALSE
 ## 142  TRUE  TRUE TRUE TRUE    TRUE
 ## 143 FALSE  TRUE TRUE TRUE   FALSE
-## 144 FALSE  TRUE TRUE TRUE   FALSE
+## 144  TRUE  TRUE TRUE TRUE    TRUE
 ## 145 FALSE  TRUE TRUE TRUE   FALSE
-## 146 FALSE  TRUE TRUE TRUE   FALSE
-## 147 FALSE  TRUE TRUE TRUE   FALSE
+## 146  TRUE  TRUE TRUE TRUE    TRUE
+## 147  TRUE  TRUE TRUE TRUE    TRUE
 ## 148 FALSE  TRUE TRUE TRUE   FALSE
 ## 149  TRUE  TRUE TRUE TRUE    TRUE
-## 150  TRUE  TRUE TRUE TRUE    TRUE
+## 150 FALSE  TRUE TRUE TRUE   FALSE
 ## 151  TRUE  TRUE TRUE TRUE    TRUE
-## 152  TRUE  TRUE TRUE TRUE    TRUE
-## 153 FALSE  TRUE TRUE TRUE   FALSE
+## 152 FALSE  TRUE TRUE TRUE   FALSE
+## 153  TRUE  TRUE TRUE TRUE    TRUE
 ## 154 FALSE  TRUE TRUE TRUE   FALSE
-## 155 FALSE  TRUE TRUE TRUE   FALSE
+## 155  TRUE  TRUE TRUE TRUE    TRUE
 ## 156 FALSE  TRUE TRUE TRUE   FALSE
 ## 157 FALSE  TRUE TRUE TRUE   FALSE
 ## 158 FALSE  TRUE TRUE TRUE   FALSE
 ## 159 FALSE  TRUE TRUE TRUE   FALSE
 ## 160 FALSE  TRUE TRUE TRUE   FALSE
 ## 161  TRUE  TRUE TRUE TRUE    TRUE
-## 162  TRUE  TRUE TRUE TRUE    TRUE
+## 162 FALSE  TRUE TRUE TRUE   FALSE
 ## 163 FALSE  TRUE TRUE TRUE   FALSE
-## 164  TRUE  TRUE TRUE TRUE    TRUE
-## 165 FALSE  TRUE TRUE TRUE   FALSE
+## 164 FALSE  TRUE TRUE TRUE   FALSE
+## 165  TRUE  TRUE TRUE TRUE    TRUE
 ## 166 FALSE  TRUE TRUE TRUE   FALSE
-## 167 FALSE  TRUE TRUE TRUE   FALSE
+## 167 FALSE FALSE TRUE TRUE   FALSE
 ## 168  TRUE  TRUE TRUE TRUE    TRUE
 ## 169 FALSE  TRUE TRUE TRUE   FALSE
 ## 170 FALSE  TRUE TRUE TRUE   FALSE
@@ -689,76 +692,76 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 ## 174  TRUE  TRUE TRUE TRUE    TRUE
 ## 175  TRUE  TRUE TRUE TRUE    TRUE
 ## 176 FALSE  TRUE TRUE TRUE   FALSE
-## 177  TRUE  TRUE TRUE TRUE    TRUE
-## 178  TRUE  TRUE TRUE TRUE    TRUE
-## 179  TRUE  TRUE TRUE TRUE    TRUE
-## 180 FALSE  TRUE TRUE TRUE   FALSE
-## 181  TRUE  TRUE TRUE TRUE    TRUE
+## 177 FALSE  TRUE TRUE TRUE   FALSE
+## 178 FALSE  TRUE TRUE TRUE   FALSE
+## 179 FALSE  TRUE TRUE TRUE   FALSE
+## 180  TRUE  TRUE TRUE TRUE    TRUE
+## 181 FALSE  TRUE TRUE TRUE   FALSE
 ## 182  TRUE  TRUE TRUE TRUE    TRUE
 ## 183 FALSE  TRUE TRUE TRUE   FALSE
 ## 184 FALSE  TRUE TRUE TRUE   FALSE
-## 185 FALSE  TRUE TRUE TRUE   FALSE
+## 185  TRUE  TRUE TRUE TRUE    TRUE
 ## 186 FALSE  TRUE TRUE TRUE   FALSE
-## 187 FALSE FALSE TRUE TRUE   FALSE
-## 188  TRUE  TRUE TRUE TRUE    TRUE
-## 189  TRUE  TRUE TRUE TRUE    TRUE
+## 187 FALSE  TRUE TRUE TRUE   FALSE
+## 188 FALSE  TRUE TRUE TRUE   FALSE
+## 189  TRUE FALSE TRUE TRUE   FALSE
 ## 190  TRUE  TRUE TRUE TRUE    TRUE
-## 191  TRUE  TRUE TRUE TRUE    TRUE
-## 192 FALSE  TRUE TRUE TRUE   FALSE
-## 193 FALSE  TRUE TRUE TRUE   FALSE
-## 194 FALSE  TRUE TRUE TRUE   FALSE
+## 191 FALSE  TRUE TRUE TRUE   FALSE
+## 192  TRUE  TRUE TRUE TRUE    TRUE
+## 193  TRUE  TRUE TRUE TRUE    TRUE
+## 194  TRUE  TRUE TRUE TRUE    TRUE
 ## 195 FALSE  TRUE TRUE TRUE   FALSE
-## 196 FALSE  TRUE TRUE TRUE   FALSE
-## 197  TRUE  TRUE TRUE TRUE   FALSE
+## 196  TRUE  TRUE TRUE TRUE    TRUE
+## 197 FALSE  TRUE TRUE TRUE   FALSE
 ## 198  TRUE  TRUE TRUE TRUE    TRUE
-## 199  TRUE  TRUE TRUE TRUE    TRUE
-## 200  TRUE  TRUE TRUE TRUE    TRUE
+## 199 FALSE  TRUE TRUE TRUE   FALSE
+## 200 FALSE  TRUE TRUE TRUE   FALSE
 ## 201 FALSE  TRUE TRUE TRUE   FALSE
-## 202 FALSE  TRUE TRUE TRUE   FALSE
+## 202  TRUE  TRUE TRUE TRUE    TRUE
 ## 203 FALSE  TRUE TRUE TRUE   FALSE
-## 204  TRUE  TRUE TRUE TRUE    TRUE
+## 204 FALSE  TRUE TRUE TRUE   FALSE
 ## 205  TRUE  TRUE TRUE TRUE    TRUE
 ## 206  TRUE  TRUE TRUE TRUE    TRUE
-## 207  TRUE  TRUE TRUE TRUE    TRUE
+## 207 FALSE  TRUE TRUE TRUE   FALSE
 ## 208  TRUE  TRUE TRUE TRUE    TRUE
-## 209  TRUE  TRUE TRUE TRUE    TRUE
-## 210  TRUE  TRUE TRUE TRUE    TRUE
+## 209 FALSE  TRUE TRUE TRUE   FALSE
+## 210 FALSE  TRUE TRUE TRUE   FALSE
 ## 211 FALSE  TRUE TRUE TRUE   FALSE
 ## 212 FALSE  TRUE TRUE TRUE   FALSE
-## 213  TRUE  TRUE TRUE TRUE    TRUE
+## 213 FALSE  TRUE TRUE TRUE   FALSE
 ## 214  TRUE  TRUE TRUE TRUE    TRUE
-## 215 FALSE  TRUE TRUE TRUE   FALSE
+## 215  TRUE  TRUE TRUE TRUE    TRUE
 ## 216  TRUE  TRUE TRUE TRUE    TRUE
-## 217  TRUE  TRUE TRUE TRUE    TRUE
-## 218 FALSE  TRUE TRUE TRUE   FALSE
-## 219  TRUE  TRUE TRUE TRUE    TRUE
+## 217 FALSE  TRUE TRUE TRUE   FALSE
+## 218  TRUE  TRUE TRUE TRUE    TRUE
+## 219 FALSE FALSE TRUE TRUE   FALSE
 ## 220  TRUE  TRUE TRUE TRUE    TRUE
 ## 221 FALSE  TRUE TRUE TRUE   FALSE
-## 222 FALSE  TRUE TRUE TRUE   FALSE
+## 222  TRUE  TRUE TRUE TRUE    TRUE
 ## 223  TRUE  TRUE TRUE TRUE    TRUE
 ## 224  TRUE  TRUE TRUE TRUE    TRUE
 ## 225 FALSE  TRUE TRUE TRUE   FALSE
 ## 226 FALSE  TRUE TRUE TRUE   FALSE
-## 227  TRUE  TRUE TRUE TRUE    TRUE
+## 227 FALSE  TRUE TRUE TRUE   FALSE
 ## 228  TRUE  TRUE TRUE TRUE    TRUE
-## 229 FALSE  TRUE TRUE TRUE   FALSE
+## 229  TRUE  TRUE TRUE TRUE    TRUE
 ## 230  TRUE  TRUE TRUE TRUE    TRUE
-## 231  TRUE  TRUE TRUE TRUE    TRUE
-## 232 FALSE  TRUE TRUE TRUE   FALSE
+## 231 FALSE  TRUE TRUE TRUE   FALSE
+## 232  TRUE  TRUE TRUE TRUE    TRUE
 ## 233  TRUE  TRUE TRUE TRUE    TRUE
-## 234  TRUE  TRUE TRUE TRUE    TRUE
-## 235 FALSE  TRUE TRUE TRUE   FALSE
-## 236 FALSE  TRUE TRUE TRUE   FALSE
-## 237 FALSE  TRUE TRUE TRUE   FALSE
-## 238 FALSE  TRUE TRUE TRUE   FALSE
-## 239 FALSE  TRUE TRUE TRUE   FALSE
-## 240 FALSE  TRUE TRUE TRUE   FALSE
-## 241 FALSE  TRUE TRUE TRUE   FALSE
+## 234 FALSE  TRUE TRUE TRUE   FALSE
+## 235  TRUE  TRUE TRUE TRUE    TRUE
+## 236  TRUE  TRUE TRUE TRUE    TRUE
+## 237  TRUE  TRUE TRUE TRUE    TRUE
+## 238  TRUE  TRUE TRUE TRUE    TRUE
+## 239  TRUE  TRUE TRUE TRUE    TRUE
+## 240  TRUE  TRUE TRUE TRUE    TRUE
+## 241  TRUE  TRUE TRUE TRUE    TRUE
 ## 242 FALSE  TRUE TRUE TRUE   FALSE
-## 243  TRUE  TRUE TRUE TRUE    TRUE
-## 244  TRUE  TRUE TRUE TRUE    TRUE
+## 243 FALSE  TRUE TRUE TRUE   FALSE
+## 244 FALSE  TRUE TRUE TRUE   FALSE
 ## 245  TRUE  TRUE TRUE TRUE    TRUE
-## 246 FALSE  TRUE TRUE TRUE   FALSE
+## 246  TRUE  TRUE TRUE TRUE    TRUE
 ## 247 FALSE  TRUE TRUE TRUE   FALSE
 ## 248 FALSE  TRUE TRUE TRUE   FALSE
 ## 249 FALSE  TRUE TRUE TRUE   FALSE
@@ -883,25 +886,25 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 ## Testing country capitals
 ## Flagged 0 records.
 ## Testing country centroids
-## Flagged 1 records.
+## Flagged 0 records.
 ## Testing sea coordinates
-## Flagged 151 records.
+## Flagged 138 records.
 ## Testing geographic outliers
-## Flagged 2 records.
+## Flagged 3 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 152 of 250 records, EQ = 0.61.
+## Flagged 139 of 250 records, EQ = 0.56.
 
 <span class="co"># via summary</span>
 <span class="kw">summary</span>(flags)
 ## decimallatitude             val             equ             zer 
 ##               0               0               0               0 
 ##             cap             cen             sea             otl 
-##               0               1             151               2 
+##               0               0             138               3 
 ##             gbf            inst         summary 
-##               0               0             152</code></pre></div>
+##               0               0             139</code></pre></div>
 </div>
 <div id="exclude-flagged-records" class="section level1">
 <h1 class="hasAnchor">

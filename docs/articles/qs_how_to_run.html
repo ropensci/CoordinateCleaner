@@ -58,6 +58,9 @@
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
+      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+    </li>
+    <li>
       <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
@@ -122,23 +125,23 @@ cord.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## Testing country centroids
 ## Flagged 0 records.
 ## Testing sea coordinates
-## Flagged 148 records.
+## Flagged 144 records.
 ## Testing geographic outliers
-## Flagged 3 records.
+## Flagged 2 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 148 of 250 records, EQ = 0.59.
+## Flagged 144 of 250 records, EQ = 0.58.
 
 <span class="co"># summarize and visualize results</span>
 <span class="kw">summary</span>(cord.flags)
 ## decimallatitude             val             equ             zer 
 ##               0               0               0               0 
 ##             cap             cen             sea             otl 
-##               0               0             148               3 
+##               0               0             144               2 
 ##             gbf            inst         summary 
-##               0               0             148
+##               0               0             144
 <span class="kw">plot</span>(cord.flags)</code></pre></div>
 <p><img src="qs_how_to_run_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
@@ -172,7 +175,7 @@ cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span 
 ## Testing country capitals
 ## Flagged 0 records.
 ## Testing country centroids
-## Flagged 3 records.
+## Flagged 4 records.
 ## Testing duplicates
 ## Flagged 0 records.
 ## Testing equal lat/lon
@@ -182,9 +185,9 @@ cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span 
 ## Testing biodiversity institutions
 ## Flagged 0 records.
 ## Testing geographic outliers
-## Flagged 3 records.
+## Flagged 2 records.
 ## Testing sea coordinates
-## Flagged 146 records.
+## Flagged 144 records.
 ## Testing zero coordinates
 ## Flagged 0 records.
 ## Testing for dd.mm to dd.dd conversion errors

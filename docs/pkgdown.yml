@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   Cleaning_GBIF_data_with_CoordinateCleaner: Cleaning_GBIF_data_with_CoordinateCleaner.html
   Cleaning_PBDB_fossils_with_CoordinateCleaner: Cleaning_PBDB_fossils_with_CoordinateCleaner.html
+  comparison_other_software: comparison_other_software.html
   qs_clean_coordinates: qs_clean_coordinates.html
   qs_clean_dataset: qs_clean_dataset.html
   qs_clean_fossils: qs_clean_fossils.html
