@@ -98,6 +98,7 @@ flags <- clean_coordinates(exmpl, report = T)
 #via summary
 summary(flags)
 ```
+
 # Exclude flagged records
 The output of `clean_coordinates` is in the same order as the input, thus you can easily exclude flagged records.
 
