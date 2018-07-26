@@ -9,3 +9,6 @@ env:
    global:
      - R_BUILD_ARGS="--no-build-vignettes"
      - R_CHECK_ARGS="--no-build-vignettes --as-cran"
+
+r_check_args: 
+"--no-vignettes"
