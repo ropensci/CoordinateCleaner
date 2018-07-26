@@ -24,5 +24,4 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 test <- clean_fossils(x = exmpl)
 
 summary(test)
-
 ```
