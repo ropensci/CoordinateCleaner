@@ -1,1 +1,2 @@
-language: R
+language: r
+cache: packages
