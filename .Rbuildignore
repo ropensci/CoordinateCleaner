@@ -18,3 +18,5 @@ vignettes/qs_clean_coordinates
 vignettes/qs_clean_dataset
 vignettes/qs_clean_fossils
 vignettes/comparison_other_software
+^_pkgdown\.yml$
+^docs$

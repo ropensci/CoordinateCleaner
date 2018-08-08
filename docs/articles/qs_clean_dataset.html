@@ -115,20 +115,32 @@
 </h2>
 <p>The <code>clean_dataset</code> function implements tests to identify these problems on a data set level. A data set can in this context can be any meaningful cluster of occurrence records, i.e from the same museum, or the same collector, etc. Output is a summary data.frame with summarizing flags for each test and dataset (note that you can change the level of detail in the output with the <code>output</code> flag). We generally recommend to double check the results, in particular of the periodicity test. IN general power of the test increases with data set size and geographic extent. The test can be made more conservative using the <code>periodicity.thresh</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CoordinateCleaner)
+## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang
+## Registered S3 method overwritten by 'dplyr':
+##   method               from  
+##   as.data.frame.tbl_df tibble
 
-<span class="co"># Create test dataset</span>
-clean &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dataset =</span> <span class="kw">rep</span>(<span class="st">"clean"</span>, <span class="dv">1000</span>), <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, 
-    <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">1000</span>), <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">1000</span>))
-
-bias.long &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">500</span>), <span class="dv">1</span>), <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, 
-    <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">300</span>), <span class="dv">0</span>), <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">200</span>))
-bias.lat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">500</span>), <span class="dv">1</span>), <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, 
-    <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">300</span>), <span class="dv">0</span>), <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">200</span>))
-bias &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dataset =</span> <span class="kw">rep</span>(<span class="st">"biased"</span>, <span class="dv">1000</span>), <span class="dt">decimallongitude =</span> bias.long, 
-    <span class="dt">decimallatitude =</span> bias.lat)
+<span class="co">#Create test dataset</span>
+clean &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dataset =</span> <span class="kw">rep</span>(<span class="st">"clean"</span>, <span class="dv">1000</span>),
+                    <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">1000</span>),
+                    <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">1000</span>))
+                    
+bias.long &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">500</span>), <span class="dv">1</span>),
+               <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">300</span>), <span class="dv">0</span>),
+               <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">42</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">40</span>, <span class="dt">n =</span> <span class="dv">200</span>))
+bias.lat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">500</span>), <span class="dv">1</span>),
+              <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">300</span>), <span class="dv">0</span>),
+              <span class="kw">runif</span>(<span class="dt">min =</span> <span class="op">-</span><span class="dv">12</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">10</span>, <span class="dt">n =</span> <span class="dv">200</span>))
+bias &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dataset =</span> <span class="kw">rep</span>(<span class="st">"biased"</span>, <span class="dv">1000</span>),
+                   <span class="dt">decimallongitude =</span> bias.long,
+                   <span class="dt">decimallatitude =</span> bias.lat)
 test &lt;-<span class="st"> </span><span class="kw">rbind</span>(clean, bias)
 
-<span class="co"># run clean_dataset</span>
+<span class="co">#run clean_dataset</span>
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_dataset.html">clean_dataset</a></span>(test)
 ## Testing for dd.mm to dd.dd conversion errors
 ## Warning in FUN(X[[i]], ...): Geographic span too small, check 'min_span'
@@ -138,11 +150,12 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <pre><code>## Flagged 1 datasets.</code></pre>
 <p><img src="qs_clean_dataset_files/figure-html/unnamed-chunk-1-8.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="co"># check problems clean</span>
-<span class="kw">hist</span>(test[test<span class="op">$</span>dataset <span class="op">==</span><span class="st"> </span><span class="kw">rownames</span>(flags[flags<span class="op">$</span>summary, ]), <span class="st">"decimallongitude"</span>])</code></pre></div>
+<span class="co">#check problems</span>
+<span class="co">#clean</span>
+<span class="kw">hist</span>(test[test<span class="op">$</span>dataset <span class="op">==</span><span class="st"> </span><span class="kw">rownames</span>(flags[flags<span class="op">$</span>summary,]), <span class="st">"decimallongitude"</span>])</code></pre></div>
 <p><img src="qs_clean_dataset_files/figure-html/unnamed-chunk-1-9.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># biased</span>
-<span class="kw">hist</span>(test[test<span class="op">$</span>dataset <span class="op">==</span><span class="st"> </span><span class="kw">rownames</span>(flags[<span class="op">!</span>flags<span class="op">$</span>summary, ]), <span class="st">"decimallongitude"</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#biased</span>
+<span class="kw">hist</span>(test[test<span class="op">$</span>dataset <span class="op">==</span><span class="st"> </span><span class="kw">rownames</span>(flags[<span class="op">!</span>flags<span class="op">$</span>summary,]), <span class="st">"decimallongitude"</span>])</code></pre></div>
 <p><img src="qs_clean_dataset_files/figure-html/unnamed-chunk-1-10.png" width="700"></p>
 </div>
   </div>

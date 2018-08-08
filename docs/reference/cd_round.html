@@ -269,15 +269,9 @@ details and tutorials.</p>
                     <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='no'>lat</span>,
                     <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"test"</span>)
 
-  <span class='co'>#plot overview</span>
-  <span class='no'>suma</span> <span class='kw'>&lt;-</span> <span class='no'>inp</span>
-  <span class='no'>suma</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='fu'>round</span>(<span class='no'>suma</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>0</span>)
-  <span class='no'>suma</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate</span>(<span class='no'>dataset</span> ~ <span class='no'>decimallongitude</span> + <span class='no'>decimallatitude</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='st'>"length"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>suma</span>)
-  <span class='no'>colo</span> <span class='kw'>&lt;-</span> <span class='fu'>rev</span>(<span class='fu'>heat.colors</span>(<span class='fu'>max</span>(<span class='no'>suma</span>$<span class='no'>dataset</span>)))
-  <span class='fu'>plot</span>(<span class='no'>suma</span>$<span class='no'>decimallatitude</span> ~ <span class='no'>suma</span>$<span class='no'>decimallongitude</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>colo</span>[<span class='no'>suma</span>$<span class='no'>dataset</span>])</div><div class='img'><img src='cd_round-1.png' alt='' width='700' height='433' /></div><div class='input'>
-  <span class='co'>#run test</span>
 
-  <span class='fu'>cd_round</span>(<span class='no'>inp</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"dataset"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing for rasterized collection</span></div><div class='img'><img src='cd_round-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   dataset lon.n.outliers lon.n.regular.distance lon.regular.distance lon.flag
+  <span class='co'>#run test</span>
+  <span class='fu'>cd_round</span>(<span class='no'>inp</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"dataset"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing for rasterized collection</span></div><div class='img'><img src='cd_round-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='cd_round-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   dataset lon.n.outliers lon.n.regular.distance lon.regular.distance lon.flag
 #&gt; 1    test              4                      3                    1    FALSE
 #&gt;   lat.n.outliers lat.n.regular.distance lat.regular.distance lat.flag summary
 #&gt; 1              4                      2                    1    FALSE   FALSE</div><div class='input'>

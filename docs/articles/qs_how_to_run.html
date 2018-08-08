@@ -106,13 +106,22 @@
 <p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
 <p>You can run Coordinate cleaner with few lines of R code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CoordinateCleaner)
+## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang
+## Registered S3 method overwritten by 'dplyr':
+##   method               from  
+##   as.data.frame.tbl_df tibble
 
-<span class="co"># create example dataset</span>
-exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, 
-    <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>), <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>), 
-    <span class="dt">dataset =</span> <span class="st">"clean"</span>)
+<span class="co">#create example dataset</span>
+exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+                    <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>),
+                    <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>),
+                    <span class="dt">dataset =</span> <span class="st">"clean"</span>)
 
-<span class="co"># run wrapper function</span>
+<span class="co">#run wrapper function</span>
 cord.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> exmpl)
 ## Testing coordinate validity
 ## Flagged 0 records.
@@ -125,27 +134,27 @@ cord.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## Testing country centroids
 ## Flagged 0 records.
 ## Testing sea coordinates
-## Flagged 144 records.
+## Flagged 162 records.
 ## Testing geographic outliers
 ## Flagged 2 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 144 of 250 records, EQ = 0.58.
+## Flagged 162 of 250 records, EQ = 0.65.
 
-<span class="co"># summarize and visualize results</span>
+<span class="co">#summarize and visualize results</span>
 <span class="kw">summary</span>(cord.flags)
 ## decimallatitude             val             equ             zer 
 ##               0               0               0               0 
 ##             cap             cen             sea             otl 
-##               0               0             144               2 
+##               0               0             162               2 
 ##             gbf            inst         summary 
-##               0               0             144
+##               0               0             162
 <span class="kw">plot</span>(cord.flags)</code></pre></div>
 <p><img src="qs_how_to_run_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="co"># run dataset-level cleaning</span>
+<span class="co">#run dataset-level cleaning</span>
 ds.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_dataset.html">clean_dataset</a></span>(exmpl)
 ## Testing for dd.mm to dd.dd conversion errors
 ## Flagged 0 records
@@ -155,27 +164,38 @@ ds.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cl
 <p><img src="qs_how_to_run_files/figure-html/unnamed-chunk-1-5.png" width="700"></p>
 <p>Alternatively, you can run the individual functions in a pipe compatible way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-## -- Attaching packages ------------------------------------ tidyverse 1.2.1 --
+## Registered S3 method overwritten by 'rvest':
+##   method            from
+##   read_xml.response xml2
+## -- Attaching packages ---------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
 ## v ggplot2 3.0.0     v purrr   0.2.5
-## v tibble  1.4.2     v dplyr   0.7.4
-## v tidyr   0.8.0     v stringr 1.3.0
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
 ## v readr   1.1.1     v forcats 0.3.0
-## Warning: package 'ggplot2' was built under R version 3.4.4
-## Warning: package 'purrr' was built under R version 3.4.4
-## -- Conflicts --------------------------------------- tidyverse_conflicts() --
+## -- Conflicts ------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ## x purrr::map()    masks maps::map()
 
-cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/cd_round.html">cd_round</a></span>()
+cleaned &lt;-<span class="st">  </span>exmpl<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>()<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/cd_round.html">cd_round</a></span>()
 ## Testing coordinate validity
 ## Flagged 0 records.
 ## Testing country capitals
 ## Flagged 0 records.
 ## Testing country centroids
-## Flagged 4 records.
+## Flagged 1 records.
 ## Testing duplicates
 ## Flagged 0 records.
 ## Testing equal lat/lon
@@ -187,7 +207,7 @@ cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span 
 ## Testing geographic outliers
 ## Flagged 2 records.
 ## Testing sea coordinates
-## Flagged 144 records.
+## Flagged 160 records.
 ## Testing zero coordinates
 ## Flagged 0 records.
 ## Testing for dd.mm to dd.dd conversion errors

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.com/azizka/CoordinateCleaner)
 [![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
+[rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 
 ***Note: the latest release of CoordinateCleaner (2.0), might cause compatibility issues with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.***
 
