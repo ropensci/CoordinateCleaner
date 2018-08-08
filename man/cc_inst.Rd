@@ -57,8 +57,7 @@ x <- data.frame(species = letters[1:10],
                 decimallongitude = runif(100, -180, 180), 
                 decimallatitude = runif(100, -90,90))
                 
-cc_inst(x, buffer = 5)#large buffer for demonstration
-cc_inst(x, value = "flagged", buffer = 5)
+cc_inst(x, value = "flagged", buffer = 5)#large buffer for demonstration
 
 }
 \keyword{Coordinate}

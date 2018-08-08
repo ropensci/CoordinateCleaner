@@ -4,8 +4,9 @@
 \alias{cc_cen}
 \title{Flag Coordinates in Vicinity of Country and Province Centroids}
 \usage{
-cc_cen(x, lon = "decimallongitude", lat = "decimallatitude", buffer = 0.1,
-  test = "both", ref = NULL, value = "clean", verbose = TRUE)
+cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
+  buffer = 0.1, test = "both", ref = NULL, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

@@ -7,7 +7,8 @@
 cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
   method = "quantile", size_thresh = 7, mltpl = 5, replicates = 5,
-  flag_thresh = 0.5, uniq_loc = FALSE, value = "clean", verbose = TRUE)
+  flag_thresh = 0.5, uniq_loc = FALSE, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

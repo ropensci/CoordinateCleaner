@@ -4,8 +4,8 @@
 \alias{cc_sea}
 \title{Flag Non-terrestrial Coordinates}
 \usage{
-cc_sea(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL,
-  value = "clean", speedup = TRUE, verbose = TRUE)
+cc_sea(x, lon = "decimallongitude", lat = "decimallatitude",
+  ref = NULL, value = "clean", speedup = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

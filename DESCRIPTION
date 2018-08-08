@@ -25,6 +25,6 @@ BugReports: https://github.com/azizka/CoordinateCleaner/issues
 Depends: R (>= 3.0.0)
 Imports: geosphere, ggplot2, graphics, methods, raster, rgeos, rnaturalearth, stats, sp, utils
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: countrycode, covr, dplyr, knitr, maps, paleobioDB, rgbif, rmarkdown, testthat
 VignetteBuilder: knitr

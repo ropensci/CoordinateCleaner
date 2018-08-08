@@ -4,9 +4,9 @@
 \alias{write_pyrate}
 \title{Create Input Files for PyRate}
 \usage{
-write_pyrate(x, status, fname, taxon = "accepted_name", min_age = "min_ma",
-  max_age = "max_ma", trait = NULL, path = getwd(), replicates = 1,
-  cutoff = NULL, random = TRUE)
+write_pyrate(x, status, fname, taxon = "accepted_name",
+  min_age = "min_ma", max_age = "max_ma", trait = NULL,
+  path = getwd(), replicates = 1, cutoff = NULL, random = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

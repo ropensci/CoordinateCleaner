@@ -4,8 +4,8 @@
 \alias{cc_urb}
 \title{Flag Records Inside Urban Areas}
 \usage{
-cc_urb(x, lon = "decimallongitude", lat = "decimallatitude", ref = NULL,
-  value = "clean", verbose = TRUE)
+cc_urb(x, lon = "decimallongitude", lat = "decimallatitude",
+  ref = NULL, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

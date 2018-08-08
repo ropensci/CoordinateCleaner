@@ -6,8 +6,8 @@
 \title{Geographic Coordinate Cleaning based on Dataset Properties}
 \usage{
 clean_dataset(x, lon = "decimallongitude", lat = "decimallatitude",
-  ds = "dataset", tests = c("ddmm", "periodicity"), value = "dataset",
-  verbose = TRUE, ...)
+  ds = "dataset", tests = c("ddmm", "periodicity"),
+  value = "dataset", verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

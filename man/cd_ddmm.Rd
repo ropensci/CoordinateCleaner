@@ -6,7 +6,8 @@
 \usage{
 cd_ddmm(x, lon = "decimallongitude", lat = "decimallatitude",
   ds = "dataset", pvalue = 0.025, diff = 1, mat_size = 1000,
-  min_span = 2, value = "clean", verbose = TRUE, diagnostic = FALSE)
+  min_span = 2, value = "clean", verbose = TRUE,
+  diagnostic = FALSE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

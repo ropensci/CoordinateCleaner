@@ -134,5 +134,25 @@ NULL
 #' 
 NULL
 
-
+#' Example data from the Paleobiologydatabase
+#' 
+#' A dataset of 5000 flowering plant fossil occurrences as example for data of the paleobiology Database, downloaded using the paleobioDB packages as specified in the vignette \dQuote{Cleaning_PBDB_fossils_with_CoordinateCleaner}.
+#' 
+#' 
+#' @name pbdb_example
+#' @docType data
+#' @format A data frame with 5000 observations on 36 variables.
+#' @source \itemize{ 
+#' \item The Paleobiology database \url{https://paleobiodb.org/} 
+#' \item Sara Varela, Javier Gonzalez Hernandez and Luciano Fabris Sgarbi (2016). 
+#' paleobioDB: Download and Process Data from the Paleobiology Database. 
+#' R package version 0.5.0. \url{https://CRAN.R-project.org/package=paleobioDB}.
+#' }
+#' @keywords gazetteers
+#' @examples
+#' 
+#' data(institutions)
+#' str(institutions)
+#' 
+NULL
 

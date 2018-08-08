@@ -4,8 +4,8 @@
 \alias{cc_cap}
 \title{Flag Coordinates in Vicinity of Country Capitals.}
 \usage{
-cc_cap(x, lon = "decimallongitude", lat = "decimallatitude", buffer = 0.1,
-  ref = NULL, value = "clean", verbose = TRUE)
+cc_cap(x, lon = "decimallongitude", lat = "decimallatitude",
+  buffer = 0.1, ref = NULL, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

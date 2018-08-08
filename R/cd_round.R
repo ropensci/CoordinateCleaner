@@ -75,15 +75,8 @@
 #'                     decimallatitude = lat,
 #'                     dataset = "test")
 #'             
-#'   #plot overview
-#'   suma <- inp
-#'   suma[,1:2] <- round(suma[,1:2], 0)
-#'   suma <- aggregate(dataset ~ decimallongitude + decimallatitude, FUN = "length", data = suma)
-#'   colo <- rev(heat.colors(max(suma$dataset)))
-#'   plot(suma$decimallatitude ~ suma$decimallongitude, col = colo[suma$dataset])
 #'           
 #'   #run test
-#'   
 #'   cd_round(inp, value = "dataset")
 #' 
 #' @export

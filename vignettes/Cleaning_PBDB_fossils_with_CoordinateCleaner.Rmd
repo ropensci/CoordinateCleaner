@@ -33,7 +33,6 @@ install_github("azizka/CoordinateCleaner")
 As a first step we will load the R libraries required for the tutorial. You might need to install some of them using `install.packages`. 
 
 ```{r, echo = T, warning = F, message = F, eval = TRUE}
-install_github("ropensci/paleobioDB")
 library(dplyr)
 library(ggplot2)
 library(CoordinateCleaner)
@@ -44,12 +43,21 @@ library(paleobioDB)
 # Load test dataset
 For this tutorial we will use a dataset of vascular plant fossils from the last 65 million years, downloaded from the paleobiology database using the plaeobioDB package. For the tutorial we'll limit the data to maximum 5,000 records, to keep the downloading time reasonable. If you obtained your data from the web mask of the paleobiology database, or use an entirely different database, you will have to adapt the column names in the script.
 
-```{r, eval = TRUE, collapse = TRUE}
+```{r, eval = F, collapse = TRUE}
 #load data
 dat <- paleobioDB::pbdb_occurrences(base_name = "Magnoliopsida", vocab = "pbdb", limit = 5000,
                         show = c("coords", "phylo", "attr", "loc", "time", "rem"))
 rownames(dat) <- NULL
 ```
+
+Alternatively, CoordinateCleaner includes an example dataset, downloaded from paleobioDB as specified above. We will use thisone for now.
+
+```{r, eval = T, collapse = TRUE}
+data(pbdb_example)
+dat <- pbdb_example
+rownames(dat) <- NULL
+```
+
 
 ```{r, echo = F, eval = F, message = F}
 dat <- read_csv("tutorial_s3_example_input_data",  guess_max = 10000)

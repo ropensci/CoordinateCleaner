@@ -5,7 +5,8 @@
 \title{Flag Coordinates Outside their Reported Country}
 \usage{
 cc_coun(x, lon = "decimallongitude", lat = "decimallatitude",
-  iso3 = "countrycode", value = "clean", ref = NULL, verbose = TRUE)
+  iso3 = "countrycode", value = "clean", ref = NULL,
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species

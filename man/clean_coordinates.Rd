@@ -9,13 +9,14 @@
 \usage{
 clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", countries = NULL, tests = c("capitals",
-  "centroids", "equal", "gbif", "institutions", "outliers", "seas", "zeros"),
-  capitals_rad = 0.05, centroids_rad = 0.01, centroids_detail = "both",
-  inst_rad = 0.001, outliers_method = "quantile", outliers_mtp = 3,
-  outliers_td = 1000, outliers_size = 7, zeros_rad = 0.5,
-  capitals_ref = NULL, centroids_ref = NULL, country_ref = NULL,
-  inst_ref = NULL, seas_ref = NULL, urban_ref = NULL,
-  value = "spatialvalid", verbose = TRUE, report = FALSE)
+  "centroids", "equal", "gbif", "institutions", "outliers", "seas",
+  "zeros"), capitals_rad = 0.05, centroids_rad = 0.01,
+  centroids_detail = "both", inst_rad = 0.001,
+  outliers_method = "quantile", outliers_mtp = 3, outliers_td = 1000,
+  outliers_size = 7, zeros_rad = 0.5, capitals_ref = NULL,
+  centroids_ref = NULL, country_ref = NULL, inst_ref = NULL,
+  seas_ref = NULL, urban_ref = NULL, value = "spatialvalid",
+  verbose = TRUE, report = FALSE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
