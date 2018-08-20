@@ -23,6 +23,7 @@ Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo
 | Coordinates  in-congruent with additional location information | cc_count                                                  | coord_within    |errorcheck, quickclean| 100%                                 |
 | Coordinates assigned to GBIF headquaters                      | cc_gbif                                                   | -                |-| 0%                                   |
 | Coordinates assigned to the location of biodiversity institutions  |    cc_inst                                     | -                |-| 0%                                   |
+| Coordinates outside natural range                             | cc_iucn                                                  |-                 |-| 0%                                   |
 | Spatial outliers                                              | cc_outl                                                   | -                |outliers| 50%, biogeo uses environmental distance                                   |
 | Coordinates within the ocean                                  | cc_sea                                                    | -                |-| 0%                                   |
 | Coordinates in urban area                                     | cc_urb                                                    | -                |-| 0%                                   |
@@ -38,5 +39,5 @@ Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo
 | Missing date                                                  | -                                                         | date_missing     |-| 0%                                   |
 | Add date                                                      | -                                                         | date_create      |-| 0%                                   |
 | Date format                                                   | -                                                         | date_standardize |-| 0%
-| REformatting coordinate annotation |-|-|a large set of functions|0 %|
-| Correcting of coordinates using guessing and environmental distance |-|-|a large set of functions|0 %|
+| Reformatting coordinate annotation |-|-|a large set of functions|0 %|
+| Correcting coordinates using guessing and environmental distance |-|-|a large set of functions|0 %|

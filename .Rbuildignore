@@ -17,6 +17,8 @@ vignettes/qs_how_to_run
 vignettes/qs_clean_coordinates
 vignettes/qs_clean_dataset
 vignettes/qs_clean_fossils
+vignettes/t_geographic_outliers.Rmd
 vignettes/comparison_other_software
 ^_pkgdown\.yml$
 ^docs$
+vignettes/examples

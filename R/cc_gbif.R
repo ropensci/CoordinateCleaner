@@ -11,6 +11,12 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}.
+#' @param buffer numerical. The buffer around the GBIF headquarters,
+#' where records should be flagged as problematic. Units depend on geod. Default = 100 m.
+#' @param geod logical. If TRUE the radius around each centroid is calculated
+#' based on a sphere, buffer is in meters and independent of latitude. If FALSE
+#' the radius is calculated assuming planar coordinates and varies slightly with latitude,
+#' in this case buffer is in degrees. DEfault = T.
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
@@ -31,23 +37,61 @@
 #' cc_gbif(x, value = "flagged")
 #' 
 #' @export
-#' @importFrom sp over SpatialPoints
+#' @importFrom geosphere destPoint
+#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons SpatialPolygons SpatialPoints
 #' @importFrom rgeos gBuffer
 cc_gbif <- function(x, 
                     lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lat = "decimallatitude",
+                    buffer = 100,
+                    geod = TRUE,
                     value = "clean",
                     verbose = TRUE) {
 
   # check function argument validity
   match.arg(value, choices = c("clean", "flagged"))
+  
+  if(buffer > 10 & !geod){
+    warnings("Using large buffer check 'geod'")
+  }
+  if(buffer < 100 & geod){
+    warnings("Using small buffer check 'geod'")
+  }
+  
+  # set default projection
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
-  dat <- sp::SpatialPoints(x[, c(lon, lat)])
-  ref <- rgeos::gBuffer(sp::SpatialPoints(cbind(12.58, 55.67)), width = 0.5)
+  dat <- sp::SpatialPoints(x[, c(lon, lat)], 
+                           proj4string = sp::CRS(wgs84))
 
-  out <- sp::over(x = dat, y = ref)
-  out <- is.na(out)
-
+  if(geod){
+    # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+    dg <- seq(from = 0, to = 360, by = 5)
+    
+    buff_XY <- geosphere::destPoint(p = cbind(12.58, 55.67), 
+                                    b = rep(dg, each = 1), 
+                                    d = buffer)
+    
+    id <- rep(1, times = length(dg))
+    
+    
+    lst <- split(data.frame(buff_XY), f = id)
+    
+    # Make SpatialPolygons out of the list of coordinates
+    poly   <- lapply(lst, sp::Polygon, hole = FALSE)
+    polys  <- lapply(list(poly), sp::Polygons, ID = NA)
+    ref <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+    
+    #point in polygon test
+    out <- is.na(sp::over(x = dat, y = ref))
+  }else{
+    ref <- rgeos::gBuffer(sp::SpatialPoints(cbind(12.58, 55.67), 
+                                            proj4string = sp::CRS(wgs84)), 
+                          width = 0.5)
+    
+    out <- sp::over(x = dat, y = ref)
+    out <- is.na(out)
+  }
   if (verbose) {
     message("Testing GBIF headquarters, flagging records around Copenhagen")
     message(sprintf("Flagged %s records.", sum(!out)))

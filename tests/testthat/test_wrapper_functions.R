@@ -18,7 +18,7 @@ test_that("clean_coordinates produces correct output", {
 
   expect_equal(ncol(t1), 13)
   expect_equal(nrow(t1), 250)
-  expect_equal(sum(t1$summary), 183)
+  expect_equal(sum(t1$summary), 181)
 
 })
 
@@ -39,8 +39,6 @@ test_that("clean_coordinates S3 methods work", {
   
   expect_equal(is(t1), "spatialvalid")
 })
-
-
 
 #Dataset level cleaning
 #Create test dataset
@@ -93,7 +91,7 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 
 test_that("fossil wrapper cleaning works", {
   expect_is(clean_fossils(exmpl), "spatialvalid")
-  expect_equal(sum(clean_fossils(exmpl)$summary), 248)
+  expect_equal(sum(clean_fossils(exmpl)$summary), 249)
 })
 
 

@@ -14,8 +14,12 @@
 #' @param lat a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer numerical. The buffer around each province or country
-#' centroid, where records should be flagged as problematic, in decimal
-#' degrees.  Default = 0.1.
+#' centroid, where records should be flagged as problematic. Units depend on geod.  
+#' Default = 1 kilometer.
+#' @param geod logical. If TRUE the radius around each centroid is calculated
+#' based on a sphere, buffer is in meters and independent of latitude. If FALSE
+#' the radius is calculated assuming planar coordinates and varies slightly with latitude,
+#' in this case buffer is in degrees. DEfault = T.
 #' @param test a character string. Specifying the details of the test. One of
 #' c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 #' country and province centroids.
@@ -42,13 +46,15 @@
 #' cc_cen(x, value = "flagged")
 #' 
 #' @export
-#' @importFrom sp SpatialPoints "proj4string<-" over proj4string
+#' @importFrom geosphere destPoint
+#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons proj4string "proj4string<-" SpatialPolygons SpatialPoints
 #' @importFrom raster extent crop
 #' @importFrom rgeos gBuffer
 cc_cen <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
-                   buffer = 0.1,
+                   buffer = 1000,
+                   geod = TRUE,
                    test = "both", 
                    ref = NULL, 
                    value = "clean", 
@@ -61,9 +67,19 @@ cc_cen <- function(x,
   if (verbose) {
     message("Testing country centroids")
   }
+  if(buffer > 10 & !geod){
+    warnings("Using large buffer check 'geod'")
+  }
+  if(buffer < 100 & geod){
+    warnings("Using small buffer check 'geod'")
+  }
 
+  # set default projection
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  
   # select relevant columns
-  dat <- sp::SpatialPoints(x[, c(lon, lat)])
+  dat <- sp::SpatialPoints(x[, c(lon, lat)], 
+                           proj4string = sp::CRS(wgs84))
 
   if (is.null(ref)) {
     ref <- CoordinateCleaner::countryref
@@ -74,7 +90,7 @@ cc_cen <- function(x,
       ref <- ref[ref$type == "province", ]
     })
   } else {
-    proj4string(ref) <- ""
+    proj4string(ref) <- wgs84
     warning("assuming lat/lon for centroids.ref")
   }
 
@@ -82,7 +98,8 @@ cc_cen <- function(x,
 
   # subset of testdatset according to speed up buffer
   ref <- raster::crop(
-    sp::SpatialPoints(ref[, c("centroid.lon", "centroid.lat")]),
+    sp::SpatialPoints(ref[, c("centroid.lon", "centroid.lat")], 
+                      proj4string = sp::CRS(wgs84)),
     limits
   )
 
@@ -90,8 +107,31 @@ cc_cen <- function(x,
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
-    ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
-    out <- is.na(sp::over(x = dat, y = ref))
+    if(geod){
+      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+      dg <- seq(from = 0, to = 360, by = 5)
+      
+      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+                                      b = rep(dg, each = length(ref)), 
+                                      d = buffer)
+      
+      id <- rep(1:length(ref), times = length(dg))
+      
+      
+      lst <- split(data.frame(buff_XY), f = id)
+      
+      # Make SpatialPolygons out of the list of coordinates
+      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
+      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
+      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+      ref <- sp::disaggregate(spolys)
+      
+      #point in polygon test
+      out <- is.na(sp::over(x = dat, y = ref))
+    }else{
+      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
+      out <- is.na(sp::over(x = dat, y = ref))
+      }
   }
 
   # create output based on value argument

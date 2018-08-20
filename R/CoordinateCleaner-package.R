@@ -31,8 +31,6 @@ NULL
 
 
 
-
-
 #' Country Centroids and Country Capitals
 #' 
 #' A \code{data.frame} with coordinates of country and province centroids and country
@@ -81,7 +79,7 @@ NULL
 #'  instead
 #' }
 #' 
-#' @name Coordinatecleaner-deprecated
+#' @name CoordinateCleaner-deprecated
 NULL
 
 
@@ -108,29 +106,6 @@ NULL
 #' 
 #' data(institutions)
 #' str(institutions)
-#' 
-NULL
-
-
-#' Global Coastlines
-#' 
-#' A \code{SpatialPolygonsDataFrame} with global coastlines.
-#' 
-#' 
-#' @name landmass
-#' @docType data
-#' @note Most of the times it might be desirable to only flag records far away
-#' from the coast as problematic rather than those close to the coastline
-#' (which might be due to disagreements in coastlines, or low GPS uncertainty).
-#' For these cases, there is a alternative coastline reference buffered by one
-#' degree available at
-#' \url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
-#' @source
-#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
-#' @keywords gazetteers
-#' @examples
-#' 
-#' data("landmass")
 #' 
 NULL
 

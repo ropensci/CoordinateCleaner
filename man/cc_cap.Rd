@@ -5,7 +5,8 @@
 \title{Flag Coordinates in Vicinity of Country Capitals.}
 \usage{
 cc_cap(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 0.1, ref = NULL, value = "clean", verbose = TRUE)
+  buffer = 10000, geod = TRUE, ref = NULL, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -18,8 +19,13 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{The buffer around each capital coordinate (the centre of the
-city), where records should be flagged as problematic, in decimal degrees.
-Default = 0.1.}
+city), where records should be flagged as problematic. Units depend on geod.
+Default = 10 kilometers.}
+
+\item{geod}{logical. If TRUE the radius around each capital is calculated
+based on a sphere, buffer is in meters and independent of latitude. If FALSE
+the radius is calculated assuming planar coordinates and varies slightly with latitude,
+in this case buffer is in degrees. DEfault = T.}
 
 \item{ref}{a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 be any SpatialPointsDataframe, but the structure must be identical to

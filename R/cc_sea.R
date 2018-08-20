@@ -20,7 +20,10 @@
 #' Default = \dQuote{decimallatitude}.
 #' @param ref a SpatialPolygonsDataframe. Providing the geographic gazetteer.
 #' Can be any SpatialPolygonsDataframe, but the structure must be identical to
-#' \code{\link{landmass}}. See details.  Default = \code{\link{landmass}}
+#' rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
+#' Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
+#' @param scale the scale of the default reference, as downloaded from natural earth. 
+#' Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 50.
 #' @param value a character string.  Defining the output value. See value.
 #' @param speedup logical. Using heuristic to speed up the analysis for large data sets
 #'  with many records per location.
@@ -44,13 +47,16 @@
 #' @export
 #' @importFrom sp CRS SpatialPoints "proj4string<-" over proj4string coordinates
 #' @importFrom raster crop
+#' @importFrom rgdal readOGR
+#' @importFrom rnaturalearth ne_download
 cc_sea <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
                    ref = NULL,
+                   scale = 50,
                    value = "clean",
                    speedup = TRUE, 
-                   verbose = TRUE) {
+                   verbose = TRUE){
 
   # check value argument
   match.arg(value, choices = c("clean", "flagged"))
@@ -59,30 +65,29 @@ cc_sea <- function(x,
     message("Testing sea coordinates")
   }
   
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  
   # run test
   if(speedup){
     ## heuristic to speedup - reduce to individual locations
     inp <- x[!duplicated(x[,c(lon, lat)]),]
-    pts <- sp::SpatialPoints(inp[, c(lon, lat)])
+    pts <- sp::SpatialPoints(inp[, c(lon, lat)], proj4string = CRS(wgs84))
     
     # select and prepare terrestrial surface reference
     if (is.null(ref)) {
-      ref <- CoordinateCleaner::landmass
+      if(!scale %in%  c(10, 50, 110)){
+        stop("scale must be one of c(10,50,110)")
+      }
+      
+      ref <- rnaturalearth::ne_download(scale = scale, type = 'land', category = 'physical')
       ref <- raster::crop(ref, raster::extent(pts) + 1)
-    } else {
-      #Enable sf formatted custom references
-      ref <- as(ref, "Spatial")
-      
+    }else{
       #Check projection of custom reference and reproject if necessary
-      wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-      
       if(is.na(sp::proj4string(ref))){
         warning("no projection information for reference found, 
                 assuming '+proj=longlat +datum=WGS84 +no_defs 
                 +ellps=WGS84 +towgs84=0,0,0'")
-      }else if(sp::proj4string(ref) == wgs84){
-        sp::proj4string(ref) <- ""
-      }else{
+      }else if(sp::proj4string(ref) != wgs84){
         ref <- sp::spTransform(ref, sp::CRS(wgs84))
         warning("reprojecting reference to '+proj=longlat +datum=WGS84 
                 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
@@ -101,15 +106,26 @@ cc_sea <- function(x,
     out <- out[order(out$order),]
     out <- out$out
   }else{
-    pts <- sp::SpatialPoints(x[, c(lon, lat)])
+    
+    pts <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = wgs84)
     
     # select and prepare terrestrial surface reference
     if (is.null(ref)) {
-      ref <- CoordinateCleaner::landmass
+      match.arg(scale, choices = c(10, 50, 110))
+      
+      ref <- rnaturalearth::ne_download(scale = scale, type = 'land', category = 'physical')
       ref <- raster::crop(ref, raster::extent(pts) + 1)
     } else {
-      sp::proj4string(ref) <- ""
-      warning("Assuming lat/lon for ref")
+      #Check projection of custom reference and reproject if necessary
+      if(is.na(sp::proj4string(ref))){
+        warning("no projection information for reference found, 
+                assuming '+proj=longlat +datum=WGS84 +no_defs 
+                +ellps=WGS84 +towgs84=0,0,0'")
+      }else if(sp::proj4string(ref) != wgs84){
+        ref <- sp::spTransform(ref, sp::CRS(wgs84))
+        warning("reprojecting reference to '+proj=longlat +datum=WGS84 
+                +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+      }
     }
     
     # select relevant columns

@@ -10,12 +10,13 @@
 clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", countries = NULL, tests = c("capitals",
   "centroids", "equal", "gbif", "institutions", "outliers", "seas",
-  "zeros"), capitals_rad = 0.05, centroids_rad = 0.01,
-  centroids_detail = "both", inst_rad = 0.001,
+  "zeros"), capitals_rad = 10000, centroids_rad = 1000,
+  centroids_detail = "both", inst_rad = 100,
   outliers_method = "quantile", outliers_mtp = 3, outliers_td = 1000,
-  outliers_size = 7, zeros_rad = 0.5, capitals_ref = NULL,
-  centroids_ref = NULL, country_ref = NULL, inst_ref = NULL,
-  seas_ref = NULL, urban_ref = NULL, value = "spatialvalid",
+  outliers_size = 7, range_rad = 0, zeros_rad = 0.5,
+  capitals_ref = NULL, centroids_ref = NULL, country_ref = NULL,
+  inst_ref = NULL, range_ref = NULL, seas_ref = NULL,
+  seas_scale = 50, urban_ref = NULL, value = "spatialvalid",
   verbose = TRUE, report = FALSE)
 }
 \arguments{
@@ -42,10 +43,10 @@ See details for all tests available. Default = c("capitals", "centroids",
 "seas", "zeros")}
 
 \item{capitals_rad}{numeric. The radius around capital coordinates in
-degrees. Default = 0.1.}
+meters. Default = 10000.}
 
-\item{centroids_rad}{numeric. The side length of the rectangle around
-country centroids in degrees. Default = 0.01.}
+\item{centroids_rad}{numeric. The radius around capital coordinates in
+meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to
 \sQuote{country} only country (adm-0) centroids are tested, if set to
@@ -66,6 +67,8 @@ records of a species to be identified as outlier, in km. Default = 1000.}
 \item{outliers_size}{numerical.  The minimum number of records in a dataset
 to run the taxon-specific outlier test.  Default = 7.}
 
+\item{range_rad}{buffer around natural ranges. Default = 0.}
+
 \item{zeros_rad}{numeric. The radius around 0/0 in degrees. Default = 0.5.}
 
 \item{capitals_ref}{a \code{data.frame} with alternative reference data for
@@ -84,8 +87,16 @@ reference for the countries test. If NULL, the
 biodiversity institution test. If NULL, the \code{institutions} dataset
 is used.  Alternatives must be identical in structure.}
 
+\item{range_ref}{a \code{SpatialPolygonsDataFrame} of species natural ranges.
+Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.}
+
 \item{seas_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
-for the seas test. If NULL, the \code{\link{landmass}} dataset is used.}
+for the seas test. If NULL, the
+rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
+dataset is used.}
+
+\item{seas_scale}{The scale of the default landmass reference. Must be one of 10, 50, 110.
+Higher numbers equal higher detail. Default = 50.}
 
 \item{urban_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
@@ -160,6 +171,8 @@ the median of the mean distance of all points plus/minus the mad of the mean
 distances of all records of the species * mltpl. If \dQuote{distance}
 records are flagged as outliers, if the \emph{minimum} distance to the next
 record of the species is > \code{tdi}.
+\item ranges tests if records fall within provided natural range polygons on
+a per species basis. See \code{\link{cc_iucn}} for details.
 \item seas tests if coordinates fall into the ocean.
 \item urban tests if coordinates are from urban areas.
 \emph{Switched off by default}

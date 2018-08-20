@@ -42,7 +42,7 @@
 #' dataset to be tested. Default = 10.
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-#' 'mad'}) to identify outliers. See details.  Default = 3.
+#' 'mad'}) to identify outliers. See details.  Default = 5.
 #' @param replicates numeric. The number of replications for the distance
 #' matrix calculation. See details.  Default = 5.
 #' @param flag_thresh numeric.  The fraction of replicates necessary to flag a

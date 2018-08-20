@@ -5,8 +5,8 @@
 \title{Flag Geographic Outliers in Species Distributions}
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", method = "quantile", mltpl = 3, tdi = 1000,
-  value = "clean", verbose = TRUE)
+  species = "species", method = "quantile", mltpl = 5, tdi = 1000,
+  value = "clean", sampling_cor = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -27,13 +27,16 @@ selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
 
 \item{mltpl}{numeric. The multiplier of the interquartile range
 (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-'mad'})to identify outliers. See details.  Default = 3.}
+'mad'})to identify outliers. See details.  Default = 5.}
 
 \item{tdi}{numeric.  The minimum absolute distance (\code{method ==
 'distance'}) of a record to all other records of a species to be identified
 as outlier, in km. See details. Default = 1000.}
 
 \item{value}{a character string.  Defining the output value. See value.}
+
+\item{sampling_cor}{logical. If TRUE, outlier detection is weightend by sampling intensity. 
+See details. Defeulat = F.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -61,7 +64,16 @@ deviation is used. In this case a record is flagged as outlier, if the
 the median of the mean distance of all points plus/minus the mad of the mean
 distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
-record of the species is > \code{tdi}.
+record of the species is > \code{tdi}. For speces with records from > 10000
+unique locations a random sample of 1000 records is used for 
+the distance matrix calculation.
+
+The likelihood of occurrence records being erroroneous outliers is linked to the sampling effort
+in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
+from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
+(the mean distance) for each records is than weighted by the log transformed 
+number of records per square kilometre in this country. See for an example and further
+ explanation of the outlier test.
 }
 \note{
 See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more

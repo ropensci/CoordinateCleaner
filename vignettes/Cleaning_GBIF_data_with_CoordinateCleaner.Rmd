@@ -52,6 +52,7 @@ You might need to confirm to install the rnaturalearth package when loading `Coo
 library(dplyr)
 library(ggplot2)
 library(rgbif)
+library(sp)
 library(countrycode)
 library(CoordinateCleaner)
 
@@ -95,9 +96,8 @@ dat <- data.frame(dat)
 flags <- clean_coordinates(x = dat, lon = "decimalLongitude", lat = "decimalLatitude",
                           countries = "countryCode", 
                           species = "species",
-                          c("capitals", "centroids", "equal",
-                            "gbif", "institutions",
-                            "zeros", "countries")) # most test are on by default
+                          tests = c("capitals", "centroids", "equal","gbif", "institutions",
+                                    "zeros", "countries")) # most test are on by default
 summary(flags)
 plot(flags)
 ```
@@ -106,10 +106,10 @@ The automatic test flagged `r round(sum(!flags$summary) / nrow(dat) * 100, 1)`% 
 
 ```{r, eval = TRUE}
 #Exclude problematic records
-dat.cl <- dat[flags$summary,]
+dat_cl <- dat[flags$summary,]
 
 #THe flagged records
-dat.fl <- dat[!flags$summary,]
+dat_fl <- dat[!flags$summary,]
 ```
 
 ### Option B) Using the magrittr pipe (%>%)
@@ -138,16 +138,16 @@ That helped a lot, but unfortunately some unwanted records remain, especially wi
 
 ```{r, eval = TRUE, collapse = T, fig.cap = "\\label{fig:automated}A histogram of the coordinate precision in the dataset.."}
 #Remove records with low coordinate precision
-hist(dat.cl$coordinateUncertaintyInMeters/1000, breaks = 20)
+hist(dat_cl$coordinateUncertaintyInMeters/1000, breaks = 20)
 
-dat.cl <- dat.cl %>%
+dat_cl <- dat_cl %>%
   filter(coordinateUncertaintyInMeters/1000 <= 100 | is.na(coordinateUncertaintyInMeters))
 
 #Remove unsuitable data sources, especially fossils 
 #which are responsible for the majority of problems in this case
 table(dat$basisOfRecord)
 
-dat.cl <- filter(dat.cl, basisOfRecord == "HUMAN_OBSERVATION" | 
+dat_cl <- filter(dat_cl, basisOfRecord == "HUMAN_OBSERVATION" | 
                          basisOfRecord == "OBSERVATION" |
                          basisOfRecord == "PRESERVED_SPECIMEN")
 ```
@@ -155,9 +155,9 @@ dat.cl <- filter(dat.cl, basisOfRecord == "HUMAN_OBSERVATION" |
 In the next step we will remove records with suspicious individual counts. GBIF includes few records of absence (individual count = 0) and suspiciously high occurrence counts, which might indicate inappropriate data or data entry problems. 
 ```{r, eval = TRUE}
 #Individual count
-table(dat.cl$individualCount)
+table(dat_cl$individualCount)
 
-dat.cl <- dat.cl%>%
+dat_cl <- dat_cl%>%
   filter(individualCount > 0 | is.na(individualCount))%>%
   filter(individualCount < 99 | is.na(individualCount)) # high counts are not a problem
 ```
@@ -166,20 +166,20 @@ We might also want to exclude very old records, as they are more likely to be un
 
 ```{r, eval = TRUE}
 #Age of records
-table(dat.cl$year)
+table(dat_cl$year)
 
-dat.cl <- dat.cl%>%
+dat_cl <- dat_cl%>%
   filter(year > 1945) # remove records from before second world war
 ```
 
 On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the [taxize R package](https://ropensci.org/tutorials/taxize_tutorial.html) or the [taxonomic name resolution service](http://tnrs.iplantcollaborative.org/) (plants only).
 
 ```{r, collapse = T, eval = TRUE}
-table(dat.cl$family) #that looks good
-dat.cl <- dat.cl%>%
+table(dat_cl$family) #that looks good
+dat_cl <- dat_cl%>%
   filter(family == 'Felidae')
 
-table(dat.cl$taxonRank) # this is also good
+table(dat_cl$taxonRank) # this is also good
 
 ```
 
@@ -188,20 +188,56 @@ We excluded almost 50% of the initial data points with the data cleaning, and th
 We have, however, also lost quite a number of records. In general, there is no "one-size-fits-it-all" for data quality of geographic species occurrence records. Of course highest coordinate precision is desirable, but what is acceptable will strongly depend on the downstream analyses. For species distribution modelling, usually high precision is necessary e.g. 1-10 km, but for other analyses such as biogeographic reconstructions using tectonic plates, a record might be considered good enough quality, as long as it is on the right continent. As another example for conservation purposes it might be sufficient to know that a species is present within a certain country.
 
 # Improving data quality using external information
-Figure \ref{fig:final} shows the success of automated cleaning. However, three records within Europe remain. A short inspection of the data suggests that these are a dubious human observation and five specimens, potentially assigned to their specimen location, or fossils with misclassified meta-data. One option to automatically flag these records is to rerun the outlier test on the cleaned data. However, this would most likely also flag the isolated Indian population (which is a true presence) as problematic. Another alternative is to use additional knowledge or the study outline for additional cleaning, using species defined ranges (for animals for example the [IUCN range maps](http://www.iucnredlist.org/technical-documents/spatial-data) or for plants the botanical countries of the [World Checklist of selected plant families](http://wcsp.science.kew.org/home.do). A third alternative is to exclude records outside a certain study extent. In our example the latter is the easiest solution because we know that lions do not occur in high latitudes any more.
+Figure \ref{fig:final} shows the success of automated cleaning. However, three records within Europe remain. A short inspection of the data suggests that these are a dubious human observation and five specimens, potentially assigned to their specimen location, or fossils with misclassified meta-data. One option to automatically flag these records is to rerun the outlier test on the cleaned data. However, this would most likely also flag the isolated Indian population (which is a true presence) as problematic. 
 
+## Flag records based on fixed longitude and latitude
+The first option alternative is to exclude records outside a certain study extent. In our example this is the easiest solution because we know that lions do not occur in high latitudes any more.
 
 ```{r, eval = TRUE}
 #exclude based on study area
-dat.fin <- filter(dat.cl, decimalLatitude < 40)
+dat_fin <- filter(dat_cl, decimalLatitude < 40)
+```
+
+## Flag records based on species natural ranges
+In cases where simple latitudinal or longitudinal borders are not useful, an alternative is to use species ranges from external source as reference and flag all records falling outside these ranges. For amphibians, birds, mammals and reptiles the International Union for the conservation of nature (IUCN) provides detailed shape files of species' natural distribution ranges. These can be downloaded for free at http://www.iucnredlist.org/technical-documents/spatial-data. *CoordinateCleaner* implements a straight forward way to use these, or any other, ranges to flag records in the `cc_iucn` function. Since downloading the IUCN shapes requires log-in we will approximate lion's natural range from scratch for our example. For plants check out the botanical countries of the [World Checklist of selected plant families](http://wcsp.science.kew.org/home.do).
+
+
+```{r, eval = TRUE, collapse = T}
+
+#create simple antural range for lions
+range <- Polygon(cbind(c(-23, -7, 31, 71, 83, 42, 41, 24, -23), c(14, 37, 32, 27, 18, 0, -16, -38, 14)))
+range <- Polygons(list(range), ID = c("A"))
+wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+range <- SpatialPolygons(list(range), proj4string = CRS(wgs84))
+df <- data.frame(species = c("Panthera leo"), row.names = c("A"))
+nat_range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
+
+# Visualize range
+plo <- fortify(nat_range)
+
+ggplot() +
+  borders("world", colour="gray50", fill="gray50")+
+  geom_polygon(data = plo, aes(x = long, y = lat, group = group))+
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.title = element_blank())
+
+# run cc_iucn()
+range_flags <- cc_iucn(x = dat_cl,
+                       range = nat_range,
+                       lon = "decimalLongitude",
+                       lat = "decimalLatitude",
+                       value = "flagged")
+
+dat_fin <- dat_cl[range_flags, ]
 ```
 
 ```{r, eval = TRUE, echo = F, warning = F, fig.height = 10, fig.cap = "\\label{fig:final}The dataset of occurrence of lions after different cleaning phases."}
 dat$cleaning = "Raw data"
-dat.cl$cleaning = "Automatic cleaning"
-dat.fin$cleaning = "Manual polishing"
+dat_cl$cleaning = "Automatic cleaning"
+dat_fin$cleaning = "Manual polishing"
 
-plo <- bind_rows(dat, dat.cl, dat.fin)
+plo <- bind_rows(dat, dat_cl, dat_fin)
 plo$cleaning <- factor(plo$cleaning, levels = c("Raw data", "Automatic cleaning", "Manual polishing"))
 
 wm <- borders("world", colour="gray50", fill="gray50")
@@ -218,7 +254,6 @@ ggplot() +
 
 ```
 
-
 # Identifying problematic data sets
 Some types of potentially problematic coordinates can cause bias, but are not identifiable on record-level if the relevant meta-data are missing. This is especially the case if the erroneous records have been combined with precise GPS-based point occurrences into datasets of mixed precision. Two important cases are: (A) coordinate conversion errors based on the misinterpretation of the degree sign as decimal delimiter and (B) data derived from rasterized data collection designs (e.g. presence in a 50x50 km grid cell). \textit{CoordinateCleaner} implements two algorithms to identify these problems on a dataset level.
 
@@ -226,7 +261,7 @@ Some types of potentially problematic coordinates can cause bias, but are not id
 We will first run the test for erroneous data conversion due to the misinterpretation of the degree sign as decimal delimiter. We will use the `cd_ddmm` function, alternatively, you can use the `clean_dataset` wrapper. See supplementary material S1 for a detailed description of the algorithm and implementation of the test. You can control the output of the function via the `value` argument.
 
 ```{r, eval = TRUE, warnings = F, message = F}
-out.ddmm <- cd_ddmm(dat.cl, lon = "decimalLongitude", lat = "decimalLatitude", 
+out.ddmm <- cd_ddmm(dat_cl, lon = "decimalLongitude", lat = "decimalLatitude", 
                     ds = "species", diagnostic = T, diff = 1,
                     value = "dataset")
 
@@ -239,7 +274,7 @@ As a second step we will use the `cd_round` function to identify datasets with a
 
 ```{r, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
 par(mfrow = c(2,2), mar = rep(2, 4))
-out.round <- cd_round(dat.fin, lon = "decimalLongitude", 
+out.round <- cd_round(dat_fin, lon = "decimalLongitude", 
                       lat = "decimalLatitude", 
                       ds = "species",
                       value = "dataset",

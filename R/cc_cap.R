@@ -14,8 +14,12 @@
 #' @param lat a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer The buffer around each capital coordinate (the centre of the
-#' city), where records should be flagged as problematic, in decimal degrees.
-#' Default = 0.1.
+#' city), where records should be flagged as problematic. Units depend on geod.
+#' Default = 10 kilometers.
+#' @param geod logical. If TRUE the radius around each capital is calculated
+#' based on a sphere, buffer is in meters and independent of latitude. If FALSE
+#' the radius is calculated assuming planar coordinates and varies slightly with latitude,
+#' in this case buffer is in degrees. DEfault = T.
 #' @param ref a SpatialPointsDataframe. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataframe, but the structure must be identical to
 #' \code{\link{countryref}}.  Default = \code{\link{countryref}}
@@ -39,13 +43,15 @@
 #' cc_cap(x, value = "flagged")
 #' 
 #' @export
-#' @importFrom sp SpatialPoints proj4string "proj4string<-" over
+#' @importFrom geosphere destPoint
+#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons proj4string "proj4string<-" SpatialPolygons SpatialPoints
 #' @importFrom raster extent crop
 #' @importFrom rgeos gBuffer
 cc_cap <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
-                   buffer = 0.1,
+                   buffer = 10000,
+                   geod = TRUE,
                    ref = NULL, 
                    value = "clean", 
                    verbose = TRUE) {
@@ -56,9 +62,19 @@ cc_cap <- function(x,
   if (verbose) {
     message("Testing country capitals")
   }
+  if(buffer > 10 & !geod){
+    warnings("Using large buffer check 'geod'")
+  }
+  if(buffer < 100 & geod){
+    warnings("Using small buffer check 'geod'")
+  }
+  
+  # set default projection
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
   # select relevant columns
-  dat <- sp::SpatialPoints(x[, c(lon, lat)])
+  dat <- sp::SpatialPoints(x[, c(lon, lat)], 
+                           proj4string = sp::CRS(wgs84))
 
   # check for reference data and adapt projection of custom reference data
   if (is.null(ref)) {
@@ -67,7 +83,8 @@ cc_cap <- function(x,
   }
   # subset reference data to data window to spead up the test
   limits <- raster::extent(dat) + buffer
-  ref <- raster::crop(SpatialPoints(ref[, c("capital.lon", "capital.lat")]), 
+  ref <- raster::crop(SpatialPoints(ref[, c("capital.lon", "capital.lat")], 
+                                    proj4string = sp::CRS(wgs84)), 
                       limits)
 
   # test if any points fall within the buffer incase no capitals are found in
@@ -75,8 +92,31 @@ cc_cap <- function(x,
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
-    ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
-    out <- is.na(sp::over(x = dat, y = ref))
+    if(geod){
+      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+      dg <- seq(from = 0, to = 360, by = 5)
+      
+      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+                                      b = rep(dg, each = length(ref)), 
+                                      d = buffer)
+      
+      id <- rep(1:length(ref), times = length(dg))
+      
+      
+      lst <- split(data.frame(buff_XY), f = id)
+      
+      # Make SpatialPolygons out of the list of coordinates
+      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
+      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
+      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+      ref <- sp::disaggregate(spolys)
+      
+      #point in polygon test
+      out <- is.na(sp::over(x = dat, y = ref))
+    }else{
+      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
+      out <- is.na(sp::over(x = dat, y = ref))
+    }
   }
 
   # create output based on value argument

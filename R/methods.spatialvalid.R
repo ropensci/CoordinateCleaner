@@ -14,7 +14,7 @@ is.spatialvalid <- function(x) {
 #' @param x an object of the class \code{spatialvalid} as from
 #' \code{\link{clean_coordinates}}.
 #' @param bgmap an object of the class \code{SpatialPolygonsDataFrame} used as
-#' background map. Default = \code{\link{landmass}}
+#' background map. Default = ggplot::borders()
 #' @param clean logical.  If TRUE, non-flagged coordinates are included in the
 #' map.
 #' @param details logical. If TRUE, occurrences are colour-coded by the type of
@@ -78,9 +78,6 @@ plot.spatialvalid <- function(x,
       ggplot2::theme_bw()
     
   }
-  
-
-  
 
   # plot background
 

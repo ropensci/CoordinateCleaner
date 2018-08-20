@@ -5,8 +5,8 @@
 \title{Flag Coordinates in Vicinity of Country and Province Centroids}
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 0.1, test = "both", ref = NULL, value = "clean",
-  verbose = TRUE)
+  buffer = 1000, geod = TRUE, test = "both", ref = NULL,
+  value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -19,8 +19,13 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{numerical. The buffer around each province or country
-centroid, where records should be flagged as problematic, in decimal
-degrees.  Default = 0.1.}
+centroid, where records should be flagged as problematic. Units depend on geod.  
+Default = 1 kilometer.}
+
+\item{geod}{logical. If TRUE the radius around each centroid is calculated
+based on a sphere, buffer is in meters and independent of latitude. If FALSE
+the radius is calculated assuming planar coordinates and varies slightly with latitude,
+in this case buffer is in degrees. DEfault = T.}
 
 \item{test}{a character string. Specifying the details of the test. One of
 c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for

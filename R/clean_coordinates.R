@@ -43,6 +43,8 @@
 #' distances of all records of the species * mltpl. If \dQuote{distance}
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}.
+#' * ranges tests if records fall within provided natural range polygons on
+#'   a per species basis. See \code{\link{cc_iucn}} for details.
 #' * seas tests if coordinates fall into the ocean.
 #' * urban tests if coordinates are from urban areas. 
 #' *Switched off by default*
@@ -68,9 +70,9 @@
 #' "equal", "gbif", "institutions", "outliers",
 #' "seas", "zeros")
 #' @param capitals_rad numeric. The radius around capital coordinates in
-#' degrees. Default = 0.1.
-#' @param centroids_rad numeric. The side length of the rectangle around
-#' country centroids in degrees. Default = 0.01.
+#' meters. Default = 10000.
+#' @param centroids_rad numeric. The radius around capital coordinates in
+#' meters. Default = 1000.
 #' @param centroids_detail a \code{character string}. If set to
 #' \sQuote{country} only country (adm-0) centroids are tested, if set to
 #' \sQuote{provinces} only province (adm-1) centroids are tested.  Default =
@@ -84,6 +86,7 @@
 #' records of a species to be identified as outlier, in km. Default = 1000.
 #' @param outliers_size numerical.  The minimum number of records in a dataset
 #' to run the taxon-specific outlier test.  Default = 7.
+#' @param range_rad buffer around natural ranges. Default = 0.
 #' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
 #' @param capitals_ref a \code{data.frame} with alternative reference data for
 #' the country capitals test. If missing, the \code{countryref} dataset is used.
@@ -97,8 +100,14 @@
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
 #' biodiversity institution test. If NULL, the \code{institutions} dataset
 #' is used.  Alternatives must be identical in structure.
+#' @param range_ref a \code{SpatialPolygonsDataFrame} of species natural ranges.
+#' Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.
 #' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
-#' for the seas test. If NULL, the \code{\link{landmass}} dataset is used.
+#' for the seas test. If NULL, the 
+#' rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical') 
+#' dataset is used.
+#' @param seas_scale The scale of the default landmass reference. Must be one of 10, 50, 110.
+#' Higher numbers equal higher detail. Default = 50.
 #' @param urban_ref a \code{SpatialPolygonsDataFrame} as alternative reference
 #' for the urban test. If NULL, the test is skipped. See details for a
 #' reference gazetteers.
@@ -152,20 +161,23 @@ clean_coordinates <- function(x,
                                        "institutions", 
                                        "outliers",
                                        "seas", "zeros"),
-                             capitals_rad = 0.05,
-                             centroids_rad = 0.01, 
+                             capitals_rad = 10000,
+                             centroids_rad = 1000, 
                              centroids_detail = "both", 
-                             inst_rad = 0.001, 
+                             inst_rad = 100, 
                              outliers_method = "quantile",
                              outliers_mtp = 3, 
                              outliers_td = 1000, 
                              outliers_size = 7, 
+                             range_rad = 0,
                              zeros_rad = 0.5,
                              capitals_ref = NULL, 
                              centroids_ref = NULL, 
                              country_ref = NULL, 
                              inst_ref = NULL, 
+                             range_ref = NULL,
                              seas_ref = NULL, 
+                             seas_scale = 50,
                              urban_ref = NULL,
                              value = "spatialvalid", 
                              verbose = TRUE, 
@@ -194,9 +206,9 @@ clean_coordinates <- function(x,
   }
 
   # Initiate output 
-  out <- data.frame(matrix(NA, nrow = nrow(x), ncol = 12))
+  out <- data.frame(matrix(NA, nrow = nrow(x), ncol = 13))
   colnames(out) <- c("val", "equ", "zer", "cap", "cen", "sea", "urb", "con",
-                    "otl", "gbf", "inst", "dpl")
+                    "otl", "gbf", "inst", "rang", "dpl")
 
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work
@@ -245,7 +257,9 @@ clean_coordinates <- function(x,
   ## Seas
   if ("seas" %in% tests) {
     out$sea <- cc_sea(x,
-      lon = lon, lat = lat, ref = seas_ref, verbose = verbose,
+      lon = lon, lat = lat, ref = seas_ref, 
+      scale = seas_scale,
+      verbose = verbose,
       value = "flagged"
     )
   }
@@ -296,6 +310,19 @@ clean_coordinates <- function(x,
       lon = lon, lat = lat, ref = inst_ref, buffer = inst_rad,
       verbose = verbose, value = "flagged"
     )
+  }
+  
+  ## Natural ranges
+  if ("range" %in% tests) {
+    if(!is.null(range_rad)){
+      stop("'range_rad' not found")
+    }else{
+      out$rang <- cc_iucn(x,
+                           lon = lon, lat = lat, species = species,
+                           buffer = range_rad,
+                           verbose = verbose, value = "flagged"
+      )
+    }
   }
 
   ## exclude duplicates

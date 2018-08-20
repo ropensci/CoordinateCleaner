@@ -12,7 +12,7 @@
 \code{\link{clean_coordinates}}.}
 
 \item{bgmap}{an object of the class \code{SpatialPolygonsDataFrame} used as
-background map. Default = \code{\link{landmass}}}
+background map. Default = ggplot::borders()}
 
 \item{clean}{logical.  If TRUE, non-flagged coordinates are included in the
 map.}

@@ -66,8 +66,7 @@ cc_urb <- function(x,
     ref <- as(ref, "Spatial")
     
     #Check projection of custom reference and reproject if necessary
-    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs 
-    +ellps=WGS84 +towgs84=0,0,0"
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
     
     if(is.na(sp::proj4string(ref))){
       warning("no projection information for reference found, 
@@ -81,7 +80,6 @@ cc_urb <- function(x,
               +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
     }
   }
-  
 
   # Prepare input points and extent
   dat <- sp::SpatialPoints(x[, c(lon, lat)])

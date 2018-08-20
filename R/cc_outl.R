@@ -15,7 +15,9 @@
 #' the median of the mean distance of all points plus/minus the mad of the mean
 #' distances of all records of the species * mltpl. If \dQuote{distance}:
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
-#' record of the species is > \code{tdi}.
+#' record of the species is > \code{tdi}. For speces with records from > 10000
+#' unique locations a random sample of 1000 records is used for 
+#' the distance matrix calculation.
 #' 
 #' @param x a data.frame. Containing geographical coordinates and species
 #' names.
@@ -30,11 +32,13 @@
 #' \dQuote{mad}.  Default = \dQuote{quantile}.
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-#' 'mad'})to identify outliers. See details.  Default = 3.
+#' 'mad'})to identify outliers. See details.  Default = 5.
 #' @param tdi numeric.  The minimum absolute distance (\code{method ==
 #' 'distance'}) of a record to all other records of a species to be identified
 #' as outlier, in km. See details. Default = 1000.
 #' @param value a character string.  Defining the output value. See value.
+#' @param sampling_cor logical. If TRUE, outlier detection is weightend by sampling intensity. 
+#' See details. Defeulat = F.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -43,6 +47,12 @@
 #' problematic. Default = \dQuote{clean}.
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
+#' @details The likelihood of occurrence records being erroroneous outliers is linked to the sampling effort
+#' in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
+#' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
+#' (the mean distance) for each records is than weighted by the log transformed 
+#' number of records per square kilometre in this country. See for an example and further
+#'  explanation of the outlier test.
 #' @keywords Coordinate cleaning
 #' @examples
 #' 
@@ -58,14 +68,17 @@
 #' @export
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats mad IQR median quantile
+#' @importFrom sp over SpatialPoints
+#' 
 cc_outl <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude", 
                     species = "species",
                     method = "quantile", 
-                    mltpl = 3, 
+                    mltpl = 5, 
                     tdi = 1000, 
                     value = "clean", 
+                    sampling_cor = FALSE,
                     verbose = TRUE) {
 
   # check value argument
@@ -75,9 +88,57 @@ cc_outl <- function(x,
   if (verbose) {
     message("Testing geographic outliers")
   }
+  
+  if(sampling_cor){
+    # identify countries in the dataset, with point polygon test
+    pts <- sp::SpatialPoints(x[, c(lon, lat)])
+    
+    if (!requireNamespace("rnaturalearth", quietly = TRUE)) {
+      stop("Install the 'rnaturalearth' package or provide a custom reference",
+           call. = FALSE
+      )
+    }
+    if (!requireNamespace("rgbif", quietly = TRUE)) {
+      stop("'rgbif' is needed for sampling_cor = TRUE.",
+           call. = FALSE
+      )
+    }
+    
+    # load country reference and get area
+    ref <- rnaturalearth::ne_countries(scale = "medium")
+    sp::proj4string(ref) <- ""
+    area <- data.frame(country = ref@data$iso_a3, 
+                       area = geosphere::areaPolygon(ref))
+    area <- area[!is.na(area$area),]
+    
+    ref <- raster::crop(ref, raster::extent(pts) + 1)
+    
+    # get country from coordinates and compare with provided country
+    country <- sp::over(x = pts, y = ref)[, "iso_a3"]
+    
+    dat <- data.frame(x, country)
+    
+    # get number of records in GBIF per country as proxy for sampling intensity
+    country <- unique(country)
+    country <- country[!is.na(country)]
+    
+    nrec <- sapply(country, FUN = function(k){rgbif::occ_count(country = k)})##get record count
+    nrec <- data.frame(country = country, weight = unlist(nrec), row.names = NULL)
+    
+    # log transform and prepare as weight for each plot
+    dat <- dplyr::left_join(dat, nrec)
+    dat <- dplyr::left_join(dat, area)
+    dat$weight <- dat$weight / (dat$area / 1000000) #normalize number of records to 10 sqkm
+    dat$weight <- log(dat$weight)
+    dat <- dat[,-c(4,6)] #remove country information
+    dat$weight[is.na(dat$weight)] <- median(dat$weight, na.rm = T) # records in the sea get the mean weight
+    #dat$weight <- log10(dat$weight)
+  }else{
+    dat <- x
+  }
 
   # split up into species
-  splist <- split(x, f = as.character(x[[species]]))
+  splist <- split(dat, f = as.character(dat[[species]]))
 
   # remove duplicate records and make sure that there are at least two records
   # left
@@ -85,30 +146,44 @@ cc_outl <- function(x,
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
   splist <- splist[test > 7]
+  
 
   # loop over species and run outlier test
   flags <- lapply(splist, function(k) {
     test <- nrow(k[!duplicated(k), ])
 
     if (test > 7) {
-      # absolute distance test with mean interpoint distance
-      if (method == "distance") {
+      #calculate distance matrix
+      if(nrow(k) > 10000){ #subsampling for large datasets
+        dum <- k[sample(1:nrow(k), size = 1000),]
+        dist <- geosphere::distm(k[, c(lon, lat)], dum[, c(lon,lat)])
+        warning("large dataset. Using subsampling for outlier detection.")
+      }else{
         dist <- geosphere::distm(k[, c(lon, lat)], 
                                  fun = geosphere::distHaversine)
-        dist[dist == 0] <- NA
-
+      }
+      
+      dist[dist == 0] <- NA
+      
+      # absolute distance test with mean interpoint distance
+      if (method == "distance") {
         mins <- apply(dist, 1, min, na.rm = TRUE)
         out <- which(mins > tdi * 1000)
+        
+        if(sampling_cor){
+          stop("Sampling correction impossible for method 'distance'" )
+        }
       }
 
       # Quantile based test, with mean interpoint distances
       if (method == "quantile") {
-        dist <- geosphere::distm(k[, c(lon, lat)], 
-                                 fun = geosphere::distHaversine)
-        dist[dist == 0] <- NA
-
         mins <- apply(dist, 1, mean, na.rm = TRUE)
         quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
+        
+        if(sampling_cor){#weight for sampling intensity in country
+          mins <- mins * k$weight
+        }
+        
         out <- which(mins < quo[1] - stats::IQR(mins) * mltpl | mins > quo[2] +
           stats::IQR(mins) * mltpl)
       }
@@ -117,11 +192,12 @@ cc_outl <- function(x,
       # calculate the mean distance to
       # all other points for each point, and then take the mad of this
       if (method == "mad") {
-        dist <- geosphere::distm(k[, c(lon, lat)], 
-                                 fun = geosphere::distHaversine)
-        dist[dist == 0] <- NA
-
         mins <- apply(dist, 1, mean, na.rm = TRUE)
+       
+         if(sampling_cor){ #weight for sampling intensity in country
+          mins <- mins * k$weight
+        }
+        
         quo <- stats::median(mins)
         tester <- stats::mad(mins)
         out <- which(mins < quo - tester * mltpl | mins > quo + tester *

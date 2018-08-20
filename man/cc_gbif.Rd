@@ -5,7 +5,7 @@
 \title{Flag Records Assigned to GBIF Headquarters}
 \usage{
 cc_gbif(x, lon = "decimallongitude", lat = "decimallatitude",
-  value = "clean", verbose = TRUE)
+  buffer = 100, geod = TRUE, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -16,6 +16,14 @@ Default = \dQuote{decimallongitude}.}
 
 \item{lat}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallatitude}.}
+
+\item{buffer}{numerical. The buffer around the GBIF headquarters,
+where records should be flagged as problematic. Units depend on geod. Default = 100 m.}
+
+\item{geod}{logical. If TRUE the radius around each centroid is calculated
+based on a sphere, buffer is in meters and independent of latitude. If FALSE
+the radius is calculated assuming planar coordinates and varies slightly with latitude,
+in this case buffer is in degrees. DEfault = T.}
 
 \item{value}{a character string.  Defining the output value. See value.}
 

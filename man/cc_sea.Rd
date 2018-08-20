@@ -5,7 +5,8 @@
 \title{Flag Non-terrestrial Coordinates}
 \usage{
 cc_sea(x, lon = "decimallongitude", lat = "decimallatitude",
-  ref = NULL, value = "clean", speedup = TRUE, verbose = TRUE)
+  ref = NULL, scale = 50, value = "clean", speedup = TRUE,
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -19,7 +20,11 @@ Default = \dQuote{decimallatitude}.}
 
 \item{ref}{a SpatialPolygonsDataframe. Providing the geographic gazetteer.
 Can be any SpatialPolygonsDataframe, but the structure must be identical to
-\code{\link{landmass}}. See details.  Default = \code{\link{landmass}}}
+rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
+Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')}
+
+\item{scale}{the scale of the default reference, as downloaded from natural earth. 
+Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 50.}
 
 \item{value}{a character string.  Defining the output value. See value.}
 
