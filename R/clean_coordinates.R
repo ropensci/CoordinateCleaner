@@ -347,12 +347,9 @@ clean_coordinates <- function(x,
     }
   }
   if (value == "spatialvalid") {
-    inp <- data.frame(
-      species = x[, species], 
-      decimallongitude = x[, lon],
-      decimallatitude = x[, lat]
-    )
-    
+    inp <- x[, c(species, lon, lat)]
+    names(inp) <- c("species", "decimallongitude", "decimallatitude")
+
     out <- data.frame(inp, out, summary = suma)
     class(out) <- c("spatialvalid", "data.frame", class(out))
     

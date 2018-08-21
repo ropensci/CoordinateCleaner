@@ -21,7 +21,6 @@ is.spatialvalid <- function(x) {
 #' flag.
 #' @param pts_size numeric. The point size for the plot.
 #' @param font_size numeric. The font size for the legend and axes
-#' @param \dots additional arguments passed to other methods
 #' @return A plot of the records flagged as potentially erroneous by
 #' \code{\link{clean_coordinates}}.
 #' @seealso \code{\link{clean_coordinates}}
@@ -46,8 +45,7 @@ plot.spatialvalid <- function(x,
                               clean = TRUE, 
                               details = FALSE,
                               pts_size = 1, 
-                              font_size = 10, 
-                              ...) {
+                              font_size = 10) {
   x <- data.frame(x)
 
   # prepare background

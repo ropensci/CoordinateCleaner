@@ -35,7 +35,10 @@ lnx <- read_delim(file = "examples/0006556-180730143533302.csv", delim = "\t", g
 ```
 
 
-```{r, warning = F, message = F, eval = F, echo = T}
+# 1. The case of the European lynx
+The Eurasian lynx (*Lynx lynx*) is a wide-spread Eurasian carnivore species. Eurasia. The global Biodiversity Information Facility (www.gbif.org) comprises more than `r nrow(squ)` records for this species, the vast majority in Europe, few records from Asia and some records from North America and South America. While the European and Asian records correspond to the recent natural range of the species (compare for instance [here](http://www.iucnredlist.org/details/12519/0)), the American records are at least doubtful and might correspond to swapped coordinates, individuals in captivity or misidentification of the Canada lynx (*Lynx canadensis*). The species is an extreme case for outlier detection, because it includes potential true outliers (in the Americas), but also very isolated but potentially valid records (in northern China). We'll see how `cc_outl` can help to improve the data set, and show an alternative to outlier detection for extreme cases. Since this is a large dataset, the test will automatically sub-sampling for the calculation of the distance matrix.
+
+```{r, warning = F, message = F, collapse = T, eval = -(1:11)}
 #libraries
 library(CoordinateCleaner)
 library(rgbif)
@@ -43,22 +46,10 @@ library(tidyverse)
 library(ggplot2)
 library(sp)
 
-# Load example data
-squ <- rgbif::occ_search(scientificName = "Sciurus vulgaris", limit = 200000)%>%
-  select(species = specieskey, decimallongitude, decimallatitude, countrycode)%>%
-  filter(!is.na(decimallongitude))%>%
-  filter(!is.na(decimallatitude))
-  
+# Load data from GBIF
 lnx <- rgbif::occ_search(scientificName = "Lynx lynx", limit = 200000)%>%
-  select(species = specieskey, decimallongitude, decimallatitude, countrycode)%>%
-  filter(!is.na(decimallongitude))%>%
-  filter(!is.na(decimallatitude))
-```
-
-# Example 1 - The case of the European lynx
-The Eurasian lynx (*Lynx lynx*) is a wide-spread Eurasian carnivore species. Eurasia. The global Biodiversity Information Facility (www.gbif.org) comprises more than `r nrow(squ)` records for this species, the vast majority in Europe, few records from Asia and some records from North America and South America. While the European and Asian records correspond to the recent natural range of the species (compare for instance [here](http://www.iucnredlist.org/details/12519/0)), the American records are at least doubtful and might correspond to swapped coordinates, individuals in captivity or miss identifications of the Canada lynx (*Lynx canadensis*). The species is an extreme case for outlier detection, because it includes potential true outliers (in the Americas), but also very isolated but potentially valid records (in northern China). We'll see how `cc_outl` can help to improve the data set. Since this is a very large dataset, the test will automatically sub-sampling for the calculation of the distance matrix.
-
-```{r, warning = F, message = F, collapse = T}
+  select(species = specieskey, decimallongitude, decimallatitude, countrycode,
+         hasCoordinate = T)
 
 # Run basic coordinate cleaning
 flags <- clean_coordinates(x = lnx, tests = c("capitals",
@@ -76,9 +67,10 @@ ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
              aes(x = decimallongitude, y = decimallatitude, col = outlier))+
-  scale_color_viridis(discrete = T, names = "Flagged")+
+  scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
-  theme_bw()
+  theme_bw()+
+  theme(legend.position = "bottom")
 ```
 
 The default settings of the outlier test flagged `r sum(!outl)` outliers. This is only a small number of records. A comparison with the natural range of the species shows that the American records were all flag correctly as outliers. However it also reveals some potential issues, since few isolated records in Asia where also flagged as potential outliers, although they are well within the natural range of the species and likely are valid records. There isolated position is probably rather due to low sampling and data availability across Asia. Some tweaking seems necessary to get the best representation of the distribution of the Eurasian lynx using. `CoordinateCleaner` offers three options to improve the results 1) change the sensitivity of cc_outl, 2) correct for sampling intensity and 3) drop the outlier test and use natural ranges via `cc_iucn` instead.
@@ -89,30 +81,29 @@ We can make the outlier detection more conservative using the `mltpl` argument o
 ```{r, warning = F, message = F, collapse = T}
 outl_10 <- cc_outl(lnx, value = "flagged", mltpl = 10)
 
-
 plo <- data.frame(lnx, outlier =  as.factor(!outl_10))
 
 # visualize occurrence records
 ggplot()+
-  borders(fill = "grey60",
-          xlim = range(lnx["decimallongitude"]), 
-          ylim = range(lnx["decimallatitude"]))+
+  borders(fill = "grey60")+
   geom_point(data = plo, 
              aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+  scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
-  theme_bw()
+  theme_bw()+
+  theme(legend.position = "bottom")
 
 ```
 
 This further improved the results and now only the two very isolated records in eastern Asia remain as false flags.
 
-## Correcting for sampling intensity
-This may take some time.
+## 1.2 Correcting for sampling intensity
+An alternative to changing test sensitivity is to account for the general sampling situation per country for the outlier test, with the assumption, that geographically isolated records in well sampled countries are more likely to be true outliers, and geographically isolated records in badly sampled countries are less likely to be true outliers. The `sampling_cor` argument of `cc_outl`, uses the total number of occurrence records available from the Global Biodiversity Information Facility (GBIF) as a proxy for sampling per country, and weights the mean distance to other to other records of each records by the logarithmic, area-normalized number of records in GBIF. Here we will use `sampling_cor` with a less sensitive `mltpl` value. This may take some time.
 
 
 ```{r, warning = F, message = F, collapse = T}
 # Run outlier test
-outl_samp<- cc_outl(lnx, value = "flagged", mltpl = 5, sampling_cor = T)
+outl_samp<- cc_outl(lnx, value = "flagged", mltpl = 3, sampling_cor = T)
 
 # visualize occurrence records
 plo <- data.frame(lnx, outlier =  as.factor(!outl_samp))
@@ -121,12 +112,14 @@ ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
              aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+  scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
-  theme_bw()
+  theme_bw()+
+  theme(legend.position = "bottom")
 ```
 
 
-## Use natural ranges instead of outlier detection
+## 1.3 Natural ranges instead of outlier detection
 Cleaning geographic species occurrence data from outliers must be done carefully. The example of the Eurasian lynx showcased potential empirical problems (albeit in an extreme case) of outlier testing, mostly cause by biased sampling. In addition, it is also conceptually difficult to define outliers, since species can have disjunct distributions, the borders of species ranges are fuzzy, and single individuals might deviated drastically from the average species range. So, if for any analyses it is essential that the entire range of species is included, and records flagged by `cc_outl` cannot be verified, it is advisable to skip oilier testing and use species reference ranges to identify coordinate errors. Such reference ranges are for instance available for download for all species of amphibians, birds, mammals and reptiles from  http://www.iucnredlist.org/technical-documents/spatial-data. These are very detailed and *CoordinateCleaner* implements a straight forward way to use these, or any other, ranges to flag records in the `cc_iucn` function. Since downloading the IUCN shapes requires log-in, and for demonstration, we will use a self-build range for the lynx natural range. This is only a rough approximation based on euclidean geometry, but will suffice for the purpose of cleaning this data. 
 
 ```{r, warning = F, message = F, collapse = T}
@@ -157,8 +150,10 @@ ggplot()+
   geom_polygon(data = nat_range, aes(x = long, y = lat), fill = "green", alpha = 0.5, col = "grey50")+
   geom_point(data = plo, 
              aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+  scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
-  theme_bw()
+  theme_bw()+
+  theme(legend.position = "bottom")
 
 ```
 
@@ -170,6 +165,17 @@ ggplot()+
 <!-- We'll first run the standard *CoordinateCleaner* cleaning and then perform a detailed outlier test. -->
 
 <!-- ```{r, warning = F, message = F, collapse = T} -->
+<!-- #libraries -->
+<!-- library(CoordinateCleaner) -->
+<!-- library(rgbif) -->
+<!-- library(tidyverse) -->
+<!-- library(ggplot2) -->
+<!-- library(sp) -->
+
+<!-- # Load example data -->
+<!-- squ <- rgbif::occ_search(scientificName = "Sciurus vulgaris", limit = 200000)%>% -->
+<!--  select(species = specieskey, decimallongitude, decimallatitude, countrycode, -->
+<!--        hasCoordinate = T) -->
 
 <!-- # Run basic coordinate cleaning -->
 <!-- flags <- clean_coordinates(x = squ, tests = c("capitals", -->

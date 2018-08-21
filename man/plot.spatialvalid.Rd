@@ -5,7 +5,7 @@
 \title{Plot Method for Class Spatialvalid}
 \usage{
 \method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE,
-  details = FALSE, pts_size = 1, font_size = 10, ...)
+  details = FALSE, pts_size = 1, font_size = 10)
 }
 \arguments{
 \item{x}{an object of the class \code{spatialvalid} as from
@@ -23,8 +23,6 @@ flag.}
 \item{pts_size}{numeric. The point size for the plot.}
 
 \item{font_size}{numeric. The font size for the legend and axes}
-
-\item{\dots}{additional arguments passed to other methods}
 }
 \value{
 A plot of the records flagged as potentially erroneous by
