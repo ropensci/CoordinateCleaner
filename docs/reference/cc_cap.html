@@ -63,7 +63,7 @@ erroneously geo-referenced to capitals." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -106,6 +106,9 @@ erroneously geo-referenced to capitals." />
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -141,7 +144,8 @@ erroneously geo-referenced to capitals.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cc_cap</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,8 +168,15 @@ Default = &#8220;decimallatitude&#8221;.</p></td>
     <tr>
       <th>buffer</th>
       <td><p>The buffer around each capital coordinate (the centre of the
-city), where records should be flagged as problematic, in decimal degrees.
-Default = 0.1.</p></td>
+city), where records should be flagged as problematic. Units depend on geod.
+Default = 10 kilometers.</p></td>
+    </tr>
+    <tr>
+      <th>geod</th>
+      <td><p>logical. If TRUE the radius around each capital is calculated
+based on a sphere, buffer is in meters and independent of latitude. If FALSE
+the radius is calculated assuming planar coordinates and varies slightly with latitude,
+in this case buffer is in degrees. DEfault = T.</p></td>
     </tr>
     <tr>
       <th>ref</th>

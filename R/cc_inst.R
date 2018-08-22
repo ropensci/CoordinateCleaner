@@ -41,7 +41,7 @@
 #'                 decimallongitude = runif(100, -180, 180), 
 #'                 decimallatitude = runif(100, -90,90))
 #'                 
-#' cc_inst(x, value = "flagged", buffer = 5)#large buffer for demonstration
+#' cc_inst(x, value = "flagged", buffer = 500000)#large buffer for demonstration
 #' 
 #' @export
 #' @importFrom geosphere destPoint
@@ -52,6 +52,8 @@ cc_inst <- function(x,
                     lat = "decimallatitude", 
                     buffer = 100,
                     geod = TRUE,
+                    geo_verify = FALSE,
+                    verify_mult = 10,
                     ref = NULL, 
                     value = "clean", 
                     verbose = TRUE) {
@@ -101,8 +103,6 @@ cc_inst <- function(x,
                                       d = buffer)
       
       id <- rep(1:length(ref), times = length(dg))
-      
-      
       lst <- split(data.frame(buff_XY), f = id)
       
       # Make SpatialPolygons out of the list of coordinates
@@ -118,6 +118,40 @@ cc_inst <- function(x,
       out <- is.na(sp::over(x = dat, y = ref))
     }
   }
+  
+  if(geo_verify){
+     #create second radius, x times the ratius of the other
+    if(geod){
+      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+      dg <- seq(from = 0, to = 360, by = 5)
+      
+      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+                                      b = rep(dg, each = length(ref)), 
+                                      d = buffer * verify_mult)
+      
+      id <- rep(1:length(ref), times = length(dg))
+      lst <- split(data.frame(buff_XY), f = id)
+      
+      # Make SpatialPolygons out of the list of coordinates
+      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
+      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
+      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+      ref <- sp::disaggregate(spolys)
+    }else{
+      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
+    }
+    
+    # test flagged records again
+    #identify flagged records
+    
+    #identify all records from these species
+    
+    
+    
+     
+  }
+  
+  
 
   # create output based on value argument
   if (verbose) {

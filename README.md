@@ -34,13 +34,13 @@ See [News](https://github.com/azizka/CoordinateCleaner/blob/master/NEWS.md) for 
 # Installation
 ## Stable from CRAN
 
-```{r, evaluate = F}
+```{r}
 install.packages("CoordinateCleaner")
 library(CoordinateCleaner)
 ```
 
 ## Developmental using devtools
-```{r, evaluate = F}
+```{r}
 devtools::install_github("azizka/CoordinateCleaner")
 library(CoordinateCleaner)
 ```

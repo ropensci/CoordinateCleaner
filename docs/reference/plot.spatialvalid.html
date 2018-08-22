@@ -62,7 +62,7 @@ to visualize the flags from clean_coordinates" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -105,6 +105,9 @@ to visualize the flags from clean_coordinates" />
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -140,7 +143,7 @@ to visualize the flags from clean_coordinates</p>
 
     <pre class="usage"><span class='co'># S3 method for spatialvalid</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>bgmap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pts_size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>font_size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pts_size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>font_size</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,7 +156,7 @@ to visualize the flags from clean_coordinates</p>
     <tr>
       <th>bgmap</th>
       <td><p>an object of the class <code>SpatialPolygonsDataFrame</code> used as
-background map. Default = <code><a href='landmass.html'>landmass</a></code></p></td>
+background map. Default = ggplot::borders()</p></td>
     </tr>
     <tr>
       <th>clean</th>
@@ -172,10 +175,6 @@ flag.</p></td>
     <tr>
       <th>font_size</th>
       <td><p>numeric. The font size for the legend and axes</p></td>
-    </tr>
-    <tr>
-      <th>&#8230;</th>
-      <td><p>additional arguments passed to other methods</p></td>
     </tr>
     </table>
     
@@ -196,14 +195,17 @@ flag.</p></td>
                     <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>51</span>),
                     <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>26</span>, <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>11</span>))
 
-<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean_coordinates.html'>clean_coordinates</a></span>(<span class='no'>exmpl</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
+<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean_coordinates.html'>clean_coordinates</a></span>(<span class='no'>exmpl</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; OGR data source with driver: ESRI Shapefile 
+#&gt; Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpemtG6F", layer: "ne_50m_land"
+#&gt; with 1420 features
+#&gt; It has 3 fields
+#&gt; Integer64 fields read as strings:  scalerank </div><div class='input'>
 <span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             val             equ             zer             cap 
 #&gt;               0               0               0               0               0 
 #&gt;             cen             sea             otl             gbf            inst 
-#&gt;               0             149               1               0               0 
+#&gt;               0             154               1               0               0 
 #&gt;         summary 
-#&gt;             150 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;             154 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

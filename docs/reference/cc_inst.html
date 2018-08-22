@@ -65,7 +65,7 @@ captivity/horticulture." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -108,6 +108,9 @@ captivity/horticulture." />
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -145,7 +148,8 @@ captivity/horticulture.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cc_inst</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>geo_verify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,7 +173,14 @@ Default = &#8220;decimallatitude&#8221;.</p></td>
       <th>buffer</th>
       <td><p>numerical. The buffer around each province or country
 centroid, where records should be flagged as problematic, in decimal
-degrees.  Default = 0.001 (= ~ 100m).</p></td>
+degrees.  Default = 100m.</p></td>
+    </tr>
+    <tr>
+      <th>geod</th>
+      <td><p>logical. If TRUE the radius around each institution is calculated
+based on a sphere, buffer is in meters and independent of latitude. If FALSE
+the radius is calculated assuming planar coordinates and varies slightly with latitude,
+in this case buffer is in degrees. DEfault = T.</p></td>
     </tr>
     <tr>
       <th>ref</th>
@@ -212,22 +223,20 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
-<span class='fu'>cc_inst</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>5</span>)<span class='co'>#large buffer for demonstration</span></div><div class='output co'>#&gt; <span class='message'>Testing biodiversity institutions</span></div><div class='output co'>#&gt; <span class='message'>Flagged 25 records.</span></div><div class='output co'>#&gt;     1     2     3     4     5     6     7     8     9    10    11    12    13 
-#&gt;  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE 
-#&gt;    14    15    16    17    18    19    20    21    22    23    24    25    26 
-#&gt;  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE 
-#&gt;    27    28    29    30    31    32    33    34    35    36    37    38    39 
-#&gt; FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE 
-#&gt;    40    41    42    43    44    45    46    47    48    49    50    51    52 
-#&gt; FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE 
-#&gt;    53    54    55    56    57    58    59    60    61    62    63    64    65 
-#&gt;  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE 
-#&gt;    66    67    68    69    70    71    72    73    74    75    76    77    78 
-#&gt;  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE 
-#&gt;    79    80    81    82    83    84    85    86    87    88    89    90    91 
-#&gt;  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE 
-#&gt;    92    93    94    95    96    97    98    99   100 
-#&gt;  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE </div><div class='input'>
+<span class='fu'>cc_inst</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>5</span>)<span class='co'>#large buffer for demonstration</span></div><div class='output co'>#&gt; <span class='message'>Testing biodiversity institutions</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   65   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96 
+#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
+#&gt;   97   98   99  100 
+#&gt; TRUE TRUE TRUE TRUE </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

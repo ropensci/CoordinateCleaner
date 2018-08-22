@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -101,6 +101,9 @@
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -126,20 +129,42 @@
       
     </div>
 
-    <div id="coordinatecleaner-2-0-1-2018-06-08" class="section level1">
+    <div id="coordinatecleaner-2-0-2-2018-08-20" class="section level1">
 <h1 class="page-header">
-<a href="#coordinatecleaner-2-0-1-2018-06-08" class="anchor"></a>CoordinateCleaner 2.0-1 (2018-06-08)<small> Unreleased </small>
+<a href="#coordinatecleaner-2-0-2-2018-08-20" class="anchor"></a>CoordinateCleaner 2.0-2 (2018-08-20)<small> Unreleased </small>
 </h1>
 <div id="major-improvements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#major-improvements" class="anchor"></a>MAJOR IMPROVEMENTS</h3>
 <ul>
-<li>changed and more consistent naming scheme for the functions</li>
+<li>sampling correction into cc_outl</li>
+<li>tutorial on outlier detection on the bookdown documentation</li>
+<li>subsampling heuristic in cc_outl</li>
 </ul>
 </div>
 <div id="minor-improvements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-improvements" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>reduced packages size, by switching to data download from rnauralearth for urbanareas and landmass</li>
+<li>fixed issue with names of plot.spatialvalid</li>
+</ul>
+</div>
+</div>
+    <div id="coordinatecleaner-2-0-1-2018-06-08" class="section level1">
+<h1 class="page-header">
+<a href="#coordinatecleaner-2-0-1-2018-06-08" class="anchor"></a>CoordinateCleaner 2.0-1 (2018-06-08)<small> Unreleased </small>
+</h1>
+<div id="major-improvements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-improvements-1" class="anchor"></a>MAJOR IMPROVEMENTS</h3>
+<ul>
+<li>changed and more consistent naming scheme for the functions</li>
+</ul>
+</div>
+<div id="minor-improvements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>fixed typos in Readme</li>
 <li>set a download from naturalearth as default for cc_urb</li>
@@ -154,17 +179,17 @@
 <h1 class="page-header">
 <a href="#coordinatecleaner-1-2-1-2018-06-08" class="anchor"></a>CoordinateCleaner 1.2-1 (2018-06-08)<small> Unreleased </small>
 </h1>
-<div id="major-improvements-1" class="section level3">
+<div id="major-improvements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-improvements-1" class="anchor"></a>MAJOR IMPROVEMENTS</h3>
+<a href="#major-improvements-2" class="anchor"></a>MAJOR IMPROVEMENTS</h3>
 <ul>
 <li>Adapted function and argument names consistently to underscore_case</li>
 <li>Simplified internal code structure of wrapper functions</li>
 </ul>
 </div>
-<div id="minor-improvements-1" class="section level3">
+<div id="minor-improvements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>adapted package to Ropensci reviews</li>
 </ul>
@@ -184,9 +209,9 @@
 <h1 class="page-header">
 <a href="#coordinatecleaner-1-1-1-2018-05-15" class="anchor"></a>CoordinateCleaner 1.1-1 (2018-05-15)<small> Unreleased </small>
 </h1>
-<div id="minor-improvements-2" class="section level3">
+<div id="minor-improvements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Switched documentation and NAMESPACE generation to roxygen2</li>
 <li>Switched from sapply to vapply</li>
@@ -202,9 +227,9 @@
 <h3 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>NEW FEATURES</h3>
 </div>
-<div id="minor-improvements-3" class="section level3">
+<div id="minor-improvements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-4" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Adaption of code to ROpensci guidelines</li>
 </ul>
@@ -224,6 +249,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#coordinatecleaner-2-0-2-2018-08-20">2.0-2</a></li>
         <li><a href="#coordinatecleaner-2-0-1-2018-06-08">2.0-1</a></li>
         <li><a href="#coordinatecleaner-1-2-1-2018-06-08">1.2-1</a></li>
         <li><a href="#coordinatecleaner-1-1-1-2018-05-15">1.1-1</a></li>

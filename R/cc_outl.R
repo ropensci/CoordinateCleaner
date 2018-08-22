@@ -110,13 +110,14 @@ cc_outl <- function(x,
     area <- data.frame(country = ref@data$iso_a3, 
                        area = geosphere::areaPolygon(ref))
     area <- area[!is.na(area$area),]
+    area <- area[!is.na(area$country),]
     
     ref <- raster::crop(ref, raster::extent(pts) + 1)
     
     # get country from coordinates and compare with provided country
     country <- sp::over(x = pts, y = ref)[, "iso_a3"]
     
-    dat <- data.frame(x, country)
+    dat <- data.frame(x[,c(species, lon, lat)], country)
     
     # get number of records in GBIF per country as proxy for sampling intensity
     country <- unique(country)
@@ -126,13 +127,20 @@ cc_outl <- function(x,
     nrec <- data.frame(country = country, weight = unlist(nrec), row.names = NULL)
     
     # log transform and prepare as weight for each plot
-    dat <- dplyr::left_join(dat, nrec)
-    dat <- dplyr::left_join(dat, area)
-    dat$weight <- dat$weight / (dat$area / 1000000) #normalize number of records to 10 sqkm
+    dat <- dplyr::left_join(dat, nrec, by = "country")
+    dat <- dplyr::left_join(dat, area, by = "country")
+    
+    dat$weight <- dat$weight / (dat$area / 1000000 / 100) #normalize number of records to 100 sqkm
     dat$weight <- log(dat$weight)
-    dat <- dat[,-c(4,6)] #remove country information
     dat$weight[is.na(dat$weight)] <- median(dat$weight, na.rm = T) # records in the sea get the mean weight
-    #dat$weight <- log10(dat$weight)
+    #rescale weight between 0.5 and 2
+    dat$weight <- (dat$weight - 0) / (11 - 2) * 
+      (2 - 0.5) + 0.5 
+    dat$weight[dat$weight < 0.5] <- 0.5 # records with less than 20 records per 100 sqkm get all the same minimum value
+    dat$weight[dat$weight > 2] <- 2 #records with more than 59874 records per 100 sqkm get the amximum value
+    
+    dat <- data.frame(x, weight = dat$weight)
+    
   }else{
     dat <- x
   }
@@ -147,7 +155,6 @@ cc_outl <- function(x,
   test <- as.vector(unlist(lapply(test, "sum")))
   splist <- splist[test > 7]
   
-
   # loop over species and run outlier test
   flags <- lapply(splist, function(k) {
     test <- nrow(k[!duplicated(k), ])

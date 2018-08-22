@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
     </li>
   </ul>
 </li>
@@ -194,119 +197,126 @@
 <td>0%</td>
 </tr>
 <tr class="odd">
+<td>Coordinates outside natural range</td>
+<td>cc_iucn</td>
+<td>-</td>
+<td>-</td>
+<td>0%</td>
+</tr>
+<tr class="even">
 <td>Spatial outliers</td>
 <td>cc_outl</td>
 <td>-</td>
 <td>outliers</td>
 <td>50%, biogeo uses environmental distance</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Coordinates within the ocean</td>
 <td>cc_sea</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Coordinates in urban area</td>
 <td>cc_urb</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Coordinate conversion error</td>
 <td>dc_ddmm</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Rounded coordinates/rasterized collection</td>
 <td>dc_round</td>
 <td>-</td>
 <td>precisioncheck</td>
 <td>20%, biogeo test for predefined rasaters</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Fossils: invalid age range</td>
 <td>tc_equal</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Fossils: excessive age range</td>
 <td>tc_range</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Fossils: temporal outlier</td>
 <td>tc_outl</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Fossils: PyRate interface</td>
 <td>WritePyrate</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Wrapper functions to run all test</td>
 <td>CleanCoordinates, CleanCoordinatesDS, CleanCoordiantesFOS</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Database of biodiversity institutions</td>
 <td>institutions</td>
 <td>-</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Taxonomic cleaning</td>
 <td>-</td>
 <td>tax_no_epithet</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Missing date</td>
 <td>-</td>
 <td>date_missing</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Add date</td>
 <td>-</td>
 <td>date_create</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Date format</td>
 <td>-</td>
 <td>date_standardize</td>
 <td>-</td>
 <td>0%</td>
 </tr>
-<tr class="even">
-<td>REformatting coordinate annotation</td>
+<tr class="odd">
+<td>Reformatting coordinate annotation</td>
 <td>-</td>
 <td>-</td>
 <td>a large set of functions</td>
 <td>0 %</td>
 </tr>
-<tr class="odd">
-<td>Correcting of coordinates using guessing and environmental distance</td>
+<tr class="even">
+<td>Correcting coordinates using guessing and environmental distance</td>
 <td>-</td>
 <td>-</td>
 <td>a large set of functions</td>

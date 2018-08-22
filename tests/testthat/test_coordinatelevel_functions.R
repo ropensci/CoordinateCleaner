@@ -52,9 +52,10 @@ test_that("cc_iucn works", {
 
 
 test_that("cc_outl works", {
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 246)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", sampling_cor = T, mltpl = 0.1)), 119)
   
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 

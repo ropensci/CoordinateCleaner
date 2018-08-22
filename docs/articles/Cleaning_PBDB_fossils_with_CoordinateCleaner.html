@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
     <li>
       <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+    </li>
+    <li>
+      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
     </li>
   </ul>
 </li>
@@ -186,10 +189,10 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>fl,]
 <p>We’ll also test if the records are identical, or in close vicinity to the centroids of political units. You can modify the buffer around each centroid using the <code>buffer</code> argument and the level of testing (country centroids, province centroids, or both) using the <code>test argument</code>. In case you have a list of geographic coordinates you consider problematic, for instance a list of cities you can provide them as custom gazetteer using the <code>ref</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>(cl, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>, <span class="dt">value =</span> <span class="st">"flagged"</span>)
 ## Testing country centroids
-## Flagged 87 records.
+## Flagged 6 records.
 fl_rec &lt;-<span class="st"> </span>cl[<span class="op">!</span>fl, ]
 <span class="kw">unique</span>(fl_rec<span class="op">$</span>cc)
-## [1] UK JP UG
+## [1] JP
 ## 22 Levels: NZ US CN IR KP AU UK FR JP DE CA RU KE ZM EG CD ZA TZ UG ... IT
 cl &lt;-<span class="st"> </span>cl[fl, ]</code></pre></div>
 <p>Next we will test if the coordinates are within the country they are assigned to. This test is a bit more tricky, as it will also flag records, if the country name in the country column is not following ISO3 or if the records have been assigned during a different political landscape. For instance records from former Western and Eastern Germany. Here we need to convert the country annotation in column cc from ISO2 to ISO3; it is advisable to double check which records have be flagged, to avoid unnecessary data loss (see above).</p>
@@ -235,7 +238,7 @@ cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_range
 <span class="co"># Outlier per taxon</span>
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_range.html">cf_range</a></span>(cl, <span class="dt">taxon =</span> <span class="st">"taxon_name"</span>, <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing temporal range outliers on taxon level
-## Flagged 75 records.
+## Flagged 78 records.
 
 <span class="co"># Absolute age limit</span>
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_range.html">cf_range</a></span>(cl, <span class="dt">taxon =</span> <span class="st">"taxon_name"</span>, <span class="dt">min_age =</span> <span class="st">"late_age"</span>, 
@@ -251,17 +254,17 @@ rang &lt;-<span class="st"> </span>cl<span class="op">$</span>early_age <span cl
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">""</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on dataset level
-## Flagged 232 records.
+## Flagged 256 records.
 
 <span class="co"># Outlier taxon</span>
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">"taxon_name"</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on taxon level
-## Flagged 37 records.</code></pre></div>
+## Flagged 34 records.</code></pre></div>
 <p>Done! To check how many records have been flagged in total, you can compare the two datasets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(dat) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cl)</code></pre></div>
-<pre><code>## [1] 807</code></pre>
-<p>All test combined have removed about 807 records (16.1%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
+<pre><code>## [1] 750</code></pre>
+<p>All test combined have removed about 750 records (15%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
 <p>So far so good, we have significantly refined the data for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run . You can connect all functions directly in a row using the magrittr pipe (%&gt;%) operator.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(<span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>)<span class="op">%&gt;%</span>
@@ -306,13 +309,13 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">table</span>(cl<span class="op">$</span>phylum)
 ## 
 ## Spermatophyta 
-##          4193
+##          4250
 
 <span class="co">#2. Taxonomic level of identification</span>
 <span class="kw">table</span>(cl<span class="op">$</span>taxon_rank)
 ## 
 ##  subclass   species     genus     class    family     order subfamily 
-##         7      3233       527       271       122        20         0</code></pre></div>
+##         7      3282       534       271       123        20         0</code></pre></div>
 <p>The required taxonomic level of course depends on the downstream analyses, but here we will exclude everything other than genus or species, which is a reasonable approach for most PyRate analyses.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>cl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(taxon_rank <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>))</code></pre></div>
@@ -324,7 +327,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(cl<span class="op">$</span>geogscale)</code></pre></div>
 <pre><code>## 
 ## small collection          outcrop       local area            basin 
-##             1943             1646               80                0</code></pre>
+##             1951             1695               76                0</code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
 <div id="time" class="section level2">
@@ -335,7 +338,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>late_age))
 ## 
 ##  63.3    66  70.6  93.5  93.9 100.5 
-##    52   138     8     3     3    21
+##    52   139     8     3     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> late_age))
@@ -346,7 +349,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>early_age))
 ## 
 ##  70.6  83.5  99.6 100.5 105.3   113 
-##   126     9     3    11     3    21
+##   127     9     3    11     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> early_age))
@@ -374,7 +377,7 @@ cl &lt;-<span class="st"> </span><span class="kw">filter</span>(cl, preservation
 <div id="conclusions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
-<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-74.2 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
+<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-75.32 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
 <p><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-1.png" width="672"><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
 </div>
 <div id="writing-the-result-to-disk-in-pyrate-format" class="section level1">

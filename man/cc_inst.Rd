@@ -5,8 +5,8 @@
 \title{Flag Records in the Vicinity of Biodiversity Institutions}
 \usage{
 cc_inst(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 100, geod = TRUE, ref = NULL, value = "clean",
-  verbose = TRUE)
+  buffer = 100, geod = TRUE, geo_verify = FALSE, verify_mult = 10,
+  ref = NULL, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -63,7 +63,7 @@ x <- data.frame(species = letters[1:10],
                 decimallongitude = runif(100, -180, 180), 
                 decimallatitude = runif(100, -90,90))
                 
-cc_inst(x, value = "flagged", buffer = 5)#large buffer for demonstration
+cc_inst(x, value = "flagged", buffer = 500000)#large buffer for demonstration
 
 }
 \keyword{Coordinate}
