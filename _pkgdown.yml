@@ -1,0 +1,7 @@
+reference:
+- title: Record-level
+  contents:
+  - has_concept("coordinates")
+- title: Dataset-level
+  contents:
+- has_concept("dataset")

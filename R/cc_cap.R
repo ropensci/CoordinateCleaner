@@ -33,6 +33,7 @@
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
+#' @family coordinates
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 

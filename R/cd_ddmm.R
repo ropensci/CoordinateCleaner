@@ -54,6 +54,7 @@
 #' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
 #' details and tutorials.
 #' @keywords "Coordinate cleaning" "Dataset level cleaning"
+#' @family dataset
 #' @examples
 #' 
 #' clean <- data.frame(species = letters[1:10], 
