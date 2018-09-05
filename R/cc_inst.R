@@ -52,8 +52,6 @@ cc_inst <- function(x,
                     lat = "decimallatitude", 
                     buffer = 100,
                     geod = TRUE,
-                    geo_verify = FALSE,
-                    verify_mult = 10,
                     ref = NULL, 
                     value = "clean", 
                     verbose = TRUE) {
@@ -119,37 +117,39 @@ cc_inst <- function(x,
     }
   }
   
-  if(geo_verify){
-     #create second radius, x times the ratius of the other
-    if(geod){
-      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
-      dg <- seq(from = 0, to = 360, by = 5)
-      
-      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
-                                      b = rep(dg, each = length(ref)), 
-                                      d = buffer * verify_mult)
-      
-      id <- rep(1:length(ref), times = length(dg))
-      lst <- split(data.frame(buff_XY), f = id)
-      
-      # Make SpatialPolygons out of the list of coordinates
-      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
-      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
-      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
-      ref <- sp::disaggregate(spolys)
-    }else{
-      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
-    }
-    
-    # test flagged records again
-    #identify flagged records
-    
-    #identify all records from these species
-    
-    
-    
+  # if(geo_verify){
+    #  #create second radius, x times the ratius of the other
+    # if(geod){
+    #   # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+    #   dg <- seq(from = 0, to = 360, by = 5)
+    #   
+    #   buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+    #                                   b = rep(dg, each = length(ref)), 
+    #                                   d = buffer * verify_mult)
+    #   
+    #   id <- rep(1:length(ref), times = length(dg))
+    #   lst <- split(data.frame(buff_XY), f = id)
+    #   
+    #   # Make SpatialPolygons out of the list of coordinates
+    #   poly   <- lapply(lst, sp::Polygon, hole = FALSE)
+    #   polys  <- lapply(list(poly), sp::Polygons, ID = NA)
+    #   spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+    #   ref <- sp::disaggregate(spolys)
+    # }else{
+    #   ref <- rgeos::gBuffer(ref, width = buffer * verify_mult, byid = TRUE)
+    # }
+    # 
+    # #test species with flagged records, with larger radius
+    # outl_sp <- x[!out,][[species]]
+    # test <- x[as.character(x[,species]) %in% outl_sp,]
+    # 
+    # test_pts <- sp::SpatialPoints(test[, c(lon, lat)], proj4string = sp::CRS(wgs84))
+    # test$class <- ref[sp::over(x = test_pts, y = ref),]
+    # 
+    # aggregate(class ~ species, data = test, FUN = sum)
+
      
-  }
+  # }
   
   
 

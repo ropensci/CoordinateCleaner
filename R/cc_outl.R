@@ -112,6 +112,19 @@ cc_outl <- function(x,
     area <- area[!is.na(area$area),]
     area <- area[!is.na(area$country),]
     
+    nrec_norm <- data.frame(country = names(nrec), nrec)
+    nrec_norm <- dplyr::left_join(nrec_norm, area, by = "country")
+    nrec_norm$norm <- nrec_norm$nrec /  (nrec_norm$area  / 1000000 / 100)
+    nrec_norm <- nrec_norm[!is.na(nrec_norm$country),]
+    
+    hist(log(nrec_norm$norm))
+    abline(v = log(nrec_norm[nrec_norm$country == "USA", "norm"]))
+    abline(v = log(nrec_norm[nrec_norm$country == "CHN", "norm"]), col = "yellow")
+    abline(v = log(nrec_norm[nrec_norm$country == "RUS", "norm"]), col = "red")
+    abline(v = log(nrec_norm[nrec_norm$country == "BOL", "norm"]), col = "green")
+    
+    abline(v = log(nrec_norm[nrec_norm$country == "MUS", "norm"]), col = "darkgreen")
+    
     ref <- raster::crop(ref, raster::extent(pts) + 1)
     
     # get country from coordinates and compare with provided country

@@ -5,8 +5,8 @@
 \title{Flag Records in the Vicinity of Biodiversity Institutions}
 \usage{
 cc_inst(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 100, geod = TRUE, geo_verify = FALSE, verify_mult = 10,
-  ref = NULL, value = "clean", verbose = TRUE)
+  buffer = 100, geod = TRUE, ref = NULL, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
