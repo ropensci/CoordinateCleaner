@@ -72,12 +72,10 @@ records \code{diff = 0.1} has proven reasonable flagging most datasets with
 >25\% problematic records and all dataset with >50\% problematic records.
 For datasets between 5,000 and 100,000 geographic unique records \code{diff
 = 0.01} is recommended, for datasets between 100,000 and 1 M records diff =
-0.001, and so on.  See
-\url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-clean_dataset}
-for explanation and simulation results.
+0.001, and so on.
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{
@@ -101,6 +99,10 @@ prob <-  data.frame(species = letters[1:10],
 cd_ddmm(x = prob, value = "flagged")
 
 }
+\seealso{
+Other Datasets: \code{\link{cd_round}}
+}
+\concept{Datasets}
 \keyword{"Coordinate}
 \keyword{"Dataset}
 \keyword{cleaning"}

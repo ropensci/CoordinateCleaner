@@ -54,7 +54,10 @@
 #' Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one
 #' row for each dataset in \code{x}.
 #' @seealso \code{\link{cd_ddmm}} \code{\link{cd_round}}
+#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+#' and tutorials.
 #' @keywords Coordinate cleaning wrapper
+#' @family Wrapper functions
 #' @examples
 #' #Create test dataset
 #' clean <- data.frame(dataset = rep("clean", 1000),

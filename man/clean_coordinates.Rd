@@ -134,9 +134,7 @@ collection databases.
 The function needs all coordinates to be formally valid according to WGS84.
 If the data contains invalid coordinates, the function will stop and return
 a vector flagging the invalid records. TRUE = non-problematic coordinate,
-FALSE = potentially problematic coordinates. A reference gazetteer for the
-urban test is available at at
-\url{https://github.com/azizka/CoordinateCleaner/tree/master/extra_gazetteers}.
+FALSE = potentially problematic coordinates.
 \itemize{
 \item capitals tests a radius around adm-0 capitals. The
 radius is \code{capitals_rad}.
@@ -185,8 +183,7 @@ longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 \note{
 Always tests for coordinate validity: non-numeric or missing
 coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
-
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more details
+See \url{https://azizka.github.io/CoordinateCleaner/} for more details
 and tutorials.
 }
 \examples{
@@ -201,6 +198,11 @@ test <- clean_coordinates(x = exmpl)
 summary(test)
 
 }
+\seealso{
+Other Wrapper functions: \code{\link{clean_dataset}},
+  \code{\link{clean_fossils}}
+}
+\concept{Wrapper functions}
 \keyword{Coordinate}
 \keyword{cleaning}
 \keyword{wrapper}

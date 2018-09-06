@@ -57,7 +57,10 @@
 #' containing the records considered correct by the test (\dQuote{clean}) or a
 #' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
 #' problematic. Default = \dQuote{clean}.
+#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
+#' details and tutorials.
 #' @keywords Fossil Coordinate cleaning Temporal cleaning
+#' @family fossils
 #' @examples
 #' 
 #' minages <- c(runif(n = 11, min = 10, max = 25), 62.5)

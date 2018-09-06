@@ -4,10 +4,10 @@ equ	0
 zer	0
 cap	0
 cen	0
-sea	159
-otl	1
+sea	147
+otl	3
 gbf	0
 inst	0
-summary	159
+summary	147
 Total number of records	250
-Error Quotient	0.64
+Error Quotient	0.59

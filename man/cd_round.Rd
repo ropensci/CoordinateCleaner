@@ -74,7 +74,7 @@ identify periodicity patterns in the data.
 see supplement %Copy later from supplementary material
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{
@@ -108,6 +108,10 @@ details and tutorials.
   cd_round(inp, value = "dataset")
 
 }
+\seealso{
+Other Datasets: \code{\link{cd_ddmm}}
+}
+\concept{Datasets}
 \keyword{"Coordinate}
 \keyword{"Dataset}
 \keyword{cleaning"}

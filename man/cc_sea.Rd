@@ -55,7 +55,7 @@ want to flag records in the open ocean, consider using a buffered landmass
 reference, e.g.: \code{\link{buffland}}.
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{
@@ -67,5 +67,15 @@ x <- data.frame(species = letters[1:10],
 cc_sea(x, value = "flagged")
 
 }
+\seealso{
+Other Coordinates: \code{\link{cc_cap}},
+  \code{\link{cc_cen}}, \code{\link{cc_coun}},
+  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
+  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
+  \code{\link{cc_iucn}}, \code{\link{cc_outl}},
+  \code{\link{cc_urb}}, \code{\link{cc_val}},
+  \code{\link{cc_zero}}
+}
+\concept{Coordinates}
 \keyword{Coordinate}
 \keyword{cleaning}

@@ -26,9 +26,10 @@
 #' problematic. Default = \dQuote{clean}.
 #' @note With the default reference, records are flaggeed if they fall 
 #' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
-#' See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+#' See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' @keywords Coordinate cleaning
+#' @family Coordinates
 #' @examples
 #' 
 #' \dontrun{

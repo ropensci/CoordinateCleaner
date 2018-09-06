@@ -86,6 +86,10 @@ and approximated as Euclidean distances for datasets/taxa with 10,000 to
 25,000 records. Datasets/taxa comprising more than 25,000 records are
 skipped.
 }
+\note{
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
+details and tutorials.
+}
 \examples{
 
 minages <- c(runif(n = 11, min = 10, max = 25), 62.5)
@@ -98,6 +102,11 @@ x <- data.frame(species = c(letters[1:10], rep("z", 2)),
 cf_outl(x, value = "flagged", taxon = "")
 
 }
+\seealso{
+Other fossils: \code{\link{cf_equal}},
+  \code{\link{cf_range}}
+}
+\concept{fossils}
 \keyword{Coordinate}
 \keyword{Fossil}
 \keyword{Temporal}

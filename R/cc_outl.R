@@ -45,7 +45,7 @@
 #' containing the records considered correct by the test (\dQuote{clean}) or a
 #' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
 #' problematic. Default = \dQuote{clean}.
-#' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' @details The likelihood of occurrence records being erroroneous outliers is linked to the sampling effort
 #' in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
@@ -54,6 +54,7 @@
 #' number of records per square kilometre in this country. See for an example and further
 #'  explanation of the outlier test.
 #' @keywords Coordinate cleaning
+#' @family Coordinates
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -111,19 +112,19 @@ cc_outl <- function(x,
                        area = geosphere::areaPolygon(ref))
     area <- area[!is.na(area$area),]
     area <- area[!is.na(area$country),]
-    
-    nrec_norm <- data.frame(country = names(nrec), nrec)
-    nrec_norm <- dplyr::left_join(nrec_norm, area, by = "country")
-    nrec_norm$norm <- nrec_norm$nrec /  (nrec_norm$area  / 1000000 / 100)
-    nrec_norm <- nrec_norm[!is.na(nrec_norm$country),]
-    
-    hist(log(nrec_norm$norm))
-    abline(v = log(nrec_norm[nrec_norm$country == "USA", "norm"]))
-    abline(v = log(nrec_norm[nrec_norm$country == "CHN", "norm"]), col = "yellow")
-    abline(v = log(nrec_norm[nrec_norm$country == "RUS", "norm"]), col = "red")
-    abline(v = log(nrec_norm[nrec_norm$country == "BOL", "norm"]), col = "green")
-    
-    abline(v = log(nrec_norm[nrec_norm$country == "MUS", "norm"]), col = "darkgreen")
+    # 
+    # nrec_norm <- data.frame(country = names(nrec), nrec)
+    # nrec_norm <- dplyr::left_join(nrec_norm, area, by = "country")
+    # nrec_norm$norm <- nrec_norm$nrec /  (nrec_norm$area  / 1000000 / 100)
+    # nrec_norm <- nrec_norm[!is.na(nrec_norm$country),]
+    # 
+    # hist(log(nrec_norm$norm))
+    # abline(v = log(nrec_norm[nrec_norm$country == "USA", "norm"]))
+    # abline(v = log(nrec_norm[nrec_norm$country == "CHN", "norm"]), col = "yellow")
+    # abline(v = log(nrec_norm[nrec_norm$country == "RUS", "norm"]), col = "red")
+    # abline(v = log(nrec_norm[nrec_norm$country == "BOL", "norm"]), col = "green")
+    # 
+    # abline(v = log(nrec_norm[nrec_norm$country == "MUS", "norm"]), col = "darkgreen")
     
     ref <- raster::crop(ref, raster::extent(pts) + 1)
     

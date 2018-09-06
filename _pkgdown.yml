@@ -1,7 +1,13 @@
 reference:
-- title: Record-level
+- title: Wrapper functions
   contents:
-  - has_concept("coordinates")
+  - has_concept("Wrapper functions")
+- title: Geographic coordinates
+  contents:
+  - has_concept("Coordinates")
 - title: Dataset-level
   contents:
-- has_concept("dataset")
+  - has_concept("Datasets")
+- title: Fossils
+  contents:
+  - has_concept("fossils")

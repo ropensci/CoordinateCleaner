@@ -14,9 +14,7 @@
 #' >25\% problematic records and all dataset with >50\% problematic records.
 #' For datasets between 5,000 and 100,000 geographic unique records \code{diff
 #' = 0.01} is recommended, for datasets between 100,000 and 1 M records diff =
-#' 0.001, and so on.  See
-#' \url{https://github.com/azizka/CoordinateCleaner/wiki/3.-Identifying-problematic-data-sets:-clean_dataset}
-#' for explanation and simulation results.
+#' 0.001, and so on.
 #' 
 #' @param x a data.frame. Containing geographical coordinates and species
 #' names.
@@ -51,10 +49,10 @@
 #' (\dQuote{clean}) or a logical vector (\dQuote{flags}), with TRUE = test passed and FALSE =
 #' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
-#' @note See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' @keywords "Coordinate cleaning" "Dataset level cleaning"
-#' @family dataset
+#' @family Datasets
 #' @examples
 #' 
 #' clean <- data.frame(species = letters[1:10], 

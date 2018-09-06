@@ -31,6 +31,10 @@ problematic. Default = \dQuote{clean}.
 \description{
 Flags records of fossil with equal minimum and maximum age.
 }
+\note{
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
+details and tutorials.
+}
 \examples{
 
 minages <- runif(n = 10, min = 0.1, max = 25)
@@ -44,6 +48,11 @@ x <- rbind(x, data.frame(species = "z",
 cf_equal(x, value = "flagged")
 
 }
+\seealso{
+Other fossils: \code{\link{cf_outl}},
+  \code{\link{cf_range}}
+}
+\concept{fossils}
 \keyword{Fossils}
 \keyword{Temporal}
 \keyword{cleaning}

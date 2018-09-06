@@ -76,6 +76,10 @@ is an over proportional number of records with the decimal 0 (full degrees)
 which indicates rounding and thus low precision. The default values are
 empirically optimized by with GBIF data, but should probably be adapted.
 }
+\note{
+See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+and tutorials.
+}
 \examples{
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
@@ -107,7 +111,11 @@ hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
 }
 \seealso{
 \code{\link{cd_ddmm}} \code{\link{cd_round}}
+
+Other Wrapper functions: \code{\link{clean_coordinates}},
+  \code{\link{clean_fossils}}
 }
+\concept{Wrapper functions}
 \keyword{Coordinate}
 \keyword{cleaning}
 \keyword{wrapper}

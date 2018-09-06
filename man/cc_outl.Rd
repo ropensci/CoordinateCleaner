@@ -76,7 +76,7 @@ number of records per square kilometre in this country. See for an example and f
  explanation of the outlier test.
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{
@@ -91,5 +91,15 @@ cc_outl(x, method = "distance", value = "flagged", tdi = 10000)
 cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
 
 }
+\seealso{
+Other Coordinates: \code{\link{cc_cap}},
+  \code{\link{cc_cen}}, \code{\link{cc_coun}},
+  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
+  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
+  \code{\link{cc_iucn}}, \code{\link{cc_sea}},
+  \code{\link{cc_urb}}, \code{\link{cc_val}},
+  \code{\link{cc_zero}}
+}
+\concept{Coordinates}
 \keyword{Coordinate}
 \keyword{cleaning}

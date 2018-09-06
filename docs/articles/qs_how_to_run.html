@@ -138,27 +138,27 @@ cord.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## Flagged 0 records.
 ## Testing sea coordinates
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmpu0d4ap", layer: "ne_50m_land"
+## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpoviSWp", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
-## Flagged 157 records.
+## Flagged 160 records.
 ## Testing geographic outliers
-## Flagged 5 records.
+## Flagged 4 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 158 of 250 records, EQ = 0.63.
+## Flagged 160 of 250 records, EQ = 0.64.
 
 <span class="co">#summarize and visualize results</span>
 <span class="kw">summary</span>(cord.flags)
 ## decimallatitude             val             equ             zer 
 ##               0               0               0               0 
 ##             cap             cen             sea             otl 
-##               0               0             157               5 
+##               0               0             160               4 
 ##             gbf            inst         summary 
-##               0               0             158
+##               0               0             160
 <span class="kw">plot</span>(cord.flags)</code></pre></div>
 <p><img src="qs_how_to_run_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
@@ -175,12 +175,12 @@ ds.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cl
 ## Registered S3 method overwritten by 'rvest':
 ##   method            from
 ##   read_xml.response xml2
-## -- Attaching packages -------------------------------------------------------- tidyverse 1.2.1 --
+## -- Attaching packages ------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
 ## v ggplot2 3.0.0     v purrr   0.2.5
 ## v tibble  1.4.2     v dplyr   0.7.6
 ## v tidyr   0.8.1     v stringr 1.3.1
 ## v readr   1.1.1     v forcats 0.3.0
-## -- Conflicts ----------------------------------------------------------- tidyverse_conflicts() --
+## -- Conflicts ---------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ## x purrr::map()    masks maps::map()
@@ -216,11 +216,11 @@ cleaned &lt;-<span class="st">  </span>exmpl<span class="op">%&gt;%</span>
 ## Flagged 2 records.
 ## Testing sea coordinates
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmpu0d4ap", layer: "ne_50m_land"
+## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpoviSWp", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
-## Flagged 155 records.
+## Flagged 158 records.
 ## Testing zero coordinates
 ## Flagged 0 records.
 ## Testing for dd.mm to dd.dd conversion errors

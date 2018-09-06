@@ -37,7 +37,7 @@ Flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors.
 }
 \note{
-See \url{https://github.com/azizka/CoordinateCleaner/wiki} for more
+See \url{https://azizka.github.io/CoordinateCleaner} for more
 details and tutorials.
 }
 \examples{
@@ -50,5 +50,15 @@ cc_equ(x)
 cc_equ(x, value = "flagged")
 
 }
+\seealso{
+Other Coordinates: \code{\link{cc_cap}},
+  \code{\link{cc_cen}}, \code{\link{cc_coun}},
+  \code{\link{cc_dupl}}, \code{\link{cc_gbif}},
+  \code{\link{cc_inst}}, \code{\link{cc_iucn}},
+  \code{\link{cc_outl}}, \code{\link{cc_sea}},
+  \code{\link{cc_urb}}, \code{\link{cc_val}},
+  \code{\link{cc_zero}}
+}
+\concept{Coordinates}
 \keyword{Coordinate}
 \keyword{cleaning}

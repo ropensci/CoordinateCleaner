@@ -62,6 +62,10 @@ problematic. Default = \dQuote{clean}.
 Flags record with an unexpectedly large temporal range, based on a quantile
 outlier test.
 }
+\note{
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
+details and tutorials.
+}
 \examples{
 
 minages <- runif(n = 11, min = 0.1, max = 25)
@@ -74,6 +78,11 @@ x <- data.frame(species = c(letters[1:10], "z"),
 cf_range(x, value = "flagged", taxon = "")
 
 }
+\seealso{
+Other fossils: \code{\link{cf_equal}},
+  \code{\link{cf_outl}}
+}
+\concept{fossils}
 \keyword{Fossil}
 \keyword{Temporal}
 \keyword{cleaning}
