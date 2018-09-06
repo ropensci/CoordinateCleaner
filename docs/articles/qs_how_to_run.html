@@ -138,27 +138,27 @@ cord.flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## Flagged 0 records.
 ## Testing sea coordinates
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpoviSWp", layer: "ne_50m_land"
+## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpKqJ3OM", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
-## Flagged 160 records.
+## Flagged 153 records.
 ## Testing geographic outliers
-## Flagged 4 records.
+## Flagged 2 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 160 of 250 records, EQ = 0.64.
+## Flagged 153 of 250 records, EQ = 0.61.
 
 <span class="co">#summarize and visualize results</span>
 <span class="kw">summary</span>(cord.flags)
 ## decimallatitude             val             equ             zer 
 ##               0               0               0               0 
 ##             cap             cen             sea             otl 
-##               0               0             160               4 
+##               0               0             153               2 
 ##             gbf            inst         summary 
-##               0               0             160
+##               0               0             153
 <span class="kw">plot</span>(cord.flags)</code></pre></div>
 <p><img src="qs_how_to_run_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
@@ -213,14 +213,14 @@ cleaned &lt;-<span class="st">  </span>exmpl<span class="op">%&gt;%</span>
 ## Testing biodiversity institutions
 ## Flagged 0 records.
 ## Testing geographic outliers
-## Flagged 2 records.
+## Flagged 0 records.
 ## Testing sea coordinates
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpoviSWp", layer: "ne_50m_land"
+## Source: "C:\Users\alexander.zizka\AppData\Local\Temp\RtmpKqJ3OM", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
-## Flagged 158 records.
+## Flagged 153 records.
 ## Testing zero coordinates
 ## Flagged 0 records.
 ## Testing for dd.mm to dd.dd conversion errors

@@ -251,17 +251,17 @@ rang &lt;-<span class="st"> </span>cl<span class="op">$</span>early_age <span cl
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">""</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on dataset level
-## Flagged 254 records.
+## Flagged 246 records.
 
 <span class="co"># Outlier taxon</span>
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">"taxon_name"</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on taxon level
-## Flagged 30 records.</code></pre></div>
+## Flagged 25 records.</code></pre></div>
 <p>Done! To check how many records have been flagged in total, you can compare the two datasets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(dat) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cl)</code></pre></div>
-<pre><code>## [1] 744</code></pre>
-<p>All test combined have removed about 744 records (14.9%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
+<pre><code>## [1] 731</code></pre>
+<p>All test combined have removed about 731 records (14.6%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
 <p>So far so good, we have significantly refined the data for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run . You can connect all functions directly in a row using the magrittr pipe (%&gt;%) operator.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(<span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>)<span class="op">%&gt;%</span>
@@ -306,13 +306,13 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">table</span>(cl<span class="op">$</span>phylum)
 ## 
 ## Spermatophyta 
-##          4256
+##          4269
 
 <span class="co">#2. Taxonomic level of identification</span>
 <span class="kw">table</span>(cl<span class="op">$</span>taxon_rank)
 ## 
 ##  subclass   species     genus     class    family     order subfamily 
-##         7      3287       535       271       123        20         0</code></pre></div>
+##         7      3299       534       271       125        20         0</code></pre></div>
 <p>The required taxonomic level of course depends on the downstream analyses, but here we will exclude everything other than genus or species, which is a reasonable approach for most PyRate analyses.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>cl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(taxon_rank <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>))</code></pre></div>
@@ -324,7 +324,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(cl<span class="op">$</span>geogscale)</code></pre></div>
 <pre><code>## 
 ## small collection          outcrop       local area            basin 
-##             1952             1695               79                0</code></pre>
+##             1956             1696               79                0</code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
 <div id="time" class="section level2">
@@ -335,7 +335,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>late_age))
 ## 
 ##  63.3    66  70.6  93.5  93.9 100.5 
-##    54   138     8     3     3    21
+##    53   139     8     3     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> late_age))
@@ -346,7 +346,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>early_age))
 ## 
 ##  70.6  83.5  99.6 100.5 105.3   113 
-##   126     9     3    11     3    21
+##   127     9     3    11     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> early_age))
@@ -374,7 +374,7 @@ cl &lt;-<span class="st"> </span><span class="kw">filter</span>(cl, preservation
 <div id="conclusions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
-<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-75.44 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
+<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-75.66 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
 <p><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-1.png" width="672"><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
 </div>
 <div id="writing-the-result-to-disk-in-pyrate-format" class="section level1">
