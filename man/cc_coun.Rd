@@ -15,7 +15,7 @@ names, and a country assignment.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{iso3}{a character string. The column with the country assignment of
@@ -43,7 +43,7 @@ Such a mismatch can occur for example, if latitude and longitude are
 switched.
 }
 \note{
-With the default reference, records are flaggeed if they fall 
+With the default reference, records are flagged if they fall 
 outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
 See \url{https://azizka.github.io/CoordinateCleaner/} for more
 details and tutorials.

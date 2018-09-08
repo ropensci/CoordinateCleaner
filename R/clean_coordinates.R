@@ -141,8 +141,11 @@
 #'                     decimallongitude = runif(250, min = 42, max = 51),
 #'                     decimallatitude = runif(250, min = -26, max = -11))
 #' 
-#' test <- clean_coordinates(x = exmpl)
-#' 
+#' test <- clean_coordinates(x = exmpl, 
+#'                           tests = c("capitals", "centroids", 
+#'                                     "equal", "gbif", "institutions", 
+#'                                     "seas", "zeros"))
+#'                                     
 #' summary(test)
 #' 
 #' @export

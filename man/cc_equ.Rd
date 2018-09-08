@@ -14,7 +14,7 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{test}{character string. Defines if coordinates are compared exactly

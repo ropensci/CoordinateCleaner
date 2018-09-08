@@ -14,7 +14,7 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{numerical. The buffer around the GBIF headquarters,
@@ -23,7 +23,7 @@ where records should be flagged as problematic. Units depend on geod. Default = 
 \item{geod}{logical. If TRUE the radius around each centroid is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. DEfault = T.}
+in this case buffer is in degrees. Default = T.}
 
 \item{value}{a character string.  Defining the output value. See value.}
 

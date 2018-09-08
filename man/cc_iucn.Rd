@@ -17,7 +17,7 @@ Must contain a column named as indicated by \code{species}. See details.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. The column with the species name. 

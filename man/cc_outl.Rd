@@ -5,8 +5,8 @@
 \title{Flag Geographic Outliers in Species Distributions}
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", method = "quantile", mltpl = 5, tdi = 1000,
-  value = "clean", sampling_cor = FALSE, verbose = TRUE)
+  species = "species", method = "quantile", mltpl = 3, tdi = 1000,
+  value = "clean", sampling_thresh = 0, verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -15,7 +15,7 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. The column with the species name. Default
@@ -35,8 +35,7 @@ as outlier, in km. See details. Default = 1000.}
 
 \item{value}{a character string.  Defining the output value. See value.}
 
-\item{sampling_cor}{logical. If TRUE, outlier detection is weightend by sampling intensity. 
-See details. Defeulat = F.}
+\item{sampling_thresh}{a numeric. Cut off threshold fo}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -64,11 +63,11 @@ deviation is used. In this case a record is flagged as outlier, if the
 the median of the mean distance of all points plus/minus the mad of the mean
 distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
-record of the species is > \code{tdi}. For speces with records from > 10000
+record of the species is > \code{tdi}. For species with records from > 10000
 unique locations a random sample of 1000 records is used for 
 the distance matrix calculation.
 
-The likelihood of occurrence records being erroroneous outliers is linked to the sampling effort
+The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
 in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 

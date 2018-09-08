@@ -11,7 +11,7 @@
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic. Units depend on geod.  
@@ -19,12 +19,12 @@
 #' @param geod logical. If TRUE the radius around each centroid is calculated
 #' based on a sphere, buffer is in meters and independent of latitude. If FALSE
 #' the radius is calculated assuming planar coordinates and varies slightly with latitude,
-#' in this case buffer is in degrees. DEfault = T.
+#' in this case buffer is in degrees. Default = T.
 #' @param test a character string. Specifying the details of the test. One of
 #' c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 #' country and province centroids.
-#' @param ref a SpatialPointsDataframe. Providing the geographic gazetteer. Can
-#' be any SpatialPointsDataframe, but the structure must be identical to
+#' @param ref a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+#' be any SpatialPointsDataFrame, but the structure must be identical to
 #' \code{\link{countryref}}.  Default = \code{\link{countryref}}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
@@ -43,8 +43,11 @@
 #'                 decimallongitude = runif(100, -180, 180), 
 #'                 decimallatitude = runif(100, -90,90))
 #'                 
-#' cc_cen(x)
-#' cc_cen(x, value = "flagged")
+#' cc_cen(x, geod = FALSE)
+#' 
+#' \dontrun{
+#' #' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+#' }
 #' 
 #' @export
 #' @importFrom geosphere destPoint
@@ -109,14 +112,14 @@ cc_cen <- function(x,
     out <- rep(TRUE, nrow(x))
   } else {
     if(geod){
-      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+      # credits to https://seethedatablog.wordpress.com
       dg <- seq(from = 0, to = 360, by = 5)
       
       buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
                                       b = rep(dg, each = length(ref)), 
                                       d = buffer)
       
-      id <- rep(1:length(ref), times = length(dg))
+      id <- rep(seq_along(ref), times = length(dg))
       
       
       lst <- split(data.frame(buff_XY), f = id)

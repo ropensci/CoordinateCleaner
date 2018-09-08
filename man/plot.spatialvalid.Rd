@@ -24,7 +24,7 @@ flag.}
 
 \item{font_size}{numeric. The font size for the legend and axes}
 
-\item{\dots{}}{arguments to be passed to methods.}
+\item{\dots}{arguments to be passed to methods.}
 }
 \value{
 A plot of the records flagged as potentially erroneous by
@@ -41,7 +41,11 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
                     decimallongitude = runif(250, min = 42, max = 51),
                     decimallatitude = runif(250, min = -26, max = -11))
 
-test <- clean_coordinates(exmpl, species = "species", verbose = FALSE)
+test <- clean_coordinates(exmpl, species = "species", 
+                          tests = c("capitals", "centroids", 
+                                    "equal", "gbif", "institutions", 
+                                    "seas", "zeros"),
+                          verbose = FALSE)
 
 summary(test)
 plot(test)

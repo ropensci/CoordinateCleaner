@@ -16,10 +16,10 @@
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
-#' @param ref a SpatialPolygonsDataframe. Providing the geographic gazetteer.
-#' Can be any SpatialPolygonsDataframe, but the structure must be identical to
+#' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
+#' Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 #' rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
 #' Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
 #' @param scale the scale of the default reference, as downloaded from natural earth. 
@@ -80,7 +80,9 @@ cc_sea <- function(x,
         stop("scale must be one of c(10,50,110)")
       }
       
-      ref <- rnaturalearth::ne_download(scale = scale, type = 'land', category = 'physical')
+      ref <- rnaturalearth::ne_download(scale = scale, 
+                                        type = 'land', 
+                                        category = 'physical')
       ref <- raster::crop(ref, raster::extent(pts) + 1)
     }else{
       #Check projection of custom reference and reproject if necessary
@@ -114,7 +116,9 @@ cc_sea <- function(x,
     if (is.null(ref)) {
       match.arg(scale, choices = c(10, 50, 110))
       
-      ref <- rnaturalearth::ne_download(scale = scale, type = 'land', category = 'physical')
+      ref <- rnaturalearth::ne_download(scale = scale, 
+                                        type = 'land', 
+                                        category = 'physical')
       ref <- raster::crop(ref, raster::extent(pts) + 1)
     } else {
       #Check projection of custom reference and reproject if necessary

@@ -15,7 +15,7 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{numerical. The buffer around each province or country
@@ -25,10 +25,10 @@ degrees.  Default = 100m.}
 \item{geod}{logical. If TRUE the radius around each institution is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. DEfault = T.}
+in this case buffer is in degrees. Default = T.}
 
-\item{ref}{a SpatialPointsDataframe. Providing the geographic gazetteer. Can
-be any SpatialPointsDataframe, but the structure must be identical to
+\item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+be any SpatialPointsDataFrame, but the structure must be identical to
 \code{\link{institutions}}.  Default = \code{\link{institutions}}}
 
 \item{value}{a character string.  Defining the output value. See value.}
@@ -62,8 +62,13 @@ details and tutorials.
 x <- data.frame(species = letters[1:10], 
                 decimallongitude = runif(100, -180, 180), 
                 decimallatitude = runif(100, -90,90))
-                
-cc_inst(x, value = "flagged", buffer = 500000)#large buffer for demonstration
+
+#large buffer for demonstration, using geod = FALSE for shorter runtime              
+cc_inst(x, value = "flagged", buffer = 10, geod = FALSE) 
+
+\dontrun{
+#' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+}
 
 }
 \seealso{

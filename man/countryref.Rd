@@ -5,7 +5,7 @@
 \alias{countryref}
 \title{Country Centroids and Country Capitals}
 \format{A data frame with 5,142 observations on 10 variables.
-#' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also refering to the country.}
+#' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
 \item{iso2}{ISO-2 code for each country, in case of provinces also refering to the country.} \item{name}{a
 factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
 \item{type}{identifying if the entry refers to a country or province level.} 

@@ -13,7 +13,7 @@
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic, in decimal
@@ -21,9 +21,9 @@
 #' @param geod logical. If TRUE the radius around each institution is calculated
 #' based on a sphere, buffer is in meters and independent of latitude. If FALSE
 #' the radius is calculated assuming planar coordinates and varies slightly with latitude,
-#' in this case buffer is in degrees. DEfault = T.
-#' @param ref a SpatialPointsDataframe. Providing the geographic gazetteer. Can
-#' be any SpatialPointsDataframe, but the structure must be identical to
+#' in this case buffer is in degrees. Default = T.
+#' @param ref a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+#' be any SpatialPointsDataFrame, but the structure must be identical to
 #' \code{\link{institutions}}.  Default = \code{\link{institutions}}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
@@ -41,8 +41,13 @@
 #' x <- data.frame(species = letters[1:10], 
 #'                 decimallongitude = runif(100, -180, 180), 
 #'                 decimallatitude = runif(100, -90,90))
-#'                 
-#' cc_inst(x, value = "flagged", buffer = 500000)#large buffer for demonstration
+#'
+#'#large buffer for demonstration, using geod = FALSE for shorter runtime              
+#' cc_inst(x, value = "flagged", buffer = 10, geod = FALSE) 
+#' 
+#' \dontrun{
+#' #' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+#' }
 #' 
 #' @export
 #' @importFrom geosphere destPoint
@@ -94,14 +99,14 @@ cc_inst <- function(x,
     out <- rep(TRUE, nrow(x))
   } else {
     if(geod){
-      # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+      # credits to https://seethedatablog.wordpress.com
       dg <- seq(from = 0, to = 360, by = 5)
       
       buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
                                       b = rep(dg, each = length(ref)), 
                                       d = buffer)
       
-      id <- rep(1:length(ref), times = length(dg))
+      id <- rep(seq_along(ref), times = length(dg))
       lst <- split(data.frame(buff_XY), f = id)
       
       # Make SpatialPolygons out of the list of coordinates
@@ -121,7 +126,7 @@ cc_inst <- function(x,
   # if(geo_verify){
     #  #create second radius, x times the ratius of the other
     # if(geod){
-    #   # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+    #   # credits to https://seethedatablog.wordpress.com
     #   dg <- seq(from = 0, to = 360, by = 5)
     #   
     #   buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
@@ -144,7 +149,8 @@ cc_inst <- function(x,
     # outl_sp <- x[!out,][[species]]
     # test <- x[as.character(x[,species]) %in% outl_sp,]
     # 
-    # test_pts <- sp::SpatialPoints(test[, c(lon, lat)], proj4string = sp::CRS(wgs84))
+    # test_pts <- sp::SpatialPoints(test[, c(lon, lat)], 
+  #                                 proj4string = sp::CRS(wgs84))
     # test$class <- ref[sp::over(x = test_pts, y = ref),]
     # 
     # aggregate(class ~ species, data = test, FUN = sum)

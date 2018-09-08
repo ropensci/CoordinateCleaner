@@ -15,11 +15,11 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{ref}{a SpatialPolygonsDataframe. Providing the geographic gazetteer.
-Can be any SpatialPolygonsDataframe, but the structure must be identical to
+\item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
+Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
 Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')}
 

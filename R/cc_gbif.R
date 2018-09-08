@@ -9,14 +9,14 @@
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer numerical. The buffer around the GBIF headquarters,
 #' where records should be flagged as problematic. Units depend on geod. Default = 100 m.
 #' @param geod logical. If TRUE the radius around each centroid is calculated
 #' based on a sphere, buffer is in meters and independent of latitude. If FALSE
 #' the radius is calculated assuming planar coordinates and varies slightly with latitude,
-#' in this case buffer is in degrees. DEfault = T.
+#' in this case buffer is in degrees. Default = T.
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
@@ -66,7 +66,7 @@ cc_gbif <- function(x,
                            proj4string = sp::CRS(wgs84))
 
   if(geod){
-    # credits to https://seethedatablog.wordpress.com/2017/08/03/euclidean-vs-geodesic-buffering-in-r/
+    # credits to https://seethedatablog.wordpress.com
     dg <- seq(from = 0, to = 360, by = 5)
     
     buff_XY <- geosphere::destPoint(p = cbind(12.58, 55.67), 

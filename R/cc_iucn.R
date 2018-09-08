@@ -17,7 +17,7 @@
 #' Must contain a column named as indicated by \code{species}. See details.  
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param species a character string. The column with the species name. 
 #' Default = \dQuote{species}.

@@ -42,7 +42,7 @@ NULL
 #' @name countryref
 #' @docType data
 #' @format A data frame with 5,142 observations on 10 variables.
-#' #' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also refering to the country.}
+#' #' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
 #' \item{iso2}{ISO-2 code for each country, in case of provinces also refering to the country.} \item{name}{a
 #' factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
 #' \item{type}{identifying if the entry refers to a country or province level.} 
@@ -100,6 +100,29 @@ NULL
 #' Registry of Biodiversity Repositories \url{www.grbio.org} \item Index
 #' Herbariorum \url{http://sciweb.nybg.org/Science2/IndexHerbariorum.asp}
 #' \item Botanic Gardens Conservation International \url{https://www.bgci.org/}
+#' }
+#' @keywords gazetteers
+#' @examples
+#' 
+#' data(institutions)
+#' str(institutions)
+#' 
+NULL
+
+
+#' Example data from the Paleobiologydatabase
+#' 
+#' A dataset of 5000 flowering plant fossil occurrences as example for data of the paleobiology Database, downloaded using the paleobioDB packages as specified in the vignette \dQuote{Cleaning_PBDB_fossils_with_CoordinateCleaner}.
+#' 
+#' 
+#' @name pbdb_example
+#' @docType data
+#' @format A data frame with 5000 observations on 36 variables.
+#' @source \itemize{ 
+#' \item The Paleobiology database \url{https://paleobiodb.org/} 
+#' \item Sara Varela, Javier Gonzalez Hernandez and Luciano Fabris Sgarbi (2016). 
+#' paleobioDB: Download and Process Data from the Paleobiology Database. 
+#' R package version 0.5.0. \url{https://CRAN.R-project.org/package=paleobioDB}.
 #' }
 #' @keywords gazetteers
 #' @examples

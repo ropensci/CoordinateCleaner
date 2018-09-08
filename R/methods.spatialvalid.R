@@ -21,7 +21,7 @@ is.spatialvalid <- function(x) {
 #' flag.
 #' @param pts_size numeric. The point size for the plot.
 #' @param font_size numeric. The font size for the legend and axes
-#' @param \dots{} arguments to be passed to methods.
+#' @param \dots arguments to be passed to methods.
 #' @return A plot of the records flagged as potentially erroneous by
 #' \code{\link{clean_coordinates}}.
 #' @seealso \code{\link{clean_coordinates}}
@@ -33,7 +33,11 @@ is.spatialvalid <- function(x) {
 #'                     decimallongitude = runif(250, min = 42, max = 51),
 #'                     decimallatitude = runif(250, min = -26, max = -11))
 #' 
-#' test <- clean_coordinates(exmpl, species = "species", verbose = FALSE)
+#' test <- clean_coordinates(exmpl, species = "species", 
+#'                           tests = c("capitals", "centroids", 
+#'                                     "equal", "gbif", "institutions", 
+#'                                     "seas", "zeros"),
+#'                           verbose = FALSE)
 #' 
 #' summary(test)
 #' plot(test)

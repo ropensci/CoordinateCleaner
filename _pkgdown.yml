@@ -2,12 +2,12 @@ reference:
 - title: Wrapper functions
   contents:
   - has_concept("Wrapper functions")
-- title: Geographic coordinates
+- title: Geographic coordinate cleaning
   contents:
   - has_concept("Coordinates")
-- title: Dataset-level
+- title: Dataset-levelcleaning
   contents:
   - has_concept("Datasets")
-- title: Fossils
+- title: Fossil cleaning
   contents:
   - has_concept("fossils")

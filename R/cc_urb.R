@@ -13,9 +13,9 @@
 #' names.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
-#' @param ref a SpatialPolygonsDataframe. Providing the geographic gazetteer
+#' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer
 #' with the urban areas. See details.
 #' @param value a character string. Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number

@@ -12,7 +12,8 @@ exmpl <- data.frame(species = sample(letters[-1], size = 250, replace = TRUE),
                     countrycode = "RUS")
 
 
-range_species_A <- Polygon(cbind(c(-180,-180, 180, 180,-180),c(-90,90,90,-90,-90)))
+range_species_A <- Polygon(cbind(c(-180,-180, 180, 180,-180),
+                                 c(-90,90,90,-90,-90)))
 range_A <- Polygons(list(range_species_A), ID = c("a"))
 range <- SpatialPolygons(list(range_A))
 
@@ -46,7 +47,8 @@ test_that("cc_coun works", {
 
 
 test_that("cc_iucn works", {
-  expect_equal(sum(cc_iucn(x = exmpl, range = range_emp, value = "flagged")), nrow(exmpl))
+  expect_equal(sum(cc_iucn(x = exmpl, range = range_emp, value = "flagged")),
+               nrow(exmpl))
   expect_true(sum(cc_iucn(x = exmpl, range = range, value = "flagged")) > 0)
 })
 
@@ -55,12 +57,13 @@ test_that("cc_outl works", {
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", sampling_cor = T, mltpl = 0.1)), 119)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
+                           sampling_thresh = 0.2, mltpl = 0.1)), 212)
   
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 
-                           tdi = .001)), 33)
+                           tdi = .001)), 39)
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", tdi = 10000)), 250)

@@ -15,7 +15,7 @@ names.}
 \item{lon}{a character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{The buffer around each capital coordinate (the centre of the
@@ -25,10 +25,10 @@ Default = 10 kilometers.}
 \item{geod}{logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. DEfault = T.}
+in this case buffer is in degrees. Default = T.}
 
-\item{ref}{a SpatialPointsDataframe. Providing the geographic gazetteer. Can
-be any SpatialPointsDataframe, but the structure must be identical to
+\item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+be any SpatialPointsDataFrame, but the structure must be identical to
 \code{\link{countryref}}.  Default = \code{\link{countryref}}}
 
 \item{value}{a character string.  Defining the output value. See value.}

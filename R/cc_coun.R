@@ -10,7 +10,7 @@
 #' names, and a country assignment.
 #' @param lon a character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param iso3 a character string. The column with the country assignment of
 #' each record in three letter ISO code. Default = \dQuote{countrycode}.
@@ -24,7 +24,7 @@
 #' containing the records considered correct by the test (\dQuote{clean}) or a
 #' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
 #' problematic. Default = \dQuote{clean}.
-#' @note With the default reference, records are flaggeed if they fall 
+#' @note With the default reference, records are flagged if they fall 
 #' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
 #' See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
