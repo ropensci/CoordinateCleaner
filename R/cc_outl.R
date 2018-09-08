@@ -95,7 +95,6 @@ cc_outl <- function(x,
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
-  # left
   test <- lapply(splist, "duplicated")
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
@@ -103,6 +102,8 @@ cc_outl <- function(x,
 
   # create raster for raster approximation  of large datasets
   if(any(test >= 10000)){
+    warning("large dataset. Using raster approximation.")
+    
     # get data extend
     ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)]))
     #create raster
@@ -129,40 +130,39 @@ cc_outl <- function(x,
           # get mean distance to all other points
           mins <- apply(dist, 1, mean, na.rm = TRUE)
         }
-      }
-    }else{
-      warning("large dataset. Using raster approximation.")
-      
-      # assign points to raster cells 
-      pts <- raster::extract(x = ras, y = sp::SpatialPoints(k[, c(lon, lat)]))
-      midp <- data.frame(raster::rasterToPoints(ras))
-      midp <- midp[midp$layer %in% unique(pts),]
-      midp <- midp[match(unique(pts), midp$layer),]
-
-      # calculate geospheric distance between raster cells with points
-      dist <- geosphere::distm(midp[, c("x", "y")], 
-                               fun = geosphere::distHaversine) / 1000
-      
-      # approximate within cell distance as half the cell size, assumin 1 deg = 100km
-      # this is crude, but doesn't really matter
-      dist[dist == 0] <- 100 * mean(res(ras)) / 2
-      
-      dist <- as.data.frame(dist, row.names = as.integer(midp$layer))
-      names(dist) <- midp$layer
-      
-      # weight matrix to account for the number of points per cell
-      cou <- table(pts)
-      cou <- cou[match(unique(pts), names(cou))]
-      wm <- outer(cou, cou)
-      
-      # multiply matrix elements to get weightend sum
-      dist <- round(dist * wm, 0)
-      
-      if(method == "distance"){
-        mins <- apply(dist, 1, min, na.rm = TRUE)
+        
       }else{
-        # get row means
-        mins <- apply(dist, 1, sum) / rowSums(wm)
+        # assign points to raster cells 
+        pts <- raster::extract(x = ras, y = sp::SpatialPoints(k[, c(lon, lat)]))
+        midp <- data.frame(raster::rasterToPoints(ras))
+        midp <- midp[midp$layer %in% unique(pts),]
+        midp <- midp[match(unique(pts), midp$layer),]
+        
+        # calculate geospheric distance between raster cells with points
+        dist <- geosphere::distm(midp[, c("x", "y")], 
+                                 fun = geosphere::distHaversine) / 1000
+        
+        # approximate within cell distance as half the cell size, assumin 1 deg = 100km
+        # this is crude, but doesn't really matter
+        dist[dist == 0] <- 100 * mean(raster::res(ras)) / 2
+        
+        dist <- as.data.frame(dist, row.names = as.integer(midp$layer))
+        names(dist) <- midp$layer
+        
+        # weight matrix to account for the number of points per cell
+        cou <- table(pts)
+        cou <- cou[match(unique(pts), names(cou))]
+        wm <- outer(cou, cou)
+        
+        # multiply matrix elements to get weightend sum
+        dist <- round(dist * wm, 0)
+        
+        if(method == "distance"){
+          mins <- apply(dist, 1, min, na.rm = TRUE)
+        }else{
+          # get row means
+          mins <- apply(dist, 1, sum) / rowSums(wm)
+        }
       }
     }
     
@@ -188,19 +188,23 @@ cc_outl <- function(x,
       out <- which(mins < quo - tester * mltpl | mins > quo + tester *
                      mltpl)
     }
-     
-    # #If raster simplification is used, merge back to original points
-    # if(nrow(k) >= 10000){
-    #   out <- names(mins)[out]
-    #   out <- which(pts %in% as.numeric(out))
-    # }
-      
-    # create output object
-    if (length(out) == 0) {
-      ret <- NA
-    }
-    if (length(out) > 0) {
-      ret <- rownames(k)[out]
+    
+    if(nrow(k) > 10000){
+      # create output object
+      if (length(out) == 0) {
+        ret <- NA
+      }
+      if (length(out) > 0) {
+        ret <- which(pts %in% names(out))
+      }
+    }else{
+      # create output object
+      if (length(out) == 0) {
+        ret <- NA
+      }
+      if (length(out) > 0) {
+        ret <- rownames(k)[out]
+      }
     }
     return(ret)
   })
@@ -232,23 +236,26 @@ cc_outl <- function(x,
     area <- area[!is.na(area$country),]
     
     # get number of records in GBIF per country as proxy for sampling intensity
-    nrec <- vapply(area$country, FUN = function(k){rgbif::occ_count(country = k)}, FUN.VALUE = 1)##get record count
+    nrec <- vapply(area$country, 
+                   FUN = function(k){rgbif::occ_count(country = k)},
+                   FUN.VALUE = 1)##get record count
     nrec <- data.frame(country = area$country, recs = unlist(nrec), row.names = NULL)
     
     # normalize by area
     nrec_norm <- dplyr::left_join(nrec, area, by = "country")
     nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
-    thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
-    
     ref <- raster::crop(ref, raster::extent(pts) + 1)
     
     # get country from coordinates and compare with provided country
     country <- sp::over(x = pts, y = ref)[, "iso_a3"]
     
-    #get the sampling for the flagged countries
-    
+    # get the sampling for the flagged countries
+    thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
     s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]
-    s_flagged <- s_flagged > sampling_thresh
+    s_flagged <- s_flagged > thresh
+    
+    #treat countries with no country information as FALSE
+    s_flagged[is.na(s_flagged)] <- FALSE
     
     # Only retain those flags with sampling higher than threshold
     flags <- flags[s_flagged]
