@@ -24,6 +24,7 @@ range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
 
 test_that("cc_cap works", {
   expect_equal(sum(cc_cap(x = exmpl, value = "flagged")), 250)
+  expect_equal(sum(cc_cap(x = exmpl, value = "flagged"), verbose = FALSE), 250)
   expect_equal(sum(cc_cap(x = exmpl, buffer = 10000000, value = "flagged")), 0)
   
   expect_error(cc_cap(x = exmpl, lon = "longitude", value = "flagged"), 
@@ -32,6 +33,7 @@ test_that("cc_cap works", {
 
 test_that("cc_cen works", {
   expect_equal(sum(cc_cen(x = exmpl, value = "flagged")), 250)
+  expect_equal(sum(cc_cen(x = exmpl, value = "flagged"), verbose = FALSE), 250)
   expect_equal(sum(cc_cen(x = exmpl, buffer = 10000000, value = "flagged")), 0)
   
   expect_error(cc_cen(x = exmpl, lon = "longitude", value = "flagged"), 
@@ -55,6 +57,7 @@ test_that("cc_iucn works", {
 
 test_that("cc_outl works", {
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 246)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 246)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
