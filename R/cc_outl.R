@@ -106,8 +106,9 @@ cc_outl <- function(x,
     
     # get data extend
     ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)]))
-    #create raster
-    ras <- raster::raster(x = ex, nrow = 180, ncol = 360) # using a raster that is 1deg by 1 deg globally
+    # create raster
+    # using a raster that is 1deg by 1 deg globally
+    ras <- raster::raster(x = ex, nrow = 180, ncol = 360) 
     vals <- seq_len(raster::ncell(ras))
     ras <- raster::setValues(ras, vals)
   }
@@ -142,7 +143,8 @@ cc_outl <- function(x,
         dist <- geosphere::distm(midp[, c("x", "y")], 
                                  fun = geosphere::distHaversine) / 1000
         
-        # approximate within cell distance as half the cell size, assumin 1 deg = 100km
+        # approximate within cell distance as half 
+        # the cell size, assumin 1 deg = 100km
         # this is crude, but doesn't really matter
         dist[dist == 0] <- 100 * mean(raster::res(ras)) / 2
         
@@ -239,7 +241,9 @@ cc_outl <- function(x,
     nrec <- vapply(area$country, 
                    FUN = function(k){rgbif::occ_count(country = k)},
                    FUN.VALUE = 1)##get record count
-    nrec <- data.frame(country = area$country, recs = unlist(nrec), row.names = NULL)
+    nrec <- data.frame(country = area$country, 
+                       recs = unlist(nrec), 
+                       row.names = NULL)
     
     # normalize by area
     nrec_norm <- dplyr::left_join(nrec, area, by = "country")

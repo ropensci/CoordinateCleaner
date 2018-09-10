@@ -30,7 +30,7 @@
 #' @param verify logical. If TRUE, records close to institutions are only flagged,
 #'  if there are no other records of the same species in the greater vicinity 
 #'  (a radius of buffer * verify_mltpl).
-#' @param verify_mltpl numerical. indicates the factor by whihch the radius for verify
+#' @param verify_mltpl numerical. indicates the factor by which the radius for verify
 #' exceeds the radius of the initial test. Default = 10, which might be suitable if 
 #' geod is TRUE, but might be too large otherwise.
 #' @param value character string.  Defining the output value. See value.
@@ -134,7 +134,8 @@ cc_inst <- function(x,
     }
   }
   
-  #double check flagged records, for records from the same species in the greater surroundings
+  # double check flagged records, for records from the 
+  # same species in the greater surroundings
   if(verify){
     #identify flagged records
     ref_in <- x[!out,]
@@ -169,9 +170,10 @@ cc_inst <- function(x,
     dbch_flag <- c()
     
     for(i in seq_len(nrow(ref_in))){
-      dbch <- sp::over(sp::SpatialPoints(f_spec[unlist(f_spec[species]) == ref@data[i, "species"], 
-                                                c(lon, lat)], proj4string = CRS(wgs84)), 
-                       ref[i,])
+      dbch <- sp::over(sp::SpatialPoints(
+        f_spec[unlist(f_spec[species]) == ref@data[i, "species"], 
+               c(lon, lat)], proj4string = CRS(wgs84)), 
+        ref[i,])
       
       #check if there area other records of this species in the buffer
       dbch_flag[[i]] <- sum(!is.na(dbch[species])) > 

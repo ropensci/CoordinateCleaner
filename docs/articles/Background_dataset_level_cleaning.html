@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Background dataset-level cleaning • CoordinateCleaner</title>
+<title>Background - dataset-level cleaning • CoordinateCleaner</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Background dataset-level cleaning">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Background - dataset-level cleaning">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,22 +52,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -99,7 +96,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Background dataset-level cleaning</h1>
+      <h1>Background - dataset-level cleaning</h1>
             
       
       
@@ -220,13 +217,13 @@ dat &lt;-<span class="st"> </span><span class="kw">rbind</span>(clean, biased)
 <span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>(<span class="dt">x =</span> dat, <span class="dt">diagnostic =</span> <span class="ot">TRUE</span>, <span class="dt">value =</span> <span class="st">"dataset"</span>, <span class="dt">mat_size =</span> <span class="dv">100</span>)</code></pre></div>
 <p><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <pre><code>##        binomial.pvalue perc.difference  pass
-## clean           0.0184           0.306  TRUE
+## clean           0.8682          -0.138  TRUE
 ## biased          0.0000           1.873 FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#inspect geographic extent of the flagged dataset to exclude island or patchy habitat</span>
 <span class="kw">min</span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 0.4354611</code></pre>
+<pre><code>## [1] 0.1943527</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 180.1297</code></pre>
+<pre><code>## [1] 177.1025</code></pre>
 <p>The diagnostic plots clearly show the biased distribution of decimals in the biased dataset and the large geographic extent excludes islands or patchy habitats as cause of this distribution.</p>
 
 </div>
@@ -267,7 +264,7 @@ The effect of the <code>T1</code> parameter on the sensitivity of the <code>ds_r
 <p>The follwoing example illustrates the use of <code>cd_round</code>.</p>
 <p><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <pre><code>##        n.outliers n.regular.outliers regular.distance  flag
-## biased          5                  4                1 FALSE
+## biased          5                  3                1 FALSE
 ## clean           0                  0               NA  TRUE</code></pre>
 <p>If <code>value = "dataset"</code> the output of cd_round is a table indicating the number of regualr outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.</p>
 </div>

@@ -14,8 +14,8 @@
 #' Default = \dQuote{decimallatitude}.
 #' @param iso3 a character string. The column with the country assignment of
 #' each record in three letter ISO code. Default = \dQuote{countrycode}.
-#' @param ref a SpatialPolygonsDataframe. Providing the geographic gazetteer.
-#' Can be any SpatialPolygonsDataframe, but the structure must be identical to
+#' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
+#' Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 #' \code{rnaturalearth::ne_countries(scale = "medium")}.  Default = \code{rnaturalearth::ne_countries(scale = "medium")}
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number

@@ -52,22 +52,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -112,14 +109,6 @@
 <p><code>CoordinateCleaner</code> includes a set of functions suited for fossil records including tests for imprecise or erroneous dating. <code>clean_fossils</code> is a wrapper including relevant spatial and temporal tests. As all test the temporal tests can be called individually, using the <code>cf_equal</code>, <code>cf_range</code> and <code>cf_outl</code> functions.</p>
 <p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CoordinateCleaner)
-## Registered S3 method overwritten by 'dplyr':
-##   method               from  
-##   as.data.frame.tbl_df tibble
-## Registered S3 methods overwritten by 'ggplot2':
-##   method         from 
-##   [.quosures     rlang
-##   c.quosures     rlang
-##   print.quosures rlang
 
 <span class="co"># Simulate example data</span>
 minages &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">250</span>, <span class="dv">0</span>, <span class="dv">65</span>)
@@ -131,39 +120,6 @@ exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span cla
 
 <span class="co"># Run fossil test</span>
 test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_fossils.html">clean_fossils</a></span>(<span class="dt">x =</span> exmpl)
-## Testing coordinate validity
-## Flagged 0 records.
-## Testing equal lat/lon
-## Flagged 0 records.
-## Testing zero coordinates
-## Flagged 0 records.
-## Testing country centroids
-## Flagged 0 records.
-## Testing spatio-temporal outliers on taxon level
-## Warning in cf_outl(x = x, lon = lon, lat = lat, min_age = min_age, max_age
-## = max_age, : decimallatitude not found. Using lat instead.
-## Warning in cf_outl(x = x, lon = lon, lat = lat, min_age = min_age, max_age
-## = max_age, : decimallongitude not found. Using lng instead.
-## Flagged 0 records.
-## Warning in cf_range(x = test, taxon = "", min_age = min_age, max_age =
-## max_age, : decimallatitude not found. Using lat instead.
-## Warning in cf_range(x = test, taxon = "", min_age = min_age, max_age =
-## max_age, : decimallongitude not found. Using lng instead.
-## Testing temporal range outliers on dataset level
-## Flagged 0 records.
-## Warning in cf_range(ran.test, taxon = taxon, min_age = min_age, max_age =
-## max_age, : decimallatitude not found. Using lat instead.
-## Warning in cf_range(ran.test, taxon = taxon, min_age = min_age, max_age =
-## max_age, : decimallongitude not found. Using lng instead.
-## Testing temporal range outliers on taxon level
-## Flagged 0 records.
-## Testing age validity
-## Flagged 0 records.
-## Testing GBIF headquarters, flagging records around Copenhagen
-## Flagged 0 records.
-## Testing biodiversity institutions
-## Flagged 0 records.
-## Flagged 0 of 250 records, EQ = 0
 
 <span class="kw">summary</span>(test)
 ## decimallatitude             aeq             cen             gbf 

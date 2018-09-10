@@ -5,16 +5,17 @@
 \title{Flag Records Assigned to GBIF Headquarters}
 \usage{
 cc_gbif(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 100, geod = TRUE, value = "clean", verbose = TRUE)
+  buffer = 1000, geod = TRUE, verify = FALSE, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{numerical. The buffer around the GBIF headquarters,
@@ -25,7 +26,11 @@ based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
 in this case buffer is in degrees. Default = T.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
+with identical coordinates closed to the GBIF headquarters. 
+If FALSE, the distance is the only criterion}
+
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}

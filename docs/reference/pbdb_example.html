@@ -84,22 +84,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -163,131 +160,54 @@ R package version 0.5.0. <a href='https://CRAN.R-project.org/package=paleobioDB'
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>data</span>(<span class='no'>institutions</span>)
-<span class='fu'>str</span>(<span class='no'>institutions</span>)</div><div class='output co'>#&gt; 'data.frame':	12169 obs. of  12 variables:
-#&gt;  $ name                       : chr  "Indian Agricultural Research Institute" "University of Oulu" "EMBRAPA" "KwaZulu-Natal Nature Conservation Service" ...
-#&gt;  $ decimallongitude           : num  77.2 25.5 -57.7 30.3 -78.5 ...
-#&gt;  $ decimallatitude            : num  28.64 65.06 -19.02 -29.57 -7.17 ...
-#&gt;  $ city                       : chr  "New Delhis" "FOulu" "Corumb\032" "Pietermaritzburg" ...
-#&gt;  $ country                    : chr  "IND" "FIN" "BRA" "ZAF" ...
-#&gt;  $ address                    : chr  "Pusa Campus  " "Linnanmaa F2. Dept .of Biology, University of Oulu P.O. Box 3000" "Rua 21 de Setembro 1880.  " "Douglas Mitchell Centre, Level 6, Queen Elizabeth Park, Duncan MacKenzie Drive, Pietermaritzburg.  " ...
-#&gt;  $ source                     : chr  "grbioorg" "grbioorg" "grbioorg" "grbioorg" ...
-#&gt;  $ type                       : chr  "Research_centre" "University" NA NA ...
-#&gt;  $ geocoding.precision.m      : num  1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 ...
+<span class='fu'>str</span>(<span class='no'>institutions</span>)</div><div class='output co'>#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':	11601 obs. of  12 variables:
+#&gt;  $ name                       : chr  "A.N. Severtsov Institute of Ecology and Evolution, RUSSIAN ACADEMY OF SCIENCES" "Aarhus University" "Aarhus University, Science Museums" "Aathal Dinosaur Museum" ...
+#&gt;  $ decimallongitude           : num  37.58 12.1 10.2 8.76 31.6 ...
+#&gt;  $ decimallatitude            : num  55.7 55.7 56.2 47.3 40.7 ...
+#&gt;  $ city                       : chr  "Moscow" "Aarhus C" "Aarhus" "Aathal" ...
+#&gt;  $ country                    : chr  "RUS" "DNK" "DNK" "CHE" ...
+#&gt;  $ address                    : chr  NA NA NA NA ...
+#&gt;  $ source                     : chr  "GBIF" "grbioorg" "indexherbariorum" "wikipedia" ...
+#&gt;  $ type                       : chr  "Research_centre" "University" "Herbarium" "Museum" ...
+#&gt;  $ geocoding.precision.m      : num  1000 10 1000 1000 10 10 1000 1000 1000 10 ...
 #&gt;  $ geocoding.issue            : chr  NA NA NA NA ...
-#&gt;  $ geocoding.source           : chr  "AH" "AH" "AH" "AH" ...
-#&gt;  $ inside.ptoected.area.WDPAID: num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  - attr(*, "vars")=List of 2
-#&gt;   ..$ : symbol decimallongitude
-#&gt;   ..$ : symbol decimallatitude
-#&gt;  - attr(*, "indices")=List of 8143
-#&gt;   ..$ : int 4177
-#&gt;   ..$ : int 4168
-#&gt;   ..$ : int 8632
-#&gt;   ..$ : int 7692
-#&gt;   ..$ : int  4375 5357
-#&gt;   ..$ : int 785
-#&gt;   ..$ : int 6159
-#&gt;   ..$ : int 1497
-#&gt;   ..$ : int 8259
-#&gt;   ..$ : int 953
-#&gt;   ..$ : int 3768
-#&gt;   ..$ : int 7076
-#&gt;   ..$ : int 3315
-#&gt;   ..$ : int 1362
-#&gt;   ..$ : int  8629 8630 8783
-#&gt;   ..$ : int 4870
-#&gt;   ..$ : int 896
-#&gt;   ..$ : int 7370
-#&gt;   ..$ : int 4824
-#&gt;   ..$ : int 8614
-#&gt;   ..$ : int 6468
-#&gt;   ..$ : int 6451
-#&gt;   ..$ : int 2806
-#&gt;   ..$ : int 1102
-#&gt;   ..$ : int 5075
-#&gt;   ..$ : int 3317
-#&gt;   ..$ : int 2899
-#&gt;   ..$ : int 4109
-#&gt;   ..$ : int 1509
-#&gt;   ..$ : int  222 2973
-#&gt;   ..$ : int 8734
-#&gt;   ..$ : int 1343
-#&gt;   ..$ : int 2451
-#&gt;   ..$ : int 6880
-#&gt;   ..$ : int 5963
-#&gt;   ..$ : int 5761
-#&gt;   ..$ : int 6008
-#&gt;   ..$ : int 4879
-#&gt;   ..$ : int  2395 3243 4143
-#&gt;   ..$ : int  7074 7075
-#&gt;   ..$ : int  4335 5912 5924
-#&gt;   ..$ : int 3244
-#&gt;   ..$ : int 566
-#&gt;   ..$ : int 3093
-#&gt;   ..$ : int  4438 5975
-#&gt;   ..$ : int 567
-#&gt;   ..$ : int 315
-#&gt;   ..$ : int 6769
-#&gt;   ..$ : int  4369 4985
-#&gt;   ..$ : int 163
-#&gt;   ..$ : int  6876 7149
-#&gt;   ..$ : int 8341
-#&gt;   ..$ : int 5139
-#&gt;   ..$ : int 8345
-#&gt;   ..$ : int 1865
-#&gt;   ..$ : int 1560
-#&gt;   ..$ : int 973
-#&gt;   ..$ : int  3088 3265
-#&gt;   ..$ : int 9480
-#&gt;   ..$ : int 1031
-#&gt;   ..$ : int 3886
-#&gt;   ..$ : int 8346
-#&gt;   ..$ : int  5285 6326 6735
-#&gt;   ..$ : int 6970
-#&gt;   ..$ : int 3570
-#&gt;   ..$ : int 1654
-#&gt;   ..$ : int 3624
-#&gt;   ..$ : int  2013 7061
-#&gt;   ..$ : int 3364
-#&gt;   ..$ : int 998
-#&gt;   ..$ : int  1470 2187 2240
-#&gt;   ..$ : int 9196
-#&gt;   ..$ : int 9469
-#&gt;   ..$ : int 4218
-#&gt;   ..$ : int 5742
-#&gt;   ..$ : int 828
-#&gt;   ..$ : int 7278
-#&gt;   ..$ : int 9350
-#&gt;   ..$ : int 2461
-#&gt;   ..$ : int 3332
-#&gt;   ..$ : int 2415
-#&gt;   ..$ : int 156
-#&gt;   ..$ : int 545
-#&gt;   ..$ : int 4528
-#&gt;   ..$ : int 4568
-#&gt;   ..$ : int 544
-#&gt;   ..$ : int  7579 7897
-#&gt;   ..$ : int 4388
-#&gt;   ..$ : int 8349
-#&gt;   ..$ : int  7604 8038
-#&gt;   ..$ : int 3524
-#&gt;   ..$ : int 5175
-#&gt;   ..$ : int 3932
-#&gt;   ..$ : int 5260
-#&gt;   ..$ : int 4495
-#&gt;   ..$ : int 4500
-#&gt;   ..$ : int  7605 8039
-#&gt;   ..$ : int 8350
-#&gt;   ..$ : int 2512
-#&gt;   .. [list output truncated]
-#&gt;  - attr(*, "group_sizes")= int  1 1 1 1 2 1 1 1 1 1 ...
-#&gt;  - attr(*, "biggest_group_size")= int 2475
-#&gt;  - attr(*, "labels")='data.frame':	8143 obs. of  2 variables:
-#&gt;   ..$ decimallongitude: num  -168 -160 -160 -159 -159 ...
-#&gt;   ..$ decimallatitude : num  37.1 24.8 21.9 21.9 21.9 ...
-#&gt;   ..- attr(*, "vars")=List of 2
-#&gt;   .. ..$ : symbol decimallongitude
-#&gt;   .. ..$ : symbol decimallatitude</div><div class='input'>
+#&gt;  $ geocoding.source           : chr  "RS" "automatic" "RS" "CD" ...
+#&gt;  $ inside.ptoected.area.WDPAID: int  NA NA NA NA NA NA NA NA 555575282 NA ...
+#&gt;  - attr(*, "problems")=Classes 'tbl_df', 'tbl' and 'data.frame':	1 obs. of  5 variables:
+#&gt;   ..$ row     : int 1547
+#&gt;   ..$ col     : chr "inside.ptoected.area.WDPAID"
+#&gt;   ..$ expected: chr "no trailing characters"
+#&gt;   ..$ actual  : chr ".00E+03"
+#&gt;   ..$ file    : chr "'institutions.csv'"
+#&gt;  - attr(*, "spec")=List of 2
+#&gt;   ..$ cols   :List of 12
+#&gt;   .. ..$ name                       : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ decimallongitude           : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+#&gt;   .. ..$ decimallatitude            : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+#&gt;   .. ..$ city                       : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ country                    : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ address                    : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ source                     : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ type                       : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ geocoding.precision.m      : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+#&gt;   .. ..$ geocoding.issue            : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ geocoding.source           : list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+#&gt;   .. ..$ inside.ptoected.area.WDPAID: list()
+#&gt;   .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+#&gt;   ..$ default: list()
+#&gt;   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+#&gt;   ..- attr(*, "class")= chr "col_spec"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

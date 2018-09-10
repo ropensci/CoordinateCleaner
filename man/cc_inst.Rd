@@ -39,7 +39,7 @@ be any SpatialPointsDataFrame, but the structure must be identical to
 if there are no other records of the same species in the greater vicinity 
 (a radius of buffer * verify_mltpl).}
 
-\item{verify_mltpl}{numerical. indicates the factor by whihch the radius for verify
+\item{verify_mltpl}{numerical. indicates the factor by which the radius for verify
 exceeds the radius of the initial test. Default = 10, which might be suitable if 
 geod is TRUE, but might be too large otherwise.}
 

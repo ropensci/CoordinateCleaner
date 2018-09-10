@@ -85,22 +85,19 @@ Copenhagen, DK." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -148,24 +145,25 @@ Copenhagen, DK.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cc_gbif</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -181,8 +179,14 @@ the radius is calculated assuming planar coordinates and varies slightly with la
 in this case buffer is in degrees. Default = T.</p></td>
     </tr>
     <tr>
+      <th>verify</th>
+      <td><p>logical. If TRUE records are only flagged if the dataset contains multiple records
+with identical coordinates closed to the GBIF headquarters. 
+If FALSE, the distance is the only criterion</p></td>
+    </tr>
+    <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

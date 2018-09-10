@@ -7,11 +7,11 @@
 #' Note: the buffer radius is in degrees, thus will differ slightly between
 #' different latitudes.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
+#' @param x data.frame. Containing geographical coordinates and species
 #' names.
-#' @param lon a character string. The column with the longitude coordinates.
+#' @param lon character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
+#' @param lat character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer The buffer around each capital coordinate (the centre of the
 #' city), where records should be flagged as problematic. Units depend on geod.
@@ -20,10 +20,13 @@
 #' based on a sphere, buffer is in meters and independent of latitude. If FALSE
 #' the radius is calculated assuming planar coordinates and varies slightly with latitude,
 #' in this case buffer is in degrees. Default = T.
-#' @param ref a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+#' @param ref SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataFrame, but the structure must be identical to
-#' \code{\link{countryref}}.  Default = \code{\link{countryref}}
-#' @param value a character string.  Defining the output value. See value.
+#' \code{\link{countryref}}.  Default = \code{\link{countryref}}.
+#' @param verify logical. If TRUE records are only flagged if the dataset contains multiple records
+#' with identical coordinates closed to the GBIF headquarters. 
+#' If FALSE, the distance is the only criterion
+#' @param value character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -54,6 +57,7 @@ cc_cap <- function(x,
                    buffer = 10000,
                    geod = TRUE,
                    ref = NULL, 
+                   verify = FALSE,
                    value = "clean", 
                    verbose = TRUE) {
 
@@ -118,6 +122,26 @@ cc_cap <- function(x,
       ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
       out <- is.na(sp::over(x = dat, y = ref))
     }
+  }
+  
+  # implement the verification
+  if(verify & sum(out) > 0){
+    # get flagged coordinates
+    ver <- x[!out,]
+    
+    #count the instances of all flagged records
+    ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
+                             ver[[lat]], FUN = "length")
+    names(ver_count) <- c(lon, lat, "count")
+    ver_count <- ver_count[ver_count$count > 1,]
+    
+    #test which flagged x occure multiple times
+    tester <- data.frame(x, ord = seq_len(nrow(x)))
+    tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
+    tester <- tester[order(tester$ord),]
+    
+    #create corrected output file
+    out <- is.na(tester$count)
   }
 
   # create output based on value argument

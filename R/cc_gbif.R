@@ -5,11 +5,11 @@
 #' 
 #' Not recommended if working with records from Denmark or the Copenhagen area.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
+#' @param x data.frame. Containing geographical coordinates and species
 #' names.
-#' @param lon a character string. The column with the longitude coordinates.
+#' @param lon character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
+#' @param lat character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
 #' @param buffer numerical. The buffer around the GBIF headquarters,
 #' where records should be flagged as problematic. Units depend on geod. Default = 100 m.
@@ -17,7 +17,10 @@
 #' based on a sphere, buffer is in meters and independent of latitude. If FALSE
 #' the radius is calculated assuming planar coordinates and varies slightly with latitude,
 #' in this case buffer is in degrees. Default = T.
-#' @param value a character string.  Defining the output value. See value.
+#' @param verify logical. If TRUE records are only flagged if the dataset contains multiple records
+#' with identical coordinates closed to the GBIF headquarters. 
+#' If FALSE, the distance is the only criterion
+#' @param value  character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -44,8 +47,9 @@
 cc_gbif <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude",
-                    buffer = 100,
+                    buffer = 1000,
                     geod = TRUE,
+                    verify = FALSE,
                     value = "clean",
                     verbose = TRUE) {
 
@@ -93,6 +97,27 @@ cc_gbif <- function(x,
     out <- sp::over(x = dat, y = ref)
     out <- is.na(out)
   }
+  
+  # implement the verification
+  if(verify & sum(out) > 0){
+    # get flagged coordinates
+    ver <- x[!out,]
+    
+    #count the instances of all flagged records
+    ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
+                            ver[[lat]], FUN = "length")
+    names(ver_count) <- c(lon, lat, "count")
+    ver_count <- ver_count[ver_count$count > 1,]
+    
+    #test which flagged x occure multiple times
+    tester <- data.frame(x, ord = seq_len(nrow(x)))
+    tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
+    tester <- tester[order(tester$ord),]
+    
+    #create corrected output file
+    out <- is.na(tester$count)
+  }
+  
   if (verbose) {
     message("Testing GBIF headquarters, flagging records around Copenhagen")
     message(sprintf("Flagged %s records.", sum(!out)))

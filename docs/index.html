@@ -52,22 +52,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -103,7 +100,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#coordinatecleaner-v2-0-2" class="anchor"></a>CoordinateCleaner v2.0-2</h1></div>
 
-<p><strong><em>Note: the latest release of CoordinateCleaner (2.0-2), might cause compatibility issues with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.</em></strong></p>
+<p><strong><em>Note: the latest release of CoordinateCleaner (2.0-2), mightis incompatible with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.</em></strong></p>
 <p>Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for</p>
 <ul>
 <li>General coordinate validity</li>
@@ -111,6 +108,7 @@
 <li>Capital coordinates</li>
 <li>Coordinates of biodiversity institutions</li>
 <li>Spatial outliers</li>
+<li>Temporal outliers</li>
 <li>Coordinate-country discordance</li>
 <li>Duplicated coordinates per species</li>
 <li>Assignment to the location of the GBIF headquarters</li>
@@ -124,7 +122,7 @@
 <li>Equal minimum and maximum ages (fossils)</li>
 <li>Spatio-temporal outliers (fossils)</li>
 </ul>
-<p>CoordinateCleaner can be particularly useful to ensure geographic data quality when using data from GBIF (e.g. obtained with <a href="https://github.com/ropensci/rgbif">rgbif</a>) for historical biogeography (e.g. with <a href="https://cran.r-project.org/web/packages/BioGeoBEARS/index.html">BioGeoBEARS</a> or <a href="https://cran.r-project.org/web/packages/phytools/index.html">phytools</a>), automated conservation assessment (e.g. with <a href="https://github.com/azizka/speciesgeocodeR/wiki">speciesgeocodeR</a> or <a href="https://cran.r-project.org/web/packages/ConR/index.html">conR</a>) or species distribution modelling (e.g. with <a href="https://cran.r-project.org/web/packages/dismo/index.html">dismo</a> or <a href="https://cran.r-project.org/web/packages/sdm/index.html">sdm</a>. See <a href="https://github.com/ropensci/scrubr">scrubr</a> and <a href="https://github.com/ropensci/taxize">taxize</a> for complementary taxonomic cleaning or <a href="https://github.com/cran/biogeo">biogeo</a> for correcting spatial coordinate errors. You can find a detailed comaprison of the functionality of <code>CoordinateCleaner</code>, <code>scrubr</code>, and <code>biogeo</code> <a href="https://azizka.github.io/CoordinateCleaner/articles/comparison_other_software.html">here</a>.</p>
+<p>CoordinateCleaner can be particularly useful to improve data quality when using data from GBIF (e.g. obtained with <a href="https://github.com/ropensci/rgbif">rgbif</a>) or the Paleobiology database (e.g. obtained with <a href="https://github.com/ropensci/paleobioDB">paleobioDB</a>) for historical biogeography (e.g. with <a href="https://cran.r-project.org/web/packages/BioGeoBEARS/index.html">BioGeoBEARS</a> or <a href="https://cran.r-project.org/web/packages/phytools/index.html">phytools</a>), automated conservation assessment (e.g. with <a href="https://github.com/azizka/speciesgeocodeR/wiki">speciesgeocodeR</a> or <a href="https://cran.r-project.org/web/packages/ConR/index.html">conR</a>) or species distribution modelling (e.g. with <a href="https://cran.r-project.org/web/packages/dismo/index.html">dismo</a> or <a href="https://cran.r-project.org/web/packages/sdm/index.html">sdm</a>). See <a href="https://github.com/ropensci/scrubr">scrubr</a> and <a href="https://github.com/ropensci/taxize">taxize</a> for complementary taxonomic cleaning or <a href="https://github.com/cran/biogeo">biogeo</a> for correcting spatial coordinate errors. You can find a detailed comaprison of the functionality of <code>CoordinateCleaner</code>, <code>scrubr</code>, and <code>biogeo</code> <a href="https://azizka.github.io/CoordinateCleaner/articles/comparison_other_software.html">here</a>.</p>
 <p>See <a href="https://github.com/azizka/CoordinateCleaner/blob/master/NEWS.html">News</a> for update information.</p>
 </div>
 <div id="installation" class="section level1">
@@ -185,7 +183,7 @@ cl &lt;- exmpl %&gt;%
 <div id="documentation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h1>
-<p>Pipelines for cleaning data from the Global Biodiversity Information Facility and the Paleobiology Database are available in <a href="https://azizka.github.io/CoordinateCleaner/articles/">here</a>.</p>
+<p>Pipelines for cleaning data from the Global Biodiversity Information Facility (GBIF) and the Paleobiology Database (PaleobioDB) are available in <a href="https://azizka.github.io/CoordinateCleaner/articles/">here</a>.</p>
 </div>
 <div id="contributing" class="section level1">
 <h1 class="hasAnchor">

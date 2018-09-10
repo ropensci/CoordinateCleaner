@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparison of CoordinateCleaner to other tools • CoordinateCleaner</title>
+<title>Background - Comparison of CoordinateCleaner to other tools • CoordinateCleaner</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Comparison of CoordinateCleaner to other tools">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Background - Comparison of CoordinateCleaner to other tools">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,22 +52,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
-    </li>
-    <li>
       <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
     </li>
     <li>
       <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
@@ -99,7 +96,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Comparison of CoordinateCleaner to other tools</h1>
+      <h1>Background - Comparison of CoordinateCleaner to other tools</h1>
             
       
       
@@ -112,7 +109,7 @@
 <div id="background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h2>
-<p>Erroneous database entries and problematic geographic coordinates are a central issue in biogeography and there is a set of tools available to address different dimensions of the problem. CoordinateCleaner focuses on the fast and reproducible flagging of large amounts of records, and additional functions to detect dataset-level and fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci/scrubr">scrubr</a> an <a href="https://cran.r-project.org/web/packages/biogeo/index.html">biogeo</a> offer cleaning approaches complementary to CoordinateCleaner. scrubr combines basic geographic cleaning (comparable to cc_dupl, cc_zero and cc_count in CoordinateCleaner) but adds options to clean taxonomic names (See also <a href="https://github.com/ropensci/taxize">taxize</a>) and date information. biogeo includes some basic automated geographic cleaning (similar to cc_val, cc_count and cc_outl) but rather focusses on correcting suspicious coordinates on a manual basis using environmental information.</p>
+<p>Erroneous database entries and problematic geographic coordinates are a central issue in biogeography and there is a set of tools available to address different dimensions of the problem. CoordinateCleaner focuses on the fast and reproducible flagging of large amounts of records, and additional functions to detect dataset-level and fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci/scrubr">scrubr</a> an <a href="https://cran.r-project.org/web/packages/biogeo/index.html">biogeo</a> offer cleaning approaches complementary to CoordinateCleaner. scrubr combines basic geographic cleaning (comparable to cc_dupl, cc_zero and cc_count in CoordinateCleaner) but adds options to clean taxonomic names (See also <a href="https://github.com/ropensci/taxize">taxize</a>) and date information. biogeo includes some basic automated geographic cleaning (similar to <code>cc_val</code>, <code>cc_count</code> and <code>cc_outl</code>) but rather focusses on correcting suspicious coordinates on a manual basis using environmental information.</p>
 <p>Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo.</p>
 <table class="table">
 <colgroup>
@@ -124,7 +121,7 @@
 </colgroup>
 <thead><tr class="header">
 <th>Functionality</th>
-<th>CoordinateCleaner2.0-1</th>
+<th>CoordinateCleaner2.0-2</th>
 <th>scrubr 0.1.1</th>
 <th>biogeo 1.0</th>
 <th>Percent overlap</th>

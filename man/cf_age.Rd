@@ -77,7 +77,7 @@ $x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
 times, to account for dating uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than \sQuote{flag.thres}
 replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
-records are tested. DIstance are calculated as EUclidean dsitance.
+records are tested. Distance are calculated as EUclidean distance.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

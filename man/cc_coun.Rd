@@ -23,8 +23,8 @@ each record in three letter ISO code. Default = \dQuote{countrycode}.}
 
 \item{value}{a character string.  Defining the output value. See value.}
 
-\item{ref}{a SpatialPolygonsDataframe. Providing the geographic gazetteer.
-Can be any SpatialPolygonsDataframe, but the structure must be identical to
+\item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
+Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 \code{rnaturalearth::ne_countries(scale = "medium")}.  Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number

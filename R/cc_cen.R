@@ -26,6 +26,9 @@
 #' @param ref a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataFrame, but the structure must be identical to
 #' \code{\link{countryref}}.  Default = \code{\link{countryref}}
+#' @param verify logical. If TRUE records are only flagged if the dataset contains multiple records
+#' with identical coordinates closed to the GBIF headquarters. 
+#' If FALSE, the distance is the only criterion
 #' @param value a character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
 #' of records flagged.
@@ -60,7 +63,8 @@ cc_cen <- function(x,
                    buffer = 1000,
                    geod = TRUE,
                    test = "both", 
-                   ref = NULL, 
+                   ref = NULL,
+                   verify = FALSE,
                    value = "clean", 
                    verbose = TRUE) {
 
@@ -136,6 +140,26 @@ cc_cen <- function(x,
       ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
       out <- is.na(sp::over(x = dat, y = ref))
       }
+  }
+  
+  # implement the verification
+  if(verify & sum(out) > 0){
+    # get flagged coordinates
+    ver <- x[!out,]
+    
+    #count the instances of all flagged records
+    ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
+                             ver[[lat]], FUN = "length")
+    names(ver_count) <- c(lon, lat, "count")
+    ver_count <- ver_count[ver_count$count > 1,]
+    
+    #test which flagged x occure multiple times
+    tester <- data.frame(x, ord = seq_len(nrow(x)))
+    tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
+    tester <- tester[order(tester$ord),]
+    
+    #create corrected output file
+    out <- is.na(tester$count)
   }
 
   # create output based on value argument

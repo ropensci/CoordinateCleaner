@@ -5,17 +5,17 @@
 \title{Flag Coordinates in Vicinity of Country Capitals.}
 \usage{
 cc_cap(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 10000, geod = TRUE, ref = NULL, value = "clean",
-  verbose = TRUE)
+  buffer = 10000, geod = TRUE, ref = NULL, verify = FALSE,
+  value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{The buffer around each capital coordinate (the centre of the
@@ -27,11 +27,15 @@ based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
 in this case buffer is in degrees. Default = T.}
 
-\item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+\item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 be any SpatialPointsDataFrame, but the structure must be identical to
-\code{\link{countryref}}.  Default = \code{\link{countryref}}}
+\code{\link{countryref}}.  Default = \code{\link{countryref}}.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
+with identical coordinates closed to the GBIF headquarters. 
+If FALSE, the distance is the only criterion}
+
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}

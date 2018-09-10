@@ -6,7 +6,7 @@
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
   buffer = 1000, geod = TRUE, test = "both", ref = NULL,
-  value = "clean", verbose = TRUE)
+  verify = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -34,6 +34,10 @@ country and province centroids.}
 \item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 be any SpatialPointsDataFrame, but the structure must be identical to
 \code{\link{countryref}}.  Default = \code{\link{countryref}}}
+
+\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
+with identical coordinates closed to the GBIF headquarters. 
+If FALSE, the distance is the only criterion}
 
 \item{value}{a character string.  Defining the output value. See value.}
 
