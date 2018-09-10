@@ -1,5 +1,5 @@
 ---
-title: "Comparison of CoordinateCleaner to other tools"
+title: "Background - Comparison of CoordinateCleaner to other tools"
 output: html_document
 ---
 
