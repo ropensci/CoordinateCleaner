@@ -12,7 +12,7 @@ clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
   "centroids", "equal", "gbif", "institutions", "outliers", "seas",
   "zeros"), capitals_rad = 10000, centroids_rad = 1000,
   centroids_detail = "both", inst_rad = 100,
-  outliers_method = "quantile", outliers_mtp = 3, outliers_td = 1000,
+  outliers_method = "quantile", outliers_mtp = 5, outliers_td = 1000,
   outliers_size = 7, range_rad = 0, zeros_rad = 0.5,
   capitals_ref = NULL, centroids_ref = NULL, country_ref = NULL,
   inst_ref = NULL, range_ref = NULL, seas_ref = NULL,
@@ -59,7 +59,7 @@ coordinates in degrees. Default = 0.001.}
 \item{outliers_method}{The method used for outlier testing. See details.}
 
 \item{outliers_mtp}{numeric. The multiplier for the interquartile range of
-the outlier test.  If NULL \code{outliers.td} is used.  Default = 3.}
+the outlier test.  If NULL \code{outliers.td} is used.  Default = 5.}
 
 \item{outliers_td}{numeric.  The minimum distance of a record to all other
 records of a species to be identified as outlier, in km. Default = 1000.}

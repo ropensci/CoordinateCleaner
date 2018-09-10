@@ -49,7 +49,7 @@ cf_equal(x, value = "flagged")
 
 }
 \seealso{
-Other fossils: \code{\link{cf_outl}},
+Other fossils: \code{\link{cf_age}}, \code{\link{cf_outl}},
   \code{\link{cf_range}}
 }
 \concept{fossils}

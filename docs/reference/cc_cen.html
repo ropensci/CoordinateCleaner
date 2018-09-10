@@ -86,28 +86,34 @@ biological databases are often erroneously geo-referenced to centroids." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
+      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
     </li>
     <li>
-      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
     <li>
-      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -162,7 +168,7 @@ Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>a character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -176,7 +182,7 @@ Default = 1 kilometer.</p></td>
       <td><p>logical. If TRUE the radius around each centroid is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. DEfault = T.</p></td>
+in this case buffer is in degrees. Default = T.</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -186,8 +192,8 @@ country and province centroids.</p></td>
     </tr>
     <tr>
       <th>ref</th>
-      <td><p>a SpatialPointsDataframe. Providing the geographic gazetteer. Can
-be any SpatialPointsDataframe, but the structure must be identical to
+      <td><p>a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+be any SpatialPointsDataFrame, but the structure must be identical to
 <code><a href='countryref.html'>countryref</a></code>.  Default = <code><a href='countryref.html'>countryref</a></code></p></td>
     </tr>
     <tr>
@@ -235,120 +241,12 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
-<span class='fu'>cc_cen</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
-#&gt; 1         a       -54.252343       29.896562
-#&gt; 2         b       161.034576      -53.297878
-#&gt; 3         c      -102.204009        8.746459
-#&gt; 4         d      -168.446625       58.950255
-#&gt; 5         e      -127.686296      -67.039623
-#&gt; 6         f       127.578200      -42.986499
-#&gt; 7         g      -103.266248      -38.084935
-#&gt; 8         h      -104.288134      -87.341577
-#&gt; 9         i      -165.772552       63.670271
-#&gt; 10        j       160.118929      -15.471391
-#&gt; 11        a       -91.825925       45.182492
-#&gt; 12        b       101.204125       39.422512
-#&gt; 13        c       -76.234619        2.763954
-#&gt; 14        d       135.128848       85.470526
-#&gt; 15        e       -73.529966      -25.060039
-#&gt; 16        f       174.069147      -59.328809
-#&gt; 17        g        32.341520       50.965321
-#&gt; 18        h        93.297017      -84.433699
-#&gt; 19        i       120.987110       52.095665
-#&gt; 20        j        94.615009      -60.011338
-#&gt; 21        a       -29.782827      -84.831738
-#&gt; 22        b      -130.293057       51.471210
-#&gt; 23        c      -150.895814       58.555415
-#&gt; 24        d        56.153745       83.743275
-#&gt; 25        e        36.721389      -21.844588
-#&gt; 26        f        56.518499      -58.610461
-#&gt; 27        g       -61.445821       18.675072
-#&gt; 28        h       172.610719       54.983472
-#&gt; 29        i        77.467008      -83.397706
-#&gt; 30        j       134.146910       41.923920
-#&gt; 31        a       173.982149      -51.250922
-#&gt; 32        b      -101.317323      -87.119434
-#&gt; 33        c        59.230823      -66.851536
-#&gt; 34        d       -39.756946       33.491359
-#&gt; 35        e      -163.417090       25.549428
-#&gt; 36        f        42.089241      -31.079066
-#&gt; 37        g        35.450998      -20.253243
-#&gt; 38        h       -33.532693       37.350071
-#&gt; 39        i       128.998134       35.577977
-#&gt; 40        j         6.365227       76.618218
-#&gt; 41        a       172.545628       -7.376810
-#&gt; 42        b      -173.874352       17.271756
-#&gt; 43        c        62.441217      -60.298022
-#&gt; 44        d       -46.342842       12.043761
-#&gt; 45        e       150.483829       71.653927
-#&gt; 46        f        64.072114       17.005011
-#&gt; 47        g        59.454886       59.704185
-#&gt; 48        h        92.174792       16.813506
-#&gt; 49        i        15.421376       50.214714
-#&gt; 50        j       -93.856285      -18.401104
-#&gt; 51        a         3.201686       62.978899
-#&gt; 52        b       -29.784826       43.532205
-#&gt; 53        c        81.701587      -32.797761
-#&gt; 54        d        49.566799      -69.897560
-#&gt; 55        e       -37.292416      -71.802834
-#&gt; 56        f       165.413739       54.017595
-#&gt; 57        g       -72.483109      -21.609586
-#&gt; 58        h      -161.927580      -80.513825
-#&gt; 59        i        27.427471       87.571566
-#&gt; 60        j      -101.553909       18.751314
-#&gt; 61        a      -134.691743      -63.219110
-#&gt; 62        b       157.734967        6.976831
-#&gt; 63        c       108.459046      -67.357939
-#&gt; 64        d        92.899303       83.372716
-#&gt; 65        e        11.723459      -81.551697
-#&gt; 66        f        16.849719      -60.946347
-#&gt; 67        g      -145.466459       78.567737
-#&gt; 68        h       -40.194089       84.722645
-#&gt; 69        i      -117.953320       37.849329
-#&gt; 70        j        68.661305       69.316367
-#&gt; 71        a        63.075061       85.837557
-#&gt; 72        b       160.666145      -83.718064
-#&gt; 73        c      -109.360972      -11.023692
-#&gt; 74        d       168.709501       26.004557
-#&gt; 75        e       -40.645340       89.069833
-#&gt; 76        f        54.123804      -33.360728
-#&gt; 77        g       113.254633       64.058754
-#&gt; 78        h      -154.452682        7.260783
-#&gt; 79        i         9.658917       67.215123
-#&gt; 80        j        94.850937        2.805412
-#&gt; 81        a       -23.260809       66.502674
-#&gt; 82        b        18.890041       64.174067
-#&gt; 83        c      -106.548967      -27.777027
-#&gt; 84        d      -168.830634      -89.981336
-#&gt; 85        e       169.094541      -53.067646
-#&gt; 86        f      -115.699286       80.139688
-#&gt; 87        g       100.185403      -39.359968
-#&gt; 88        h       138.855887       68.568159
-#&gt; 89        i       121.120650       83.000930
-#&gt; 90        j        37.932639      -89.276678
-#&gt; 91        a       146.476605        9.522037
-#&gt; 92        b      -167.072469      -50.537525
-#&gt; 93        c      -132.689336       26.410886
-#&gt; 94        d      -146.149068       40.986368
-#&gt; 95        e        70.770117       67.065740
-#&gt; 96        f       -33.937660      -21.243322
-#&gt; 97        g      -156.370810       70.694227
-#&gt; 98        h      -134.462656       61.896651
-#&gt; 99        i       157.438878       41.357018
-#&gt; 100       j      -102.103117      -83.085304</div><div class='input'><span class='fu'>cc_cen</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   65   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96 
-#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
-#&gt;   97   98   99  100 
-#&gt; TRUE TRUE TRUE TRUE </div><div class='input'>
+<span class='fu'>cc_cen</span>(<span class='no'>x</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Spatial object is not projected; GEOS expects planar coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 100 records.</span></div><div class='output co'>#&gt; [1] species          decimallongitude decimallatitude 
+#&gt; &lt;0 rows&gt; (or 0-length row.names)</div><div class='input'>
+</div># NOT RUN {
+#' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+# }
+<div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

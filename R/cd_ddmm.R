@@ -176,6 +176,7 @@ cd_ddmm <- function(x,
       if (diagnostic) {
         plo <- raster(dat_t1)
         raster::plot(plo)
+        title(as.logical(flag_t1))
       }
     } else {
       outp <- rep(NA, 3)
@@ -188,9 +189,11 @@ cd_ddmm <- function(x,
   out_ds <- do.call("rbind.data.frame", out)
   rownames(out_ds) <- names(out)
   names(out_ds) <- c("binomial.pvalue", "perc.difference", "pass")
-
+  
   flags <- x[[ds]] %in% c(rownames(out_ds[out_ds$pass == 1, ]), 
                           rownames(out_ds[is.na(out_ds$pass), ]))
+  
+  out_ds$pass <- as.logical(out_ds$pass)
 
   # return output dependent on value argument
   if (verbose) {

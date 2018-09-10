@@ -85,28 +85,34 @@ to visualize the flags from clean_coordinates" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
+      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
     </li>
     <li>
-      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
     <li>
-      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -199,17 +205,19 @@ flag.</p></td>
                     <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>51</span>),
                     <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>26</span>, <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>11</span>))
 
-<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean_coordinates.html'>clean_coordinates</a></span>(<span class='no'>exmpl</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; OGR data source with driver: ESRI Shapefile 
-#&gt; Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmpw57eko", layer: "ne_50m_land"
+<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean_coordinates.html'>clean_coordinates</a></span>(<span class='no'>exmpl</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>,
+                          <span class='kw'>tests</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"capitals"</span>, <span class='st'>"centroids"</span>,
+                                    <span class='st'>"equal"</span>, <span class='st'>"gbif"</span>, <span class='st'>"institutions"</span>,
+                                    <span class='st'>"seas"</span>, <span class='st'>"zeros"</span>),
+                          <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; OGR data source with driver: ESRI Shapefile 
+#&gt; Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmp8abmF9", layer: "ne_50m_land"
 #&gt; with 1420 features
 #&gt; It has 3 fields
 #&gt; Integer64 fields read as strings:  scalerank </div><div class='input'>
 <span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             val             equ             zer             cap 
-#&gt;               0               0               0               0               0 
-#&gt;             cen             sea             otl             gbf            inst 
-#&gt;               0             154               1               0               0 
-#&gt;         summary 
-#&gt;             154 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;               0               0               0               0               1 
+#&gt;             cen             sea             gbf            inst         summary 
+#&gt;               0             148               0               0             148 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>test</span>)</div><div class='img'><img src='plot.spatialvalid-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -53,11 +53,8 @@
 #' @examples
 #' 
 #' #simulate bias grid, one degree resolution, 10% error on a 1000 records dataset
-#'   ##simulate biased fraction of the data, grid resolution = 1 degree
-#'   
-#'   
-#'   
-#'   #simulate non-biased fraction of the data
+#' #simulate biased fraction of the data, grid resolution = 1 degree
+#' #simulate non-biased fraction of the data
 #'   bi <- sample(3 + 0:5, size = 100, replace = TRUE)
 #'   mu <- runif(3, 0, 15)
 #'   sig <- runif(3, 0.1, 5)

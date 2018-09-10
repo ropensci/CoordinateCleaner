@@ -87,28 +87,34 @@ geo-references, individuals in horticulture/captivity." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
+      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
     </li>
     <li>
-      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
     <li>
-      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -147,7 +153,7 @@ geo-references, individuals in horticulture/captivity.</p>
 
     <pre class="usage"><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
   <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>sampling_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>sampling_thresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,7 +170,7 @@ Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>a character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -195,9 +201,8 @@ as outlier, in km. See details. Default = 1000.</p></td>
       <td><p>a character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
-      <th>sampling_cor</th>
-      <td><p>logical. If TRUE, outlier detection is weightend by sampling intensity. 
-See details. Defeulat = F.</p></td>
+      <th>sampling_thresh</th>
+      <td><p>a numeric. Cut off threshold fo</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -225,10 +230,10 @@ deviation is used. In this case a record is flagged as outlier, if the
 the median of the mean distance of all points plus/minus the mad of the mean
 distances of all records of the species * mltpl. If &#8220;distance&#8221;:
 records are flagged as outliers, if the <em>minimum</em> distance to the next
-record of the species is &gt; <code>tdi</code>. For speces with records from &gt; 10000
+record of the species is &gt; <code>tdi</code>. For species with records from &gt; 10000
 unique locations a random sample of 1000 records is used for 
 the distance matrix calculation.</p>
-<p>The likelihood of occurrence records being erroroneous outliers is linked to the sampling effort
+<p>The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
 in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 
@@ -369,15 +374,13 @@ details and tutorials.</p>
 #&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 88 records.</span></div><div class='output co'>#&gt;   [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-#&gt;  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-#&gt;  [25] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [37] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [49] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
-#&gt;  [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [85] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
-#&gt;  [97] FALSE FALSE FALSE FALSE</div><div class='input'>
+#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

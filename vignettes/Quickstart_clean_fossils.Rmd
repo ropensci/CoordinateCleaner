@@ -1,0 +1,25 @@
+---
+title: "Quick start - Problematic fossils"
+output: html_document
+---
+
+`CoordinateCleaner` includes a set of functions suited for fossil records including tests for imprecise or erroneous dating. `clean_fossils` is a wrapper including relevant spatial and temporal tests. As all test the temporal tests can be called individually, using the `cf_equal`, `cf_range` and `cf_outl` functions.
+
+***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
+
+```{r, collapse = T, tidy = T}
+library(CoordinateCleaner)
+
+# Simulate example data
+minages <- runif(250, 0, 65)
+exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
+                    lng = runif(250, min = 42, max = 51),
+                    lat = runif(250, min = -26, max = -11),
+                    min_ma = minages,
+                    max_ma = minages + runif(250, 0.1, 65))
+
+# Run fossil test
+test <- clean_fossils(x = exmpl)
+
+summary(test)
+```

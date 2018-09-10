@@ -5,7 +5,7 @@
 \title{Flag Geographic Outliers in Species Distributions}
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", method = "quantile", mltpl = 3, tdi = 1000,
+  species = "species", method = "quantile", mltpl = 5, tdi = 1000,
   value = "clean", sampling_thresh = 0, verbose = TRUE)
 }
 \arguments{

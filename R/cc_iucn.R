@@ -80,7 +80,7 @@ cc_iucn <- function(x,
   }
   
   ## Reduce to species in dataset
-  range <- range[range@data[, species] %in% unique(x[, species]),]
+  range <- range[range@data[, species] %in% unique(unlist(x[, species])),]
   
   # Split by species
   dat <- data.frame(x, order = rownames(x))
@@ -112,7 +112,7 @@ cc_iucn <- function(x,
       range_sub <- range[range@data[, species] == unique(k[, species]),]
       
       data.frame(order = k$order,
-                 flag = !is.na(sp::over(x = sub, y = range_sub)[, 1]))
+                 flag = !is.na(sp::over(x = sub, y = range_sub)[, species]))
     }else{
       data.frame(order = k$order,
                  flag = TRUE)
@@ -123,7 +123,7 @@ cc_iucn <- function(x,
   out <- out[order(as.numeric(as.character(out$order))), ]
 
   # Warning for species not in range
-  tester <- unique(x[, species])
+  tester <- unique(unlist(x[, species]))
   if(sum(!tester %in% range@data[, species]) > 0){
     miss <- tester[!tester %in% range@data[, species]]
     warning(sprintf("species not found in range and not tested %s\n", miss))

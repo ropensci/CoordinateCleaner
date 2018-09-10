@@ -52,28 +52,34 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
+      <a href="articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+      <a href="articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
     </li>
     <li>
-      <a href="articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+      <a href="articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
-      <a href="articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+      <a href="articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+      <a href="articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
     <li>
-      <a href="articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+      <a href="articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
+    </li>
+    <li>
+      <a href="articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -93,11 +99,11 @@
       </header><div class="row">
   <div class="contents col-md-9">
     
-<div id="coordinatecleaner-v2-0-1" class="section level1">
+<div id="coordinatecleaner-v2-0-2" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#coordinatecleaner-v2-0-1" class="anchor"></a>CoordinateCleaner v2.0-1</h1></div>
-<p><a href="https://travis-ci.com/azizka/CoordinateCleaner"><img src="https://travis-ci.com/azizka/CoordinateCleaner.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/azizka/CoordinateCleaner"><img src="https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://cran.r-project.org/package=CoordinateCleaner"><img src="http://www.r-pkg.org/badges/version/CoordinateCleaner" alt="CRAN_Status_Badge"></a> [<img src="http://cranlogs.r-pkg.org/badges/CoordinateCleaner" alt="rstudio mirror downloads"></p>
-<p><strong><em>Note: the latest release of CoordinateCleaner (2.0), might cause compatibility issues with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.</em></strong></p>
+<a href="#coordinatecleaner-v2-0-2" class="anchor"></a>CoordinateCleaner v2.0-2</h1></div>
+
+<p><strong><em>Note: the latest release of CoordinateCleaner (2.0-2), might cause compatibility issues with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.</em></strong></p>
 <p>Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for</p>
 <ul>
 <li>General coordinate validity</li>
@@ -189,7 +195,7 @@ cl &lt;- exmpl %&gt;%
 <div id="citation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h1>
-<p>Zizka, A, Silvestro, D &amp; Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. <a href="https://github.com/azizka/CoordinateCleaner" class="uri">https://github.com/azizka/CoordinateCleaner</a></p>
+<p>Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte RItter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V &amp; Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. <a href="https://github.com/azizka/CoordinateCleaner" class="uri">https://github.com/azizka/CoordinateCleaner</a></p>
 </div>
 
   </div>
@@ -218,7 +224,16 @@ cl &lt;- exmpl %&gt;%
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.com/azizka/CoordinateCleaner"><img src="https://travis-ci.com/azizka/CoordinateCleaner.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/gh/azizka/CoordinateCleaner"><img src="https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=CoordinateCleaner"><img src="http://www.r-pkg.org/badges/version/CoordinateCleaner" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://cranlogs.r-pkg.org/badges/CoordinateCleaner"><img src="http://cranlogs.r-pkg.org/badges/CoordinateCleaner" alt="rstudio mirror downloads"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

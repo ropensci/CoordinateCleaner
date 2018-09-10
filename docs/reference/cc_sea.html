@@ -88,28 +88,34 @@ longitude." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
+      <a href="../articles/Background_comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background dataset-level cleaning</a>
     </li>
     <li>
-      <a href="../articles/comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_coordinates.html">Quick start - Problematic records</a>
+      <a href="../articles/Quickstart_clean_coordinates.html">Quick start - Problematic records</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_dataset.html">Quick start - Problematic datasets</a>
+      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
     </li>
     <li>
-      <a href="../articles/qs_clean_fossils.html">Quick start - Problematic fossils</a>
+      <a href="../articles/Quickstart_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
     </li>
     <li>
-      <a href="../articles/qs_how_to_run.html">Quick start - How to run CoordinateCleaner</a>
+      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/t_geographic_outliers.html">Identifying geographic outliers</a>
+      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
+    </li>
+    <li>
+      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -166,13 +172,13 @@ Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>a character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>ref</th>
-      <td><p>a SpatialPolygonsDataframe. Providing the geographic gazetteer.
-Can be any SpatialPolygonsDataframe, but the structure must be identical to
+      <td><p>a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
+Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
 Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')</p></td>
     </tr>
@@ -235,7 +241,7 @@ details and tutorials.</p>
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>, -<span class='fl'>30</span>, <span class='fl'>30</span>))
 
 <span class='fu'>cc_sea</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing sea coordinates</span></div><div class='output co'>#&gt; OGR data source with driver: ESRI Shapefile 
-#&gt; Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmpw57eko", layer: "ne_50m_land"
+#&gt; Source: "C:\Users\alexander.zizka\AppData\Local\Temp\Rtmp8abmF9", layer: "ne_50m_land"
 #&gt; with 1420 features
 #&gt; It has 3 fields
 #&gt; Integer64 fields read as strings:  scalerank </div><div class='output co'>#&gt; <span class='message'>Flagged 5 records.</span></div><div class='output co'>#&gt;  [1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE</div><div class='input'>

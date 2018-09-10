@@ -18,7 +18,7 @@ test_that("clean_coordinates produces correct output", {
 
   expect_equal(ncol(t1), 13)
   expect_equal(nrow(t1), 250)
-  expect_equal(sum(t1$summary), 181)
+  expect_equal(sum(t1$summary), 184)
 
 })
 

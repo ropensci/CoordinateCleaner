@@ -1,0 +1,109 @@
+---
+title: "Quick start - Problematic records"
+output: html_document
+---
+
+The `clean_coordinates` function enables a fast, automated and reproducible flagging of potentially erroneous occurrence coordinates based on geographic gazetteers. The function can flag records based on known problems common to biological collections.
+
+Individual test can be switched on and off by a logical flag (see `?clean_coordinates`) and distance thresholds for all tests can also be adapted. Custom gazetteers for the cleaning can be provided for all tests (for a higher level of detail). See here for a detailed tutorial on how to clean occurrence records using `CoordinateCleaner`.
+
+***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
+
+## Switch individual test on/off
+`clean_coordinates` wraps around multiple tests for common error sources in species distribution records. Individual test can be included or excluded from a run with the tests argument of `clean_coordinates`, e.g. `"seas"` switches the seas test off. Most basic tests are switched on by defaults, but some more complex are switched off by default.
+
+```{r, collapse = T, tidy = T}
+library(CoordinateCleaner)
+
+exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
+                   decimallongitude = runif(250, min = 42, max = 51),
+                   decimallatitude = runif(250, min = -26, max = -11),
+                   countries = "MDG")
+
+
+#run all tests
+dat <- clean_coordinates(exmpl, tests = c("capitals", "centroids", "countries", "equal", "gbif", "institutions", "outliers", "seas", "urban", "zeros"), countries = "countries")
+
+#only run the validity test
+dat <- clean_coordinates(exmpl, tests = c(""))
+```
+
+| Test | Function | Background | Default |
+|-------|-------|-------|-------|
+|capitals|radius around capitals|georeferenced from location description|on|
+|centroids|radius around country and province centroids|geo-referenced from description|on|
+|countries|coordinates in the right country |switched lon/lat, data entry errors|off|
+|duplicates|records from one species with identical coordinates|repetitive observation of identical individual, same voucher from multiple data sources, genetic data|off|
+|gbif|radius around GBIF headquarters|data entry errors, falsely geo-referenced|on|
+|institutions|radius around biodiversity institutions|falsely geo-referenced, zoo or garden records |on|
+|outliers|records far away from all other records of this species|various|off|
+|seas| in the sea|switched lon/lat|on|
+|urban|within urban area|cultivated/captivity|off|
+|validity|outside reference coordinate system|missing data, data entry errors|on|
+|zeros|plain zeros, lat = lon|missing data, data entry errors|on|
+
+## Custom test radii for `capitals`, `centroids` and `institutions`
+The `capitals`, `centroids` and `institutions` test use a radius around gazetteers to flag coordinates. You can change this radius for each test using the `.rad` arguments. The radius is specified in decimal degrees. This means that the actual size of the in meters will vary slightly depending on latitude. 
+
+```{r}
+clean_coordinates(exmpl, capitals_rad = 0.1)
+```
+|Test|Default radius [°]|Default radius (lat 0°/45°) [km]|
+|---|---|---|
+|capitals|0.05|5.5/4|
+|centroids|0.01|1.1/0.8|
+|gbif|1|63.0|
+|institutions|0.001|0.1/0.08|
+|zeros|0.5|55.6|
+
+## Custom gazetteers
+You can use custom gazetteers for all `CleanCoordinates` tests, via the `.ref` arguments of the function. For example the `capitals.ref` argument controls the reference for the capitals test. Customized reference data must follow the same format as the default reference for the same test. You can check the structure of gazetteers via their documentation or by looking at the gazetteer (e.g. `head(capitals)`). For example:
+
+```{r, eval = F}
+#check the format of the default capitals reference
+head(countrtyref) #a data.frame with four columns: ISO3, capital, longitude, latitude
+
+#create new reference data set from scratch. For real analysis you 
+#probably want to load the alternative file from a .txt file
+my.cap <- data.frame(ISO3 = LETTERS[1:10],
+                     capital = letters[1:10],
+                     capital.longitude = runif(10, -180, 180),
+                     capital.latitude = runif(10, -90, 90))
+
+flags <- clean_coordinates(exmpl, capitals.ref = my.cap)
+```
+
+In this way test can be completely customized, you could for example provide a gazetteer with the locations of hardware stores (in the capitals format) if you want to flag records around hardware stores.
+
+Classes of the default gazetteers of `clean_coordinates`.
+
+|Test | Default gazetteer |Class | Argument |
+|---|---|---|---|
+|capitals|countryref|`data.frame`|capitals.ref|
+|centroids|countryref|`data.frame`|centroids.ref|
+|countrycheck|rnaturalearth::ne_countries(scale = "medium")|`SpatialPolygonsDataFrame`|country.ref|
+|institutions|institutions|`data.frame`|inst.ref|
+|seas|landmass|`SpatialPolygonsDataFrame`|seas.ref|
+|urban|rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')|`SpatialPolygonsDataFrame`|urban.ref|
+
+## Summary and visualization
+You cane easily summarize the results of `clean_coordinates` either with the `report` option or via `summary`. If `report == T` the summary is written to the working directory as a .txt file, if `report` is a character, it is the path to which the summary file will be written, Alternatively, you can get a summary of the number of records flagged with `summary`.
+
+```{r, collapse = T, tidy = T}
+#via the report option
+flags <- clean_coordinates(exmpl, report = T)
+
+#via summary
+summary(flags)
+```
+
+# Exclude flagged records
+The output of `clean_coordinates` is in the same order as the input, thus you can easily exclude flagged records.
+
+```{r, collapse = T, tidy = T}
+#exclude records flagged by any test
+clean <- exmpl[, flags$sumary]
+
+#exclude records flagged by the centroids test
+clean <- exmpl[, flags$centroids]
+```

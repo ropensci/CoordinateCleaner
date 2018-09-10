@@ -5,18 +5,22 @@
 \title{Flag Records in the Vicinity of Biodiversity Institutions}
 \usage{
 cc_inst(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 100, geod = TRUE, ref = NULL, value = "clean",
+  species = "species", buffer = 100, geod = TRUE, ref = NULL,
+  verify = FALSE, verify_mltpl = 10, value = "clean",
   verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
+
+\item{species}{character string. The column with the species identity. Only
+required if verify = TRUE.}
 
 \item{buffer}{numerical. The buffer around each province or country
 centroid, where records should be flagged as problematic, in decimal
@@ -25,13 +29,21 @@ degrees.  Default = 100m.}
 \item{geod}{logical. If TRUE the radius around each institution is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = T.}
+in this case buffer is in degrees. Default = TRUE.}
 
-\item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+\item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 be any SpatialPointsDataFrame, but the structure must be identical to
 \code{\link{institutions}}.  Default = \code{\link{institutions}}}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{verify}{logical. If TRUE, records close to institutions are only flagged,
+if there are no other records of the same species in the greater vicinity 
+(a radius of buffer * verify_mltpl).}
+
+\item{verify_mltpl}{numerical. indicates the factor by whihch the radius for verify
+exceeds the radius of the initial test. Default = 10, which might be suitable if 
+geod is TRUE, but might be too large otherwise.}
+
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}

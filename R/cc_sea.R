@@ -90,6 +90,7 @@ cc_sea <- function(x,
         warning("no projection information for reference found, 
                 assuming '+proj=longlat +datum=WGS84 +no_defs 
                 +ellps=WGS84 +towgs84=0,0,0'")
+        proj4string(ref) <- wgs84
       }else if(sp::proj4string(ref) != wgs84){
         ref <- sp::spTransform(ref, sp::CRS(wgs84))
         warning("reprojecting reference to '+proj=longlat +datum=WGS84 
@@ -109,7 +110,6 @@ cc_sea <- function(x,
     out <- out[order(out$order),]
     out <- out$out
   }else{
-    
     pts <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = wgs84)
     
     # select and prepare terrestrial surface reference
@@ -126,6 +126,8 @@ cc_sea <- function(x,
         warning("no projection information for reference found, 
                 assuming '+proj=longlat +datum=WGS84 +no_defs 
                 +ellps=WGS84 +towgs84=0,0,0'")
+        
+        proj4string(ref) <- wgs84
       }else if(sp::proj4string(ref) != wgs84){
         ref <- sp::spTransform(ref, sp::CRS(wgs84))
         warning("reprojecting reference to '+proj=longlat +datum=WGS84 

@@ -52,5 +52,24 @@ test_that("cf_outl identifies existing bias", {
                            method = "mad", taxon = "")), 10)
   expect_equal(sum(cf_outl(test, value = "flagged", 
                            method = "mad", taxon = "", uniq_loc = F)), 10)
-  
 })
+
+
+#cf_age
+test_that("cf_age identifies existing bias", {
+  #return value
+  expect_is(cf_age(test, value = "flagged", taxon = ""), "logical")
+  expect_is(cf_age(test, value = "clean", taxon = ""), "data.frame")
+  
+  #outlier method
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                           method = "quantile", taxon = "")), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                           method = "quantile", taxon = "", uniq_loc = F)), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                           method = "mad", taxon = "")), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                           method = "mad", taxon = "", uniq_loc = F)), 11)
+})
+
+

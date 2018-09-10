@@ -79,7 +79,7 @@
 #' coordinates in degrees. Default = 0.001.
 #' @param outliers_method The method used for outlier testing. See details.
 #' @param outliers_mtp numeric. The multiplier for the interquartile range of
-#' the outlier test.  If NULL \code{outliers.td} is used.  Default = 3.
+#' the outlier test.  If NULL \code{outliers.td} is used.  Default = 5.
 #' @param outliers_td numeric.  The minimum distance of a record to all other
 #' records of a species to be identified as outlier, in km. Default = 1000.
 #' @param outliers_size numerical.  The minimum number of records in a dataset
@@ -167,7 +167,7 @@ clean_coordinates <- function(x,
                              centroids_detail = "both", 
                              inst_rad = 100, 
                              outliers_method = "quantile",
-                             outliers_mtp = 3, 
+                             outliers_mtp = 5, 
                              outliers_td = 1000, 
                              outliers_size = 7, 
                              range_rad = 0,

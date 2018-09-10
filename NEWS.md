@@ -1,21 +1,23 @@
 
-CoordinateCleaner 2.0-2 (2018-09-06)
+CoordinateCleaner 2.0-2 (2018-09-10)
 =========================
 
 ### MAJOR IMPROVEMENTS
 
-  * sampling correction into cc_outl
   * tutorial on outlier detection on the bookdown documentation
+  * tutorial on using custom gazetteers
   * rasterisation heuristic in cc_outl
   * added sampling correction to cc_outl
+  * added verify option to cc_inst
   
   
 ### MINOR IMPROVEMENTS
 
   * reduced packages size, by switching to data download from rnauralearth for urbanareas and landmass
   * fixed issue with names of plot.spatialvalid
-  * grouped fucntions on documentation webpage
+  * grouped functions on documentation webpage
   * fixed broken links in the help pages
+  ' improved documentation structure
   
 
 CoordinateCleaner 2.0-1 (2018-06-08)
