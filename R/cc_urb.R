@@ -64,7 +64,9 @@ cc_urb <- function(x,
     sp::proj4string(ref) <- ""
   } else {
     #Enable sf formatted custom references
-    ref <- as(ref, "Spatial")
+    if(!any(is(ref) == "Spatial")){
+      ref <- as(ref, "Spatial")
+    }
     
     #Check projection of custom reference and reproject if necessary
     wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"

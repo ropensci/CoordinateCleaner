@@ -1,6 +1,8 @@
 context("Individual coordinate functions cc_*")
 
 require(sp)
+require(rnaturalearth)
+require(dplyr)
 
 set.seed(1)
 lon <- runif(250, min = 42, max = 51)
@@ -59,10 +61,7 @@ test_that("cc_coun works", {
   
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
-  
-  
-  
-  
+
 })
 
 
@@ -101,10 +100,10 @@ test_that("cc_urb works", {
   
   city_exmpl <- data.frame(species = letters[1:10], coordinates(sp::spsample(cust_ref, n = 200, type = "random")))
   names(city_exmpl) <- c("species", "decimallongitude", "decimallatitude")
-  city_exmpl <- bind_rows(exmpl, city_exmpl)
+  city_exmpl <- dplyr::bind_rows(exmpl, city_exmpl)
   
-  expect_is(cc_urb(city_exmpl, value = "flagged", taxon = ""), "logical")
-  expect_is(cc_urb(city_exmpl, value = "clean", taxon = ""), "data.frame")
+  expect_is(cc_urb(city_exmpl, value = "flagged"), "logical")
+  expect_is(cc_urb(city_exmpl, value = "clean"), "data.frame")
 
   expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged")), 250)
   expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged", ref = cust_ref)), 250)
