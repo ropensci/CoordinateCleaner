@@ -41,10 +41,28 @@ test_that("cc_cen works", {
 })
 
 test_that("cc_coun works", {
-  #skip_on_cran()
+  
+  cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
+  cust_ref2 <- cust_ref1
+  proj4string(cust_ref2) <- ""
+  cust_ref3 <- spTransform(cust_ref1, 
+                           CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'))
+  
+  
+  expect_is(cc_coun(exmpl, value = "flagged"), "logical")
+  expect_is(cc_coun(exmpl, value = "clean"), "data.frame")
+  
+  
+  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref1)), 0)
+  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref2)), 0)
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
+  
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
+  
+  
+  
+  
 })
 
 
@@ -76,6 +94,23 @@ test_that("cc_outl works", {
                        value = "flagged"), 
                "undefined columns selected")
 })
+
+
+test_that("cc_urb works", {
+  cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')
+  
+  city_exmpl <- data.frame(species = letters[1:10], coordinates(sp::spsample(cust_ref, n = 200, type = "random")))
+  names(city_exmpl) <- c("species", "decimallongitude", "decimallatitude")
+  city_exmpl <- bind_rows(exmpl, city_exmpl)
+  
+  expect_is(cc_urb(city_exmpl, value = "flagged", taxon = ""), "logical")
+  expect_is(cc_urb(city_exmpl, value = "clean", taxon = ""), "data.frame")
+
+  expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged")), 250)
+  expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged", ref = cust_ref)), 250)
+})
+
+
 
 #extend input data
 exmpl <- rbind(exmpl, data.frame(species = rep("a", 50), 

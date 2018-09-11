@@ -56,7 +56,7 @@ test_that("cf_outl identifies existing bias", {
 
 
 #cf_age
-test_that("cf_age identifies existing bias", {
+test_that("cf_age runs", {
   #return value
   expect_is(cf_age(test, value = "flagged", taxon = ""), "logical")
   expect_is(cf_age(test, value = "clean", taxon = ""), "data.frame")
@@ -71,5 +71,7 @@ test_that("cf_age identifies existing bias", {
   expect_equal(sum(cf_age(test, value = "flagged", 
                            method = "mad", taxon = "", uniq_loc = F)), 11)
 })
+
+
 
 
