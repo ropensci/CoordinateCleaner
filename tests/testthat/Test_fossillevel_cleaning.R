@@ -28,6 +28,24 @@ test_that("cf_range identifies existing bias", {
   
 })
 
+#cf_age
+test_that("cf_age runs", {
+  #return value
+  expect_is(cf_age(test, value = "flagged", taxon = ""), "logical")
+  expect_is(cf_age(test, value = "clean", taxon = ""), "data.frame")
+  
+  #outlier method
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "quantile", taxon = "")), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "quantile", taxon = "", uniq_loc = F)), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "mad", taxon = "")), 11)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "mad", taxon = "", uniq_loc = F)), 11)
+})
+
+
 #cf_outl
 set.seed(1)
 minages <- c(runif(n = 11, min = 10, max = 25), 62.5)
@@ -55,22 +73,6 @@ test_that("cf_outl identifies existing bias", {
 })
 
 
-#cf_age
-test_that("cf_age runs", {
-  #return value
-  expect_is(cf_age(test, value = "flagged", taxon = ""), "logical")
-  expect_is(cf_age(test, value = "clean", taxon = ""), "data.frame")
-  
-  #outlier method
-  expect_equal(sum(cf_age(test, value = "flagged", 
-                           method = "quantile", taxon = "")), 11)
-  expect_equal(sum(cf_age(test, value = "flagged", 
-                           method = "quantile", taxon = "", uniq_loc = F)), 11)
-  expect_equal(sum(cf_age(test, value = "flagged", 
-                           method = "mad", taxon = "")), 11)
-  expect_equal(sum(cf_age(test, value = "flagged", 
-                           method = "mad", taxon = "", uniq_loc = F)), 11)
-})
 
 
 

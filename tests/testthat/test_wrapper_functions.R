@@ -40,6 +40,11 @@ test_that("clean_coordinates S3 methods work", {
   expect_equal(is(t1), "spatialvalid")
 })
 
+
+test_that("CleanCoordinates work", {
+  expect_equal(CleanCoordinates(exmpl), 250)
+})
+
 #Dataset level cleaning
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
@@ -71,6 +76,11 @@ test_that("dataset level cleaning works", {
   expect_equal(sum(clean_dataset(test)$summary), 1)
 })
 
+# test_that("CleanCoordinatesDS work", {
+#   expect_equal(CleanCoordinatesDS(test), 250)
+# })
+
+
 
 #Fossil wrapper function
 set.seed(1)
@@ -94,7 +104,9 @@ test_that("fossil wrapper cleaning works", {
   expect_equal(sum(clean_fossils(exmpl)$summary), 249)
 })
 
-
+test_that("CleanCoordinatesFOS work", {
+  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 249)
+})
 
 #Write Pyrate output
 
