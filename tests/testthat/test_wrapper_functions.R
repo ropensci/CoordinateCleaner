@@ -40,7 +40,7 @@ test_that("clean_coordinates countries argument produces correct output", {
 
 
 test_that("CleanCoordinates work", {
-  expect_equal(sum(CleanCoordinates(exmpl)$summary), 184)
+  expect_equal(sum(CleanCoordinates(exmpl)$summary), 185)
 })
 
 #Dataset level cleaning
