@@ -12,13 +12,22 @@ exmpl <- data.frame(species = sp,
                     decimallongitude = lon,
                     decimallatitude = lat,
                     ISO3 = "RUS")
-t1 <- clean_coordinates(x = exmpl)
+
 
 test_that("clean_coordinates produces correct output", {
-
+  t1 <- clean_coordinates(x = exmpl)
   expect_equal(ncol(t1), 13)
   expect_equal(nrow(t1), 250)
   expect_equal(sum(t1$summary), 184)
+  
+  expect_is(plot(t1), "gg")
+  expect_is(plot(t1, clean = FALSE), "gg")
+  expect_is(plot(t1, details = FALSE), "gg")
+  expect_is(plot(t1, details = FALSE, clean = FALSE), "gg")
+  
+  expect_is(summary(t1), "integer")
+  
+  expect_equal(is(t1), "spatialvalid")
 
 })
 
@@ -29,20 +38,9 @@ test_that("clean_coordinates countries argument produces correct output", {
                       tests = c("countries", "seas"))$summary), 0)
 })
 
-test_that("clean_coordinates S3 methods work", {
-  expect_is(plot(t1), "gg")
-  expect_is(plot(t1, clean = FALSE), "gg")
-  expect_is(plot(t1, details = FALSE), "gg")
-  expect_is(plot(t1, details = FALSE, clean = FALSE), "gg")
-  
-  expect_is(summary(t1), "integer")
-  
-  expect_equal(is(t1), "spatialvalid")
-})
-
 
 test_that("CleanCoordinates work", {
-  expect_equal(CleanCoordinates(exmpl), 250)
+  expect_equal(sum(CleanCoordinates(exmpl)$summary), 184)
 })
 
 #Dataset level cleaning
