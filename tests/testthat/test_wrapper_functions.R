@@ -102,9 +102,9 @@ test_that("fossil wrapper cleaning works", {
   expect_equal(sum(clean_fossils(exmpl)$summary), 249)
 })
 
-test_that("CleanCoordinatesFOS work", {
-  expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 249)
-})
+# test_that("CleanCoordinatesFOS work", {
+#   expect_equal(sum(CleanCoordinatesFOS(exmpl)$summary), 249)
+# })
 
 #Write Pyrate output
 
