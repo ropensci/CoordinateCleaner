@@ -11,7 +11,7 @@ test <- data.frame(species = c(letters[1:10], "z"),
 
 
 
-
+# cf_range
 test_that("cf_range identifies existing bias", {
   #return value
   expect_is(cf_range(test, value = "flagged", taxon = ""), "logical")
@@ -24,7 +24,11 @@ test_that("cf_range identifies existing bias", {
                             method = "mad", taxon = "")), 10)
   expect_equal(sum(cf_range(test, value = "flagged", 
                             method = "time", taxon = "", 
-                            max_range = 20, uniq_loc = F)), 10)
+                            max_range = 20)), 10)
+  
+  expect_equal(sum(cf_range(test, value = "clean", 
+                            method = "quantile", taxon = "",
+                            uniq_loc = TRUE)), 10)
   
 })
 
@@ -64,12 +68,20 @@ test_that("cf_outl identifies existing bias", {
   #outlier method
   expect_equal(sum(cf_outl(test, value = "flagged", 
                            method = "quantile", taxon = "")), 10)
+  expect_equal(sum(cf_outl(test, 
+                           taxon = "", 
+                           value = "flagged", 
+                           method = "quantile")), 10)
   expect_equal(sum(cf_outl(test, value = "flagged", 
-                           method = "quantile", taxon = "", uniq_loc = F)), 10)
+                           method = "mad", 
+                           taxon = "")), 10)
   expect_equal(sum(cf_outl(test, value = "flagged", 
-                           method = "mad", taxon = "")), 10)
-  expect_equal(sum(cf_outl(test, value = "flagged", 
-                           method = "mad", taxon = "", uniq_loc = F)), 10)
+                           method = "mad", 
+                           taxon = "")), 10)
+  
+  
+  
+  
 })
 
 
