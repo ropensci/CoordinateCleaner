@@ -68,6 +68,11 @@ cc_sea <- function(x,
   
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
+  # heuristic to speedup - reduce to individual locations, 
+  #overwritten alter in cases speedup == FALSE
+  inp <- x[!duplicated(x[,c(lon, lat)]),]
+  pts <- sp::SpatialPoints(inp[, c(lon, lat)], proj4string = CRS(wgs84))
+  
   # select and prepare terrestrial surface reference
   if (is.null(ref)) {
     if(!scale %in%  c(10, 50, 110)){
@@ -84,10 +89,6 @@ cc_sea <- function(x,
   
   # run test
   if(speedup){
-    ## heuristic to speedup - reduce to individual locations
-    inp <- x[!duplicated(x[,c(lon, lat)]),]
-    pts <- sp::SpatialPoints(inp[, c(lon, lat)], proj4string = CRS(wgs84))
-    
     ## point-in-polygon test
     out <- sp::over(x = pts, y = ref)[, 1]
     out <- !is.na(out)

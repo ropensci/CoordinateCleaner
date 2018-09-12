@@ -71,7 +71,9 @@ cc_urb <- function(x,
   }
 
   # Prepare input points and extent
-  dat <- sp::SpatialPoints(x[, c(lon, lat)])
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  
+  dat <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = CRS(egs84))
   limits <- raster::extent(dat) + 1
   ref <- raster::crop(ref, limits)
 
