@@ -42,6 +42,7 @@ test_that("cc_cen works", {
                "undefined columns selected")
 })
 
+# cc_coun
 test_that("cc_coun works", {
   
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
@@ -64,7 +65,7 @@ test_that("cc_coun works", {
 
 })
 
-
+# cc_iucn
 test_that("cc_iucn works", {
   expect_equal(sum(cc_iucn(x = exmpl, range = range_emp, value = "flagged")),
                nrow(exmpl))
@@ -94,6 +95,31 @@ test_that("cc_outl works", {
                "undefined columns selected")
 })
 
+# cc_sea
+test_that("cc_sea works", {
+  cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = "small", type = 'land', category = "physical")
+
+  proj4string(cust_ref2) <- ""
+  cust_ref3 <- spTransform(cust_ref1, 
+                           CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'))
+  
+  
+  expect_is(cc_sea(exmpl, value = "flagged", ref = cust_ref1), "logical")
+  expect_is(cc_sea(exmpl, value = "clean", ref = cust_ref1), "data.frame")
+  
+  # custom reference
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 185)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 187)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 187)
+
+  # speedup
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 185)
+  
+  expect_error(cc_sea(x = exmpl, lon = "longitude", value = "flagged"), 
+               "undefined columns selected")
+})
+
+# CC_urb
 
 test_that("cc_urb works", {
   cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')

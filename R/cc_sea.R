@@ -68,36 +68,26 @@ cc_sea <- function(x,
   
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
+  # select and prepare terrestrial surface reference
+  if (is.null(ref)) {
+    if(!scale %in%  c(10, 50, 110)){
+      stop("scale must be one of c(10,50,110)")
+    }
+    
+    ref <- rnaturalearth::ne_download(scale = scale, 
+                                      type = 'land', 
+                                      category = 'physical')
+    ref <- raster::crop(ref, raster::extent(pts) + 1)
+  } else {
+    ref <- reproj(ref)
+  }
+  
   # run test
   if(speedup){
     ## heuristic to speedup - reduce to individual locations
     inp <- x[!duplicated(x[,c(lon, lat)]),]
     pts <- sp::SpatialPoints(inp[, c(lon, lat)], proj4string = CRS(wgs84))
     
-    # select and prepare terrestrial surface reference
-    if (is.null(ref)) {
-      if(!scale %in%  c(10, 50, 110)){
-        stop("scale must be one of c(10,50,110)")
-      }
-      
-      ref <- rnaturalearth::ne_download(scale = scale, 
-                                        type = 'land', 
-                                        category = 'physical')
-      ref <- raster::crop(ref, raster::extent(pts) + 1)
-    }else{
-      #Check projection of custom reference and reproject if necessary
-      if(is.na(sp::proj4string(ref))){
-        warning("no projection information for reference found, 
-                assuming '+proj=longlat +datum=WGS84 +no_defs 
-                +ellps=WGS84 +towgs84=0,0,0'")
-        proj4string(ref) <- wgs84
-      }else if(sp::proj4string(ref) != wgs84){
-        ref <- sp::spTransform(ref, sp::CRS(wgs84))
-        warning("reprojecting reference to '+proj=longlat +datum=WGS84 
-                +no_defs +ellps=WGS84 +towgs84=0,0,0'")
-      }
-    }
-
     ## point-in-polygon test
     out <- sp::over(x = pts, y = ref)[, 1]
     out <- !is.na(out)
@@ -110,30 +100,7 @@ cc_sea <- function(x,
     out <- out[order(out$order),]
     out <- out$out
   }else{
-    pts <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = wgs84)
-    
-    # select and prepare terrestrial surface reference
-    if (is.null(ref)) {
-      match.arg(scale, choices = c(10, 50, 110))
-      
-      ref <- rnaturalearth::ne_download(scale = scale, 
-                                        type = 'land', 
-                                        category = 'physical')
-      ref <- raster::crop(ref, raster::extent(pts) + 1)
-    } else {
-      #Check projection of custom reference and reproject if necessary
-      if(is.na(sp::proj4string(ref))){
-        warning("no projection information for reference found, 
-                assuming '+proj=longlat +datum=WGS84 +no_defs 
-                +ellps=WGS84 +towgs84=0,0,0'")
-        
-        proj4string(ref) <- wgs84
-      }else if(sp::proj4string(ref) != wgs84){
-        ref <- sp::spTransform(ref, sp::CRS(wgs84))
-        warning("reprojecting reference to '+proj=longlat +datum=WGS84 
-                +no_defs +ellps=WGS84 +towgs84=0,0,0'")
-      }
-    }
+    pts <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = CRS(wgs84))
     
     # select relevant columns
     out <- sp::over(x = pts, y = ref)[, 1]
