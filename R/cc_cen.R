@@ -13,6 +13,8 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat a character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
+#' @param species character string. The column with the species identity. Only
+#' required if verify = TRUE.
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic. Units depend on geod.  
 #' Default = 1 kilometer.
@@ -60,6 +62,7 @@
 cc_cen <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
+                   species = "species",
                    buffer = 1000,
                    geod = TRUE,
                    test = "both", 
@@ -149,19 +152,23 @@ cc_cen <- function(x,
     
     #count the instances of all flagged records
     ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
-                             ver[[lat]], FUN = "length")
-    names(ver_count) <- c(lon, lat, "count")
-    ver_count <- ver_count[ver_count$count > 1,]
+                             ver[[lat]] , FUN = "length")
+    names(ver_count) <- c(lon, lat, "coord.count")
     
-    #test which flagged x occure multiple times
+    ver_spec <- aggregate(ver[[lon]] ~ ver[[species]], FUN = "length")
+    names(ver_spec) <- c(species, "species.count")
+    
+    #test which flagged x occur multiple times
     tester <- data.frame(x, ord = seq_len(nrow(x)))
     tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
-    tester <- tester[order(tester$ord),]
+    tester <- merge(tester, ver_spec, by = species, all = TRUE)
     
-    #create corrected output file
-    out <- is.na(tester$count)
+    tester <- tester[order(tester$ord),]
+    tester[is.na(tester)] <- 0
+    
+    #only falg those records that occure with only one ccordinate in the buffer
+    out <-  tester$coord.count <= tester$species.count| out
   }
-
   # create output based on value argument
   if (verbose) {
     message(sprintf("Flagged %s records.", sum(!out)))

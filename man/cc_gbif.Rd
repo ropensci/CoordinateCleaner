@@ -5,8 +5,8 @@
 \title{Flag Records Assigned to GBIF Headquarters}
 \usage{
 cc_gbif(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 1000, geod = TRUE, verify = FALSE, value = "clean",
-  verbose = TRUE)
+  species = "species", buffer = 1000, geod = TRUE, verify = FALSE,
+  value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -17,6 +17,9 @@ Default = \dQuote{decimallongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
+
+\item{species}{character string. The column with the species identity. Only
+required if verify = TRUE.}
 
 \item{buffer}{numerical. The buffer around the GBIF headquarters,
 where records should be flagged as problematic. Units depend on geod. Default = 100 m.}

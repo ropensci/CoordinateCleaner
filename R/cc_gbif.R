@@ -11,6 +11,8 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
+#' @param species character string. The column with the species identity. Only
+#' required if verify = TRUE.
 #' @param buffer numerical. The buffer around the GBIF headquarters,
 #' where records should be flagged as problematic. Units depend on geod. Default = 100 m.
 #' @param geod logical. If TRUE the radius around each centroid is calculated
@@ -47,6 +49,7 @@
 cc_gbif <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude",
+                    species = "species",
                     buffer = 1000,
                     geod = TRUE,
                     verify = FALSE,
@@ -102,20 +105,25 @@ cc_gbif <- function(x,
   if(verify & sum(out) > 0){
     # get flagged coordinates
     ver <- x[!out,]
-    
     #count the instances of all flagged records
-    ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
-                            ver[[lat]], FUN = "length")
-    names(ver_count) <- c(lon, lat, "count")
-    ver_count <- ver_count[ver_count$count > 1,]
     
-    #test which flagged x occure multiple times
+    ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
+                            ver[[lat]] , FUN = "length")
+    names(ver_count) <- c(lon, lat, "coord.count")
+    
+    ver_spec <- aggregate(ver[[lon]] ~ ver[[species]], FUN = "length")
+    names(ver_spec) <- c(species, "species.count")
+
+    #test which flagged x occur multiple times
     tester <- data.frame(x, ord = seq_len(nrow(x)))
     tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
-    tester <- tester[order(tester$ord),]
+    tester <- merge(tester, ver_spec, by = species, all = TRUE)
     
-    #create corrected output file
-    out <- is.na(tester$count)
+    tester <- tester[order(tester$ord),]
+    tester[is.na(tester)] <- 0
+    
+    #only falg those records that occure with only one ccordinate in the buffer
+    out <-  tester$coord.count <= tester$species.count| out
   }
   
   if (verbose) {

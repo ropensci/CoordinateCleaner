@@ -13,6 +13,8 @@
 #' Default = \dQuote{decimallongitude}.
 #' @param lat character string. The column with the latitude coordinates.
 #' Default = \dQuote{decimallatitude}.
+#' @param species character string. The column with the species identity. Only
+#' required if verify = TRUE.
 #' @param buffer The buffer around each capital coordinate (the centre of the
 #' city), where records should be flagged as problematic. Units depend on geod.
 #' Default = 10 kilometers.
@@ -53,7 +55,8 @@
 #' @importFrom rgeos gBuffer
 cc_cap <- function(x, 
                    lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+                   lat = "decimallatitude",
+                   species = "species",
                    buffer = 10000,
                    geod = TRUE,
                    ref = NULL, 
@@ -131,22 +134,22 @@ cc_cap <- function(x,
     
     #count the instances of all flagged records
     ver_count <- aggregate(ver[[species]] ~ ver[[lon]] + 
-                             ver[[lat]], FUN = "length")
-    names(ver_count) <- c(lon, lat, "count")
-    ver_count <- ver_count[ver_count$count > 1,]
+                             ver[[lat]] , FUN = "length")
+    names(ver_count) <- c(lon, lat, "coord.count")
     
-    #test which flagged x occure multiple times
+    ver_spec <- aggregate(ver[[lon]] ~ ver[[species]], FUN = "length")
+    names(ver_spec) <- c(species, "species.count")
+    
+    #test which flagged x occur multiple times
     tester <- data.frame(x, ord = seq_len(nrow(x)))
     tester <- merge(tester, ver_count, by = c(lon,lat), all = TRUE)
-    tester <- tester[order(tester$ord),]
+    tester <- merge(tester, ver_spec, by = species, all = TRUE)
     
-    #create corrected output file
-    out <- is.na(tester$count)
-  }
-
-  # create output based on value argument
-  if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    tester <- tester[order(tester$ord),]
+    tester[is.na(tester)] <- 0
+    
+    #only falg those records that occure with only one ccordinate in the buffer
+    out <-  tester$coord.count <= tester$species.count| out
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

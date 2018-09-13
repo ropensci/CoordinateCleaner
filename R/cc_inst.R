@@ -164,7 +164,7 @@ cc_inst <- function(x,
       ref <- rgeos::gBuffer(ref, width = buffer * verify_mltpl, byid = TRUE)
     }
     
-    #identify all records from flagged sepcies in x
+    #identify all records from flagged species in x
     f_spec <- x[x[, species] %in% ref@data[, species],]
     
     dbch_flag <- c()

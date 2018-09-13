@@ -5,8 +5,8 @@
 \title{Flag Coordinates in Vicinity of Country Capitals.}
 \usage{
 cc_cap(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 10000, geod = TRUE, ref = NULL, verify = FALSE,
-  value = "clean", verbose = TRUE)
+  species = "species", buffer = 10000, geod = TRUE, ref = NULL,
+  verify = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -17,6 +17,9 @@ Default = \dQuote{decimallongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
+
+\item{species}{character string. The column with the species identity. Only
+required if verify = TRUE.}
 
 \item{buffer}{The buffer around each capital coordinate (the centre of the
 city), where records should be flagged as problematic. Units depend on geod.

@@ -65,6 +65,29 @@ test_that("cc_coun works", {
 
 })
 
+#cc_gbif
+test_that("cc_gbif works", {
+  
+  t.gbif <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
+                                    decimallongitude = c(12.58, 12.585, 12.58),
+                                    decimallatitude = c(55.67, 55.676, 55.67),
+                                    countrycode = "RUS"))
+  
+  expect_is(cc_gbif(exmpl, value = "flagged"), "logical")
+  expect_is(cc_gbif(exmpl, value = "clean"), "data.frame")
+  
+  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged")), 250)
+  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", geod = FALSE)), 250)
+  
+  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", verify = T)), 252)
+  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", verify = T, buffer = 100)), 251)
+  
+  expect_error(cc_gbif(x = exmpl, lon = "longitude", value = "flagged"), 
+               "undefined columns selected")
+  
+  
+})
+
 # cc_iucn
 test_that("cc_iucn works", {
   expect_equal(sum(cc_iucn(x = exmpl, range = range_emp, value = "flagged")),

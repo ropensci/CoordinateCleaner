@@ -1,0 +1,14 @@
+originalPlace	interpretedPlace	longitude	latitude	xmin	xmax	ymin	ymax	uncertainty
+'Abitibi Paper Company', 'Sault Sainte Marie, Canada'	NA	NA	NA	NA	NA	NA	NA	NA
+'Academia Sinica and State Planning Commission, Commission for Integrated Survey of Natural Resources', 'Beijing, China'	Beijing, China	116.4073963	39.9041999	115.4234112	117.514625	39.442758	41.0608157	98753
+'Academia Sinica Institute of Oceanology', 'China'	NA	NA	NA	NA	NA	NA	NA	NA
+'Academia Sinica Institute of Zoology, Taipei', 'Taiwan'	No. 128, Section 2, Academia Rd, Nangang District, Taipei City, Taiwan 115	121.6139134	25.0432128	121.6125644	121.6152624	25.0418638	25.0445618	202
+'Academia Sinica, Institute of Botany', 'Shanghai, China'	No. 128號, Section 2, Academia Rd, Nangang District, Taipei City, Taiwan 11529	121.6145477	25.0421852	121.6131987	121.6158967	25.0408362	25.0435342	202
+'Academia Sinica, Institute of Botany', 'Shanghai, China'	Shanghai, China	121.4737021	31.2303904	120.8397067	122.2471487	30.6755932	31.8727163	86332
+'Academie imperial des Sciences', 'France'	23 Quai de Conti, 75006 Paris, France	2.3368827	48.8572759	2.3355337	2.3382317	48.8559269	48.8586249	180
+'Academie imperial des Sciences', 'France'	NA	NA	NA	NA	NA	NA	NA	NA
+'Academy of Military Medical Sciences', 'Beijing, China'	NA	NA	NA	NA	NA	NA	NA	NA
+'Academy of Military Medical Sciences', 'Beijing, China'	Beijing, China	116.4073963	39.9041999	115.4234112	117.514625	39.442758	41.0608157	98753
+'Academy of Military Medical Sciences, Institute of Pharmacology and Toxicology', 'Beijing, China'	Beijing, China	116.4073963	39.9041999	115.4234112	117.514625	39.442758	41.0608157	98753
+'Academy of Sciences  of the Republic of Uzbekistan institute of the Gene pool of plants and Animals', 'Tashkent, Uzbekistan'	NA	NA	NA	NA	NA	NA	NA	NA
+'Academy of Sciences, Zoological Institute', 'Russia'	University Embankment, 1, Sankt-Peterburg, Russia, 199034	30.3054559	59.942373	30.3041069	30.3068049	59.941024	59.943722	168

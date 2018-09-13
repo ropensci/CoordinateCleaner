@@ -5,8 +5,8 @@
 \title{Flag Coordinates in Vicinity of Country and Province Centroids}
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 1000, geod = TRUE, test = "both", ref = NULL,
-  verify = FALSE, value = "clean", verbose = TRUE)
+  species = "species", buffer = 1000, geod = TRUE, test = "both",
+  ref = NULL, verify = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
 \item{x}{a data.frame. Containing geographical coordinates and species
@@ -17,6 +17,9 @@ Default = \dQuote{decimallongitude}.}
 
 \item{lat}{a character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
+
+\item{species}{character string. The column with the species identity. Only
+required if verify = TRUE.}
 
 \item{buffer}{numerical. The buffer around each province or country
 centroid, where records should be flagged as problematic. Units depend on geod.  
