@@ -135,7 +135,8 @@ cf_range <- function(x,
       flags <- which(rang$range > quo + tester * mltpl)
       flags <- rang[flags, "idf"]
     }
-  } else {
+  } 
+  else {
     if (verbose) {
       message("Testing temporal range outliers on taxon level")
     }

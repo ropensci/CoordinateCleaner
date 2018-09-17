@@ -84,8 +84,6 @@ test_that("cc_gbif works", {
   
   expect_error(cc_gbif(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
-  
-  
 })
 
 # cc_iucn

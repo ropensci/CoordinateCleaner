@@ -46,6 +46,7 @@
 #' cc_sea(x, value = "flagged")
 #' 
 #' @export
+#' @importFrom dplyr inner_join
 #' @importFrom sp CRS SpatialPoints "proj4string<-" over proj4string coordinates
 #' @importFrom raster crop
 #' @importFrom rgdal readOGR
@@ -69,7 +70,7 @@ cc_sea <- function(x,
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
   # heuristic to speedup - reduce to individual locations, 
-  #overwritten alter in cases speedup == FALSE
+  #overwritten later in cases speedup == FALSE
   inp <- x[!duplicated(x[,c(lon, lat)]),]
   pts <- sp::SpatialPoints(inp[, c(lon, lat)], proj4string = CRS(wgs84))
   
@@ -97,7 +98,7 @@ cc_sea <- function(x,
     ## remerge with coordinates
     dum <- x
     dum$order <- seq_len(nrow(dum))
-    out <- merge(dum, out, by = c(lat,lon), sort = FALSE)
+    out <- dplyr::inner_join(dum,out, by = c(lat,lon))
     out <- out[order(out$order),]
     out <- out$out
   }else{
