@@ -80,9 +80,28 @@ cc_sea <- function(x,
       stop("scale must be one of c(10,50,110)")
     }
     
-    ref <- rnaturalearth::ne_download(scale = scale, 
-                                      type = 'land', 
-                                      category = 'physical')
+    path <- file.path(system.file(package = "CoordinateCleaner"), "sea.EXT")
+    file <- file.path(path, paste("ne_", scale, "m_land.shp", sep = ""))
+    
+    #Download if file does not exist yet
+    if(!file.exists(file)) {
+      ref <- rnaturalearth::ne_download(scale = scale, 
+                                        type = 'land', 
+                                        category = 'physical',
+                                        destdir = path,
+                                        load = FALSE)
+    }
+    
+    #load reference
+    ref <- rgdal::readOGR(path, 
+                          paste("ne_", scale, "m_land", sep = ""), 
+                          encoding = "UTF-8",
+                          stringsAsFactors = FALSE, 
+                          use_iconv = TRUE)
+    ref@data[ref@data == "-99" | 
+                     ref@data == "-099"] <- NA
+    
+    #Crop to the spatial extent of the points
     ref <- raster::crop(ref, raster::extent(pts) + 1)
   } else {
     ref <- reproj(ref)
