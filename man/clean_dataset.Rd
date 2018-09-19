@@ -69,7 +69,7 @@ degrees. The function uses a binomial test to check if more records than
 expected have decimals below 0.6 (which is the maximum that can be obtained
 in minutes, as one degree has 60 minutes) and if the number of these records
 is higher than those above 0.59 by a certain proportion. The periodicity
-test uses rate estimation in a poison process to estimate if there is
+test uses rate estimation in a poisson process to estimate if there is
 periodicity in the decimals of a dataset (as would be expected by for
 example rounding or data that was collected in a raster format) and if there
 is an over proportional number of records with the decimal 0 (full degrees)

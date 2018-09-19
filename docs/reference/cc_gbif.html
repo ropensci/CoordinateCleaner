@@ -88,7 +88,7 @@ Copenhagen, DK." />
       <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
@@ -145,8 +145,8 @@ Copenhagen, DK.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cc_gbif</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>geod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +165,11 @@ Default = &#8220;decimallongitude&#8221;.</p></td>
       <th>lat</th>
       <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
+    </tr>
+    <tr>
+      <th>species</th>
+      <td><p>character string. The column with the species identity. Only
+required if verify = TRUE.</p></td>
     </tr>
     <tr>
       <th>buffer</th>

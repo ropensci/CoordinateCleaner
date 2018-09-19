@@ -55,7 +55,7 @@
       <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - dataset-level cleaning</a>
+      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
     </li>
     <li>
       <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
@@ -119,11 +119,7 @@
 <h2 class="hasAnchor">
 <a href="#data-compilation" class="anchor"></a>Data compilation</h2>
 <p>We compiled names of biodiversity institutions from six different sources (Fig. ) <span class="citation">(BGCI 2017; Index Herbariorum 2017; The Global Registry of Biodiversity Repositories 2017; Wikipedia 2017, <span class="citation">Global Biodiveristy Information Facility (2017)</span>, <span class="citation">GeoNames (2017)</span>)</span> and geo-referenced them using the Google maps API via the ggmap package in R <span class="citation">(Kahle and Wickham 2013)</span> using institution names and, if this yielded no results the institutions address. For those records that did not yield any results we used opencage via the opencage R-package <span class="citation">(Salmon 2017)</span> for geo-referencing. We manually geo-referenced those institutions that could not be geo-referenced automatically (c. 50%) using the WWW and Google earth <span class="citation">(Google Inc 2017)</span>. In total the database comprises almost 9700 geo-referenced institutions (and another 2500 entries for which geo-referencing was not possible, either to problems with non-English names or geographic ambiguities). The spatial extent of the database is global (Fig. ), but we acknowledge that there is a focus on English-speaking countries and countries using the Roman alphabet (See Fig.  and Fig. ). This is partly a bias due to the data compilation process. We hope that this bias can be overcome by future contributions to the database from researchers in non-English speaking and non-Roman alphabet countries. In general, we acknowledge that the database may not be complete and created a webmask at (<a href="http://biodiversity-institutions.surge.sh/" class="uri">http://biodiversity-institutions.surge.sh/</a>) were researchers can easily submit their institution or a comment on an existing institution (). The webpage also includes an overview on the institutions included in the dataset.</p>
-<div class="figure" style="text-align: center">
-<img src="../../../../../../../Dropbox%20(Antonelli%20Lab)/Arbeit/Gothenburg/projects/29_CoordinateCleaner/Package/vignettes/inst/webpage_screenshot.png" alt="\label{fig:webpage}Web interface to submit additions and corrections to the institutions database at http://biodiversity-institutions.surge.sh/." width="100%"><p class="caption">
-Web interface to submit additions and corrections to the institutions database at <a href="http://biodiversity-institutions.surge.sh/" class="uri">http://biodiversity-institutions.surge.sh/</a>.
-</p>
-</div>
+<p><img src="../../../../../../../Dropbox%20(Antonelli%20Lab)/Arbeit/Gothenburg/projects/29_CoordinateCleaner/Package/vignettes/inst/webpage_screenshot.png" alt="Web interface to submit additions and corrections to the institutions database at http://biodiversity-institutions.surge.sh/."><!-- ```{r echo=FALSE, out.width='100%',  fig.cap = "\\label{fig:webpage}Web interface to submit additions and corrections to the institutions database at http://biodiversity-institutions.surge.sh/.",fig.align="center"} --><!-- knitr::include_graphics('https://github.com/azizka/CoordinateCleaner/vignettes/inst/webpage_screenshot.png') --><!-- ``` --></p>
 </div>
 <div id="data-structure" class="section level2">
 <h2 class="hasAnchor">

@@ -26,3 +26,5 @@ vignettes/Tutorial_Using_custom_gazetteers.Rmd
 ^docs$
 vignettes/examples
 vignettes/inst
+sea.EXT/
+urb.EXT/
