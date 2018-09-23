@@ -13,6 +13,121 @@ library(caret)
 ```
 
 
+```{r, echo = FALSE}
+# A function for generating captions and cross-references
+
+fig <- local({
+    i <- 0
+    list(
+        cap=function(refName, text, center=FALSE, col="black", inline=FALSE) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            css_ctr <- ""
+            if (center) css_ctr <- "text-align:center; display:inline-block; width:100%;"
+            cap_txt <- paste0("<span style=\"color:", col, "; ", css_ctr, "\">Figure ", i, ": ", text , "</span>")
+            anchor <- paste0("<a name=\"", refName, "\"></a>")
+            if (inline) {
+                paste0(anchor, cap_txt)    
+            } else {
+                list(anchor=anchor, cap_txt=cap_txt)
+            }
+        },
+        
+        ref=function(refName, link=FALSE, checkRef=TRUE) {
+            
+            ## This function puts in a cross reference to a caption. You refer to the
+            ## caption with the refName that was passed to fig$cap() (not the code chunk name).
+            ## The cross reference can be hyperlinked.
+            
+            if (checkRef && !refName %in% names(ref)) stop(paste0("fig$ref() error: ", refName, " not found"))
+            if (link) {
+                paste0("<A HREF=\"#", refName, "\">Figure ", ref[[refName]], "</A>")
+            } else {
+                paste0("Figure ", ref[[refName]])
+            }
+        },
+        
+        ref_all=function(){
+            ## For debugging
+            ref
+        })
+})
+
+## This chunk replaces the default hook for processing plots. It achieves the purposes,
+## of laying out auto-numbered captions, but other functionality may be gone.
+
+library(knitr)
+knit_hooks$set(plot = function(x, options) {
+    sty <- ""
+    if (options$fig.align == 'default') {
+        sty <- ""
+    } else {
+        sty <- paste0(" style=\"text-align:", options$fig.align, ";\"")
+    }
+    
+    if (is.list(options$fig.cap)) {
+        ## options$fig.cap is a list returned by the function fig$cap()
+        str_caption <- options$fig.cap$cap_txt
+        str_anchr <- options$fig.cap$anchor
+    } else {
+        ## options$fig.cap is a character object (hard coded, no anchor)
+        str_caption <- options$fig.cap
+        str_anchr <- ""
+    }
+    
+    paste('<figure', sty, '>', str_anchr, '<img src="',
+        opts_knit$get('base.url'), paste(x, collapse = '.'),
+        '"><figcaption>', str_caption, '</figcaption></figure>',
+        sep = '')
+    
+})
+
+## This chucnk will read through *this* Rmd file, and attempt to extract all of the 
+## labels (not caption text) used for Figure captions. These labels are used
+## as anchors, so scanning through the document now will allow us to create cross references
+## before the caption actually appears. 
+
+## Get the name of this Rmd file
+rmdFn <- knitr::current_input()  # filename of input document
+
+## Read lines and close connection
+rmdCon <- file(rmdFn, open = "r")
+rmdLines <- readLines(rmdCon)
+close(rmdCon)
+
+## Pull out all occurences of at least one back tick, followed 
+## by any number of characters, followed by fig$cap (all on one line)
+figscap_idx <- grep("`+(.*)fig\\$cap", rmdLines)
+rmdLines <- rmdLines[figscap_idx]
+
+## Get rid of everything up until the start of the caption label
+## This presumes the caption label is the first argument of fig$cap()
+## E.g., fig.cap = fig$cap("my_label", ...)
+rmdLinesSansPre <- sub("(.*)fig\\$cap(.*?)[\"']", "", rmdLines)
+
+## Identify everything up until the first quote
+match_data <- regexpr("(.*?)[\"']", rmdLinesSansPre)
+
+## Reduce the length by one, because we're not interested in the final quote
+attr(match_data, "match.length") <- attr(match_data, "match.length") - 1
+
+## Extract
+fig_labels <- regmatches(rmdLinesSansPre, match_data, invert=FALSE)
+
+if (length(fig_labels) > 0) {
+
+    ## Test for duplicates
+    if (anyDuplicated(fig_labels) > 0) stop("Duplicate caption labels detected")
+    
+    ## Create a named list of Figure numbers
+    ref <- as.list(1:length(fig_labels))
+    names(ref) <- fig_labels
+}    
+
+
+```
+
+
 ## Background
 Some problems with biological collection data are not apparent from individual records, but rather linked to properties of an entire data set. The CleanCoordinatesDS function can use dataset properties to flag three types of potential problems, under the assumption that these problems will effect many records in a dataset from the same source (but not necessarily all): 
 
@@ -27,7 +142,7 @@ Geographic coordinates in a longitude/latitude coordinate reference system can b
 ## Algorithm and implementation
 As part of this study we present a novel algorithm to identify data sets potentially biased by erroneous conversion from ddmm to dd.dd due to the misinterpretation of the degree sign as decimal delimiter. 
 
-```{r fig5, echo = F, evaluate = T, warning = F, fig.show = T, fig.cap = "\\label{fig:analmat}Examples of the analysis matrices for data sets with varying fractions of ddmm to dd.dd conversion errors. Error fraction is the percentage of records with conversion error in the data set."}
+```{r fig5, echo = F, evaluate = T, warning = F, fig.show = T, fig.cap = fig$cap("fig_analmat", "Examples of the analysis matrices for data sets with varying fractions of ddmm to dd.dd conversion errors. Error fraction is the percentage of records with conversion error in the data set.")}
 
 load(file = "inst/analyses_matrix_Clean")
 dat0 <- raster(dat.t1)%>%
@@ -76,7 +191,7 @@ ggplot(data = dat)+
   facet_wrap(~ds)
 ```
 
-The binomial test and frequency comparison described in the main text are based on an analysis matrix which is recording the distribution of coordinates decimals in the longitude/latitude space (Fig. \ref{fig:analmat}). The analysis matrix does not record the number of records in a cell, but only presence/absence, to account for clustered sampling (i.e. a large number of records with similar decimals are most likely not related to conversion error, but rather to multiple samples from the same location, or coordinate rounding, see section 3). 
+The binomial test and frequency comparison described in the main text are based on an analysis matrix which is recording the distribution of coordinates decimals in the longitude/latitude space (`r fig$ref("fig_analmat", link = TRUE)`). The analysis matrix does not record the number of records in a cell, but only presence/absence, to account for clustered sampling (i.e. a large number of records with similar decimals are most likely not related to conversion error, but rather to multiple samples from the same location, or coordinate rounding, see section 3). 
 
 The test is implemented in the `cd_ddmm` function and the `ddmm` argument of the `clean_dataset` wrapper function. The input follows the general package design, and is a `data.frame` with at least three columns including the decimal longitude and latitude and a data set identifier for each record. The names of the columns can be specified via the `lon`, `lat` and `ds` arguments. There are three additional arguments to customize the test, in particular to modify its sensitivity to the fraction of a data set that is biased: The `pvalue` argument controls the cut-off p-value for significance of the one-sided t-test. The `diff` argument controls the threshold difference for the `ddmm test`, and indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. The size of the analysis matrix can be adapted using the `mat.size` argument.
 
@@ -85,9 +200,9 @@ We used simulations to asses (A) the effect of varying the diff parameter and (B
 
 We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, N as $\Gamma(\alpha = 2, \beta = 1) *500$ for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using $K \in [1,5)$ truncated normal distributions with $\mu_i \sim \mathcal{U}(0,90)$ and $\sigma \sim \mathcal{U}(0.1,5)$. We then added a bias by replacing between 0 - 80% of the samples by records with decimals sampled from $\mathcal{U}(0, 0.599)$. We then analysed the simulated data using `cd_ddmm` using diff parameters between 0.1 and 1.
 
-Figure \ref{fig:ddmm_diff} shows the effect of the `diff` parameter on the sensitivity of the `cd_ddmm` test and Figure \ref{fig:dataset_size} the effect of dataset size. In general, the test is identifying the presence of a bias with rate > 0.1 (10\% bias) well, for datasets with more than 100 individual occurrence records. However, for empirical data we recommend a more conservative `diff` threshold of 0.5-1 to identify datasets with more than 30\% bias. This is because smaller bias rates might be caused by irregular sampling rather than conversion errors. However, the advisable diff threshold depends on downstream analyses and higher `diff` values might be necessary (Fig. \ref{fig:ddmm_diff}). We suggest to manually check the decimal distribution in flagged datasets to avoid data loss. This can be done easily by visually inspecting the analyses matrix, by setting the `diagnostic` argument of `cd_ddmm` to TRUE. 
+`r fig$ref("fig_ddmm_diff", link = TRUE)` shows the effect of the `diff` parameter on the sensitivity of the `cd_ddmm` test and `r fig$ref("fig_dataset_size", link = TRUE)` the effect of dataset size. In general, the test is identifying the presence of a bias with rate > 0.1 (10\% bias) well, for datasets with more than 100 individual occurrence records. However, for empirical data we recommend a more conservative `diff` threshold of 0.5-1 to identify datasets with more than 30\% bias. This is because smaller bias rates might be caused by irregular sampling rather than conversion errors. However, the advisable diff threshold depends on downstream analyses and higher `diff` values might be necessary (`r fig$ref("fig_ddmm_diff", link = TRUE)`). We suggest to manually check the decimal distribution in flagged datasets to avoid data loss. This can be done easily by visually inspecting the analyses matrix, by setting the `diagnostic` argument of `cd_ddmm` to TRUE. 
 
-```{r fig7, echo = F, evaluate = T, warning = F, fig.show = T, message = F, fig.height = 8, fig.cap = "\\label{fig:ddmm_diff}The effect of the `diff` parameter on the `cd_ddmm` test. The sensitivity of the test decreases with higher `diff` values, meaning that a higher  fraction of records with erroneous coordinate is tolerated. The error fraction in data set is the fraction of records subject to conversion error."}
+```{r fig7, echo = F, evaluate = T, warning = F, fig.show = T, message = F, fig.height = 8, fig.cap = fig$cap("fig_ddmm_diff", "The effect of the `diff` parameter on the `cd_ddmm` test. The sensitivity of the test decreases with higher `diff` values, meaning that a higher  fraction of records with erroneous coordinate is tolerated. The error fraction in data set is the fraction of records subject to conversion error.")}
 # False positive/negative rates - diff parameter
 load("inst/simulations_cd_ddmm.Rds")
 dat <- plo <- simulations_cd_ddmm
@@ -143,7 +258,7 @@ ggplot(plo.sum)+
 
 ```
 
-```{r fig8, echo = F, evaluate = T, warning = F, fig.show = T, message = F, fig.height = 8, fig.cap = "\\label{fig:dataset_size}The effect of dataset size on the `cd_ddmm` test. Datasets with less than 100 records are flagged poorly."}
+```{r fig8, echo = F, evaluate = T, warning = F, fig.show = T, message = F, fig.height = 8, fig.cap = fig$cap("fig_dataset_size", "The effect of dataset size on the `cd_ddmm` test. Datasets with less than 100 records are flagged poorly.")}
 # False positive/negative rates - dataset size
 dat$ds <- cut(dat$dataset.size, breaks = c(0,100, 500, 1000,  10000, 20000))
 plo <- dat
@@ -233,7 +348,7 @@ max(biased$decimallongitude)
 
 The diagnostic plots clearly show the biased distribution of decimals in the biased dataset and the large geographic extent excludes islands or patchy habitats as cause of this distribution.
 
-\newpage{}
+
 # Low coordinate precision due to rasterized sampling or decimal rounding (`cd_round`)
 ## Background
 Species occurrence records with coordinates often do not represent point occurrences but are either derived from rasterized collection designs (e.g. presence/absence in a 100x100 km grid cell) or have been subject to strong decimal rounding. If the relevant meta-data are missing, these issues cannot be identified on the record level, especially if the records have been combined with precise GPS-based point occurrences into data sets of mixed precision. However, knowledge of coordinate precision and awareness of a large number of imprecise records in a data set can be crucial for downstream analyses. For instance, coordinates collected in a 100km x 100km raster might be unsuitable for species distribution modelling on the local and regional scale.
@@ -241,7 +356,7 @@ Species occurrence records with coordinates often do not represent point occurre
 ## Algorithm and implementation
 The sensitivity of the algorithms presented in the main text test can be customized based on the raster regularity and the fraction of biased records in a dataset (`T1`), the geographic extent of the raster(`reg.dist.min` and `reg.dist.max`) and the number of raster nodes (`reg.out.thresh`). 
 
-```{r, echo = F, evaluate = T, warning = F, fig.show = T, fig.height = 8, fig.cap ="\\label{fig:patternCoordinates}The diagnostic plots retrived from `cd_round` for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset."}
+```{r, echo = F, evaluate = T, warning = F, fig.show = T, fig.height = 8, fig.cap = fig$cap("fig_patternCoordinates", "The diagnostic plots retrived from `cd_round` for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset.")}
 simDS <- function(n.rec,
                   K = 3,
                   data.range.min = -40, data.range.max = 40,
@@ -334,10 +449,13 @@ simDS <- function(n.rec,
 
 ```
 
-## Simulations
-We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, $N \sim \Gamma(\alpha = 2, \beta = 1) *500$ for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using $K \in [1,5)$ truncated normal distributions with $\mu_i \sim \mathcal{U}(0,90)$ and $\sigma \sim \mathcal{U}(0.1,5)$. We then added a fraction $\rho$ of biased records, where $\rho \in[0,0.6]$ (=0-60%). We assumed a rasterized bias with five nodes (i.e. a raster with five rows and five columns). We first sampled a random coordinate as origin for the raster and then sampled the four remaining nodes at a resolution $\tau \in  [0.1, 2]$. We then analysed the simulated data using the `cd_round` function with `T1` parameters between 3 and 13. Figure \ref{fig:clustering_t7_results} shows the effect of the `T1` parameter on the sensitivity of the `ds_ddmm` test.
 
-```{r fig10, echo = F, evaluate = T, warning = F, message = F, fig.show = T, fig.cap ="\\label{fig:clustering_t7_results}The effect of the `T1` parameter on the sensitivity of the `ds_round` test.", fig.height = 8}
+## Simulations
+We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, $N \sim \Gamma(\alpha = 2, \beta = 1) *500$ for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using $K \in [1,5)$ truncated normal distributions with $\mu_i \sim \mathcal{U}(0,90)$ and $\sigma \sim \mathcal{U}(0.1,5)$. We then added a fraction $\rho$ of biased records, where $\rho \in[0,0.6]$ (=0-60%). We assumed a rasterized bias with five nodes (i.e. a raster with five rows and five columns). We first sampled a random coordinate as origin for the raster and then sampled the four remaining nodes at a resolution $\tau \in  [0.1, 2]$. We then analysed the simulated data using the `cd_round` function with `T1` parameters between 3 and 13. `r fig$ref("fig_clustering_t7_results", link = TRUE)` shows the effect of the `T1` parameter on the sensitivity of the `ds_ddmm` test.
+
+
+
+```{r fig10, echo = F, evaluate = T, warning = F, message = F, fig.show = T, fig.cap = fig$cap("fig_clustering_t7_results", "The effect of the `T1` parameter on the sensitivity of the `ds_round` test."), fig.height = 8}
 
 load("inst/autocorrelation_simulations.Rds")
 
@@ -385,6 +503,7 @@ ggplot(plo.sum)+
   theme_bw()+
   theme(legend.position = "bottom")
 ```
+
 
 ## A practical example
 The follwoing example illustrates the use of `cd_round`.

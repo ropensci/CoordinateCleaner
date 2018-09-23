@@ -26,13 +26,13 @@ In this tutorial we provide a pipeline on how to clean occurrence records retrie
 With this tutorial you will be able to:
 
 1. Visualize the data and identify potential problems 
-2. Use  \emph{CoordinateCleaner} to automatically flag problematic records
+2. Use  *CoordinateCleaner* to automatically flag problematic records
 3. Use GBIF provided meta-data to improve coordinate quality, tailored to your downstream analyses
-4. Use automated cleaning algorithms of \emph{CoordinateCleaner} to identify problematic contributing datasets
+4. Use automated cleaning algorithms of *CoordinateCleaner* to identify problematic contributing datasets
 
-# Identifying erroneous coordinates with \emph{CoordinateCleaner}
+# Identifying erroneous coordinates with *CoordinateCleaner*
 
-The `clean_coordinates` function is a wrapper function around all record-level tests of \emph{CoordinateCleaner}. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases [@Maldonado2015], including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the [package vignettes](https://azizka.github.io/CoordinateCleaner/). This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
+The `clean_coordinates` function is a wrapper function around all record-level tests of *CoordinateCleaner*. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases [@Maldonado2015], including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the [package vignettes](https://azizka.github.io/CoordinateCleaner/). This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
 
 ## Install `CoordinateCleaner`
 You can install the latest stable version of CoordinateCleaner from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed.
@@ -117,7 +117,7 @@ dat_fl <- dat[!flags$summary,]
 ```
 
 ### Option B) Using the magrittr pipe (%>%)
-Alternatively, you can run all tests implemented in \emph{CoordinateCleaner} with a individual function and connect them using the magrittr pipe operator, which will directly result in a `data.frame` comprising only cleaned records.
+Alternatively, you can run all tests implemented in *CoordinateCleaner* with a individual function and connect them using the magrittr pipe operator, which will directly result in a `data.frame` comprising only cleaned records.
 
 ```{r, warning= F, message = F, eval = F}
  #to avoid specifying it in each function
@@ -277,12 +277,12 @@ ggplot() +
 ```
 
 # Identifying problematic data sets
-Some types of potentially problematic coordinates can cause bias, but are not identifiable on record-level if the relevant meta-data are missing. This is especially the case if the erroneous records have been combined with precise GPS-based point occurrences into datasets of mixed precision. Two important cases are: (A) coordinate conversion errors based on the misinterpretation of the degree sign as decimal delimiter and (B) data derived from rasterized data collection designs (e.g. presence in a 50x50 km grid cell). \textit{CoordinateCleaner} implements two algorithms to identify these problems on a dataset level.
+Some types of potentially problematic coordinates can cause bias, but are not identifiable on record-level if the relevant meta-data are missing. This is especially the case if the erroneous records have been combined with precise GPS-based point occurrences into datasets of mixed precision. Two important cases are: (A) coordinate conversion errors based on the misinterpretation of the degree sign as decimal delimiter and (B) data derived from rasterized data collection designs (e.g. presence in a 50x50 km grid cell). *CoordinateCleaner* implements two algorithms to identify these problems on a dataset level.
 
 ## Identify dataset with ddmm to dd.dd conversion error
 We will first run the test for erroneous data conversion due to the misinterpretation of the degree sign as decimal delimiter. We will use the `cd_ddmm` function, alternatively, you can use the `clean_dataset` wrapper. See supplementary material S1 for a detailed description of the algorithm and implementation of the test. You can control the output of the function via the `value` argument.
 
-```{r, eval = TRUE, warnings = F, message = F}
+```{r, eval = TRUE, warnings = F, message = F, fig.height = 6}
 out.ddmm <- cd_ddmm(dat_cl, lon = "decimalLongitude", lat = "decimalLatitude", 
                     ds = "species", diagnostic = T, diff = 1,
                     value = "dataset")
@@ -294,7 +294,7 @@ This looks good. The test indicates a slightly higher fraction of records with d
 ## Test for rasterized sampling
 As a second step we will use the `cd_round` function to identify datasets with a significant proportion of coordinates that have been collected in large scale lattice designs. These records might have a low precision and might therefore be problematic for some analyses. For instance presence derived from a 1 degree grid of a national atlas might be to coarse for small scale species distribution models. 
 
-```{r, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
+```{r, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.height = 6, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
 par(mfrow = c(2,2), mar = rep(2, 4))
 out.round <- cd_round(dat_fin, lon = "decimalLongitude", 
                       lat = "decimalLatitude", 

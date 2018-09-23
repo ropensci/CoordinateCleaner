@@ -109,7 +109,7 @@
 <div id="background" class="section level1">
 <h1 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h1>
-<p>The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using  with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is “good data” depends entirely on your downstream analyses! We wrote this tutorial (and the whole  package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.</p>
+<p>The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using <em>CoordinateCleaner</em> with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is “good data” depends entirely on your downstream analyses! We wrote this tutorial (and the whole <em>CoordinateCleaner</em> package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.</p>
 </div>
 <div id="install-coordinatecleaner" class="section level1">
 <h1 class="hasAnchor">
@@ -204,7 +204,7 @@ cl<span class="op">$</span>cc_iso3 &lt;-<span class="st"> </span><span class="kw
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_coun.html">cc_coun</a></span>(cl, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>, <span class="dt">iso3 =</span> <span class="st">"cc_iso3"</span>)
 ## Testing country identity
 ## Flagged 299 records.</code></pre></div>
-<p>Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the <code>institutions</code> database of . As for the country centroid test you can change the buffer around the institutions with the <code>buffer</code> argument.</p>
+<p>Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the <code>institutions</code> database of <em>CoordinateCleaner</em>. As for the country centroid test you can change the buffer around the institutions with the <code>buffer</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>(cl, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>)
 ## Testing biodiversity institutions
 ## Flagged 0 records.
@@ -254,17 +254,17 @@ rang &lt;-<span class="st"> </span>cl<span class="op">$</span>early_age <span cl
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">""</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on dataset level
-## Flagged 254 records.
+## Flagged 249 records.
 
 <span class="co"># Outlier taxon</span>
 cl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_outl.html">cf_outl</a></span>(cl, <span class="dt">taxon =</span> <span class="st">"taxon_name"</span>, <span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>,
               <span class="dt">min_age =</span> <span class="st">"late_age"</span>, <span class="dt">max_age =</span> <span class="st">"early_age"</span>)
 ## Testing spatio-temporal outliers on taxon level
-## Flagged 31 records.</code></pre></div>
+## Flagged 29 records.</code></pre></div>
 <p>Done! To check how many records have been flagged in total, you can compare the two datasets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(dat) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cl)</code></pre></div>
-<pre><code>## [1] 745</code></pre>
-<p>All test combined have removed about 745 records (14.9%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
+<pre><code>## [1] 738</code></pre>
+<p>All test combined have removed about 738 records (14.8%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
 <p>So far so good, we have significantly refined the data for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run . You can connect all functions directly in a row using the magrittr pipe (%&gt;%) operator.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(<span class="dt">lat =</span> <span class="st">"lat"</span>, <span class="dt">lon =</span> <span class="st">"lng"</span>)<span class="op">%&gt;%</span>
@@ -309,13 +309,13 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">table</span>(cl<span class="op">$</span>phylum)
 ## 
 ## Spermatophyta 
-##          4255
+##          4262
 
 <span class="co">#2. Taxonomic level of identification</span>
 <span class="kw">table</span>(cl<span class="op">$</span>taxon_rank)
 ## 
 ##  subclass   species     genus     class    family     order subfamily 
-##         7      3289       533       270       123        20         0</code></pre></div>
+##         7      3293       535       271       123        20         0</code></pre></div>
 <p>The required taxonomic level of course depends on the downstream analyses, but here we will exclude everything other than genus or species, which is a reasonable approach for most PyRate analyses.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span>cl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(taxon_rank <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>))</code></pre></div>
@@ -327,7 +327,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(cl<span class="op">$</span>geogscale)</code></pre></div>
 <pre><code>## 
 ## small collection          outcrop       local area            basin 
-##             1951             1696               79                0</code></pre>
+##             1952             1696               79                0</code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
 <div id="time" class="section level2">
@@ -338,7 +338,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>late_age))
 ## 
 ##  63.3    66  70.6  93.5  93.9 100.5 
-##    51   138     8     3     3    21
+##    53   139     8     3     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> late_age))
@@ -349,7 +349,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw">tail</span>(<span class="kw">table</span>(cl<span class="op">$</span>early_age))
 ## 
 ##  70.6  83.5  99.6 100.5 105.3   113 
-##   126     9     3    11     3    21
+##   127     9     3    11     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> early_age))
@@ -377,13 +377,13 @@ cl &lt;-<span class="st"> </span><span class="kw">filter</span>(cl, preservation
 <div id="conclusions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
-<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-75.44 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
+<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-75.56 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
 <p><img src="Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-1.png" width="672"><img src="Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
 </div>
 <div id="writing-the-result-to-disk-in-pyrate-format" class="section level1">
 <h1 class="hasAnchor">
 <a href="#writing-the-result-to-disk-in-pyrate-format" class="anchor"></a>Writing the result to disk in PyRate format</h1>
-<p>If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, <a href="https://github.com/dsilvestro/PyRate">PyRate</a> might be useful for you. You can use the <code>write_pyrate</code> function of  to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the <code>status</code> argument of <code>write_pyrate</code>. If you want to specify a path were to save the file, use the <code>path</code> argument instead of <code>fname</code>.</p>
+<p>If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, <a href="https://github.com/dsilvestro/PyRate">PyRate</a> might be useful for you. You can use the <code>write_pyrate</code> function of <em>CoordinateCleaner</em> to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the <code>status</code> argument of <code>write_pyrate</code>. If you want to specify a path were to save the file, use the <code>path</code> argument instead of <code>fname</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># replace  blanks in taxon names</span>
 cl<span class="op">$</span>taxon_name &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">"[[:blank:]]{1,}"</span>,<span class="st">"_"</span>, cl<span class="op">$</span>taxon_name)
 

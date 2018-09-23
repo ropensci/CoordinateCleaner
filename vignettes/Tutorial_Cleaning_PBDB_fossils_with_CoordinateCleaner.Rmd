@@ -17,7 +17,7 @@ knitr::opts_chunk$set(warning = FALSE, fig.width = 7)
 ```
 
 # Background
-The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using \emph{CoordinateCleaner} with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is "good data" depends entirely on your downstream analyses! We wrote this tutorial (and the whole \emph{CoordinateCleaner} package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.
+The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using *CoordinateCleaner* with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is "good data" depends entirely on your downstream analyses! We wrote this tutorial (and the whole *CoordinateCleaner* package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.
 
 # Install `CoordinateCleaner`
 You can install the latest stable version of CoordinateCleaner (Currently 2.0-1) from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed. In this tutorial, relevant R-code is shown in grey boxes, the resulting output lines are marked by ##. 
@@ -122,7 +122,7 @@ cl$cc_iso3 <- countrycode(cl$cc, origin = "iso2c", destination = "iso3c", custom
 cl <- cc_coun(cl, lat = "lat", lon = "lng", iso3 = "cc_iso3")
 ```
 
-Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the `institutions` database of \emph{CoordinateCleaner}. As for the country centroid test you can change the buffer around the institutions with the `buffer` argument.
+Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the `institutions` database of *CoordinateCleaner*. As for the country centroid test you can change the buffer around the institutions with the `buffer` argument.
 
 ```{r, eval = TRUE, collapse = T}
 cl <- cc_inst(cl, lat = "lat", lon = "lng")
@@ -301,7 +301,7 @@ cl <- filter(cl, preservation_quality != "very poor")
 Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (`r 1 - nrow(cl)/ nrow(dat) * 100` %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset. 
 
 
-```{r, echo = F, fig.height = 4, eval = TRUE}
+```{r, echo = F, fig.height = 4, eval = TRUE, fig.height = 6}
 wm <- borders("world", colour="gray50", fill="gray50")
 
 ggplot()+ coord_fixed()+ wm +
@@ -317,9 +317,9 @@ ggplot()+ coord_fixed()+ wm +
 
 #Writing the result to disk in PyRate format
 
-If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, [PyRate](https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of \emph{CoordinateCleaner} to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
+If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, [PyRate](https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of *CoordinateCleaner* to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
 
-```{r, message = F, warning = F, eval = F}
+```{r, message = F, warning = F, eval = F, fig.height = 6}
 # replace  blanks in taxon names
 cl$taxon_name <- gsub("[[:blank:]]{1,}","_", cl$taxon_name)
 

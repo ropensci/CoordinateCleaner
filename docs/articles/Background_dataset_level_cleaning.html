@@ -127,29 +127,15 @@
 <h2 class="hasAnchor">
 <a href="#algorithm-and-implementation" class="anchor"></a>Algorithm and implementation</h2>
 <p>As part of this study we present a novel algorithm to identify data sets potentially biased by erroneous conversion from ddmm to dd.dd due to the misinterpretation of the degree sign as decimal delimiter.</p>
-<div class="figure">
-<img src="Background_dataset_level_cleaning_files/figure-html/fig5-1.png" alt="\label{fig:analmat}Examples of the analysis matrices for data sets with varying fractions of ddmm to dd.dd conversion errors. Error fraction is the percentage of records with conversion error in the data set." width="700"><p class="caption">
-Examples of the analysis matrices for data sets with varying fractions of ddmm to dd.dd conversion errors. Error fraction is the percentage of records with conversion error in the data set.
-</p>
-</div>
-<p>The binomial test and frequency comparison described in the main text are based on an analysis matrix which is recording the distribution of coordinates decimals in the longitude/latitude space (Fig. ). The analysis matrix does not record the number of records in a cell, but only presence/absence, to account for clustered sampling (i.e. a large number of records with similar decimals are most likely not related to conversion error, but rather to multiple samples from the same location, or coordinate rounding, see section 3).</p>
+<figure><a name="fig_analmat"></a><img src="Background_dataset_level_cleaning_files/figure-html/fig5-1.png"><figcaption></figcaption></figure><p>The binomial test and frequency comparison described in the main text are based on an analysis matrix which is recording the distribution of coordinates decimals in the longitude/latitude space (<a href="#fig_analmat">Figure 1</a>). The analysis matrix does not record the number of records in a cell, but only presence/absence, to account for clustered sampling (i.e. a large number of records with similar decimals are most likely not related to conversion error, but rather to multiple samples from the same location, or coordinate rounding, see section 3).</p>
 <p>The test is implemented in the <code>cd_ddmm</code> function and the <code>ddmm</code> argument of the <code>clean_dataset</code> wrapper function. The input follows the general package design, and is a <code>data.frame</code> with at least three columns including the decimal longitude and latitude and a data set identifier for each record. The names of the columns can be specified via the <code>lon</code>, <code>lat</code> and <code>ds</code> arguments. There are three additional arguments to customize the test, in particular to modify its sensitivity to the fraction of a data set that is biased: The <code>pvalue</code> argument controls the cut-off p-value for significance of the one-sided t-test. The <code>diff</code> argument controls the threshold difference for the <code>ddmm test</code>, and indicates by which fraction the records with decimals below 0.6 must outnumber the records with decimals above 0.6. The size of the analysis matrix can be adapted using the <code>mat.size</code> argument.</p>
 <div id="simulations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#simulations" class="anchor"></a>Simulations</h3>
 <p>We used simulations to asses (A) the effect of varying the diff parameter and (B) the effect of data set size on the performance of the <code>ddmm</code> test.</p>
 <p>We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, N as <span class="math inline">\(\Gamma(\alpha = 2, \beta = 1) *500\)</span> for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using <span class="math inline">\(K \in [1,5)\)</span> truncated normal distributions with <span class="math inline">\(\mu_i \sim \mathcal{U}(0,90)\)</span> and <span class="math inline">\(\sigma \sim \mathcal{U}(0.1,5)\)</span>. We then added a bias by replacing between 0 - 80% of the samples by records with decimals sampled from <span class="math inline">\(\mathcal{U}(0, 0.599)\)</span>. We then analysed the simulated data using <code>cd_ddmm</code> using diff parameters between 0.1 and 1.</p>
-<p>Figure  shows the effect of the <code>diff</code> parameter on the sensitivity of the <code>cd_ddmm</code> test and Figure  the effect of dataset size. In general, the test is identifying the presence of a bias with rate &gt; 0.1 (10% bias) well, for datasets with more than 100 individual occurrence records. However, for empirical data we recommend a more conservative <code>diff</code> threshold of 0.5-1 to identify datasets with more than 30% bias. This is because smaller bias rates might be caused by irregular sampling rather than conversion errors. However, the advisable diff threshold depends on downstream analyses and higher <code>diff</code> values might be necessary (Fig. ). We suggest to manually check the decimal distribution in flagged datasets to avoid data loss. This can be done easily by visually inspecting the analyses matrix, by setting the <code>diagnostic</code> argument of <code>cd_ddmm</code> to TRUE.</p>
-<div class="figure">
-<img src="Background_dataset_level_cleaning_files/figure-html/fig7-1.png" alt="\label{fig:ddmm_diff}The effect of the `diff` parameter on the `cd_ddmm` test. The sensitivity of the test decreases with higher `diff` values, meaning that a higher  fraction of records with erroneous coordinate is tolerated. The error fraction in data set is the fraction of records subject to conversion error." width="700"><p class="caption">
-The effect of the <code>diff</code> parameter on the <code>cd_ddmm</code> test. The sensitivity of the test decreases with higher <code>diff</code> values, meaning that a higher fraction of records with erroneous coordinate is tolerated. The error fraction in data set is the fraction of records subject to conversion error.
-</p>
-</div>
-<div class="figure">
-<img src="Background_dataset_level_cleaning_files/figure-html/fig8-1.png" alt="\label{fig:dataset_size}The effect of dataset size on the `cd_ddmm` test. Datasets with less than 100 records are flagged poorly." width="700"><p class="caption">
-The effect of dataset size on the <code>cd_ddmm</code> test. Datasets with less than 100 records are flagged poorly.
-</p>
-</div>
+<p><a href="#fig_ddmm_diff">Figure 2</a> shows the effect of the <code>diff</code> parameter on the sensitivity of the <code>cd_ddmm</code> test and <a href="#fig_dataset_size">Figure 3</a> the effect of dataset size. In general, the test is identifying the presence of a bias with rate &gt; 0.1 (10% bias) well, for datasets with more than 100 individual occurrence records. However, for empirical data we recommend a more conservative <code>diff</code> threshold of 0.5-1 to identify datasets with more than 30% bias. This is because smaller bias rates might be caused by irregular sampling rather than conversion errors. However, the advisable diff threshold depends on downstream analyses and higher <code>diff</code> values might be necessary (<a href="#fig_ddmm_diff">Figure 2</a>). We suggest to manually check the decimal distribution in flagged datasets to avoid data loss. This can be done easily by visually inspecting the analyses matrix, by setting the <code>diagnostic</code> argument of <code>cd_ddmm</code> to TRUE.</p>
+<figure><a name="fig_ddmm_diff"></a><img src="Background_dataset_level_cleaning_files/figure-html/fig7-1.png"><figcaption></figcaption></figure><figure><a name="fig_dataset_size"></a><img src="Background_dataset_level_cleaning_files/figure-html/fig8-1.png"><figcaption></figcaption></figure>
 </div>
 </div>
 <div id="expected-failure-rate" class="section level2">
@@ -215,17 +201,15 @@ dat &lt;-<span class="st"> </span><span class="kw">rbind</span>(clean, biased)
 <span class="co"># with diagnostic plots and small matrix due to small dataset size and for visualization</span>
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>(<span class="dt">x =</span> dat, <span class="dt">diagnostic =</span> <span class="ot">TRUE</span>, <span class="dt">value =</span> <span class="st">"dataset"</span>, <span class="dt">mat_size =</span> <span class="dv">100</span>)</code></pre></div>
-<p><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<pre><code>##        binomial.pvalue perc.difference  pass
-## clean           0.5217           0.005  TRUE
+<figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-3-1.png"><figcaption></figcaption></figure><pre><code>##        binomial.pvalue perc.difference  pass
+## clean           0.8167          -0.109  TRUE
 ## biased          0.0000           1.873 FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#inspect geographic extent of the flagged dataset to exclude island or patchy habitat</span>
 <span class="kw">min</span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 0.002012559</code></pre>
+<pre><code>## [1] 1.222584</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 179.5245</code></pre>
+<pre><code>## [1] 178.484</code></pre>
 <p>The diagnostic plots clearly show the biased distribution of decimals in the biased dataset and the large geographic extent excludes islands or patchy habitats as cause of this distribution.</p>
-
 </div>
 </div>
 <div id="low-coordinate-precision-due-to-rasterized-sampling-or-decimal-rounding-cd_round" class="section level1">
@@ -242,29 +226,20 @@ dat &lt;-<span class="st"> </span><span class="kw">rbind</span>(clean, biased)
 <p>The sensitivity of the algorithms presented in the main text test can be customized based on the raster regularity and the fraction of biased records in a dataset (<code>T1</code>), the geographic extent of the raster(<code>reg.dist.min</code> and <code>reg.dist.max</code>) and the number of raster nodes (<code>reg.out.thresh</code>).</p>
 <pre><code>## Testing for rasterized collection
 ## Testing for rasterized collection</code></pre>
-<div class="figure">
-<img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-3-1.png" alt="\label{fig:patternCoordinates}The diagnostic plots retrived from `cd_round` for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset." width="700"><p class="caption">
-The diagnostic plots retrived from <code>cd_round</code> for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset.
-</p>
-</div>
+<figure><a name="fig_patternCoordinates"></a><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-4-1.png"><figcaption></figcaption></figure>
 </div>
 <div id="simulations-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simulations-1" class="anchor"></a>Simulations</h2>
-<p>We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, <span class="math inline">\(N \sim \Gamma(\alpha = 2, \beta = 1) *500\)</span> for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using <span class="math inline">\(K \in [1,5)\)</span> truncated normal distributions with <span class="math inline">\(\mu_i \sim \mathcal{U}(0,90)\)</span> and <span class="math inline">\(\sigma \sim \mathcal{U}(0.1,5)\)</span>. We then added a fraction <span class="math inline">\(\rho\)</span> of biased records, where <span class="math inline">\(\rho \in[0,0.6]\)</span> (=0-60%). We assumed a rasterized bias with five nodes (i.e. a raster with five rows and five columns). We first sampled a random coordinate as origin for the raster and then sampled the four remaining nodes at a resolution <span class="math inline">\(\tau \in [0.1, 2]\)</span>. We then analysed the simulated data using the <code>cd_round</code> function with <code>T1</code> parameters between 3 and 13. Figure  shows the effect of the <code>T1</code> parameter on the sensitivity of the <code>ds_ddmm</code> test.</p>
-<div class="figure">
-<img src="Background_dataset_level_cleaning_files/figure-html/fig10-1.png" alt="\label{fig:clustering_t7_results}The effect of the `T1` parameter on the sensitivity of the `ds_round` test." width="700"><p class="caption">
-The effect of the <code>T1</code> parameter on the sensitivity of the <code>ds_round</code> test.
-</p>
-</div>
+<p>We simulated 100,000 datasets of species occurrences with varying number of records and degree of sample clustering. For each iteration we first draw a random number, <span class="math inline">\(N \sim \Gamma(\alpha = 2, \beta = 1) *500\)</span> for the number of records. We the simulated N latitude and longitude coordinates between 0° an 90° using <span class="math inline">\(K \in [1,5)\)</span> truncated normal distributions with <span class="math inline">\(\mu_i \sim \mathcal{U}(0,90)\)</span> and <span class="math inline">\(\sigma \sim \mathcal{U}(0.1,5)\)</span>. We then added a fraction <span class="math inline">\(\rho\)</span> of biased records, where <span class="math inline">\(\rho \in[0,0.6]\)</span> (=0-60%). We assumed a rasterized bias with five nodes (i.e. a raster with five rows and five columns). We first sampled a random coordinate as origin for the raster and then sampled the four remaining nodes at a resolution <span class="math inline">\(\tau \in [0.1, 2]\)</span>. We then analysed the simulated data using the <code>cd_round</code> function with <code>T1</code> parameters between 3 and 13. <a href="#fig_clustering_t7_results">Figure 5</a> shows the effect of the <code>T1</code> parameter on the sensitivity of the <code>ds_ddmm</code> test.</p>
+<figure><a name="fig_clustering_t7_results"></a><img src="Background_dataset_level_cleaning_files/figure-html/fig10-1.png"><figcaption></figcaption></figure>
 </div>
 <div id="a-practical-example-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-practical-example-1" class="anchor"></a>A practical example</h2>
 <p>The follwoing example illustrates the use of <code>cd_round</code>.</p>
-<p><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<pre><code>##        n.outliers n.regular.outliers regular.distance  flag
-## biased          6                  4                1 FALSE
+<figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-5-1.png"><figcaption></figcaption></figure><pre><code>##        n.outliers n.regular.outliers regular.distance  flag
+## biased          3                  2                1 FALSE
 ## clean           0                  0               NA  TRUE</code></pre>
 <p>If <code>value = "dataset"</code> the output of cd_round is a table indicating the number of regualr outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.</p>
 </div>
