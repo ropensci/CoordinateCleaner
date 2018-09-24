@@ -2,25 +2,28 @@
 % Please edit documentation in R/cc_urb.R
 \name{cc_urb}
 \alias{cc_urb}
-\title{Flag Records Inside Urban Areas}
+\title{Identify Records Inside Urban Areas}
 \usage{
 cc_urb(x, lon = "decimallongitude", lat = "decimallatitude",
   ref = NULL, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer
-with the urban areas. See details.}
+with the urban areas. See details. By default 
+rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas').
+Can be any \code{SpatialPolygonsDataframe}, but the structure must be
+identical to \code{rnaturalearth::ne_download()}.}
 
-\item{value}{a character string. Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -29,18 +32,13 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records from inside urban areas, based on a geographic gazetteer.
+Removes or flags records from inside urban areas, based on a geographic gazetteer.
 Often records from large databases span substantial time periods (centuries)
 and old records might represent habitats which today are replaced by city
 area.
-}
-\details{
-By default rnaturalearth::ne_download will be used to download reference data, if no reference is provided by the user.
-User-provided references can be any \code{SpatialPolygonsDataframe}, but the structure must be
-identical to \code{rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')}.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

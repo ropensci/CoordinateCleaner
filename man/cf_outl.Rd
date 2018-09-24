@@ -2,7 +2,7 @@
 % Please edit documentation in R/cf_outl.R
 \name{cf_outl}
 \alias{cf_outl}
-\title{Flag Fossil Outlier Records in Space and Time}
+\title{Identify Outlier Records in Space and Time}
 \usage{
 cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
@@ -11,26 +11,27 @@ cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
+To identify unique records if \code{uniq_loc  = TRUE}.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
-Default = \dQuote{decimallatitude}.}
+\item{lat}{character string. The column with the longitude coordinates.
+Default = \dQuote{decimallatitude}. To identify unique records if \code{uniq_loc  = T}.}
 
-\item{min_age}{a character string. The column with the minimum age. Default
+\item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
 
-\item{max_age}{a character string. The column with the maximum age. Default
+\item{max_age}{character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
-\item{taxon}{a character string. The column with the taxon name. If
+\item{taxon}{character string. The column with the taxon name. If
 \dQuote{}, searches for outliers over the entire dataset, otherwise per
 specified taxon. Default = \dQuote{accepted_name}.}
 
-\item{method}{a character string.  Defining the method for outlier
+\item{method}{character string.  Defining the method for outlier
 selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default
 = \dQuote{quantile}.}
 
@@ -44,14 +45,14 @@ dataset to be tested. Default = 10.}
 \item{replicates}{numeric. The number of replications for the distance
 matrix calculation. See details.  Default = 5.}
 
-\item{flag_thresh}{numeric.  The fraction of replicates necessary to flag a
-record. See details. Default = 0.5.}
+\item{flag_thresh}{numeric.  The fraction of passed replicates necessary to pass the test. 
+See details. Default = 0.5.}
 
 \item{uniq_loc}{logical.  If TRUE only single records per location and time
 point (and taxon if \code{taxon} != "") are used for the outlier testing.
 Default = T.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -60,10 +61,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records of fossils that are spatio-temporal outliers based on
+Removes or flags records of fossils that are spatio-temporal outliers based on
 interquantile ranges. Records are flagged if they are either extreme in time
 or space, or both.
 }
@@ -76,7 +77,7 @@ between the minimum and maximum age for each record. The mean distance for
 each point to all neighbours is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
-$x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
+\eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than \sQuote{flag.thres}
 replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}

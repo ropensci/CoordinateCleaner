@@ -2,22 +2,22 @@
 % Please edit documentation in R/cc_iucn.R
 \name{cc_iucn}
 \alias{cc_iucn}
-\title{Flag Records Outside Natural Ranges}
+\title{Identify Records Outside Natural Ranges}
 \usage{
 cc_iucn(x, range, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", buffer = 0, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
 \item{range}{a SpatialPolygonsDataFrame of natural ranges for species in x. 
 Must contain a column named as indicated by \code{species}. See details.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. The column with the species name. 
@@ -27,7 +27,7 @@ Default = \dQuote{species}.}
 from where records should be flagged as problematic, in decimal
 degrees. Default = 0.}
 
-\item{value}{a character string. Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -36,10 +36,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records outside of the provided natural range polygon, on a per species basis. 
+Removes or flags records outside of the provided natural range polygon, on a per species basis. 
 Expects one entry per species. See the example or 
 \url{http://www.iucnredlist.org/technical-documents/spatial-data} for 
 the required polygon structure.
@@ -52,7 +52,8 @@ Note: the buffer radius is in degrees, thus will differ slightly between
 different latitudes.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner} for more
+See \url{https://azizka.github.io/CoordinateCleaner/} for more
+details and tutorials.
 }
 \examples{
 require(sp)

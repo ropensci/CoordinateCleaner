@@ -58,7 +58,7 @@ You can then run the default `cc_outl` test.
 flags <- clean_coordinates(x = lnx, tests = c("capitals",
   "centroids", "equal", "gbif", "institutions","seas","zeros"))
 
-lnx <- lnx[flags$summary,]
+lnx <- lnx[flags$.summary,]
 
 # Default outlier detection
 outl <- cc_outl(lnx, value = "flagged")
@@ -140,7 +140,7 @@ squ <- rgbif::occ_search(scientificName = "Lynx lynx", limit = 200000,
 flags <- clean_coordinates(x = squ, tests = c("capitals",
   "centroids", "equal", "gbif", "institutions","seas","zeros"))
 
-squ <- squ[flags$summary,]
+squ <- squ[flags$.summary,]
 
 # Default outlier detection
 outl <- cc_outl(squ, value = "flagged")
@@ -158,7 +158,7 @@ ggplot()+
   theme(legend.position = "bottom")
 ```
 
-The default test flagged `r sum(!flags$summary)` of `r nrow(squ)` records. A comparison with the natural range shows that all erroneous records in the Americas and South Africa where identified correctly. Unfortunately the strong sampling bias towards Europe has also let to a flagging of potentially correct East Asian records. We will again use the sampling thresh argument to address this and avoid the false flagging of records in Eastern Asia.
+The default test flagged `r sum(!flags$.summary)` of `r nrow(squ)` records. A comparison with the natural range shows that all erroneous records in the Americas and South Africa where identified correctly. Unfortunately the strong sampling bias towards Europe has also let to a flagging of potentially correct East Asian records. We will again use the sampling thresh argument to address this and avoid the false flagging of records in Eastern Asia.
 
 ```{r, warning = F, message = F, collapse = T}
 # Run outlier test

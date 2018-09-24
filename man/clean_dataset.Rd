@@ -3,20 +3,20 @@
 \name{clean_dataset}
 \alias{clean_dataset}
 \alias{CleanCoordinatesDS}
-\title{Geographic Coordinate Cleaning based on Dataset Properties}
+\title{Coordinate Cleaning using Dataset Properties}
 \usage{
 clean_dataset(x, lon = "decimallongitude", lat = "decimallatitude",
   ds = "dataset", tests = c("ddmm", "periodicity"),
   value = "dataset", verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
@@ -36,16 +36,21 @@ of records flagged.}
 \code{\link{cd_round}} to customize test sensitivity.}
 }
 \value{
-Depending on the \sQuote{value} argument, either a summary per
-dataset \code{dataset}, a data.frame (\dQuote{clean}) containing the records considered
-correct by the test or a logical vector (\dQuote{flagged}), with TRUE = test
-passed and FALSE = test failed/potentially problematic .
-Default = \dQuote{clean}. If \dQuote{dataset}: \code{data.frame} with one
-row for each dataset in \code{x}.
+Depending on the \sQuote{value} argument:
+\describe{
+\item{\dQuote{dataset}}{a \code{data.frame} with the
+the test summary statistics for each dataset in \code{x}}
+\item{\dQuote{clean}}{a \code{data.frame} containing only
+records from datatsets in \code{x} that passed the tests}
+\item{\dQuote{flagged}}{a logical vector of the same length as
+rows in \code{x}, with TRUE = test passed and
+FALSE = test failed/potentially problematic.}
+}
 }
 \description{
-Identifies potentially problematic coordinates based on dataset properties.
-Includes test to flag potential errors with converting ddmm to dd.dd, and
+Tests for problems associated with coordinate conversions and rounding,
+based on dataset properties. Includes test to identify contributing datasets with
+potential errors with converting ddmm to dd.dd, and
 periodicity in the data decimals indicating rounding or a raster basis
 linked to low coordinate precision. Specifically:
 \itemize{
@@ -69,7 +74,7 @@ degrees. The function uses a binomial test to check if more records than
 expected have decimals below 0.6 (which is the maximum that can be obtained
 in minutes, as one degree has 60 minutes) and if the number of these records
 is higher than those above 0.59 by a certain proportion. The periodicity
-test uses rate estimation in a poisson process to estimate if there is
+test uses rate estimation in a Poisson process to estimate if there is
 periodicity in the decimals of a dataset (as would be expected by for
 example rounding or data that was collected in a raster format) and if there
 is an over proportional number of records with the decimal 0 (full degrees)

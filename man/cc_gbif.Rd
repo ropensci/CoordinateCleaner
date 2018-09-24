@@ -2,7 +2,7 @@
 % Please edit documentation in R/cc_gbif.R
 \name{cc_gbif}
 \alias{cc_gbif}
-\title{Flag Records Assigned to GBIF Headquarters}
+\title{Identify Records Assigned to GBIF Headquarters}
 \usage{
 cc_gbif(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", buffer = 1000, geod = TRUE, verify = FALSE,
@@ -24,13 +24,12 @@ required if verify = TRUE.}
 \item{buffer}{numerical. The buffer around the GBIF headquarters,
 where records should be flagged as problematic. Units depend on geod. Default = 100 m.}
 
-\item{geod}{logical. If TRUE the radius around each centroid is calculated
-based on a sphere, buffer is in meters and independent of latitude. If FALSE
-the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = T.}
+\item{geod}{logical. If TRUE the radius is calculated
+based on a sphere, buffer is in meters. If FALSE
+the radius is calculated in degrees. Default = T.}
 
-\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
-with identical coordinates closed to the GBIF headquarters. 
+\item{verify}{logical. If TRUE records are only flagged if they are the
+only record in a given species flagged close to a given reference.
 If FALSE, the distance is the only criterion}
 
 \item{value}{character string.  Defining the output value. See value.}
@@ -42,10 +41,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records within 0.5 degree radius around the GBIF headquarters in
+Removes or flags records within 0.5 degree radius around the GBIF headquarters in
 Copenhagen, DK.
 }
 \details{

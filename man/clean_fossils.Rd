@@ -16,26 +16,26 @@ clean_fossils(x, lon = "lng", lat = "lat", min_age = "min_ma",
   value = "spatialvalid", verbose = TRUE, report = FALSE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing fossil records, conaining taxon names, ages,
+and geographic coordinates..}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{min_age}{a character string. The column with the minimum age. Default
+\item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
 
-\item{max_age}{a character string. The column with the maximum age. Default
+\item{max_age}{character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
-\item{taxon}{a character string. The column with the taxon name. If
+\item{taxon}{character string. The column with the taxon name. If
 \dQuote{}, searches for outliers over the entire dataset, otherwise per
 specified taxon. Default = \dQuote{accepted_name}.}
 
-\item{tests}{a vector of character strings, indicating which tests to run.
+\item{tests}{vector of character strings, indicating which tests to run.
 See details for all tests available. Default = c("centroids",
 "equal", "gbif", "institutions", "temprange", "spatiotemp", "agesequal", "zeros")}
 
@@ -43,8 +43,8 @@ See details for all tests available. Default = c("centroids",
 x, with country information for each record in ISO3 format.  If missing, the
 countries test is skipped.}
 
-\item{centroids_rad}{numeric. The side length of the rectangle around
-country centroids in degrees. Default = 0.01.}
+\item{centroids_rad}{numeric. The radius around capital coordinates in
+meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to
 \sQuote{country} only country (adm-0) centroids are tested, if set to
@@ -69,15 +69,15 @@ distance matrix calculation. See details.  Default = 5.}
 \item{zeros_rad}{numeric. The radius around 0/0 in degrees. Default = 0.5.}
 
 \item{centroids_ref}{a \code{data.frame} with alternative reference data for
-the centroid test. If missing, the \code{countryref} dataset is used.
+the centroid test. If NULL, the \code{countryref} dataset is used.
 Alternatives must be identical in structure.}
 
 \item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative
-reference for the countries test. If missing, the
+reference for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium')} dataset is used.}
 
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
-biodiversity institution test. If missing, the \code{institutions} dataset
+biodiversity institution test. If NULL, the \code{institutions} dataset
 is used.  Alternatives must be identical in structure.}
 
 \item{value}{a character string defining the output value. See the value
@@ -85,23 +85,26 @@ section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
 \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
-of records flagged}
+of records flagged.}
 
 \item{report}{logical or character.  If TRUE a report file is written to the
 working directory, summarizing the cleaning results. If a character, the
 path to which the file should be written.  Default = FALSE.}
 }
 \value{
-Depending on the output argument: \describe{
-\item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
-column for each test. TRUE = clean coordinate, FALSE = potentially
-problematic coordinates.  The summary column is FALSE if any test flagged
-the respective coordinate.} \item{list("flagged")}{a logical vector with the
+Depending on the output argument:
+\describe{
+\item{\dQuote{spatialvalid}}{an object of class \code{spatialvalid} similar to x
+with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
+problematic coordinate entries.  The .summary column is FALSE if any test flagged
+the respective coordinate.}
+\item{\dQuote{flagged}}{a logical vector with the
 same order as the input data summarizing the results of all test. TRUE =
 clean coordinate, FALSE = potentially problematic (= at least one test
-failed).} \item{list("cleaned")}{a \code{data.frame} of cleaned coordinates
-if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and
-species ID otherwise} }
+failed).}
+\item{\dQuote{clean}}{a \code{data.frame} similar to x
+with potentially problematic records removed}
+}
 }
 \description{
 Cleaning records by multiple empirical tests to flag potentially erroneous
@@ -136,7 +139,7 @@ between the minimum and maximum age for each record. The mean distance for
 each point to all neighbours is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
-$x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
+\eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than \sQuote{flag_thresh}
 replicates. Only datasets/taxa comprising more than \sQuote{size.thresh}

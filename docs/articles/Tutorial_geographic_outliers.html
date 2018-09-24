@@ -136,7 +136,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
 
-lnx &lt;-<span class="st"> </span>lnx[flags<span class="op">$</span>summary,]
+lnx &lt;-<span class="st"> </span>lnx[flags<span class="op">$</span>.summary,]
 
 <span class="co"># Default outlier detection</span>
 outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>)
@@ -216,7 +216,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
 
-squ &lt;-<span class="st"> </span>squ[flags<span class="op">$</span>summary,]
+squ &lt;-<span class="st"> </span>squ[flags<span class="op">$</span>.summary,]
 
 <span class="co"># Default outlier detection</span>
 outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(squ, <span class="dt">value =</span> <span class="st">"flagged"</span>)

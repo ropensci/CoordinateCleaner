@@ -1,47 +1,25 @@
-#' Flag Coordinates in Vicinity of Country and Province Centroids
+#' Identify Coordinates in Vicinity of Country and Province Centroids
 #' 
-#' Flags records within a radius around the geographic centroids of political
+#' Removes or flags records within a radius around the geographic centroids of political
 #' countries and provinces. Poorly geo-referenced occurrence records in
 #' biological databases are often erroneously geo-referenced to centroids.
 #' 
-#' Note: the buffer radius is in degrees, thus will differ slightly between
-#' different latitudes.
-#' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param species character string. The column with the species identity. Only
-#' required if verify = TRUE.
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic. Units depend on geod.  
 #' Default = 1 kilometer.
-#' @param geod logical. If TRUE the radius around each centroid is calculated
-#' based on a sphere, buffer is in meters and independent of latitude. If FALSE
-#' the radius is calculated assuming planar coordinates and varies slightly with latitude,
-#' in this case buffer is in degrees. Default = T.
 #' @param test a character string. Specifying the details of the test. One of
 #' c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 #' country and province centroids.
-#' @param ref a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
-#' be any SpatialPointsDataFrame, but the structure must be identical to
-#' \code{\link{countryref}}.  Default = \code{\link{countryref}}
-#' @param verify logical. If TRUE records are only flagged if the dataset contains multiple records
-#' with identical coordinates closed to the GBIF headquarters. 
-#' If FALSE, the distance is the only criterion
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -166,12 +144,16 @@ cc_cen <- function(x,
     tester <- tester[order(tester$ord),]
     tester[is.na(tester)] <- 0
     
-    #only falg those records that occure with only one ccordinate in the buffer
+    #only flag those records that occure with only one coordinate in the buffer
     out <-  tester$coord.count <= tester$species.count| out
   }
   # create output based on value argument
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

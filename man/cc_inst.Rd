@@ -2,7 +2,7 @@
 % Please edit documentation in R/cc_inst.R
 \name{cc_inst}
 \alias{cc_inst}
-\title{Flag Records in the Vicinity of Biodiversity Institutions}
+\title{Identify Records in the Vicinity of Biodiversity Institutions}
 \usage{
 cc_inst(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", buffer = 100, geod = TRUE, ref = NULL,
@@ -10,7 +10,7 @@ cc_inst(x, lon = "decimallongitude", lat = "decimallatitude",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
@@ -22,14 +22,14 @@ Default = \dQuote{decimallatitude}.}
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
 
-\item{buffer}{numerical. The buffer around each province or country
-centroid, where records should be flagged as problematic, in decimal
+\item{buffer}{numerical. The buffer around each institution,
+where records should be flagged as problematic, in decimal
 degrees.  Default = 100m.}
 
-\item{geod}{logical. If TRUE the radius around each institution is calculated
+\item{geod}{logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = TRUE.}
+in this case buffer is in degrees. Default = T.}
 
 \item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 be any SpatialPointsDataFrame, but the structure must be identical to
@@ -52,10 +52,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flag records assigned to the location of zoos, botanical gardens, herbaria,
+Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
 universities and museums, based on a global database of ~10,000 such
 biodiversity institutions. Coordinates from these locations can be related
 to data-entry errors, false automated geo-reference or individuals in

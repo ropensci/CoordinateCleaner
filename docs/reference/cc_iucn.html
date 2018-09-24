@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Records Outside Natural Ranges — cc_iucn • CoordinateCleaner</title>
+<title>Identify Records Outside Natural Ranges — cc_iucn • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Records Outside Natural Ranges — cc_iucn" />
+<meta property="og:title" content="Identify Records Outside Natural Ranges — cc_iucn" />
 
-<meta property="og:description" content="Flags records outside of the provided natural range polygon, on a per species basis. 
+<meta property="og:description" content="Removes or flags records outside of the provided natural range polygon, on a per species basis. 
 Expects one entry per species. See the example or 
 http://www.iucnredlist.org/technical-documents/spatial-data for 
 the required polygon structure." />
@@ -134,14 +134,14 @@ the required polygon structure." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Records Outside Natural Ranges</h1>
+    <h1>Identify Records Outside Natural Ranges</h1>
     
     <div class="hidden name"><code>cc_iucn.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags records outside of the provided natural range polygon, on a per species basis. 
+    <p>Removes or flags records outside of the provided natural range polygon, on a per species basis. 
 Expects one entry per species. See the example or 
 <a href='http://www.iucnredlist.org/technical-documents/spatial-data'>http://www.iucnredlist.org/technical-documents/spatial-data</a> for 
 the required polygon structure.</p>
@@ -156,7 +156,7 @@ the required polygon structure.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
@@ -166,12 +166,12 @@ Must contain a column named as indicated by <code>species</code>. See details.</
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -187,7 +187,7 @@ degrees. Default = 0.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string. Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -201,7 +201,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -213,7 +213,8 @@ different latitudes.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>See <a href='https://azizka.github.io/CoordinateCleaner'>https://azizka.github.io/CoordinateCleaner</a> for more</p>
+    <p>See <a href='https://azizka.github.io/CoordinateCleaner/'>https://azizka.github.io/CoordinateCleaner/</a> for more
+details and tutorials.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -242,7 +243,7 @@ different latitudes.</p>
 
 <span class='fu'>cc_iucn</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='no'>range</span>, <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Testing natural ranges</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no projection information for reference found, </span>
 #&gt; <span class='warning'>              assuming '+proj=longlat +datum=WGS84 </span>
-#&gt; <span class='warning'>              +no_defs +ellps=WGS84 +towgs84=0,0,0'</span></div><div class='output co'>#&gt; <span class='message'>Flagged 98 records.</span></div><div class='output co'>#&gt;    species decimallongitude decimallatitude
+#&gt; <span class='warning'>              +no_defs +ellps=WGS84 +towgs84=0,0,0'</span></div><div class='output co'>#&gt; <span class='message'>Removed 98 records.</span></div><div class='output co'>#&gt;    species decimallongitude decimallatitude
 #&gt; 12       B         22.91815        13.48934
 #&gt; 93       A        -58.38912       -34.00688</div><div class='input'>
 </div></pre>

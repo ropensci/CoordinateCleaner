@@ -2,9 +2,10 @@
 [![Build Status](https://travis-ci.com/azizka/CoordinateCleaner.svg?branch=master)](https://travis-ci.com/azizka/CoordinateCleaner)
 [![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
+[![downloads](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 
-***Note: the latest release of CoordinateCleaner (2.0-2), mightis incompatible with scripts using older versions (1.x), since some function and argument names changed. Please see the news file for details.***
+***Note: the latest release of CoordinateCleaner (2.0-2), mightis incompatible with scripts using older versions (1.x), since function and argument names changed. Please see the news file for details.***
 
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for

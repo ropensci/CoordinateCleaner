@@ -86,7 +86,7 @@ ggplot()+ coord_fixed()+ wm +
 
 This map clearly indicates, that we need to prepare the data further, if we want them to represent the current day (or historic) distribution of lions.
 
-## Use \emph{CoordinateCleaner} to automatically flag problematic records
+## Use *CoordinateCleaner* to automatically flag problematic records
 
 ### Option A) Using the `clean_coordinates` wrapper function
 As a first step we will run the automatic cleaning algorithm of CoordinateCleaner. The `clean_coordinates` function is a wrapper around a large set of automated cleaning steps to flag errors that are common to biological collections, including: sea coordinates, zero coordinates, coordinate - country mismatches, coordinates assigned to country and province centroids, coordinates within city areas, outlier coordinates and coordinates assigned to biodiversity institutions. You can switch on each test individually using logical flags, modify the sensitivity of most individual tests using the ".rad" arguments, and provide custom gazetteers using the ".ref" arguments. See `?clean_coordinates` for help. To use the country - coordinate mismatch test we need to convert the country from ISO2 to ISO3 format.
@@ -103,17 +103,17 @@ flags <- clean_coordinates(x = dat, lon = "decimalLongitude", lat = "decimalLati
                           tests = c("capitals", "centroids", "equal","gbif", "institutions",
                                     "zeros", "countries")) # most test are on by default
 summary(flags)
-plot(flags)
+plot(flags, lon = "decimalLongitude", lat = "decimalLatitude")
 ```
 
-The automatic test flagged `r round(sum(!flags$summary) / nrow(dat) * 100, 1)`% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.
+The automatic test flagged `r round(sum(!flags$.summary) / nrow(dat) * 100, 1)`% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.
 
 ```{r, eval = TRUE}
 #Exclude problematic records
-dat_cl <- dat[flags$summary,]
+dat_cl <- dat[flags$.summary,]
 
 #THe flagged records
-dat_fl <- dat[!flags$summary,]
+dat_fl <- dat[!flags$.summary,]
 ```
 
 ### Option B) Using the magrittr pipe (%>%)
@@ -137,10 +137,19 @@ clean <- dat%>%
   cc_dupl()
 ```
 
+In this way, you can also add the individual test results as columns to your intial data.frame:
+
+```{r, eval = FALSE}
+dat %>%
+    as_tibble() %>% 
+    mutate(val = cc_val(., value = "flagged"),
+           sea = cc_sea(., value = "flagged"))
+```
+
 ### Temporal outliers
 While the `cc_outl` function identifies geographic outliers, record in GBIF migh also have doubtfull temporal information, i.e. for the time of collection, which can be problematic for example for analuses of range dynamics. The `cf_age` function used for fossil cleaning can also be used to check GBIF records for temporal outliers.
 
-```{r, r, eval = TRUE, collapse = T}
+```{r, r, eval = TRUE, collapse = TRUE}
 flags <- cf_age(x = dat_cl,
                 lon = "decimalLongitude",
                 lat = "decimalLatitude",

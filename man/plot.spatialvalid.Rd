@@ -4,12 +4,19 @@
 \alias{plot.spatialvalid}
 \title{Plot Method for Class Spatialvalid}
 \usage{
-\method{plot}{spatialvalid}(x, bgmap = NULL, clean = TRUE,
+\method{plot}{spatialvalid}(x, lon = "decimallongitude",
+  lat = "decimallatitude", bgmap = NULL, clean = TRUE,
   details = FALSE, pts_size = 1, font_size = 10, ...)
 }
 \arguments{
 \item{x}{an object of the class \code{spatialvalid} as from
 \code{\link{clean_coordinates}}.}
+
+\item{lon}{character string. The column with the longitude coordinates.
+Default = \dQuote{decimallongitude}.}
+
+\item{lat}{character string. The column with the latitude coordinates.
+Default = \dQuote{decimallatitude}.}
 
 \item{bgmap}{an object of the class \code{SpatialPolygonsDataFrame} used as
 background map. Default = ggplot::borders()}
@@ -42,9 +49,7 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
                     decimallatitude = runif(250, min = -26, max = -11))
 
 test <- clean_coordinates(exmpl, species = "species", 
-                          tests = c("capitals", "centroids", 
-                                    "equal", "gbif", "institutions", 
-                                    "seas", "zeros"),
+                          tests = c("sea", "gbif", "zeros"),
                           verbose = FALSE)
 
 summary(test)

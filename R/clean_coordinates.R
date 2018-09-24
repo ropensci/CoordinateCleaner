@@ -50,13 +50,9 @@
 #' This test is always on, since all records need to pass for any other test to run.
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
+#' 
 #' @aliases CleanCoordinates summary.spatialvalid is.spatialvalid
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
+#' 
 #' @param species a character string. A vector of the same length as rows in x,
 #' with the species identity for each record.  If missing, the outliers test is
 #' skipped.
@@ -112,28 +108,33 @@
 #' @param value a character string defining the output value. See the value
 #' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
 #' \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged
 #' @param report logical or character.  If TRUE a report file is written to the
 #' working directory, summarizing the cleaning results. If a character, the
 #' path to which the file should be written.  Default = FALSE.
+#' @inheritParams cc_cap
 #' 
-#' @return Depending on the output argument: \describe{
-#' \item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
-#' column for each test. TRUE = clean coordinate, FALSE = potentially
-#' problematic coordinates.  The summary column is FALSE if any test flagged
-#' the respective coordinate.} \item{list("flagged")}{a logical vector with the
+#' @return Depending on the output argument: 
+#' \describe{
+#' \item{\dQuote{spatialvalid}}{an object of class \code{spatialvalid} similar to x
+#' with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
+#' problematic coordinate entries.  The .summary column is FALSE if any test flagged
+#' the respective coordinate.} 
+#' \item{\dQuote{flagged}}{a logical vector with the
 #' same order as the input data summarizing the results of all test. TRUE =
 #' clean coordinate, FALSE = potentially problematic (= at least one test
-#' failed).} \item{list("clean")}{a \code{data.frame} of cleaned coordinates
-#' if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and
-#' species ID otherwise} }
+#' failed).} 
+#' \item{\dQuote{clean}}{a \code{data.frame} similar to x
+#' with potentially problematic records removed}
+#' }
+#' 
 #' @note Always tests for coordinate validity: non-numeric or missing
 #' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 #' See \url{https://azizka.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
+#' 
 #' @keywords Coordinate cleaning wrapper
 #' @family Wrapper functions
+#' 
 #' @examples
 #' 
 #' 
@@ -143,8 +144,16 @@
 #' 
 #' test <- clean_coordinates(x = exmpl, 
 #'                           tests = c("capitals", "centroids", 
-#'                                     "equal", "gbif", "institutions", 
-#'                                     "seas", "zeros"))
+#'                                     "equal", "gbif", "zeros"))
+#'                                     
+#'\dontrun{
+#' #run a selection of tests
+#' test <- clean_coordinates(x = exmpl, 
+#'                           tests = c("capitals", "seas"))
+#'
+#'
+#'}
+#'                                  
 #'                                     
 #' summary(test)
 #' 
@@ -348,11 +357,14 @@ clean_coordinates <- function(x,
     }
   }
   if (value == "spatialvalid") {
-    inp <- x[, c(species, lon, lat)]
-    names(inp) <- c("species", "decimallongitude", "decimallatitude")
 
-    out <- data.frame(inp, out, summary = suma)
-    class(out) <- c("spatialvalid", "data.frame", class(out))
+    ret <- data.frame(x, out, summary = suma)
+    names(ret) <- c(names(x),
+                    paste(".", names(out), sep = ""),
+                    ".summary")
+    
+    class(ret) <- c("spatialvalid", "data.frame", class(out))
+    out <- ret
     
     if (report) {
       report <- "clean_coordinates_report.txt"

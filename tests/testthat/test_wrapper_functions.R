@@ -16,9 +16,9 @@ exmpl <- data.frame(species = sp,
 
 test_that("clean_coordinates produces correct output", {
   t1 <- clean_coordinates(x = exmpl)
-  expect_equal(ncol(t1), 13)
+  expect_equal(ncol(t1), 14)
   expect_equal(nrow(t1), 250)
-  expect_equal(sum(t1$summary), 184)
+  expect_equal(sum(t1$.summary), 184)
   
   expect_is(plot(t1), "gg")
   expect_is(plot(t1, clean = FALSE), "gg")
@@ -35,12 +35,12 @@ test_that("clean_coordinates countries argument produces correct output", {
   #skip_on_cran()
   expect_equal(sum(
     clean_coordinates(x = exmpl, countries = "ISO3", 
-                      tests = c("countries", "seas"))$summary), 0)
+                      tests = c("countries", "seas"))$.summary), 0)
 })
 
 
 test_that("CleanCoordinates work", {
-  expect_equal(sum(CleanCoordinates(exmpl)$summary), 185)
+  expect_equal(sum(CleanCoordinates(exmpl)$.summary), 185)
 })
 
 #Dataset level cleaning
@@ -99,7 +99,7 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 
 test_that("fossil wrapper cleaning works", {
   expect_is(clean_fossils(exmpl), "spatialvalid")
-  expect_equal(sum(clean_fossils(exmpl)$summary), 249)
+  expect_equal(sum(clean_fossils(exmpl)$.summary), 249)
 })
 
 # test_that("CleanCoordinatesFOS work", {

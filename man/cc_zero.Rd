@@ -2,26 +2,26 @@
 % Please edit documentation in R/cc_zero.R
 \name{cc_zero}
 \alias{cc_zero}
-\title{Flag Zero Coordinates}
+\title{Identify Zero Coordinates}
 \usage{
 cc_zero(x, lon = "decimallongitude", lat = "decimallatitude",
   buffer = 0.5, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{buffer}{numerical. The buffer around each province or country
-centroid, where records should be flagged as problematic, in decimal
+\item{buffer}{numerical. The buffer around the 0/0 point,
+where records should be flagged as problematic, in decimal
 degrees.  Default = 0.1.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -30,10 +30,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records with either zero longitude or latitude and a radius around the
+Removes or flags records with either zero longitude or latitude and a radius around the
 point at zero longitude and zero latitude. These problems are often due to
 erroneous data-entry or geo-referencing and can lead to typical patterns of
 high diversity around the equator.

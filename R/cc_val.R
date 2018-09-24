@@ -1,29 +1,21 @@
-#' Check Coordinate Validity in lat/lon
+#' Identify Invalid lat/lon Coordinates
 #' 
-#' Checks if all coordinates in a data set are valid in a latitude/longitude
-#' coordinate reference system. That is non-numeric, not available coordinates
-#' and lat >90, la <-90, lon > 180 and lon < -180 are flagged.
+#' Removes or flags non-numeric and not available coordinates
+#' as well as lat >90, la <-90, lon > 180 and lon < -180 are flagged.
 #' 
 #' This test is obligatory before running any further tests of
 #' CoordinateCleaner, as additional tests only run with valid coordinates.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -62,11 +54,14 @@ cc_val <- function(x,
   out <- !Reduce("|", out)
 
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))
 
   return(out)
 }
-80

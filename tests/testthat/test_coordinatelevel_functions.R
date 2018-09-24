@@ -4,6 +4,7 @@ require(sp)
 require(rnaturalearth)
 require(dplyr)
 
+# setup test data
 set.seed(1)
 lon <- runif(250, min = 42, max = 51)
 set.seed(1)
@@ -24,15 +25,22 @@ df <- data.frame(species = c("e"), row.names = c("a"))
 range_emp <- SpatialPolygonsDataFrame(range, data = as.data.frame(df_miss))
 range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
 
+wgs84 <- '+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'
+
+# run tests
+## cc_cap
 test_that("cc_cap works", {
   expect_equal(sum(cc_cap(x = exmpl, value = "flagged")), 250)
   expect_equal(sum(cc_cap(x = exmpl, value = "flagged"), verbose = FALSE), 250)
   expect_equal(sum(cc_cap(x = exmpl, buffer = 10000000, value = "flagged")), 0)
+  expect_equal(sum(cc_cap(x = exmpl, buffer = 10000000, 
+                          value = "flagged", verify = T)), 0)
   
   expect_error(cc_cap(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
 })
 
+## cc_cen
 test_that("cc_cen works", {
   expect_equal(sum(cc_cen(x = exmpl, value = "flagged")), 250)
   expect_equal(sum(cc_cen(x = exmpl, value = "flagged"), verbose = FALSE), 250)
@@ -42,14 +50,14 @@ test_that("cc_cen works", {
                "undefined columns selected")
 })
 
-# cc_coun
+## cc_coun
 test_that("cc_coun works", {
   
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
   cust_ref2 <- cust_ref1
   proj4string(cust_ref2) <- ""
   cust_ref3 <- spTransform(cust_ref1, 
-                           CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'))
+                           CRS(wgs84))
   
   
   expect_is(cc_coun(exmpl, value = "flagged"), "logical")
@@ -65,7 +73,7 @@ test_that("cc_coun works", {
 
 })
 
-#cc_gbif
+## cc_gbif
 test_that("cc_gbif works", {
   
   t.gbif <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
@@ -80,11 +88,39 @@ test_that("cc_gbif works", {
   expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", geod = FALSE)), 250)
   
   expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", verify = T)), 252)
-  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged", verify = T, buffer = 100)), 251)
+  expect_equal(sum(cc_gbif(x = t.gbif, value = "flagged",
+                           verify = T, buffer = 100)), 251)
   
   expect_error(cc_gbif(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
 })
+
+# cc_inst
+test_that("cc_inst works", {
+  t.inst <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
+                                    decimallongitude = c(12.58, 12.585, 12.58),
+                                    decimallatitude = c(55.67, 55.676, 55.67),
+                                    countrycode = "RUS"))
+  
+  expect_is(cc_inst(t.inst, value = "flagged"), "logical")
+  expect_is(cc_inst(t.inst, value = "clean"), "data.frame")
+  
+  expect_equal(sum(cc_inst(x = t.inst, value = "flagged")), 253)
+  expect_equal(sum(cc_inst(x = t.inst, value = "flagged", geod = FALSE)), 0)
+  
+  expect_equal(sum(cc_inst(x = t.inst, value = "flagged", 
+                           geod = FALSE, buffer = 0.01)), 251)
+  
+  expect_equal(sum(cc_inst(x = t.inst, 
+                           value = "flagged", verify = T)), 253)
+  expect_equal(sum(cc_inst(x = t.inst, 
+                           value = "flagged", verify = T, 
+                           geod = FALSE, buffer = 100)), 252)
+  
+  expect_error(cc_inst(x = exmpl, lon = "longitude", value = "flagged"), 
+               "undefined columns selected")
+})
+
 
 # cc_iucn
 test_that("cc_iucn works", {
@@ -118,11 +154,14 @@ test_that("cc_outl works", {
 
 # cc_sea
 test_that("cc_sea works", {
-  cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = "small", type = 'land', category = "physical")
+  cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = 
+                                                         "small", 
+                                                       type = 'land', 
+                                                       category = "physical")
 
   proj4string(cust_ref2) <- ""
   cust_ref3 <- spTransform(cust_ref1, 
-                           CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'))
+                           CRS(wgs84))
   
   
   expect_is(cc_sea(exmpl, value = "flagged", ref = cust_ref1), "logical")
@@ -145,7 +184,9 @@ test_that("cc_sea works", {
 test_that("cc_urb works", {
   cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')
   
-  city_exmpl <- data.frame(species = letters[1:10], coordinates(sp::spsample(cust_ref, n = 200, type = "random")))
+  city_exmpl <- data.frame(species = letters[1:10], 
+                           coordinates(sp::spsample(cust_ref, n = 200, 
+                                                    type = "random")))
   names(city_exmpl) <- c("species", "decimallongitude", "decimallatitude")
   city_exmpl <- dplyr::bind_rows(exmpl, city_exmpl)
   
@@ -153,7 +194,8 @@ test_that("cc_urb works", {
   expect_is(cc_urb(city_exmpl, value = "clean"), "data.frame")
 
   expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged")), 250)
-  expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged", ref = cust_ref)), 250)
+  expect_equal(sum(cc_urb(x = city_exmpl, value = "flagged",
+                          ref = cust_ref)), 250)
 })
 
 

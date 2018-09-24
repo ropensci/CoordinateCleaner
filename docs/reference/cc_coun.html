@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Coordinates Outside their Reported Country — cc_coun • CoordinateCleaner</title>
+<title>Identify Coordinates Outside their Reported Country — cc_coun • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Coordinates Outside their Reported Country — cc_coun" />
+<meta property="og:title" content="Identify Coordinates Outside their Reported Country — cc_coun" />
 
-<meta property="og:description" content="Identifies mismatches between geographic coordinates and additional country
+<meta property="og:description" content="Removes or flags mismatches between geographic coordinates and additional country
 information (usually this information is reliably reported with specimens).
 Such a mismatch can occur for example, if latitude and longitude are
 switched." />
@@ -134,14 +134,14 @@ switched." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Coordinates Outside their Reported Country</h1>
+    <h1>Identify Coordinates Outside their Reported Country</h1>
     
     <div class="hidden name"><code>cc_coun.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Identifies mismatches between geographic coordinates and additional country
+    <p>Removes or flags mismatches between geographic coordinates and additional country
 information (usually this information is reliably reported with specimens).
 Such a mismatch can occur for example, if latitude and longitude are
 switched.</p>
@@ -157,17 +157,17 @@ switched.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
-names, and a country assignment.</p></td>
+      <td><p>data.frame. Containing geographical coordinates and species
+names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -177,13 +177,14 @@ each record in three letter ISO code. Default = &#8220;countrycode&#8221;.</p></
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>ref</th>
       <td><p>a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
 Can be any SpatialPolygonsDataFrame, but the structure must be identical to
-<code><a href='http://www.rdocumentation.org/packages/rnaturalearth/topics/ne_countries'>rnaturalearth::ne_countries(scale = "medium")</a></code>.  Default = <code><a href='http://www.rdocumentation.org/packages/rnaturalearth/topics/ne_countries'>rnaturalearth::ne_countries(scale = "medium")</a></code></p></td>
+<code><a href='http://www.rdocumentation.org/packages/rnaturalearth/topics/ne_countries'>rnaturalearth::ne_countries(scale = "medium")</a></code>.  
+Default = <code><a href='http://www.rdocumentation.org/packages/rnaturalearth/topics/ne_countries'>rnaturalearth::ne_countries(scale = "medium")</a></code></p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -197,7 +198,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

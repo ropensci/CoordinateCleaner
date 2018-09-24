@@ -1,33 +1,26 @@
-#' Flag Records Inside Urban Areas
+#' Identify Records Inside Urban Areas
 #'
-#' Flags records from inside urban areas, based on a geographic gazetteer.
+#' Removes or flags records from inside urban areas, based on a geographic gazetteer.
 #' Often records from large databases span substantial time periods (centuries)
 #' and old records might represent habitats which today are replaced by city
 #' area.
 #'
-#' By default rnaturalearth::ne_download will be used to download reference data, if no reference is provided by the user.
-#' User-provided references can be any \code{SpatialPolygonsDataframe}, but the structure must be
-#' identical to \code{rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas')}.
 #'
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer
-#' with the urban areas. See details.
-#' @param value a character string. Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' with the urban areas. See details. By default 
+#' rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas').
+#' Can be any \code{SpatialPolygonsDataframe}, but the structure must be
+#' identical to \code{rnaturalearth::ne_download()}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #'
 #' \dontrun{
@@ -105,7 +98,11 @@ cc_urb <- function(x,
   }
 
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

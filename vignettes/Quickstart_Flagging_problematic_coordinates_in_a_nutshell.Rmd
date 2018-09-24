@@ -30,7 +30,7 @@ dat <- clean_coordinates(exmpl, tests = c(""))
 ```
 
 | Test | Function | Background | Default |
-|-------|-------|-------|-------|
+|---|---|---|---|
 |capitals|radius around capitals|georeferenced from location description|on|
 |centroids|radius around country and province centroids|geo-referenced from description|on|
 |countries|coordinates in the right country |switched lon/lat, data entry errors|off|
@@ -45,25 +45,18 @@ dat <- clean_coordinates(exmpl, tests = c(""))
 |zeros|plain zeros, lat = lon|missing data, data entry errors|on|
 
 ## Custom test radii for `capitals`, `centroids` and `institutions`
-The `capitals`, `centroids` and `institutions` test use a radius around gazetteers to flag coordinates. You can change this radius for each test using the `.rad` arguments. The radius is specified in decimal degrees. This means that the actual size of the in meters will vary slightly depending on latitude. 
+The `capitals`, `centroids` and `institutions` test use a radius around gazetteers to flag coordinates. You can change this radius for each test using the `*.rad` arguments. The radius is specified in meters. If you want to specify it in degrees rather, use the individual `cc_*` functions.
 
-```{r}
-clean_coordinates(exmpl, capitals_rad = 0.1)
+```{r, collapse = T, tidy = T, message = F, warning = F, eval = F}
+clean_coordinates(exmpl, capitals_rad = 5000)
 ```
-|Test|Default radius [°]|Default radius (lat 0°/45°) [km]|
-|---|---|---|
-|capitals|0.05|5.5/4|
-|centroids|0.01|1.1/0.8|
-|gbif|1|63.0|
-|institutions|0.001|0.1/0.08|
-|zeros|0.5|55.6|
 
 ## Custom gazetteers
-You can use custom gazetteers for all `CleanCoordinates` tests, via the `.ref` arguments of the function. For example the `capitals.ref` argument controls the reference for the capitals test. Customized reference data must follow the same format as the default reference for the same test. You can check the structure of gazetteers via their documentation or by looking at the gazetteer (e.g. `head(capitals)`). For example:
+You can use custom gazetteers for all `CleanCoordinates` tests, via the `*.ref` arguments of the function. For example the `capitals.ref` argument controls the reference for the capitals test. Customized reference data must follow the same format as the default reference for the same test. You can check the structure of gazetteers via their documentation or by looking at the gazetteer (e.g. `head(capitals)`). For example:
 
-```{r, eval = F}
+```{r, eval = F, collapse = T, tidy = T, message = F, warning = F}
 #check the format of the default capitals reference
-head(countrtyref) #a data.frame with four columns: ISO3, capital, longitude, latitude
+head(countryref) #a data.frame with four columns: ISO3, capital, longitude, latitude
 
 #create new reference data set from scratch. For real analysis you 
 #probably want to load the alternative file from a .txt file
@@ -75,7 +68,7 @@ my.cap <- data.frame(ISO3 = LETTERS[1:10],
 flags <- clean_coordinates(exmpl, capitals.ref = my.cap)
 ```
 
-In this way test can be completely customized, you could for example provide a gazetteer with the locations of hardware stores (in the capitals format) if you want to flag records around hardware stores.
+In this way, you can fully customize the tests, and for example provide a gazetteer with the locations of hardware stores (in the capitals format) if you want to flag records around hardware stores.
 
 Classes of the default gazetteers of `clean_coordinates`.
 
@@ -91,9 +84,10 @@ Classes of the default gazetteers of `clean_coordinates`.
 ## Summary and visualization
 You cane easily summarize the results of `clean_coordinates` either with the `report` option or via `summary`. If `report == T` the summary is written to the working directory as a .txt file, if `report` is a character, it is the path to which the summary file will be written, Alternatively, you can get a summary of the number of records flagged with `summary`.
 
-```{r, collapse = T, tidy = T}
+```{r, collapse = T, tidy = T, message = F, warning = F}
 #via the report option
-flags <- clean_coordinates(exmpl, report = T)
+flags <- clean_coordinates(exmpl)
+#flags <- clean_coordinates(exmpl, report = T)
 
 #via summary
 summary(flags)
@@ -102,17 +96,17 @@ summary(flags)
 # Exclude flagged records
 The output of `clean_coordinates` is in the same order as the input, thus you can easily exclude flagged records.
 
-```{r, collapse = T, tidy = T}
+```{r, collapse = T, tidy = T, message = F, warning = F}
 #exclude records flagged by any test
-clean <- exmpl[, flags$sumary]
+clean <- exmpl[flags$.summary, ]
 
 #exclude records flagged by the centroids test
-clean <- exmpl[, flags$centroids]
+clean <- exmpl[flags$.cen, ]
 ```
 
 ## Individual tests using the pipe
 Alternatively, you can run the individual functions in a pipe compatible way:
-```{r, collapse = T, warning = F, message = F}
+```{r, collapse = T, tidy = T, message = F, warning = F}
 cleaned <-  exmpl%>%
   cc_val()%>%
   cc_cap()%>%
@@ -124,6 +118,15 @@ cleaned <-  exmpl%>%
   cc_outl()%>%
   cc_sea()%>%
   cc_zero()
+```
+
+In this way, you can also add the individual test results as columns to your intial data.frame:
+
+```{r, collapse = T, tidy = T, message = F, warning = F}
+exmpl %>%
+    as_tibble() %>% 
+    mutate(val = cc_val(., value = "flagged"),
+           sea = cc_sea(., value = "flagged"))
 ```
 
 

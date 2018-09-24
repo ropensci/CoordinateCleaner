@@ -2,20 +2,20 @@
 % Please edit documentation in R/cc_sea.R
 \name{cc_sea}
 \alias{cc_sea}
-\title{Flag Non-terrestrial Coordinates}
+\title{Identify Non-terrestrial Coordinates}
 \usage{
 cc_sea(x, lon = "decimallongitude", lat = "decimallatitude",
   ref = NULL, scale = 50, value = "clean", speedup = TRUE,
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
@@ -26,22 +26,22 @@ Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'phys
 \item{scale}{the scale of the default reference, as downloaded from natural earth. 
 Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 50.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{speedup}{logical. Using heuristic to speed up the analysis for large data sets
 with many records per location.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
-of records flagged. Default = TRUE.}
+of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags coordinates outside the reference landmass. Can be used to restrict
+Removes or flags coordinates outside the reference landmass. Can be used to restrict
 datasets to terrestrial taxa, or exclude records from the open ocean, when
 depending on the reference (see details). Often records of terrestrial taxa
 can be found in the open ocean, mostly due to switched latitude and

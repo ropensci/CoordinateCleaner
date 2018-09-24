@@ -2,7 +2,7 @@
 % Please edit documentation in R/cf_range.R
 \name{cf_range}
 \alias{cf_range}
-\title{Flag Fossils with Extreme Age Ranges}
+\title{Identify Fossils with Extreme Age Ranges}
 \usage{
 cf_range(x, lon = "decimallongitude", lat = "decimallatitude",
   min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
@@ -10,32 +10,33 @@ cf_range(x, lon = "decimallongitude", lat = "decimallatitude",
   uniq_loc = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
+To identify unique records if \code{uniq_loc  = TRUE}.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
-Default = \dQuote{decimallatitude}.}
+\item{lat}{character string. The column with the longitude coordinates.
+Default = \dQuote{decimallatitude}. To identify unique records if \code{uniq_loc  = T}.}
 
-\item{min_age}{a character string. The column with the minimum age. Default
+\item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
 
-\item{max_age}{a character string. The column with the maximum age. Default
+\item{max_age}{character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
-\item{taxon}{a character string. The column with the taxon name. If
+\item{taxon}{character string. The column with the taxon name. If
 \dQuote{}, searches for outliers over the entire dataset, otherwise per
 specified taxon. Default = \dQuote{accepted_name}.}
 
-\item{method}{a character string.  Defining the method for outlier
-selection.  See details. Either \dQuote{quantile} \dQuote{mad}, or
-\dQuote{time}.  Default = \dQuote{quantile}.}
+\item{method}{character string.  Defining the method for outlier
+selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default
+= \dQuote{quantile}.}
 
 \item{mltpl}{numeric. The multiplier of the interquartile range
 (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-'mad'}) to identify outliers. See details.  Default = 3.}
+'mad'}) to identify outliers. See details.  Default = 5.}
 
 \item{size_thresh}{numeric.  The minimum number of records needed for a
 dataset to be tested. Default = 10.}
@@ -47,7 +48,7 @@ and max age. Only relevant for \code{method} = \dQuote{time}.}
 point (and taxon if \code{taxon} != "") are used for the outlier testing.
 Default = T.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -56,10 +57,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags record with an unexpectedly large temporal range, based on a quantile
+Removes or flags records with an unexpectedly large temporal range, based on a quantile
 outlier test.
 }
 \note{

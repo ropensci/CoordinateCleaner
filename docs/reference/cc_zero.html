@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Zero Coordinates — cc_zero • CoordinateCleaner</title>
+<title>Identify Zero Coordinates — cc_zero • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Zero Coordinates — cc_zero" />
+<meta property="og:title" content="Identify Zero Coordinates — cc_zero" />
 
-<meta property="og:description" content="Flags records with either zero longitude or latitude and a radius around the
+<meta property="og:description" content="Removes or flags records with either zero longitude or latitude and a radius around the
 point at zero longitude and zero latitude. These problems are often due to
 erroneous data-entry or geo-referencing and can lead to typical patterns of
 high diversity around the equator." />
@@ -134,14 +134,14 @@ high diversity around the equator." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Zero Coordinates</h1>
+    <h1>Identify Zero Coordinates</h1>
     
     <div class="hidden name"><code>cc_zero.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags records with either zero longitude or latitude and a radius around the
+    <p>Removes or flags records with either zero longitude or latitude and a radius around the
 point at zero longitude and zero latitude. These problems are often due to
 erroneous data-entry or geo-referencing and can lead to typical patterns of
 high diversity around the equator.</p>
@@ -156,28 +156,28 @@ high diversity around the equator.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>buffer</th>
-      <td><p>numerical. The buffer around each province or country
-centroid, where records should be flagged as problematic, in decimal
+      <td><p>numerical. The buffer around the 0/0 point,
+where records should be flagged as problematic, in decimal
 degrees.  Default = 0.1.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -191,7 +191,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -215,7 +215,7 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>34.84</span>, <span class='fl'>0</span>, <span class='fl'>33.98</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>23.08</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>15.98</span>))
 
-<span class='fu'>cc_zero</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 3 records.</span></div><div class='output co'>#&gt;   species decimallongitude decimallatitude
+<span class='fu'>cc_zero</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Removed 3 records.</span></div><div class='output co'>#&gt;   species decimallongitude decimallatitude
 #&gt; 4       A            33.98           15.98</div><div class='input'><span class='fu'>cc_zero</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 3 records.</span></div><div class='output co'>#&gt;     1     2     3     4 
 #&gt; FALSE FALSE FALSE  TRUE </div><div class='input'>
 </div></pre>

@@ -1,35 +1,29 @@
-#' Flag Coordinates Outside their Reported Country
+#' Identify Coordinates Outside their Reported Country
 #' 
-#' Identifies mismatches between geographic coordinates and additional country
+#' Removes or flags mismatches between geographic coordinates and additional country
 #' information (usually this information is reliably reported with specimens).
 #' Such a mismatch can occur for example, if latitude and longitude are
 #' switched.
 #' 
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names, and a country assignment.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param iso3 a character string. The column with the country assignment of
 #' each record in three letter ISO code. Default = \dQuote{countrycode}.
 #' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
 #' Can be any SpatialPolygonsDataFrame, but the structure must be identical to
-#' \code{rnaturalearth::ne_countries(scale = "medium")}.  Default = \code{rnaturalearth::ne_countries(scale = "medium")}
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' \code{rnaturalearth::ne_countries(scale = "medium")}.  
+#' Default = \code{rnaturalearth::ne_countries(scale = "medium")}
+#' @inheritParams cc_cen
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note With the default reference, records are flagged if they fall 
 #' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
 #' See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' \dontrun{
@@ -88,7 +82,11 @@ cc_coun <- function(x,
 
   # return output
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

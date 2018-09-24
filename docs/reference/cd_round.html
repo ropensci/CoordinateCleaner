@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flags Datasets with Rasterized Coordinates — cd_round • CoordinateCleaner</title>
+<title>Identify Datasets with Rasterized Coordinates — cd_round • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,15 @@
 
 
 
-<meta property="og:title" content="Flags Datasets with Rasterized Coordinates — cd_round" />
+<meta property="og:title" content="Identify Datasets with Rasterized Coordinates — cd_round" />
 
 <meta property="og:description" content="Flags datasets with periodicity patterns indicative of a rasterized
 (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 combination of autocorrelation and sliding-window outlier detection to
-identify periodicity patterns in the data." />
+identify periodicity patterns in the data. See 
+https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html
+for further details and 
+a description of the algorithm" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,7 +137,7 @@ identify periodicity patterns in the data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flags Datasets with Rasterized Coordinates</h1>
+    <h1>Identify Datasets with Rasterized Coordinates</h1>
     
     <div class="hidden name"><code>cd_round.Rd</code></div>
     </div>
@@ -144,7 +147,10 @@ identify periodicity patterns in the data." />
     <p>Flags datasets with periodicity patterns indicative of a rasterized
 (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 combination of autocorrelation and sliding-window outlier detection to
-identify periodicity patterns in the data.</p>
+identify periodicity patterns in the data. See 
+<a href='https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html'>https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html</a>
+for further details and 
+a description of the algorithm</p>
     
     </div>
 
@@ -158,17 +164,17 @@ identify periodicity patterns in the data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -221,7 +227,7 @@ Default = &#8220;both&#8221;</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -238,10 +244,6 @@ with summary statistics and flags for each dataset (&#8220;dataset&#8221;) or a
 (&#8220;clean&#8221;) or a logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE =
 test failed/potentially problematic. Default =
 &#8220;clean&#8221;.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>see supplement <!-- %Copy later from supplementary material --></p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -290,8 +292,6 @@ details and tutorials.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
 

@@ -2,20 +2,20 @@
 % Please edit documentation in R/cc_dupl.R
 \name{cc_dupl}
 \alias{cc_dupl}
-\title{Flag Duplicated Records}
+\title{Identify Duplicated Records}
 \usage{
 cc_dupl(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", additions = NULL, value = "clean",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. The column with the species name. Default
@@ -25,19 +25,19 @@ Default = \dQuote{decimallatitude}.}
 included in the test for duplication. For example as below, collector name
 and collector number.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
-of records flagged}
+of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags duplicated records based on species name and coordinates, as well as
+Removes or flags duplicated records based on species name and coordinates, as well as
 user-defined additional columns. True (specimen) duplicates or duplicates
 from the same species can make up the bulk of records in a biological
 collection database, but are undesirable for many analyses. Both can be

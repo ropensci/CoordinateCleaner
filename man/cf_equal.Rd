@@ -2,22 +2,22 @@
 % Please edit documentation in R/cf_equal.R
 \name{cf_equal}
 \alias{cf_equal}
-\title{Flag Fossils with equal min and max age}
+\title{Identify Fossils with equal min and max age}
 \usage{
 cf_equal(x, min_age = "min_ma", max_age = "max_ma", value = "clean",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.}
 
-\item{min_age}{a character string. The column with the minimum age. Default
+\item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
 
-\item{max_age}{a character string. The column with the maximum age. Default
+\item{max_age}{character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -26,10 +26,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records of fossil with equal minimum and maximum age.
+Removes or flags records with equal minimum and maximum age.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

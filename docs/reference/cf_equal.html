@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Fossils with equal min and max age — cf_equal • CoordinateCleaner</title>
+<title>Identify Fossils with equal min and max age — cf_equal • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Fossils with equal min and max age — cf_equal" />
+<meta property="og:title" content="Identify Fossils with equal min and max age — cf_equal" />
 
-<meta property="og:description" content="Flags records of fossil with equal minimum and maximum age." />
+<meta property="og:description" content="Removes or flags records with equal minimum and maximum age." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -131,14 +131,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Fossils with equal min and max age</h1>
+    <h1>Identify Fossils with equal min and max age</h1>
     
     <div class="hidden name"><code>cf_equal.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags records of fossil with equal minimum and maximum age.</p>
+    <p>Removes or flags records with equal minimum and maximum age.</p>
     
     </div>
 
@@ -150,22 +150,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
-names.</p></td>
+      <td><p>data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.</p></td>
     </tr>
     <tr>
       <th>min_age</th>
-      <td><p>a character string. The column with the minimum age. Default
+      <td><p>character string. The column with the minimum age. Default
 = &#8220;min_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>max_age</th>
-      <td><p>a character string. The column with the maximum age. Default
+      <td><p>character string. The column with the maximum age. Default
 = &#8220;max_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -179,7 +179,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

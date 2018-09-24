@@ -1,46 +1,21 @@
-#' Flag Fossils with Extreme Age Ranges
+#' Identify Fossils with Extreme Age Ranges
 #' 
-#' Flags record with an unexpectedly large temporal range, based on a quantile
+#' Removes or flags records with an unexpectedly large temporal range, based on a quantile
 #' outlier test.
 #' 
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param min_age a character string. The column with the minimum age. Default
-#' = \dQuote{min_ma}.
-#' @param max_age a character string. The column with the maximum age. Default
-#' = \dQuote{max_ma}.
-#' @param taxon a character string. The column with the taxon name. If
-#' \dQuote{}, searches for outliers over the entire dataset, otherwise per
-#' specified taxon. Default = \dQuote{accepted_name}.
-#' @param method a character string.  Defining the method for outlier
-#' selection.  See details. Either \dQuote{quantile} \dQuote{mad}, or
-#' \dQuote{time}.  Default = \dQuote{quantile}.
-#' @param mltpl numeric. The multiplier of the interquartile range
-#' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
-#' 'mad'}) to identify outliers. See details.  Default = 3.
-#' @param size_thresh  numeric.  The minimum number of records needed for a
-#' dataset to be tested. Default = 10.
 #' @param max_range numeric. A absolute maximum time interval between min age
 #' and max age. Only relevant for \code{method} = \dQuote{time}.
-#' @param uniq_loc logical.  If TRUE only single records per location and time
-#' point (and taxon if \code{taxon} != "") are used for the outlier testing.
-#' Default = T.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cf_age
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Fossil Temporal cleaning
 #' @family fossils
+#' 
 #' @examples
 #' 
 #' minages <- runif(n = 11, min = 0.1, max = 25)
@@ -219,11 +194,21 @@ cf_range <- function(x,
   x <- x[, names(x) != "idf"]
 
   if (verbose) {
-    if (value == "ids") {
-      message(sprintf("Flagged %s records.", length(flags)))
-    } else {
-      message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      if (value == "ids") {
+        message(sprintf("Removed %s records.", length(flags)))
+      } else {
+        message(sprintf("Removed %s records.", sum(!out)))
+      }
+    }else{
+      if (value == "ids") {
+        message(sprintf("Flagged %s records.", length(flags)))
+      } else {
+        message(sprintf("Flagged %s records.", sum(!out)))
+      }
     }
+    
+
   }
 
   switch(value, clean = return(x[out, ]), 

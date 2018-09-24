@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Records in the Vicinity of Biodiversity Institutions — cc_inst • CoordinateCleaner</title>
+<title>Identify Records in the Vicinity of Biodiversity Institutions — cc_inst • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Records in the Vicinity of Biodiversity Institutions — cc_inst" />
+<meta property="og:title" content="Identify Records in the Vicinity of Biodiversity Institutions — cc_inst" />
 
-<meta property="og:description" content="Flag records assigned to the location of zoos, botanical gardens, herbaria,
+<meta property="og:description" content="Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
 universities and museums, based on a global database of ~10,000 such
 biodiversity institutions. Coordinates from these locations can be related
 to data-entry errors, false automated geo-reference or individuals in
@@ -135,14 +135,14 @@ captivity/horticulture." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Records in the Vicinity of Biodiversity Institutions</h1>
+    <h1>Identify Records in the Vicinity of Biodiversity Institutions</h1>
     
     <div class="hidden name"><code>cc_inst.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flag records assigned to the location of zoos, botanical gardens, herbaria,
+    <p>Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
 universities and museums, based on a global database of ~10,000 such
 biodiversity institutions. Coordinates from these locations can be related
 to data-entry errors, false automated geo-reference or individuals in
@@ -160,7 +160,7 @@ captivity/horticulture.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
@@ -180,16 +180,16 @@ required if verify = TRUE.</p></td>
     </tr>
     <tr>
       <th>buffer</th>
-      <td><p>numerical. The buffer around each province or country
-centroid, where records should be flagged as problematic, in decimal
+      <td><p>numerical. The buffer around each institution,
+where records should be flagged as problematic, in decimal
 degrees.  Default = 100m.</p></td>
     </tr>
     <tr>
       <th>geod</th>
-      <td><p>logical. If TRUE the radius around each institution is calculated
+      <td><p>logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = TRUE.</p></td>
+in this case buffer is in degrees. Default = T.</p></td>
     </tr>
     <tr>
       <th>ref</th>
@@ -225,7 +225,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Non-terrestrial Coordinates — cc_sea • CoordinateCleaner</title>
+<title>Identify Non-terrestrial Coordinates — cc_sea • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Non-terrestrial Coordinates — cc_sea" />
+<meta property="og:title" content="Identify Non-terrestrial Coordinates — cc_sea" />
 
-<meta property="og:description" content="Flags coordinates outside the reference landmass. Can be used to restrict
+<meta property="og:description" content="Removes or flags coordinates outside the reference landmass. Can be used to restrict
 datasets to terrestrial taxa, or exclude records from the open ocean, when
 depending on the reference (see details). Often records of terrestrial taxa
 can be found in the open ocean, mostly due to switched latitude and
@@ -135,14 +135,14 @@ longitude." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Non-terrestrial Coordinates</h1>
+    <h1>Identify Non-terrestrial Coordinates</h1>
     
     <div class="hidden name"><code>cc_sea.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags coordinates outside the reference landmass. Can be used to restrict
+    <p>Removes or flags coordinates outside the reference landmass. Can be used to restrict
 datasets to terrestrial taxa, or exclude records from the open ocean, when
 depending on the reference (see details). Often records of terrestrial taxa
 can be found in the open ocean, mostly due to switched latitude and
@@ -159,17 +159,17 @@ longitude.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -186,7 +186,7 @@ Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 50.</p
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>speedup</th>
@@ -196,7 +196,7 @@ with many records per location.</p></td>
     <tr>
       <th>verbose</th>
       <td><p>logical. If TRUE reports the name of the test and the number
-of records flagged. Default = TRUE.</p></td>
+of records flagged.</p></td>
     </tr>
     </table>
     
@@ -205,7 +205,7 @@ of records flagged. Default = TRUE.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

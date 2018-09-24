@@ -1,6 +1,6 @@
-#' Flag Records in the Vicinity of Biodiversity Institutions
+#' Identify Records in the Vicinity of Biodiversity Institutions
 #' 
-#' Flag records assigned to the location of zoos, botanical gardens, herbaria,
+#' Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
 #' universities and museums, based on a global database of ~10,000 such
 #' biodiversity institutions. Coordinates from these locations can be related
 #' to data-entry errors, false automated geo-reference or individuals in
@@ -9,21 +9,9 @@
 #' Note: the buffer radius is in degrees, thus will differ slightly between
 #' different latitudes.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon  character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat  character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param species character string. The column with the species identity. Only
-#' required if verify = TRUE.
-#' @param buffer numerical. The buffer around each province or country
-#' centroid, where records should be flagged as problematic, in decimal
+#' @param buffer numerical. The buffer around each institution,
+#' where records should be flagged as problematic, in decimal
 #' degrees.  Default = 100m.
-#' @param geod logical. If TRUE the radius around each institution is calculated
-#' based on a sphere, buffer is in meters and independent of latitude. If FALSE
-#' the radius is calculated assuming planar coordinates and varies slightly with latitude,
-#' in this case buffer is in degrees. Default = TRUE.
 #' @param ref  SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataFrame, but the structure must be identical to
 #' \code{\link{institutions}}.  Default = \code{\link{institutions}}
@@ -33,15 +21,13 @@
 #' @param verify_mltpl numerical. indicates the factor by which the radius for verify
 #' exceeds the radius of the initial test. Default = 10, which might be suitable if 
 #' geod is TRUE, but might be too large otherwise.
-#' @param value character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
 #' @examples
@@ -140,55 +126,65 @@ cc_inst <- function(x,
     #identify flagged records
     ref_in <- x[!out,]
     
-    #buffer with a larger buffer than for the intial test
-    if(geod){
-      # credits to https://seethedatablog.wordpress.com
+    if(nrow(ref_in) > 0){
+      #buffer with a larger buffer than for the intial test
+      if(geod){
+        # credits to https://seethedatablog.wordpress.com
         dg <- seq(from = 0, to = 360, by = 5)
-
+        
         buff_XY <- geosphere::destPoint(p = ref_in[, c(lon, lat)],
                                         b = rep(dg, each = nrow(ref_in)),
                                         d = buffer * verify_mltpl)
-
+        
         id <- rep(seq(from = 1, to = nrow(ref_in)), times = length(dg))
         lst <- split(data.frame(buff_XY), f = id)
-
+        
         # Make SpatialPolygons out of the list of coordinates
         poly   <- lapply(lst, sp::Polygon, hole = FALSE)
         polys <- list()
         for(i in seq_along(poly)){
           polys[[i]] <- sp::Polygons(list(poly[[i]]), ID = rownames(ref_in)[i])
-          }
+        }
         spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
         ref <- sp::SpatialPolygonsDataFrame(spolys, data = data.frame(ref_in))
-    }else{
-      ref <- rgeos::gBuffer(ref, width = buffer * verify_mltpl, byid = TRUE)
-    }
-    
-    #identify all records from flagged species in x
-    f_spec <- x[x[, species] %in% ref@data[, species],]
-    
-    dbch_flag <- c()
-    
-    for(i in seq_len(nrow(ref_in))){
-      dbch <- sp::over(sp::SpatialPoints(
-        f_spec[unlist(f_spec[species]) == ref@data[i, "species"], 
-               c(lon, lat)], proj4string = CRS(wgs84)), 
-        ref[i,])
+      }else{
+        ref <- rgeos::gBuffer(SpatialPoints(ref_in[,c (lon, lat)], 
+                                            proj4string = sp::CRS(wgs84)),
+                              width = buffer * verify_mltpl, byid = TRUE)
+        ref <- sp::SpatialPolygonsDataFrame(ref, data = data.frame(ref_in))
+        
+      }
       
-      #check if there area other records of this species in the buffer
-      dbch_flag[[i]] <- sum(!is.na(dbch[species])) > 
-        nrow(ref_in[ref_in[[species]] == ref_in[[i, species]] &
-                      ref_in[[lon]] ==  ref_in[[i, lon]] &
-                      ref_in[[lat]] ==  ref_in[[i, lat]],])
+      #identify all records from flagged species in x
+      f_spec <- x[x[, species] %in% ref@data[, species],]
+      
+      dbch_flag <- c()
+      
+      for(i in seq_len(nrow(ref_in))){
+        dbch <- sp::over(sp::SpatialPoints(
+          f_spec[unlist(f_spec[species]) == ref@data[i, "species"], 
+                 c(lon, lat)], proj4string = CRS(wgs84)), 
+          ref[i,])
+        
+        #check if there area other records of this species in the buffer
+        dbch_flag[[i]] <- sum(!is.na(dbch[species])) > 
+          nrow(ref_in[ref_in[[species]] == ref_in[[i, species]] &
+                        ref_in[[lon]] ==  ref_in[[i, lon]] &
+                        ref_in[[lat]] ==  ref_in[[i, lat]],])
+      }
+      
+      #unflag those records with other records of the same species nearby
+      out[rownames(ref_in)] <- dbch_flag
     }
-    
-    #unflag those records with other records of the same species nearby
-    out[rownames(ref_in)] <- dbch_flag
   }
 
     # create output based on value argument
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

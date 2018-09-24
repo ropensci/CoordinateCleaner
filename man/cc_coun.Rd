@@ -2,30 +2,31 @@
 % Please edit documentation in R/cc_coun.R
 \name{cc_coun}
 \alias{cc_coun}
-\title{Flag Coordinates Outside their Reported Country}
+\title{Identify Coordinates Outside their Reported Country}
 \usage{
 cc_coun(x, lon = "decimallongitude", lat = "decimallatitude",
   iso3 = "countrycode", value = "clean", ref = NULL,
   verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names, and a country assignment.}
+\item{x}{data.frame. Containing geographical coordinates and species
+names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{iso3}{a character string. The column with the country assignment of
 each record in three letter ISO code. Default = \dQuote{countrycode}.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
 Can be any SpatialPolygonsDataFrame, but the structure must be identical to
-\code{rnaturalearth::ne_countries(scale = "medium")}.  Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
+\code{rnaturalearth::ne_countries(scale = "medium")}.  
+Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -34,10 +35,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Identifies mismatches between geographic coordinates and additional country
+Removes or flags mismatches between geographic coordinates and additional country
 information (usually this information is reliably reported with specimens).
 Such a mismatch can occur for example, if latitude and longitude are
 switched.

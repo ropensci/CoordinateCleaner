@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Records with Identical lat/lon — cc_equ • CoordinateCleaner</title>
+<title>Identify Records with Identical lat/lon — cc_equ • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Records with Identical lat/lon — cc_equ" />
+<meta property="og:title" content="Identify Records with Identical lat/lon — cc_equ" />
 
-<meta property="og:description" content="Flags records with equal latitude and longitude coordinates, either exact or
+<meta property="og:description" content="Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors." />
 <meta name="twitter:card" content="summary" />
 
@@ -132,14 +132,14 @@ absolute. Equal coordinates can often indicate data entry errors." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Records with Identical lat/lon</h1>
+    <h1>Identify Records with Identical lat/lon</h1>
     
     <div class="hidden name"><code>cc_equ.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags records with equal latitude and longitude coordinates, either exact or
+    <p>Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors.</p>
     
     </div>
@@ -152,17 +152,17 @@ absolute. Equal coordinates can often indicate data entry errors.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -173,7 +173,7 @@ Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -184,10 +184,10 @@ of records flagged.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Depending on the value argument, either a <code>data.frame</code>
+    <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -211,7 +211,7 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
-<span class='fu'>cc_equ</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
+<span class='fu'>cc_equ</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Removed 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
 #&gt; 1         a       -50.085470     -39.3636493
 #&gt; 2         b        54.903614      37.2503696
 #&gt; 3         c      -128.318679     -10.4063544

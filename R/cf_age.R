@@ -1,6 +1,6 @@
-#' Flag Fossils with Outlier Age
+#' Identify Fossils with Outlier Age
 #' 
-#' Flags records of fossils that are temporal outliers based on
+#' Removes or flags records that are temporal outliers based on
 #' interquantile ranges. 
 #' 
 #' The outlier detection is based on an interquantile range test. A temporal
@@ -8,27 +8,27 @@
 #' between the minimum and maximum age for each record. The mean distance for
 #' each point to all neighbours is calculated and the sum of these distances
 #' is then tested against the interquantile range and flagged as an outlier if
-#' $x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
+#' \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 #' times, to account for dating uncertainty. Records are flagged as outliers
 #' if they are flagged by a fraction of more than \sQuote{flag.thres}
 #' replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
-#' records are tested. Distance are calculated as EUclidean distance.
+#' records are tested. Distance are calculated as Euclidean distance.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
+#' @param x data.frame. Containing fossil records, conaining taxon names, ages, 
+#' and geographic coordinates.
+#' @param lon character string. The column with the longitude coordinates.
 #' To identify unique records if \code{uniq_loc  = TRUE}.
 #' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
+#' @param lat character string. The column with the longitude coordinates.
 #' Default = \dQuote{decimallatitude}. To identify unique records if \code{uniq_loc  = T}.
-#' @param min_age a character string. The column with the minimum age. Default
+#' @param min_age character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max_age a character string. The column with the maximum age. Default
+#' @param max_age character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
-#' @param taxon a character string. The column with the taxon name. If
+#' @param taxon character string. The column with the taxon name. If
 #' \dQuote{}, searches for outliers over the entire dataset, otherwise per
 #' specified taxon. Default = \dQuote{accepted_name}.
-#' @param method a character string.  Defining the method for outlier
+#' @param method character string.  Defining the method for outlier
 #' selection.  See details. Either \dQuote{quantile} or \dQuote{mad}.  Default
 #' = \dQuote{quantile}.
 #' @param size_thresh numeric.  The minimum number of records needed for a
@@ -38,22 +38,21 @@
 #' 'mad'}) to identify outliers. See details.  Default = 5.
 #' @param replicates numeric. The number of replications for the distance
 #' matrix calculation. See details.  Default = 5.
-#' @param flag_thresh numeric.  The fraction of replicates necessary to flag a
-#' record. See details. Default = 0.5.
+#' @param flag_thresh numeric.  The fraction of passed replicates necessary to pass the test. 
+#' See details. Default = 0.5.
 #' @param uniq_loc logical.  If TRUE only single records per location and time
 #' point (and taxon if \code{taxon} != "") are used for the outlier testing.
 #' Default = T.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords Fossil Coordinate cleaning Temporal cleaning
 #' @family fossils
+#' 
 #' @examples
 #' 
 #' minages <- c(runif(n = 11, min = 10, max = 25), 62.5)
@@ -108,6 +107,10 @@ cf_age <- function(x,
   if("lat" %in% names(x) & !("decimallatitude" %in% names(x))){
     lat <- "lat"
     warning("decimallatitude not found. Using lat instead.")
+  }
+  if("lng" %in% names(x) & !("decimallongitude" %in% names(x))){
+    lon <- "lng"
+    warning("decimallongitude not found. Using lon instead.")
   }
   
   #Enable recent records with only one time stamp
@@ -278,7 +281,11 @@ cf_age <- function(x,
   
   # report to screen
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out, na.rm = TRUE)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out, na.rm = TRUE)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out, na.rm = TRUE)))
+    }
   }
   
   switch(value, 

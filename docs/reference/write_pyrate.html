@@ -155,8 +155,8 @@ extinction status for each sample. Creates files in the working directory!</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
-names.</p></td>
+      <td><p>data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.</p></td>
     </tr>
     <tr>
       <th>status</th>
@@ -169,18 +169,17 @@ Indicating for each record &#8220;extinct&#8221; or &#8220;extant&#8221;.</p></t
     </tr>
     <tr>
       <th>taxon</th>
-      <td><p>a character string. The column with the taxon name. If
-&#8220;&#8221;, searches for outliers over the entire dataset, otherwise per
-specified taxon. Default = &#8220;identified_name&#8221;.</p></td>
+      <td><p>character string. The column with the taxon name. 
+Default = &#8220;accepted_name&#8221;.</p></td>
     </tr>
     <tr>
       <th>min_age</th>
-      <td><p>a character string. The column with the minimum age. Default
+      <td><p>character string. The column with the minimum age. Default
 = &#8220;min_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>max_age</th>
-      <td><p>a character string. The column with the maximum age. Default
+      <td><p>character string. The column with the maximum age. Default
 = &#8220;max_ma&#8221;.</p></td>
     </tr>
     <tr>
@@ -272,10 +271,6 @@ and tutorials on PyRate and PyRate input.</p>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Daniele Silvestro
 
   </div>
 </div>

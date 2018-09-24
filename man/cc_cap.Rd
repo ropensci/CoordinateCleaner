@@ -2,7 +2,7 @@
 % Please edit documentation in R/cc_cap.R
 \name{cc_cap}
 \alias{cc_cap}
-\title{Flag Coordinates in Vicinity of Country Capitals.}
+\title{Identify Coordinates in Vicinity of Country Capitals.}
 \usage{
 cc_cap(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", buffer = 10000, geod = TRUE, ref = NULL,
@@ -34,8 +34,8 @@ in this case buffer is in degrees. Default = T.}
 be any SpatialPointsDataFrame, but the structure must be identical to
 \code{\link{countryref}}.  Default = \code{\link{countryref}}.}
 
-\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
-with identical coordinates closed to the GBIF headquarters. 
+\item{verify}{logical. If TRUE records are only flagged if they are the
+only record in a given species flagged close to a given reference.
 If FALSE, the distance is the only criterion}
 
 \item{value}{character string.  Defining the output value. See value.}
@@ -50,13 +50,9 @@ logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test fail
 problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records within a certain radius around country capitals. Poorly
+Removes or flags records within a certain radius around country capitals. Poorly
 geo-referenced occurrence records in biological databases are often
 erroneously geo-referenced to capitals.
-}
-\details{
-Note: the buffer radius is in degrees, thus will differ slightly between
-different latitudes.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

@@ -1,18 +1,14 @@
-#' Flags Datasets with Rasterized Coordinates
+#' Identify Datasets with Rasterized Coordinates
 #' 
 #' Flags datasets with periodicity patterns indicative of a rasterized
 #' (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 #' combination of autocorrelation and sliding-window outlier detection to
-#' identify periodicity patterns in the data.
+#' identify periodicity patterns in the data. See 
+#' \url{https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+#' for further details and 
+#' a description of the algorithm
 #' 
-#' see supplement %Copy later from supplementary material
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param ds a character string. The column with the dataset of each record. In
 #' case \code{x} should be treated as a single dataset, identical for all
 #' records.  Default = \dQuote{dataset}.
@@ -37,19 +33,21 @@
 #' \dQuote{lat} for latitude, \dQuote{lon} for longitude, or \dQuote{both} for
 #' both.  In the latter case datasets are only flagged if both test are failed.
 #' Default = \dQuote{both}
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
+#' @inheritParams cc_cap
+#' 
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 #' \code{data.frame} containing the records considered correct by the test
 #' (\dQuote{clean}) or a logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE =
 #' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords "Coordinate cleaning" "Dataset level cleaning"
 #' @family Datasets
+#' 
 #' @examples
 #' 
 #' #simulate bias grid, one degree resolution, 10% error on a 1000 records dataset
@@ -143,6 +141,11 @@ cd_round <- function(x,
           if (graphs) {
             title(paste(unique(k[[ds]]), n_outl$flag, sep = " - "))
           }
+          n_outl <- data.frame(unique(k[[ds]]), n_outl)
+          names(n_outl) <- c(
+            "dataset", "lon.n.outliers", "lon.n.regular.distance",
+            "lon.regular.distance", "summary"
+          )
         }
 
         if (test == "lat") {
@@ -168,6 +171,12 @@ cd_round <- function(x,
           if (graphs) {
             title(paste(unique(k[[ds]]), n_outl$flag, sep = " - "))
           }
+          
+          n_outl <- data.frame(unique(k[[ds]]), n_outl)
+          names(n_outl) <- c(
+            "dataset", "lat.n.outliers", "lat.n.regular.distance",
+            "lat.regular.distance", "summary"
+          )
         }
 
         if (test == "both") {
@@ -241,7 +250,8 @@ cd_round <- function(x,
         dataset = unique(x[[ds]]), 
         n.outliers = NA, 
         n.regular.outliers = NA,
-        regular.distance = NA, summary = NA
+        regular.distance = NA, 
+        summary = NA
       )
     } else {
       if (test == "lon") {

@@ -1,29 +1,22 @@
-#' Flag Records with Identical lat/lon
+#' Identify Records with Identical lat/lon
 #' 
-#' Flags records with equal latitude and longitude coordinates, either exact or
+#' Removes or flags records with equal latitude and longitude coordinates, either exact or
 #' absolute. Equal coordinates can often indicate data entry errors.
 #' 
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param test character string. Defines if coordinates are compared exactly
 #' (\dQuote{identical}) or on the absolute scale (i.e. -1 = 1,
 #' \dQuote{absolute}). Default is to \dQuote{absolute}.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the value argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -56,7 +49,11 @@ cc_equ <- function(x,
   })
 
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

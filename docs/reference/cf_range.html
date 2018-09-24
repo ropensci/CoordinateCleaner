@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Fossils with Extreme Age Ranges — cf_range • CoordinateCleaner</title>
+<title>Identify Fossils with Extreme Age Ranges — cf_range • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Fossils with Extreme Age Ranges — cf_range" />
+<meta property="og:title" content="Identify Fossils with Extreme Age Ranges — cf_range" />
 
-<meta property="og:description" content="Flags record with an unexpectedly large temporal range, based on a quantile
+<meta property="og:description" content="Removes or flags records with an unexpectedly large temporal range, based on a quantile
 outlier test." />
 <meta name="twitter:card" content="summary" />
 
@@ -132,14 +132,14 @@ outlier test." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Fossils with Extreme Age Ranges</h1>
+    <h1>Identify Fossils with Extreme Age Ranges</h1>
     
     <div class="hidden name"><code>cf_range.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags record with an unexpectedly large temporal range, based on a quantile
+    <p>Removes or flags records with an unexpectedly large temporal range, based on a quantile
 outlier test.</p>
     
     </div>
@@ -154,46 +154,47 @@ outlier test.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
-names.</p></td>
+      <td><p>data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
+To identify unique records if <code>uniq_loc  = TRUE</code>.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
-Default = &#8220;decimallatitude&#8221;.</p></td>
+      <td><p>character string. The column with the longitude coordinates.
+Default = &#8220;decimallatitude&#8221;. To identify unique records if <code>uniq_loc  = T</code>.</p></td>
     </tr>
     <tr>
       <th>min_age</th>
-      <td><p>a character string. The column with the minimum age. Default
+      <td><p>character string. The column with the minimum age. Default
 = &#8220;min_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>max_age</th>
-      <td><p>a character string. The column with the maximum age. Default
+      <td><p>character string. The column with the maximum age. Default
 = &#8220;max_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>taxon</th>
-      <td><p>a character string. The column with the taxon name. If
+      <td><p>character string. The column with the taxon name. If
 &#8220;&#8221;, searches for outliers over the entire dataset, otherwise per
 specified taxon. Default = &#8220;accepted_name&#8221;.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>a character string.  Defining the method for outlier
-selection.  See details. Either &#8220;quantile&#8221; &#8220;mad&#8221;, or
-&#8220;time&#8221;.  Default = &#8220;quantile&#8221;.</p></td>
+      <td><p>character string.  Defining the method for outlier
+selection.  See details. Either &#8220;quantile&#8221; or &#8220;mad&#8221;.  Default
+= &#8220;quantile&#8221;.</p></td>
     </tr>
     <tr>
       <th>mltpl</th>
       <td><p>numeric. The multiplier of the interquartile range
 (<code>method == 'quantile'</code>) or median absolute deviation (<code>method ==
-'mad'</code>) to identify outliers. See details.  Default = 3.</p></td>
+'mad'</code>) to identify outliers. See details.  Default = 5.</p></td>
     </tr>
     <tr>
       <th>size_thresh</th>
@@ -213,7 +214,7 @@ Default = T.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -227,7 +228,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

@@ -163,17 +163,17 @@ collection databases.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -300,7 +300,7 @@ section for details. one of &#8216;spatialvalid&#8217;, &#8216;summary&#8217;,
     <tr>
       <th>verbose</th>
       <td><p>logical. If TRUE reports the name of the test and the number
-of records flagged</p></td>
+of records flagged.</p></td>
     </tr>
     <tr>
       <th>report</th>
@@ -313,15 +313,17 @@ path to which the file should be written.  Default = FALSE.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the output argument:</p><dl class='dl-horizontal'>
-<dt>list("spatialvalid")</dt><dd><p>an object of class <code>spatialvalid</code> with one
-column for each test. TRUE = clean coordinate, FALSE = potentially
-problematic coordinates.  The summary column is FALSE if any test flagged
-the respective coordinate.</p></dd> <dt>list("flagged")</dt><dd><p>a logical vector with the
+<dt>&#8220;spatialvalid&#8221;</dt><dd><p>an object of class <code>spatialvalid</code> similar to x
+with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
+problematic coordinate entries.  The .summary column is FALSE if any test flagged
+the respective coordinate.</p></dd>
+<dt>&#8220;flagged&#8221;</dt><dd><p>a logical vector with the
 same order as the input data summarizing the results of all test. TRUE =
 clean coordinate, FALSE = potentially problematic (= at least one test
-failed).</p></dd> <dt>list("clean")</dt><dd><p>a <code>data.frame</code> of cleaned coordinates
-if <code>species = NULL</code> or a <code>data.frame</code> with cleaned coordinates and
-species ID otherwise</p></dd> </dl>
+failed).</p></dd>
+<dt>&#8220;clean&#8221;</dt><dd><p>a <code>data.frame</code> similar to x
+with potentially problematic records removed</p></dd>
+</dl>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -396,16 +398,17 @@ and tutorials.</p>
 
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>clean_coordinates</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>exmpl</span>,
                           <span class='kw'>tests</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"capitals"</span>, <span class='st'>"centroids"</span>,
-                                    <span class='st'>"equal"</span>, <span class='st'>"gbif"</span>, <span class='st'>"institutions"</span>,
-                                    <span class='st'>"seas"</span>, <span class='st'>"zeros"</span>))</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing sea coordinates</span></div><div class='output co'>#&gt; OGR data source with driver: ESRI Shapefile 
-#&gt; Source: "C:\Users\alexander.zizka\Dropbox (Antonelli Lab)\Arbeit\research_projects\29_CoordinateCleaner\Package\sea.EXT", layer: "ne_50m_land"
-#&gt; with 1420 features
-#&gt; It has 3 fields
-#&gt; Integer64 fields read as strings:  scalerank </div><div class='output co'>#&gt; <span class='message'>Flagged 153 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing GBIF headquarters, flagging records around Copenhagen</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing biodiversity institutions</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 153 of 250 records, EQ = 0.61.</span></div><div class='input'>
-<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             val             equ             zer             cap 
-#&gt;               0               0               0               0               0 
-#&gt;             cen             sea             gbf            inst         summary 
-#&gt;               0             153               0               0             153 </div><div class='input'>
+                                    <span class='st'>"equal"</span>, <span class='st'>"gbif"</span>, <span class='st'>"zeros"</span>))</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing GBIF headquarters, flagging records around Copenhagen</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 of 250 records, EQ = 0.</span></div><div class='input'>                                    
+</div><span class='co'># NOT RUN {</span>
+<span class='co'>#run a selection of tests</span>
+<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>clean_coordinates</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>exmpl</span>,
+                          <span class='kw'>tests</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"capitals"</span>, <span class='st'>"seas"</span>))
+
+
+<span class='co'># }</span><div class='input'>
+
+<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt;     .val     .equ     .zer     .cap     .cen     .gbf .summary 
+#&gt;        0        0        0        0        0        0        0 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -1,6 +1,3 @@
-# A function to clean fossil data
-
-
 #' Geographic and Temporal Cleaning of Records from Fossil Collections
 #' 
 #' Cleaning records by multiple empirical tests to flag potentially erroneous
@@ -34,7 +31,7 @@
 #' each point to all neighbours is calculated for both matrices and spatial and
 #' temporal distances are scaled to the same range. The sum of these distanced
 #' is then tested against the interquantile range and flagged as an outlier if
-#' $x > IQR(x) + q_75 * mltpl$. The test is replicated \sQuote{replicates}
+#' \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 #' times, to account for temporal uncertainty. Records are flagged as outliers
 #' if they are flagged by a fraction of more than \sQuote{flag_thresh}
 #' replicates. Only datasets/taxa comprising more than \sQuote{size.thresh}
@@ -46,76 +43,36 @@
 #' 
 #' @aliases CleanCoordinatesFOS
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param min_age a character string. The column with the minimum age. Default
+#' @param x data.frame. Containing fossil records, conaining taxon names, ages, 
+#' and geographic coordinates..
+#' @param min_age character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
-#' @param max_age a character string. The column with the maximum age. Default
+#' @param max_age character string. The column with the maximum age. Default
 #' = \dQuote{max_ma}.
-#' @param taxon a character string. The column with the taxon name. If
+#' @param taxon character string. The column with the taxon name. If
 #' \dQuote{}, searches for outliers over the entire dataset, otherwise per
 #' specified taxon. Default = \dQuote{accepted_name}.
-#' @param countries a character string. A vector of the same length as rows in
-#' x, with country information for each record in ISO3 format.  If missing, the
-#' countries test is skipped.
-#' @param tests a vector of character strings, indicating which tests to run. 
+#' @param tests vector of character strings, indicating which tests to run. 
 #' See details for all tests available. Default = c("centroids", 
 #' "equal", "gbif", "institutions", "temprange", "spatiotemp", "agesequal", "zeros")
-#' @param centroids_rad numeric. The side length of the rectangle around
-#' country centroids in degrees. Default = 0.01.
-#' @param centroids_detail a \code{character string}. If set to
-#' \sQuote{country} only country (adm-0) centroids are tested, if set to
-#' \sQuote{provinces} only province (adm-1) centroids are tested.  Default =
-#' \sQuote{both}.
-#' @param inst_rad numeric. The radius around biodiversity institutions
-#' coordinates in degrees. Default = 0.001.
-#' @param outliers_method The method used for outlier testing. See details.
 #' @param outliers_threshold numerical.  The multiplier for the interquantile
 #' range for outlier detection. The higher the number, the more conservative
 #' the outlier tests.  See \code{\link{cf_outl}} for details. Default = 3.
-#' @param outliers_size numerical.  The minimum number of records in a dataset
-#' to run the taxon-specific outlier test.  Default = 7.
 #' @param outliers_replicates numeric. The number of replications for the
 #' distance matrix calculation. See details.  Default = 5.
-#' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
-#' @param centroids_ref a \code{data.frame} with alternative reference data for
-#' the centroid test. If missing, the \code{countryref} dataset is used.
-#' Alternatives must be identical in structure.
-#' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
-#' reference for the countries test. If missing, the
-#' \code{rnaturalearth:ne_countries('medium')} dataset is used.
-#' @param inst_ref a \code{data.frame} with alternative reference data for the
-#' biodiversity institution test. If missing, the \code{institutions} dataset
-#' is used.  Alternatives must be identical in structure.
-#' @param value a character string defining the output value. See the value
-#' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-#' \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged
-#' @param report logical or character.  If TRUE a report file is written to the
-#' working directory, summarizing the cleaning results. If a character, the
-#' path to which the file should be written.  Default = FALSE.
-#' @return Depending on the output argument: \describe{
-#' \item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
-#' column for each test. TRUE = clean coordinate, FALSE = potentially
-#' problematic coordinates.  The summary column is FALSE if any test flagged
-#' the respective coordinate.} \item{list("flagged")}{a logical vector with the
-#' same order as the input data summarizing the results of all test. TRUE =
-#' clean coordinate, FALSE = potentially problematic (= at least one test
-#' failed).} \item{list("cleaned")}{a \code{data.frame} of cleaned coordinates
-#' if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and
-#' species ID otherwise} }
+#' @inheritParams clean_coordinates
+#' 
+#' @inherit clean_coordinates return
+#' 
 #' @note Always tests for coordinate validity: non-numeric or missing
 #' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 #' 
 #' See \url{https://azizka.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
+#' 
 #' @keywords Fossil Coordinate cleaning Temporal cleaning
 #' @family Wrapper functions
+#' 
 #' @examples
 #' 
 #' minages <- runif(250, 0, 65)
@@ -322,11 +279,14 @@ clean_fossils <- function(x,
     }
   }
   if (value == "spatialvalid") {
-    inp <- data.frame(taxon = x[, taxon], 
-                      decimallongitude = x[, lon], 
-                      decimallatitude = x[, lat])
-    out <- data.frame(inp,out, summary = suma)
-    class(out) <- c("spatialvalid", "data.frame", class(out))
+    ret <- data.frame(x, out, summary = suma)
+    names(ret) <- c(names(x),
+                    paste(".", names(out), sep = ""),
+                    ".summary")
+    
+    class(ret) <- c("spatialvalid", "data.frame", class(out))
+    out <- ret
+    
     if (report) {
       report <- "clean_fossils_report.txt"
     }

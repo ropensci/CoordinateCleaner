@@ -161,38 +161,38 @@ databases. Individual tests can be activated via the tests argument:</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
-names.</p></td>
+      <td><p>data.frame. Containing fossil records, conaining taxon names, ages,
+and geographic coordinates..</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>min_age</th>
-      <td><p>a character string. The column with the minimum age. Default
+      <td><p>character string. The column with the minimum age. Default
 = &#8220;min_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>max_age</th>
-      <td><p>a character string. The column with the maximum age. Default
+      <td><p>character string. The column with the maximum age. Default
 = &#8220;max_ma&#8221;.</p></td>
     </tr>
     <tr>
       <th>taxon</th>
-      <td><p>a character string. The column with the taxon name. If
+      <td><p>character string. The column with the taxon name. If
 &#8220;&#8221;, searches for outliers over the entire dataset, otherwise per
 specified taxon. Default = &#8220;accepted_name&#8221;.</p></td>
     </tr>
     <tr>
       <th>tests</th>
-      <td><p>a vector of character strings, indicating which tests to run.
+      <td><p>vector of character strings, indicating which tests to run.
 See details for all tests available. Default = c("centroids",
 "equal", "gbif", "institutions", "temprange", "spatiotemp", "agesequal", "zeros")</p></td>
     </tr>
@@ -204,8 +204,8 @@ countries test is skipped.</p></td>
     </tr>
     <tr>
       <th>centroids_rad</th>
-      <td><p>numeric. The side length of the rectangle around
-country centroids in degrees. Default = 0.01.</p></td>
+      <td><p>numeric. The radius around capital coordinates in
+meters. Default = 1000.</p></td>
     </tr>
     <tr>
       <th>centroids_detail</th>
@@ -246,19 +246,19 @@ distance matrix calculation. See details.  Default = 5.</p></td>
     <tr>
       <th>centroids_ref</th>
       <td><p>a <code>data.frame</code> with alternative reference data for
-the centroid test. If missing, the <code>countryref</code> dataset is used.
+the centroid test. If NULL, the <code>countryref</code> dataset is used.
 Alternatives must be identical in structure.</p></td>
     </tr>
     <tr>
       <th>country_ref</th>
       <td><p>a <code>SpatialPolygonsDataFrame</code> as alternative
-reference for the countries test. If missing, the
+reference for the countries test. If NULL, the
 <code>rnaturalearth:ne_countries('medium')</code> dataset is used.</p></td>
     </tr>
     <tr>
       <th>inst_ref</th>
       <td><p>a <code>data.frame</code> with alternative reference data for the
-biodiversity institution test. If missing, the <code>institutions</code> dataset
+biodiversity institution test. If NULL, the <code>institutions</code> dataset
 is used.  Alternatives must be identical in structure.</p></td>
     </tr>
     <tr>
@@ -270,7 +270,7 @@ section for details. one of &#8216;spatialvalid&#8217;, &#8216;summary&#8217;,
     <tr>
       <th>verbose</th>
       <td><p>logical. If TRUE reports the name of the test and the number
-of records flagged</p></td>
+of records flagged.</p></td>
     </tr>
     <tr>
       <th>report</th>
@@ -283,15 +283,17 @@ path to which the file should be written.  Default = FALSE.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the output argument:</p><dl class='dl-horizontal'>
-<dt>list("spatialvalid")</dt><dd><p>an object of class <code>spatialvalid</code> with one
-column for each test. TRUE = clean coordinate, FALSE = potentially
-problematic coordinates.  The summary column is FALSE if any test flagged
-the respective coordinate.</p></dd> <dt>list("flagged")</dt><dd><p>a logical vector with the
+<dt>&#8220;spatialvalid&#8221;</dt><dd><p>an object of class <code>spatialvalid</code> similar to x
+with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
+problematic coordinate entries.  The .summary column is FALSE if any test flagged
+the respective coordinate.</p></dd>
+<dt>&#8220;flagged&#8221;</dt><dd><p>a logical vector with the
 same order as the input data summarizing the results of all test. TRUE =
 clean coordinate, FALSE = potentially problematic (= at least one test
-failed).</p></dd> <dt>list("cleaned")</dt><dd><p>a <code>data.frame</code> of cleaned coordinates
-if <code>species = NULL</code> or a <code>data.frame</code> with cleaned coordinates and
-species ID otherwise</p></dd> </dl>
+failed).</p></dd>
+<dt>&#8220;clean&#8221;</dt><dd><p>a <code>data.frame</code> similar to x
+with potentially problematic records removed</p></dd>
+</dl>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -323,7 +325,7 @@ between the minimum and maximum age for each record. The mean distance for
 each point to all neighbours is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
-$x &gt; IQR(x) + q_75 * mltpl$. The test is replicated &#8216;replicates&#8217;
+\(x &gt; IQR(x) + q_75 * mltpl\). The test is replicated &#8216;replicates&#8217;
 times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than &#8216;flag_thresh&#8217;
 replicates. Only datasets/taxa comprising more than &#8216;size.thresh&#8217;
@@ -357,10 +359,8 @@ and tutorials.</p>
                     <span class='kw'>max_ma</span> <span class='kw'>=</span> <span class='no'>minages</span> + <span class='fu'>runif</span>(<span class='fl'>250</span>, <span class='fl'>0.1</span>, <span class='fl'>65</span>))
 
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>clean_fossils</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>exmpl</span>)</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing zero coordinates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing country centroids</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing spatio-temporal outliers on taxon level</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallatitude not found. Using lat instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallongitude not found. Using lng instead.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallatitude not found. Using lat instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallongitude not found. Using lng instead.</span></div><div class='output co'>#&gt; <span class='message'>Testing temporal range outliers on dataset level</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallatitude not found. Using lat instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallongitude not found. Using lng instead.</span></div><div class='output co'>#&gt; <span class='message'>Testing temporal range outliers on taxon level</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing age validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing GBIF headquarters, flagging records around Copenhagen</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Testing biodiversity institutions</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 of 250 records, EQ = 0</span></div><div class='input'>
-<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; decimallatitude             aeq             cen             gbf            inst 
-#&gt;               0               0               0               0               0 
-#&gt;             spt             zer         summary 
-#&gt;               0               0               0 </div><div class='input'>
+<span class='fu'>summary</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt;     .aeq     .cen     .gbf    .inst     .spt     .zer .summary 
+#&gt;        0        0        0        0        0        0        0 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

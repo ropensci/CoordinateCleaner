@@ -2,20 +2,20 @@
 % Please edit documentation in R/cc_cen.R
 \name{cc_cen}
 \alias{cc_cen}
-\title{Flag Coordinates in Vicinity of Country and Province Centroids}
+\title{Identify Coordinates in Vicinity of Country and Province Centroids}
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", buffer = 1000, geod = TRUE, test = "both",
   ref = NULL, verify = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{character string. The column with the species identity. Only
@@ -25,7 +25,7 @@ required if verify = TRUE.}
 centroid, where records should be flagged as problematic. Units depend on geod.  
 Default = 1 kilometer.}
 
-\item{geod}{logical. If TRUE the radius around each centroid is calculated
+\item{geod}{logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
 in this case buffer is in degrees. Default = T.}
@@ -34,15 +34,15 @@ in this case buffer is in degrees. Default = T.}
 c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 country and province centroids.}
 
-\item{ref}{a SpatialPointsDataFrame. Providing the geographic gazetteer. Can
+\item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 be any SpatialPointsDataFrame, but the structure must be identical to
-\code{\link{countryref}}.  Default = \code{\link{countryref}}}
+\code{\link{countryref}}.  Default = \code{\link{countryref}}.}
 
-\item{verify}{logical. If TRUE records are only flagged if the dataset contains multiple records
-with identical coordinates closed to the GBIF headquarters. 
+\item{verify}{logical. If TRUE records are only flagged if they are the
+only record in a given species flagged close to a given reference.
 If FALSE, the distance is the only criterion}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -51,16 +51,12 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records within a radius around the geographic centroids of political
+Removes or flags records within a radius around the geographic centroids of political
 countries and provinces. Poorly geo-referenced occurrence records in
 biological databases are often erroneously geo-referenced to centroids.
-}
-\details{
-Note: the buffer radius is in degrees, thus will differ slightly between
-different latitudes.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

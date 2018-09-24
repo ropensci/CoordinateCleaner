@@ -2,7 +2,7 @@
 % Please edit documentation in R/cd_ddmm.R
 \name{cd_ddmm}
 \alias{cd_ddmm}
-\title{Flag Datasets with a Degree Conversion Error}
+\title{Identify Datasets with a Degree Conversion Error}
 \usage{
 cd_ddmm(x, lon = "decimallongitude", lat = "decimallatitude",
   ds = "dataset", pvalue = 0.025, diff = 1, mat_size = 1000,
@@ -10,13 +10,13 @@ cd_ddmm(x, lon = "decimallongitude", lat = "decimallatitude",
   diagnostic = FALSE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
@@ -40,7 +40,7 @@ for smaller datasets, therefore, default = 1000. For large datasets try
 \item{min_span}{numeric. The minimum geographic extent of datasets to be
 tested. Default = 2.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -57,7 +57,7 @@ test failed/potentially problematic. Default =
 \dQuote{clean}.
 }
 \description{
-This test identifies datasets where a significant fraction of records has
+This test flags datasets where a significant fraction of records has
 been subject to a common degree minute to decimal degree conversion error,
 where the degree sign is recognized as decimal delimiter.
 }

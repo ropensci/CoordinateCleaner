@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Geographic Coordinate Cleaning based on Dataset Properties — clean_dataset • CoordinateCleaner</title>
+<title>Coordinate Cleaning using Dataset Properties — clean_dataset • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Geographic Coordinate Cleaning based on Dataset Properties — clean_dataset" />
+<meta property="og:title" content="Coordinate Cleaning using Dataset Properties — clean_dataset" />
 
-<meta property="og:description" content="Identifies potentially problematic coordinates based on dataset properties.
-Includes test to flag potential errors with converting ddmm to dd.dd, and
+<meta property="og:description" content="Tests for problems associated with coordinate conversions and rounding,
+based on dataset properties. Includes test to identify contributing datasets with
+potential errors with converting ddmm to dd.dd, and
 periodicity in the data decimals indicating rounding or a raster basis
 linked to low coordinate precision. Specifically:
 ddmm  tests for erroneous conversion from a degree
@@ -139,15 +140,16 @@ which can indicate imprecise coordinates, due to rounding or rasterization.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Geographic Coordinate Cleaning based on Dataset Properties</h1>
+    <h1>Coordinate Cleaning using Dataset Properties</h1>
     
     <div class="hidden name"><code>clean_dataset.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Identifies potentially problematic coordinates based on dataset properties.
-Includes test to flag potential errors with converting ddmm to dd.dd, and
+    <p>Tests for problems associated with coordinate conversions and rounding,
+based on dataset properties. Includes test to identify contributing datasets with
+potential errors with converting ddmm to dd.dd, and
 periodicity in the data decimals indicating rounding or a raster basis
 linked to low coordinate precision. Specifically:</p><ul>
 <li><p>ddmm  tests for erroneous conversion from a degree
@@ -167,17 +169,17 @@ which can indicate imprecise coordinates, due to rounding or rasterization.</p><
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -210,12 +212,16 @@ of records flagged.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Depending on the &#8216;value&#8217; argument, either a summary per
-dataset <code>dataset</code>, a data.frame (&#8220;clean&#8221;) containing the records considered
-correct by the test or a logical vector (&#8220;flagged&#8221;), with TRUE = test
-passed and FALSE = test failed/potentially problematic .
-Default = &#8220;clean&#8221;. If &#8220;dataset&#8221;: <code>data.frame</code> with one
-row for each dataset in <code>x</code>.</p>
+    <p>Depending on the &#8216;value&#8217; argument:</p><dl class='dl-horizontal'>
+<dt>&#8220;dataset&#8221;</dt><dd><p>a <code>data.frame</code> with the
+the test summary statistics for each dataset in <code>x</code></p></dd>
+<dt>&#8220;clean&#8221;</dt><dd><p>a <code>data.frame</code> containing only
+records from datatsets in <code>x</code> that passed the tests</p></dd>
+<dt>&#8220;flagged&#8221;</dt><dd><p>a logical vector of the same length as
+rows in <code>x</code>, with TRUE = test passed and
+FALSE = test failed/potentially problematic.</p></dd>
+</dl>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -232,7 +238,7 @@ degrees. The function uses a binomial test to check if more records than
 expected have decimals below 0.6 (which is the maximum that can be obtained
 in minutes, as one degree has 60 minutes) and if the number of these records
 is higher than those above 0.59 by a certain proportion. The periodicity
-test uses rate estimation in a poisson process to estimate if there is
+test uses rate estimation in a Poisson process to estimate if there is
 periodicity in the decimals of a dataset (as would be expected by for
 example rounding or data that was collected in a raster format) and if there
 is an over proportional number of records with the decimal 0 (full degrees)

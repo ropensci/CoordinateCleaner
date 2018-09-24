@@ -2,12 +2,15 @@ context("Fossil cleaning tc_*")
 
 set.seed(1)
 #cf_range
-minages <- runif(n = 11, min = 0.1, max = 25)
-test <- data.frame(species = c(letters[1:10], "z"),
-                lng = c(runif(n = 9, min = 4, max = 16), 75, 7),
-                lat = c(runif(n = 11, min = -5, max = 5)),
+minages <- runif(n = 100, min = 0.1, max = 25)
+set.seed(1)
+maxages <- minages + c(runif(n = 99, min = 0, max = 5), 25)
+
+test <- data.frame(species = c(letters[1:9], "z"),
+                lng = c(runif(n = 98, min = 4, max = 16), 75, 7),
+                lat = c(runif(n = 100, min = -5, max = 5)),
                 min_ma = minages, 
-                max_ma = minages + c(runif(n = 10, min = 0, max = 5), 25))
+                max_ma = maxages)
 
 
 
@@ -19,17 +22,30 @@ test_that("cf_range identifies existing bias", {
   
   #outlier method
   expect_equal(sum(cf_range(test, value = "flagged", 
-                            method = "quantile", taxon = "")), 10)
+                            method = "quantile", taxon = "")), 99)
   expect_equal(sum(cf_range(test, value = "flagged", 
-                            method = "mad", taxon = "")), 10)
+                            method = "mad", taxon = "")), 99)
   expect_equal(sum(cf_range(test, value = "flagged", 
                             method = "time", taxon = "", 
-                            max_range = 20)), 10)
+                            max_range = 20)), 99)
   
-  expect_equal(sum(cf_range(test, value = "clean", 
+  expect_equal(nrow(cf_range(test, value = "clean", 
                             method = "quantile", taxon = "",
-                            uniq_loc = TRUE)), 10)
+                            uniq_loc = TRUE)), 99)
+  expect_equal(nrow(cf_range(test, value = "clean", 
+                             method = "mad", taxon = "",
+                             uniq_loc = TRUE)), 99)
+  expect_equal(nrow(cf_range(test, value = "clean", 
+                             method = "time", taxon = "",
+                             uniq_loc = TRUE)), 100)
   
+  expect_equal(nrow(cf_range(test, value = "clean", 
+                             method = "quantile", taxon = "species",
+                             uniq_loc = TRUE)), 99)
+  
+  expect_equal(nrow(cf_range(test, value = "clean", 
+                             method = "quantile", taxon = "species",
+                             uniq_loc = TRUE)), 99)
 })
 
 #cf_age
@@ -40,13 +56,25 @@ test_that("cf_age runs", {
   
   #outlier method
   expect_equal(sum(cf_age(test, value = "flagged", 
-                          method = "quantile", taxon = "")), 11)
+                          method = "quantile",
+                          taxon = "", replicates = 10)), 100)
   expect_equal(sum(cf_age(test, value = "flagged", 
-                          method = "quantile", taxon = "", uniq_loc = F)), 11)
+                          method = "quantile", taxon = "", 
+                          uniq_loc = F, replicates = 10)), 100)
   expect_equal(sum(cf_age(test, value = "flagged", 
-                          method = "mad", taxon = "")), 11)
+                          method = "quantile", taxon = "species", 
+                          uniq_loc = F, replicates = 10)), 100)
   expect_equal(sum(cf_age(test, value = "flagged", 
-                          method = "mad", taxon = "", uniq_loc = F)), 11)
+                          method = "mad", taxon = "",
+                          replicates = 10, flag_thresh = 0.1, 
+                          mltpl = 10)), 100)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "mad", taxon = "species",
+                          replicates = 10, flag_thresh = 0.1, 
+                          mltpl = 10)), 100)
+  expect_equal(sum(cf_age(test, value = "flagged", 
+                          method = "mad", taxon = "", 
+                          uniq_loc = F)), 100)
 })
 
 

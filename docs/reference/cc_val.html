@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check Coordinate Validity in lat/lon — cc_val • CoordinateCleaner</title>
+<title>Identify Invalid lat/lon Coordinates — cc_val • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,10 @@
 
 
 
-<meta property="og:title" content="Check Coordinate Validity in lat/lon — cc_val" />
+<meta property="og:title" content="Identify Invalid lat/lon Coordinates — cc_val" />
 
-<meta property="og:description" content="Checks if all coordinates in a data set are valid in a latitude/longitude
-coordinate reference system. That is non-numeric, not available coordinates
-and lat &amp;gt;90, la &amp;lt;-90, lon &amp;gt; 180 and lon &amp;lt; -180 are flagged." />
+<meta property="og:description" content="Removes or flags non-numeric and not available coordinates
+as well as lat &amp;gt;90, la &amp;lt;-90, lon &amp;gt; 180 and lon &amp;lt; -180 are flagged." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,16 +132,15 @@ and lat &amp;gt;90, la &amp;lt;-90, lon &amp;gt; 180 and lon &amp;lt; -180 are f
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check Coordinate Validity in lat/lon</h1>
+    <h1>Identify Invalid lat/lon Coordinates</h1>
     
     <div class="hidden name"><code>cc_val.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Checks if all coordinates in a data set are valid in a latitude/longitude
-coordinate reference system. That is non-numeric, not available coordinates
-and lat &gt;90, la &lt;-90, lon &gt; 180 and lon &lt; -180 are flagged.</p>
+    <p>Removes or flags non-numeric and not available coordinates
+as well as lat &gt;90, la &lt;-90, lon &gt; 180 and lon &lt; -180 are flagged.</p>
     
     </div>
 
@@ -154,22 +152,22 @@ and lat &gt;90, la &lt;-90, lon &gt; 180 and lon &lt; -180 are flagged.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -183,7 +181,7 @@ of records flagged.</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -212,7 +210,7 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fu'>runif</span>(<span class='fl'>106</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>), <span class='fl'>NA</span>, <span class='st'>"13W33'"</span>, <span class='st'>"67,09"</span>, <span class='fl'>305</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>110</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
-<span class='fu'>cc_val</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Flagged 4 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
+<span class='fu'>cc_val</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing coordinate validity</span></div><div class='output co'>#&gt; <span class='message'>Removed 4 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
 #&gt; 1         a       175.854798      -79.431127
 #&gt; 2         b       -78.380845      -25.494926
 #&gt; 3         c        19.480452       -3.710512

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Coordinates in Vicinity of Country Capitals. — cc_cap • CoordinateCleaner</title>
+<title>Identify Coordinates in Vicinity of Country Capitals. — cc_cap • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Coordinates in Vicinity of Country Capitals. — cc_cap" />
+<meta property="og:title" content="Identify Coordinates in Vicinity of Country Capitals. — cc_cap" />
 
-<meta property="og:description" content="Flags records within a certain radius around country capitals. Poorly
+<meta property="og:description" content="Removes or flags records within a certain radius around country capitals. Poorly
 geo-referenced occurrence records in biological databases are often
 erroneously geo-referenced to capitals." />
 <meta name="twitter:card" content="summary" />
@@ -133,14 +133,14 @@ erroneously geo-referenced to capitals." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Coordinates in Vicinity of Country Capitals.</h1>
+    <h1>Identify Coordinates in Vicinity of Country Capitals.</h1>
     
     <div class="hidden name"><code>cc_cap.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags records within a certain radius around country capitals. Poorly
+    <p>Removes or flags records within a certain radius around country capitals. Poorly
 geo-referenced occurrence records in biological databases are often
 erroneously geo-referenced to capitals.</p>
     
@@ -194,8 +194,8 @@ be any SpatialPointsDataFrame, but the structure must be identical to
     </tr>
     <tr>
       <th>verify</th>
-      <td><p>logical. If TRUE records are only flagged if the dataset contains multiple records
-with identical coordinates closed to the GBIF headquarters. 
+      <td><p>logical. If TRUE records are only flagged if they are the
+only record in a given species flagged close to a given reference.
 If FALSE, the distance is the only criterion</p></td>
     </tr>
     <tr>
@@ -215,11 +215,6 @@ of records flagged.</p></td>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
 problematic . Default = &#8220;clean&#8221;.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Note: the buffer radius is in degrees, thus will differ slightly between
-different latitudes.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -243,7 +238,7 @@ details and tutorials.</p>
                 <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
                 <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
-<span class='fu'>cc_cap</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
+<span class='fu'>cc_cap</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt; <span class='message'>Removed 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
 #&gt; 1         a     -150.9299505     55.02240553
 #&gt; 2         b      120.3598934     56.52923581
 #&gt; 3         c       36.2739190    -17.29601964
@@ -343,7 +338,7 @@ details and tutorials.</p>
 #&gt; 97        g       16.9356126     73.08928400
 #&gt; 98        h      120.5286535     49.09146560
 #&gt; 99        i     -169.9358308    -20.99327931
-#&gt; 100       j      -11.0216521     89.93744229</div><div class='input'><span class='fu'>cc_cap</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt;    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+#&gt; 100       j      -11.0216521     89.93744229</div><div class='input'><span class='fu'>cc_cap</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing country capitals</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
 #&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
 #&gt;   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
 #&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
@@ -365,8 +360,6 @@ details and tutorials.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
 

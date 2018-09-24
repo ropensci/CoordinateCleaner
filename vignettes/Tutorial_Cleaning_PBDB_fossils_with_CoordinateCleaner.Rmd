@@ -92,7 +92,7 @@ Looks good, then we will test for coordinates with equal longitude and latitude.
 cl <- cc_equ(cl, lat = "lat", lon = "lng")
 ```
 
-For the purpose of the tutorial, we will always exclude flagged records. If you want to further explore them use the `value = "flagged"` argument, valid for all functions. In that case the output value will be a vector of logical values with the same length as `dat`, where TRUE = valid record, FALSE = flagged record. It is generally advisable to check flagged records whenever possible, to avoid data-loss and false flags.
+For the purpose of the tutorial, we will always exclude flagged records. If you want to further explore them, and you should if by any means possible, use the `value = "flagged"` argument, valid for all functions. In that case the output value will be a vector of logical values with the same length as `dat`, where TRUE = valid record, FALSE = flagged record. It is generally advisable to check flagged records whenever possible, to avoid data-loss and false flags.
 
 ```{r, eval = TRUE, collapse = T}
 fl <- cc_equ(dat, value = "flagged", lat = "lat", lon = "lng")
@@ -191,7 +191,7 @@ nrow(dat) - nrow(cl)
 
 All test combined have removed about `r nrow(dat) - nrow(cl)` records (`r round((1 - nrow(cl) / nrow(dat)) *100, 1)`%). If you want to identify all flagged records, to double check or correct them, take a look at the `clean_fossils` wrapper function below. 
 
-So far so good, we have significantly refined the data  for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run \emph{CoordinateCleaner}. You can  connect all functions directly in a row using the magrittr pipe (%>%) operator.
+So far so good, we have significantly refined the data  for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run *CoordinateCleaner*. You can  connect all functions directly in a row using the magrittr pipe (%>%) operator.
 
 ```{r, eval = F, collapse = T}
 cl <- dat%>%
@@ -210,7 +210,7 @@ cl <- dat%>%
           min_age = "late_age", max_age = "early_age")
 ```
 
-Alternatively you can use `clean_fossils`, a wrapper around all quality tests provided by \emph{CoordinateCleaner} relevant for fossil data. See `?CleanCoordiantesFOS` for help.
+Alternatively you can use `clean_fossils`, a wrapper around all quality tests provided by *CoordinateCleaner* relevant for fossil data. See `?CleanCoordiantesFOS` for help.
 
 ```{r, eval = F, collapse = T}
 #adapt country code to ISO3, for country test
@@ -225,8 +225,8 @@ flags <- clean_fossils(x = dat,
                              value = "spatialvalid")
 
 head(flags)
-cl <- dat[flags$summary,] #the cleaned records
-fl_rec <- dat[!flags$summary,] # the flagged records for verification
+cl <- dat[flags$.summary,] #the cleaned records
+fl_rec <- dat[!flags$.summary,] # the flagged records for verification
 ```
 
 # Improving data quality using meta-data

@@ -1,6 +1,6 @@
-#' Flag Datasets with a Degree Conversion Error
+#' Identify Datasets with a Degree Conversion Error
 #' 
-#' This test identifies datasets where a significant fraction of records has
+#' This test flags datasets where a significant fraction of records has
 #' been subject to a common degree minute to decimal degree conversion error,
 #' where the degree sign is recognized as decimal delimiter.
 #' 
@@ -16,12 +16,6 @@
 #' = 0.01} is recommended, for datasets between 100,000 and 1 M records diff =
 #' 0.001, and so on.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param ds a character string. The column with the dataset of each record. In
 #' case \code{x} should be treated as a single dataset, identical for all
 #' records.  Default = \dQuote{dataset}.
@@ -38,21 +32,23 @@
 #' datasets with 10000 - 1M records. Higher values also work reasonably well
 #' for smaller datasets, therefore, default = 1000. For large datasets try
 #' 10000.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
 #' @param diagnostic logical. If TRUE plots the analyses matrix for each
 #' dataset.
+#' @inheritParams cc_cap
+#' 
 #' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
 #' with summary statistics and flags for each dataset (\dQuote{dataset}) or a
 #' \code{data.frame} containing the records considered correct by the test
 #' (\dQuote{clean}) or a logical vector (\dQuote{flags}), with TRUE = test passed and FALSE =
 #' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
+#' 
 #' @keywords "Coordinate cleaning" "Dataset level cleaning"
 #' @family Datasets
+#' 
 #' @examples
 #' 
 #' clean <- data.frame(species = letters[1:10], 

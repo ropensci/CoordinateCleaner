@@ -1,6 +1,6 @@
-#' Flag Records Outside Natural Ranges
+#' Identify Records Outside Natural Ranges
 #' 
-#' Flags records outside of the provided natural range polygon, on a per species basis. 
+#' Removes or flags records outside of the provided natural range polygon, on a per species basis. 
 #' Expects one entry per species. See the example or 
 #' \url{http://www.iucnredlist.org/technical-documents/spatial-data} for 
 #' the required polygon structure. 
@@ -11,27 +11,20 @@
 #' Note: the buffer radius is in degrees, thus will differ slightly between
 #' different latitudes. 
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
 #' @param range a SpatialPolygonsDataFrame of natural ranges for species in x. 
 #' Must contain a column named as indicated by \code{species}. See details.  
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param species a character string. The column with the species name. 
 #' Default = \dQuote{species}.
 #' @param buffer numerical. The buffer around each species' range,
 #' from where records should be flagged as problematic, in decimal
 #' degrees. Default = 0.
-#' @param value a character string. Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
-#' @note See \url{https://azizka.github.io/CoordinateCleaner} for more
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
+#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
+#' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
 #' @examples
@@ -131,7 +124,11 @@ cc_iucn <- function(x,
 
   # Generate output
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out$flag)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out$flag)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out$flag)))
+    }
   }
   
   switch(value, clean = return(x[out$flag, ]), 

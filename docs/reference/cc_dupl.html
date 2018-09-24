@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag Duplicated Records — cc_dupl • CoordinateCleaner</title>
+<title>Identify Duplicated Records — cc_dupl • CoordinateCleaner</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Flag Duplicated Records — cc_dupl" />
+<meta property="og:title" content="Identify Duplicated Records — cc_dupl" />
 
-<meta property="og:description" content="Flags duplicated records based on species name and coordinates, as well as
+<meta property="og:description" content="Removes or flags duplicated records based on species name and coordinates, as well as
 user-defined additional columns. True (specimen) duplicates or duplicates
 from the same species can make up the bulk of records in a biological
 collection database, but are undesirable for many analyses. Both can be
@@ -135,14 +135,14 @@ flagged with this function, the former given enough additional information." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag Duplicated Records</h1>
+    <h1>Identify Duplicated Records</h1>
     
     <div class="hidden name"><code>cc_dupl.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Flags duplicated records based on species name and coordinates, as well as
+    <p>Removes or flags duplicated records based on species name and coordinates, as well as
 user-defined additional columns. True (specimen) duplicates or duplicates
 from the same species can make up the bulk of records in a biological
 collection database, but are undesirable for many analyses. Both can be
@@ -159,17 +159,17 @@ flagged with this function, the former given enough additional information.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a data.frame. Containing geographical coordinates and species
+      <td><p>data.frame. Containing geographical coordinates and species
 names.</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>a character string. The column with the longitude coordinates.
+      <td><p>character string. The column with the longitude coordinates.
 Default = &#8220;decimallongitude&#8221;.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>a character string. The column with the latitude coordinates.
+      <td><p>character string. The column with the latitude coordinates.
 Default = &#8220;decimallatitude&#8221;.</p></td>
     </tr>
     <tr>
@@ -185,12 +185,12 @@ and collector number.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>a character string.  Defining the output value. See value.</p></td>
+      <td><p>character string.  Defining the output value. See value.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p>logical. If TRUE reports the name of the test and the number
-of records flagged</p></td>
+of records flagged.</p></td>
     </tr>
     </table>
     
@@ -199,7 +199,7 @@ of records flagged</p></td>
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = &#8220;clean&#8221;.</p>
+problematic . Default = &#8220;clean&#8221;.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -234,7 +234,7 @@ details and tutorials.</p>
 #&gt;  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 #&gt;  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 #&gt;  [85]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-#&gt;  [97]  TRUE  TRUE  TRUE  TRUE</div><div class='input'><span class='fu'>cc_dupl</span>(<span class='no'>x</span>, <span class='kw'>additions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"collector"</span>, <span class='st'>"collector.number"</span>))</div><div class='output co'>#&gt; <span class='message'>Testing duplicates</span></div><div class='output co'>#&gt; <span class='message'>Flagged 3 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude collector collector.number
+#&gt;  [97]  TRUE  TRUE  TRUE  TRUE</div><div class='input'><span class='fu'>cc_dupl</span>(<span class='no'>x</span>, <span class='kw'>additions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"collector"</span>, <span class='st'>"collector.number"</span>))</div><div class='output co'>#&gt; <span class='message'>Testing duplicates</span></div><div class='output co'>#&gt; <span class='message'>Removed 3 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude collector collector.number
 #&gt; 1         a                3               2     Bonpl             1001
 #&gt; 2         b                8               0     Bonpl              354
 #&gt; 3         c               10               3     Bonpl             1001

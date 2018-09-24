@@ -20,13 +20,13 @@ clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
   verbose = TRUE, report = FALSE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. A vector of the same length as rows in x,
@@ -107,23 +107,26 @@ section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
 \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
-of records flagged}
+of records flagged.}
 
 \item{report}{logical or character.  If TRUE a report file is written to the
 working directory, summarizing the cleaning results. If a character, the
 path to which the file should be written.  Default = FALSE.}
 }
 \value{
-Depending on the output argument: \describe{
-\item{list("spatialvalid")}{an object of class \code{spatialvalid} with one
-column for each test. TRUE = clean coordinate, FALSE = potentially
-problematic coordinates.  The summary column is FALSE if any test flagged
-the respective coordinate.} \item{list("flagged")}{a logical vector with the
+Depending on the output argument:
+\describe{
+\item{\dQuote{spatialvalid}}{an object of class \code{spatialvalid} similar to x
+with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
+problematic coordinate entries.  The .summary column is FALSE if any test flagged
+the respective coordinate.}
+\item{\dQuote{flagged}}{a logical vector with the
 same order as the input data summarizing the results of all test. TRUE =
 clean coordinate, FALSE = potentially problematic (= at least one test
-failed).} \item{list("clean")}{a \code{data.frame} of cleaned coordinates
-if \code{species = NULL} or a \code{data.frame} with cleaned coordinates and
-species ID otherwise} }
+failed).}
+\item{\dQuote{clean}}{a \code{data.frame} similar to x
+with potentially problematic records removed}
+}
 }
 \description{
 Cleaning geographic coordinates by multiple empirical tests to flag
@@ -195,8 +198,16 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 
 test <- clean_coordinates(x = exmpl, 
                           tests = c("capitals", "centroids", 
-                                    "equal", "gbif", "institutions", 
-                                    "seas", "zeros"))
+                                    "equal", "gbif", "zeros"))
+                                    
+\dontrun{
+#run a selection of tests
+test <- clean_coordinates(x = exmpl, 
+                          tests = c("capitals", "seas"))
+
+
+}
+                                 
                                     
 summary(test)
 

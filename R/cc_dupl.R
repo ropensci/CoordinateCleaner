@@ -1,34 +1,27 @@
-#' Flag Duplicated Records
+#' Identify Duplicated Records
 #' 
-#' Flags duplicated records based on species name and coordinates, as well as
+#' Removes or flags duplicated records based on species name and coordinates, as well as
 #' user-defined additional columns. True (specimen) duplicates or duplicates
 #' from the same species can make up the bulk of records in a biological
 #' collection database, but are undesirable for many analyses. Both can be
 #' flagged with this function, the former given enough additional information.
 #' 
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
 #' @param species a character string. The column with the species name. Default
 #' = \dQuote{species}.
 #' @param additions a vector of character strings. Additional columns to be
 #' included in the test for duplication. For example as below, collector name
 #' and collector number.
-#' @param value a character string.  Defining the output value. See value.
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner} for more
 #' details and tutorials.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -61,7 +54,11 @@ cc_dupl <- function(x,
 
   # create output based on value argument
   if (verbose) {
-    message(sprintf("Flagged %s records.", sum(!out)))
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

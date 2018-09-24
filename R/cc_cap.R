@@ -1,11 +1,8 @@
-#' Flag Coordinates in Vicinity of Country Capitals.
+#' Identify Coordinates in Vicinity of Country Capitals.
 #' 
-#' Flags records within a certain radius around country capitals. Poorly
+#' Removes or flags records within a certain radius around country capitals. Poorly
 #' geo-referenced occurrence records in biological databases are often
 #' erroneously geo-referenced to capitals.
-#' 
-#' Note: the buffer radius is in degrees, thus will differ slightly between
-#' different latitudes.
 #' 
 #' @param x data.frame. Containing geographical coordinates and species
 #' names.
@@ -25,8 +22,8 @@
 #' @param ref SpatialPointsDataFrame. Providing the geographic gazetteer. Can
 #' be any SpatialPointsDataFrame, but the structure must be identical to
 #' \code{\link{countryref}}.  Default = \code{\link{countryref}}.
-#' @param verify logical. If TRUE records are only flagged if the dataset contains multiple records
-#' with identical coordinates closed to the GBIF headquarters. 
+#' @param verify logical. If TRUE records are only flagged if they are the
+#' only record in a given species flagged close to a given reference.
 #' If FALSE, the distance is the only criterion
 #' @param value character string.  Defining the output value. See value.
 #' @param verbose logical. If TRUE reports the name of the test and the number
@@ -148,8 +145,17 @@ cc_cap <- function(x,
     tester <- tester[order(tester$ord),]
     tester[is.na(tester)] <- 0
     
-    #only falg those records that occure with only one ccordinate in the buffer
+    #only flag those records that occure with only one coordinate in the buffer
     out <-  tester$coord.count <= tester$species.count| out
+  }
+  
+  if (verbose) {
+    if(value == "clean"){
+      message(sprintf("Removed %s records.", sum(!out)))
+    }else{
+      message(sprintf("Flagged %s records.", sum(!out)))
+    }
+    
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))

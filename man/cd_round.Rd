@@ -2,7 +2,7 @@
 % Please edit documentation in R/cd_round.R
 \name{cd_round}
 \alias{cd_round}
-\title{Flags Datasets with Rasterized Coordinates}
+\title{Identify Datasets with Rasterized Coordinates}
 \usage{
 cd_round(x, lon = "decimallongitude", lat = "decimallatitude",
   ds = "dataset", T1 = 7, reg_out_thresh = 2, reg_dist_min = 0.1,
@@ -10,13 +10,13 @@ cd_round(x, lon = "decimallongitude", lat = "decimallatitude",
   test = "both", value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
@@ -51,7 +51,7 @@ TRUE.}
 both.  In the latter case datasets are only flagged if both test are failed.
 Default = \dQuote{both}}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -68,10 +68,10 @@ test failed/potentially problematic. Default =
 Flags datasets with periodicity patterns indicative of a rasterized
 (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 combination of autocorrelation and sliding-window outlier detection to
-identify periodicity patterns in the data.
-}
-\details{
-see supplement %Copy later from supplementary material
+identify periodicity patterns in the data. See 
+\url{https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+for further details and 
+a description of the algorithm
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

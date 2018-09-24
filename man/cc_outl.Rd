@@ -2,26 +2,26 @@
 % Please edit documentation in R/cc_outl.R
 \name{cc_outl}
 \alias{cc_outl}
-\title{Flag Geographic Outliers in Species Distributions}
+\title{Identify Geographic Outliers in Species Distributions}
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", method = "quantile", mltpl = 5, tdi = 1000,
   value = "clean", sampling_thresh = 0, verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the latitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{species}{a character string. The column with the species name. Default
+\item{species}{character string. The column with the species name. Default
 = \dQuote{species}.}
 
-\item{method}{a character string.  Defining the method for outlier
+\item{method}{character string.  Defining the method for outlier
 selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
 \dQuote{mad}.  Default = \dQuote{quantile}.}
 
@@ -33,9 +33,12 @@ selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
 'distance'}) of a record to all other records of a species to be identified
 as outlier, in km. See details. Default = 1000.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
-\item{sampling_thresh}{a numeric. Cut off threshold fo}
+\item{sampling_thresh}{numeric. Cut off threshold for the sampling correction.
+Indicates the quantile of sampling in which outliers should be ignored. For instance, 
+if \code{sampling_thresh} == 0.25, records in the 25% worst sampled countries will 
+not be flagged as outliers. Default = 0 (no sampling correction).}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -44,10 +47,10 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Flags records that are outliers in geographic space according to the method
+Removes out or flags records that are outliers in geographic space according to the method
 defined via the \code{method} argument. Geographic outliers often represent
 erroneous coordinates, for example due to data entry errors, imprecise
 geo-references, individuals in horticulture/captivity.
@@ -68,11 +71,13 @@ unique locations a random sample of 1000 records is used for
 the distance matrix calculation.
 
 The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
-in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
+in any given location. To account for this, the sampling_cor option fetches 
+the number of occurrence records available 
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 
-number of records per square kilometre in this country. See for an example and further
- explanation of the outlier test.
+number of records per square kilometre in this country. 
+See for \url{https://azizka.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+an example and further explanation of the outlier test.
 }
 \note{
 See \url{https://azizka.github.io/CoordinateCleaner/} for more

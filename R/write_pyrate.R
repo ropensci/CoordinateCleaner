@@ -13,15 +13,8 @@
 #' replicates=1 (default, generates 1 data set), replicates=10 (generates 10
 #' random replicates of the data set).
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param taxon a character string. The column with the taxon name. If
-#' \dQuote{}, searches for outliers over the entire dataset, otherwise per
-#' specified taxon. Default = \dQuote{identified_name}.
-#' @param min_age a character string. The column with the minimum age. Default
-#' = \dQuote{min_ma}.
-#' @param max_age a character string. The column with the maximum age. Default
-#' = \dQuote{max_ma}.
+#' @param taxon character string. The column with the taxon name. 
+#' Default = \dQuote{accepted_name}.
 #' @param status a vector of character strings of length \code{nrow(x)}.
 #' Indicating for each record \dQuote{extinct} or \dQuote{extant}.
 #' @param trait a numeric vector of length \code{nrow(x)}. Indicating trait
@@ -40,10 +33,13 @@
 #' and MaxT) for each occurrence or the midpoint age. Note that this option
 #' defaults to TRUE if several replicates are generated (i.e. replicates > 1).
 #' Examples: random = TRUE (default) random = FALSE (use midpoint ages)
+#' @inheritParams cf_age
+#' 
 #' @return PyRate input files in the working directory.
+#' 
 #' @note See \url{https://github.com/dsilvestro/PyRate/wiki} for more details
 #' and tutorials on PyRate and PyRate input.
-#' @author Daniele Silvestro
+#' 
 #' @keywords Fossil
 #' @examples
 #' 

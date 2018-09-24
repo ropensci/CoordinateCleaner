@@ -9,22 +9,21 @@ write_pyrate(x, status, fname, taxon = "accepted_name",
   path = getwd(), replicates = 1, cutoff = NULL, random = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+and geographic coordinates.}
 
 \item{status}{a vector of character strings of length \code{nrow(x)}.
 Indicating for each record \dQuote{extinct} or \dQuote{extant}.}
 
 \item{fname}{a character string. The prefix to use for the output files.}
 
-\item{taxon}{a character string. The column with the taxon name. If
-\dQuote{}, searches for outliers over the entire dataset, otherwise per
-specified taxon. Default = \dQuote{identified_name}.}
+\item{taxon}{character string. The column with the taxon name. 
+Default = \dQuote{accepted_name}.}
 
-\item{min_age}{a character string. The column with the minimum age. Default
+\item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
 
-\item{max_age}{a character string. The column with the maximum age. Default
+\item{max_age}{character string. The column with the maximum age. Default
 = \dQuote{max_ma}.}
 
 \item{trait}{a numeric vector of length \code{nrow(x)}. Indicating trait
@@ -93,8 +92,5 @@ status <- status[exmpl$accepted_name]
 write_pyrate(x = exmpl,fname = "test", status = status)
 }
 
-}
-\author{
-Daniele Silvestro
 }
 \keyword{Fossil}

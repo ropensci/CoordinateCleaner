@@ -1,6 +1,6 @@
-#' Flag Geographic Outliers in Species Distributions
+#' Identify Geographic Outliers in Species Distributions
 #' 
-#' Flags records that are outliers in geographic space according to the method
+#' Removes out or flags records that are outliers in geographic space according to the method
 #' defined via the \code{method} argument. Geographic outliers often represent
 #' erroneous coordinates, for example due to data entry errors, imprecise
 #' geo-references, individuals in horticulture/captivity.
@@ -19,15 +19,18 @@
 #' unique locations a random sample of 1000 records is used for 
 #' the distance matrix calculation.
 #' 
-#' @param x a data.frame. Containing geographical coordinates and species
-#' names.
-#' @param lon a character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
-#' @param lat a character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
-#' @param species a character string. The column with the species name. Default
+#' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
+#' in any given location. To account for this, the sampling_cor option fetches 
+#' the number of occurrence records available 
+#' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
+#' (the mean distance) for each records is than weighted by the log transformed 
+#' number of records per square kilometre in this country. 
+#' See for \url{https://azizka.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+#' an example and further explanation of the outlier test.
+#' 
+#' @param species character string. The column with the species name. Default
 #' = \dQuote{species}.
-#' @param method a character string.  Defining the method for outlier
+#' @param method character string.  Defining the method for outlier
 #' selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
 #' \dQuote{mad}.  Default = \dQuote{quantile}.
 #' @param mltpl numeric. The multiplier of the interquartile range
@@ -36,24 +39,20 @@
 #' @param tdi numeric.  The minimum absolute distance (\code{method ==
 #' 'distance'}) of a record to all other records of a species to be identified
 #' as outlier, in km. See details. Default = 1000.
-#' @param value a character string.  Defining the output value. See value.
-#' @param sampling_thresh a numeric. Cut off threshold fo
-#' @param verbose logical. If TRUE reports the name of the test and the number
-#' of records flagged.
-#' @return Depending on the \sQuote{value} argument, either a \code{data.frame}
-#' containing the records considered correct by the test (\dQuote{clean}) or a
-#' logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-#' problematic. Default = \dQuote{clean}.
+#' @param sampling_thresh numeric. Cut off threshold for the sampling correction.
+#' Indicates the quantile of sampling in which outliers should be ignored. For instance, 
+#' if \code{sampling_thresh} == 0.25, records in the 25% worst sampled countries will 
+#' not be flagged as outliers. Default = 0 (no sampling correction).
+#' @inheritParams cc_cap
+#' 
+#' @inherit cc_cap return
+#' 
 #' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
-#' @details The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
-#' in any given location. To account for this, the sampling_cor option fetches the number of occurrence records available 
-#' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
-#' (the mean distance) for each records is than weighted by the log transformed 
-#' number of records per square kilometre in this country. See for an example and further
-#'  explanation of the outlier test.
+#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
+#' 
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
@@ -269,10 +268,21 @@ cc_outl <- function(x,
   out[flags] <- FALSE
 
   if (verbose) {
+    
+    
+    
     if (value == "ids") {
-      message(sprintf("Flagged %s records.", length(flags)))
+      if(value == "clean"){
+        message(sprintf("Removed %s records.", length(flags)))
+      }else{
+        message(sprintf("Flagged %s records.", length(flags)))
+      }
     } else {
-      message(sprintf("Flagged %s records.", sum(!out)))
+      if(value == "clean"){
+        message(sprintf("Removed %s records.", sum(!out)))
+      }else{
+        message(sprintf("Flagged %s records.", sum(!out)))
+      }
     }
   }
 

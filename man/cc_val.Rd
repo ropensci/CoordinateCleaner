@@ -2,22 +2,22 @@
 % Please edit documentation in R/cc_val.R
 \name{cc_val}
 \alias{cc_val}
-\title{Check Coordinate Validity in lat/lon}
+\title{Identify Invalid lat/lon Coordinates}
 \usage{
 cc_val(x, lon = "decimallongitude", lat = "decimallatitude",
   value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{a data.frame. Containing geographical coordinates and species
+\item{x}{data.frame. Containing geographical coordinates and species
 names.}
 
-\item{lon}{a character string. The column with the longitude coordinates.
+\item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
 
-\item{lat}{a character string. The column with the longitude coordinates.
+\item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{value}{a character string.  Defining the output value. See value.}
+\item{value}{character string.  Defining the output value. See value.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -26,12 +26,11 @@ of records flagged.}
 Depending on the \sQuote{value} argument, either a \code{data.frame}
 containing the records considered correct by the test (\dQuote{clean}) or a
 logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic. Default = \dQuote{clean}.
+problematic . Default = \dQuote{clean}.
 }
 \description{
-Checks if all coordinates in a data set are valid in a latitude/longitude
-coordinate reference system. That is non-numeric, not available coordinates
-and lat >90, la <-90, lon > 180 and lon < -180 are flagged.
+Removes or flags non-numeric and not available coordinates
+as well as lat >90, la <-90, lon > 180 and lon < -180 are flagged.
 }
 \details{
 This test is obligatory before running any further tests of
