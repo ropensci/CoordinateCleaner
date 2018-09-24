@@ -9,7 +9,7 @@ Erroneous database entries and problematic geographic coordinates are a central 
 
 Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo.
 
-| Functionality                                                 | CoordinateCleaner2.0-2                                   | scrubr 0.1.1     |biogeo 1.0| Percent overlap                      |
+| Functionality                                                 | CoordinateCleaner 2.0-2                                   | scrubr 0.1.1     |biogeo 1.0| Percent overlap                      |
 |--------------------------------|--------------|------------------|------------------|--------------------|
 | Missing coordinates                                           | cc_val                                                    | coord_incomplete |missingvalsexclude| 100%                                 |
 | Coordinates outside CRS                                       | cc_val                                                    | coord_impossible |-| 100%                                 |

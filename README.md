@@ -5,7 +5,7 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 
-***Note: the latest release of CoordinateCleaner (2.0-2), is incompatible with scripts using older versions (1.x), since function and argument names changed. Please see the news file for details.***
+***Note: the latest release of CoordinateCleaner (2.0-2) is incompatible with scripts using older versions (1.x), since functions and argument names changed. Please see the news file for details.***
 
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
