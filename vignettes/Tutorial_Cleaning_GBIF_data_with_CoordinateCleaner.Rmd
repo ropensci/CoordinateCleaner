@@ -112,7 +112,7 @@ The automatic test flagged `r round(sum(!flags$.summary) / nrow(dat) * 100, 1)`%
 #Exclude problematic records
 dat_cl <- dat[flags$.summary,]
 
-#THe flagged records
+#The flagged records
 dat_fl <- dat[!flags$.summary,]
 ```
 
@@ -235,7 +235,7 @@ In cases where simple latitudinal or longitudinal borders are not useful, an alt
 
 ```{r, eval = TRUE, collapse = T}
 
-#create simple antural range for lions
+#create simple natural range for lions
 range <- Polygon(cbind(c(-23, -7, 31, 71, 83, 42, 41, 24, -23), c(14, 37, 32, 27, 18, 0, -16, -38, 14)))
 range <- Polygons(list(range), ID = c("A"))
 wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"

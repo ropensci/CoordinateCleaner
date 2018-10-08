@@ -136,10 +136,10 @@ plot.spatialvalid <- function(x,
     pts <- x[!x$.summary, ]
     plo <- plo + 
       ggplot2::geom_point(data = pts, 
-                          ggplot2::aes_string(
-                            x = "decimallongitude",
-                            y = "decimallatitude", 
-                            colour = "flag"), 
+                          ggplot2::aes(
+                            x = lon,
+                            y = lat, 
+                            colour = flag), 
                           size = pts_size) + 
       ggplot2::theme(
       legend.title = ggplot2::element_blank(),
