@@ -136,11 +136,12 @@ plot.spatialvalid <- function(x,
     pts <- x[!x$.summary, ]
     plo <- plo + 
       ggplot2::geom_point(data = pts, 
-                          ggplot2::aes(
+                          ggplot2::aes_string(
                             x = lon,
                             y = lat, 
-                            colour = flag), 
-                          size = pts_size) + 
+                            colour = "flag"), 
+                          size = pts_size) +
+      #viridis::scale_colour_viridis(discrete = T) + 
       ggplot2::theme(
       legend.title = ggplot2::element_blank(),
       axis.title = ggplot2::element_text(size = font_size), 
