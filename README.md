@@ -97,4 +97,5 @@ See the [CONTRIBUTING](https://github.com/azizka/CoordinateCleaner/blob/master/C
 # Citation
 Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte RItter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. https://github.com/azizka/CoordinateCleaner
 
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
 
