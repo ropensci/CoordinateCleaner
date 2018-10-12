@@ -4,6 +4,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 ***Note: the latest release of CoordinateCleaner (2.0-2) is incompatible with scripts using older versions (1.x), since functions and argument names changed. Please see the news file for details.***
 
