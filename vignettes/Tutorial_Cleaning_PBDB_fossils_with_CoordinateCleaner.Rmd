@@ -26,7 +26,7 @@ You can install the latest stable version of CoordinateCleaner (Currently 2.0-1)
 install.packages("devtools")
 library(devtools)
 
-install_github("azizka/CoordinateCleaner")
+install_github("ropensci/CoordinateCleaner")
 ```
 
 # Load required libraries

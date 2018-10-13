@@ -25,7 +25,7 @@
 #' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 #' (the mean distance) for each records is than weighted by the log transformed 
 #' number of records per square kilometre in this country. 
-#' See for \url{https://azizka.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+#' See for \url{https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
 #' an example and further explanation of the outlier test.
 #' 
 #' @param species character string. The column with the species name. Default
@@ -47,7 +47,7 @@
 #' 
 #' @inherit cc_cap return
 #' 
-#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
+#' @note See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' 
 #' @keywords Coordinate cleaning

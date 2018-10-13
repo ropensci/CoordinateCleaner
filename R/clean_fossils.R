@@ -67,7 +67,7 @@
 #' @note Always tests for coordinate validity: non-numeric or missing
 #' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 #' 
-#' See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+#' See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
 #' 
 #' @keywords Fossil Coordinate cleaning Temporal cleaning

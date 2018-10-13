@@ -7,7 +7,7 @@ The `clean_coordinates` function enables a fast, automated and reproducible flag
 
 Individual tests can be switched on and off by a logical flag (see `?clean_coordinates`) and distance thresholds for all tests can be adapted. Custom gazetteers can be provided for all tests (for instance for a higher level of detail). See here for a detailed tutorial on how to clean occurrence records using `CoordinateCleaner`.
 
-***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
+***Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) [here](https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html) and how to clean fossil data (e.g. from PBDB) [here](https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html).***
 
 ## Switch individual test on/off
 `clean_coordinates` wraps around multiple tests for common error sources in species distribution records. Individual test can be included or excluded from a run with the tests argument of `clean_coordinates`, e.g. `"seas"` switches the seas test off. Most basic tests are switched on by defaults.

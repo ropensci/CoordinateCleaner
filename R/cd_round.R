@@ -4,7 +4,7 @@
 #' (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 #' combination of autocorrelation and sliding-window outlier detection to
 #' identify periodicity patterns in the data. See 
-#' \url{https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+#' \url{https://ropensci.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
 #' for further details and 
 #' a description of the algorithm
 #' 
@@ -42,7 +42,7 @@
 #' test failed/potentially problematic. Default =
 #' \dQuote{clean}.
 #' 
-#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more
+#' @note See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' 
 #' @keywords "Coordinate cleaning" "Dataset level cleaning"

@@ -55,7 +55,7 @@
 #' }
 #' 
 #' @seealso \code{\link{cd_ddmm}} \code{\link{cd_round}}
-#' @note See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+#' @note See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
 #' 
 #' @keywords Coordinate cleaning wrapper

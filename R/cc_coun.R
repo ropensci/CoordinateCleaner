@@ -18,7 +18,7 @@
 #' 
 #' @note With the default reference, records are flagged if they fall 
 #' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
-#' See \url{https://azizka.github.io/CoordinateCleaner/} for more
+#' See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' 
 #' @keywords Coordinate cleaning

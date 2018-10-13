@@ -32,7 +32,7 @@ With this tutorial you will be able to:
 
 # Identifying erroneous coordinates with *CoordinateCleaner*
 
-The `clean_coordinates` function is a wrapper function around all record-level tests of *CoordinateCleaner*. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases [@Maldonado2015], including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the [package vignettes](https://azizka.github.io/CoordinateCleaner/). This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
+The `clean_coordinates` function is a wrapper function around all record-level tests of *CoordinateCleaner*. The idea behind these tests is to use geographic gazetteers to identify records that are most likely erroneous (or very imprecise). We based the choice of tests on common problems observed in biological collection databases [@Maldonado2015], including assignment to country centroids, sea coordinate and outliers among others. You can get an overview over the individual tests using `?clean_coordinates` or via the [package vignettes](https://ropensci.github.io/CoordinateCleaner/). This tutorial assumes occurrence data in the format as downloaded from GBIF, for other formats you might need to adapt the column names. You might need to install some of the required packages for the tutorial using `install.packages`.
 
 ## Install `CoordinateCleaner`
 You can install the latest stable version of CoordinateCleaner from CRAN using `install.packages("CoordinateCleaner")`. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed.
@@ -41,7 +41,7 @@ You can install the latest stable version of CoordinateCleaner from CRAN using `
 install.packages("devtools")
 library(devtools)
 
-install_github("azizka/CoordinateCleaner")
+install_github("ropensci/CoordinateCleaner")
 ```
 
 ## Set up libraries and data

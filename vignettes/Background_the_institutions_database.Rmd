@@ -285,6 +285,6 @@ ggplot(data = plo)+
 ```
 
 ## Data accessability
-The database is open-source and available as R data file (.rda) as part of the *CoordinateCleaner* package either from [CRAN](https://cran.r-project.org/web/packages/CoordinateCleaner/index.html) or [GitHub](https://github.com/azizka/CoordinateCleaner) under a CC-BY license. We acknowledge, that this database is not complete and can constantly be improved, any feedback can be provided via the GitHub page of \emph{CoordinateCleaner} (https://github.com/azizka/CoordinateCleaner/). 
+The database is open-source and available as R data file (.rda) as part of the *CoordinateCleaner* package either from [CRAN](https://cran.r-project.org/web/packages/CoordinateCleaner/index.html) or [GitHub](https://github.com/ropensci/CoordinateCleaner) under a CC-BY license. We acknowledge, that this database is not complete and can constantly be improved, any feedback can be provided via the GitHub page of \emph{CoordinateCleaner} (https://github.com/ropensci/CoordinateCleaner/). 
 
 # References

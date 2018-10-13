@@ -6,7 +6,7 @@
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-***Note: the documentation of CoordinateCLeaner has moved to https://ropensci.github.io/CoordinateCleaner/.***
+***Note: the documentation of CoordinateCleaner has moved to https://ropensci.github.io/CoordinateCleaner/.***
 
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
@@ -30,7 +30,7 @@ Automated flagging of common spatial and temporal errors in biological and palae
 * Equal minimum and maximum ages (fossils)
 * Spatio-temporal outliers (fossils)
 
-CoordinateCleaner can be particularly useful to improve data quality when using data from GBIF (e.g. obtained with [rgbif]( https://github.com/ropensci/rgbif)) or the Paleobiology database (e.g. obtained with [paleobioDB](https://github.com/ropensci/paleobioDB)) for historical biogeography (e.g. with [BioGeoBEARS](https://cran.r-project.org/web/packages/BioGeoBEARS/index.html) or [phytools](https://cran.r-project.org/web/packages/phytools/index.html)), automated conservation assessment (e.g. with [speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/wiki) or [conR](https://cran.r-project.org/web/packages/ConR/index.html)) or species distribution modelling (e.g. with [dismo](https://cran.r-project.org/web/packages/dismo/index.html) or [sdm](https://cran.r-project.org/web/packages/sdm/index.html)). See [scrubr](https://github.com/ropensci/scrubr) and [taxize](https://github.com/ropensci/taxize) for complementary taxonomic cleaning or [biogeo](https://github.com/cran/biogeo) for correcting spatial coordinate errors. You can find a detailed comaprison of the functionality of `CoordinateCleaner`, `scrubr`, and `biogeo` [here](https://azizka.github.io/CoordinateCleaner/articles/comparison_other_software.html).
+CoordinateCleaner can be particularly useful to improve data quality when using data from GBIF (e.g. obtained with [rgbif]( https://github.com/ropensci/rgbif)) or the Paleobiology database (e.g. obtained with [paleobioDB](https://github.com/ropensci/paleobioDB)) for historical biogeography (e.g. with [BioGeoBEARS](https://cran.r-project.org/web/packages/BioGeoBEARS/index.html) or [phytools](https://cran.r-project.org/web/packages/phytools/index.html)), automated conservation assessment (e.g. with [speciesgeocodeR](https://github.com/azizka/speciesgeocodeR/wiki) or [conR](https://cran.r-project.org/web/packages/ConR/index.html)) or species distribution modelling (e.g. with [dismo](https://cran.r-project.org/web/packages/dismo/index.html) or [sdm](https://cran.r-project.org/web/packages/sdm/index.html)). See [scrubr](https://github.com/ropensci/scrubr) and [taxize](https://github.com/ropensci/taxize) for complementary taxonomic cleaning or [biogeo](https://github.com/cran/biogeo) for correcting spatial coordinate errors. You can find a detailed comaprison of the functionality of `CoordinateCleaner`, `scrubr`, and `biogeo` [here](https://ropensci.github.io/CoordinateCleaner/articles/comparison_other_software.html).
 
 See [News](https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md) for update information.
 
@@ -44,7 +44,7 @@ library(CoordinateCleaner)
 
 ## Developmental using devtools
 ```{r}
-devtools::install_github("azizka/CoordinateCleaner")
+devtools::install_github("ropensci/CoordinateCleaner")
 library(CoordinateCleaner)
 ```
 
@@ -89,14 +89,14 @@ cl <- exmpl %>%
 ```
 
 # Documentation
-Pipelines for cleaning data from the Global Biodiversity Information Facility (GBIF) and the Paleobiology Database (PaleobioDB) are available in [here](https://azizka.github.io/CoordinateCleaner/articles/).
+Pipelines for cleaning data from the Global Biodiversity Information Facility (GBIF) and the Paleobiology Database (PaleobioDB) are available in [here](https://ropensci.github.io/CoordinateCleaner/articles/).
 
 
 # Contributing
-See the [CONTRIBUTING](https://github.com/azizka/CoordinateCleaner/blob/master/CONTRIBUTING.md) document.
+See the [CONTRIBUTING](https://github.com/ropensci/CoordinateCleaner/blob/master/CONTRIBUTING.md) document.
 
 # Citation
-Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte RItter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. https://github.com/azizka/CoordinateCleaner
+Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte RItter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2018) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. https://github.com/ropensci/CoordinateCleaner
 
 [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
 

@@ -1,5 +1,5 @@
 
-CoordinateCleaner 2.0-2 (2018-09-10)
+CoordinateCleaner 2.0-2 (2018-10-12)
 =========================
 
 ### MAJOR IMPROVEMENTS
@@ -7,8 +7,9 @@ CoordinateCleaner 2.0-2 (2018-09-10)
   * tutorial on outlier detection on the bookdown documentation
   * tutorial on using custom gazetteers
   * rasterisation heuristic in cc_outl
-  * added sampling correction to cc_outl
+  * added sampling correction to cc_outl  
   * added verify option to cc_inst
+  * transfer to rOpenSci
   
   
 ### MINOR IMPROVEMENTS
