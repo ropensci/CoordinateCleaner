@@ -82,7 +82,7 @@ which indicates rounding and thus low precision. The default values are
 empirically optimized by with GBIF data, but should probably be adapted.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 and tutorials.
 }
 \examples{

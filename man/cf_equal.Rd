@@ -32,7 +32,7 @@ problematic . Default = \dQuote{clean}.
 Removes or flags records with equal minimum and maximum age.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

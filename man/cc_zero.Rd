@@ -39,7 +39,7 @@ erroneous data-entry or geo-referencing and can lead to typical patterns of
 high diversity around the equator.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

@@ -37,7 +37,7 @@ This test is obligatory before running any further tests of
 CoordinateCleaner, as additional tests only run with valid coordinates.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

@@ -51,7 +51,7 @@ Copenhagen, DK.
 Not recommended if working with records from Denmark or the Copenhagen area.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner} for more
+See \url{https://ropensci.github.io/CoordinateCleaner} for more
 details and tutorials.
 }
 \examples{

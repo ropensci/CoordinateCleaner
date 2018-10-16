@@ -107,23 +107,21 @@
     
     
 <p><code>CoordinateCleaner</code> includes a set of functions suited for fossil records including tests for imprecise or erroneous dating. <code>clean_fossils</code> is a wrapper including relevant spatial and temporal tests. As all test the temporal tests can be called individually, using the <code>cf_equal</code>, <code>cf_range</code> and <code>cf_outl</code> functions.</p>
-<p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
+<p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CoordinateCleaner)
 
 <span class="co"># Simulate example data</span>
 minages &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">250</span>, <span class="dv">0</span>, <span class="dv">65</span>)
-exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">accepted_name =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-                    <span class="dt">lng =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>),
-                    <span class="dt">lat =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>),
-                    <span class="dt">min_ma =</span> minages,
-                    <span class="dt">max_ma =</span> minages <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="dv">250</span>, <span class="fl">0.1</span>, <span class="dv">65</span>))
+exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">accepted_name =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), 
+    <span class="dt">lng =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>), <span class="dt">lat =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>), 
+    <span class="dt">min_ma =</span> minages, <span class="dt">max_ma =</span> minages <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="dv">250</span>, <span class="fl">0.1</span>, <span class="dv">65</span>))
 
 <span class="co"># Run fossil test</span>
 test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_fossils.html">clean_fossils</a></span>(<span class="dt">x =</span> exmpl)
 
 <span class="kw">summary</span>(test)
 ##     .aeq     .cen     .gbf    .inst     .spt     .zer .summary 
-##        0        0        0        0        1        0        1</code></pre></div>
+##        0        0        0        0        0        0        0</code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

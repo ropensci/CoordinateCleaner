@@ -75,7 +75,7 @@ For datasets between 5,000 and 100,000 geographic unique records \code{diff
 0.001, and so on.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

@@ -64,7 +64,7 @@ Removes or flags records with an unexpectedly large temporal range, based on a q
 outlier test.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

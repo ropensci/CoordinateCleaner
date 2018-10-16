@@ -44,7 +44,7 @@ collection database, but are undesirable for many analyses. Both can be
 flagged with this function, the former given enough additional information.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner} for more
+See \url{https://ropensci.github.io/CoordinateCleaner} for more
 details and tutorials.
 }
 \examples{

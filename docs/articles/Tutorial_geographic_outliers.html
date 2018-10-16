@@ -260,7 +260,7 @@ plo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(squ, <span 
 <span class="co">#need to be downloaded seperately from www.iucn.org</span>
 sq_range &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="st">"inst"</span>, <span class="dt">layer =</span> <span class="st">"species_20025"</span>)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\alexander.zizka\Dropbox (Antonelli Lab)\Arbeit\research_projects\29_CoordinateCleaner\Package\vignettes\inst", layer: "species_20025"
+## Source: "C:\Users\alexander.zizka\Dropbox (Antonelli Lab)\Arbeit\research_projects\29_CoordinateCleaner\CoordinateCleaner\vignettes\inst", layer: "species_20025"
 ## with 2 features
 ## It has 22 fields
 sq_range<span class="op">@</span>data<span class="op">$</span>species &lt;-<span class="st"> </span><span class="kw">unique</span>(squ<span class="op">$</span>species) <span class="co">#replace species name by GBIF ID to synchronize betwee records and range polygon</span>

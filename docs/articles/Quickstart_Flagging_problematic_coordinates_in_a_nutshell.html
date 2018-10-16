@@ -108,7 +108,7 @@
     
 <p>The <code>clean_coordinates</code> function enables a fast, automated and reproducible flagging of potentially erroneous occurrence coordinates based on geographic gazetteers. The function flags records based on known problems common to biological and palaeontological collection databases.</p>
 <p>Individual tests can be switched on and off by a logical flag (see <code><a href="../reference/clean_coordinates.html">?clean_coordinates</a></code>) and distance thresholds for all tests can be adapted. Custom gazetteers can be provided for all tests (for instance for a higher level of detail). See here for a detailed tutorial on how to clean occurrence records using <code>CoordinateCleaner</code>.</p>
-<p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://azizka.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
+<p><strong><em>Please find a detailed tutorial on how to clean occurrence records (e.g. from GBIF) <a href="https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">here</a> and how to clean fossil data (e.g. from PBDB) <a href="https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">here</a>.</em></strong></p>
 <div id="switch-individual-test-onoff" class="section level2">
 <h2 class="hasAnchor">
 <a href="#switch-individual-test-onoff" class="anchor"></a>Switch individual test on/off</h2>
@@ -116,14 +116,15 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(CoordinateCleaner)
 <span class="kw">library</span>(dplyr)
 
-exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-                   <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>),
-                   <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>),
-                   <span class="dt">countries =</span> <span class="st">"MDG"</span>)
+exmpl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), <span class="dt">decimallongitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, 
+    <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>), <span class="dt">decimallatitude =</span> <span class="kw">runif</span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>), 
+    <span class="dt">countries =</span> <span class="st">"MDG"</span>)
 
 
-<span class="co">#run all tests</span>
-dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">tests =</span> <span class="kw">c</span>(<span class="st">"capitals"</span>, <span class="st">"centroids"</span>, <span class="st">"countries"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>, <span class="st">"urban"</span>, <span class="st">"zeros"</span>), <span class="dt">countries =</span> <span class="st">"countries"</span>)
+<span class="co"># run all tests</span>
+dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">tests =</span> <span class="kw">c</span>(<span class="st">"capitals"</span>, <span class="st">"centroids"</span>, <span class="st">"countries"</span>, 
+    <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>, <span class="st">"urban"</span>, <span class="st">"zeros"</span>), 
+    <span class="dt">countries =</span> <span class="st">"countries"</span>)
 ## OGR data source with driver: ESRI Shapefile 
 ## Source: "C:\Users\alexander.zizka\Documents\R\win-library\3.6\CoordinateCleaner\sea.EXT", layer: "ne_50m_land"
 ## with 1420 features
@@ -135,7 +136,7 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 ## It has 4 fields
 ## Integer64 fields read as strings:  scalerank
 
-<span class="co">#only run the validity test</span>
+<span class="co"># only run the validity test</span>
 dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">tests =</span> <span class="kw">c</span>(<span class="st">""</span>))</code></pre></div>
 <table style="width:22%;" class="table">
 <colgroup>
@@ -237,15 +238,13 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
 <h2 class="hasAnchor">
 <a href="#custom-gazetteers" class="anchor"></a>Custom gazetteers</h2>
 <p>You can use custom gazetteers for all <code>CleanCoordinates</code> tests, via the <code>*.ref</code> arguments of the function. For example the <code>capitals.ref</code> argument controls the reference for the capitals test. Customized reference data must follow the same format as the default reference for the same test. You can check the structure of gazetteers via their documentation or by looking at the gazetteer (e.g. <code>head(capitals)</code>). For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check the format of the default capitals reference</span>
-<span class="kw">head</span>(countryref) <span class="co">#a data.frame with four columns: ISO3, capital, longitude, latitude</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check the format of the default capitals reference</span>
+<span class="kw">head</span>(countryref)  <span class="co">#a data.frame with four columns: ISO3, capital, longitude, latitude</span>
 
-<span class="co">#create new reference data set from scratch. For real analysis you </span>
-<span class="co">#probably want to load the alternative file from a .txt file</span>
-my.cap &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ISO3 =</span> LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],
-                     <span class="dt">capital =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],
-                     <span class="dt">capital.longitude =</span> <span class="kw">runif</span>(<span class="dv">10</span>, <span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>),
-                     <span class="dt">capital.latitude =</span> <span class="kw">runif</span>(<span class="dv">10</span>, <span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>))
+<span class="co"># create new reference data set from scratch. For real analysis you probably</span>
+<span class="co"># want to load the alternative file from a .txt file</span>
+my.cap &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ISO3 =</span> LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dt">capital =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dt">capital.longitude =</span> <span class="kw">runif</span>(<span class="dv">10</span>, 
+    <span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>), <span class="dt">capital.latitude =</span> <span class="kw">runif</span>(<span class="dv">10</span>, <span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>))
 
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">capitals.ref =</span> my.cap)</code></pre></div>
 <p>In this way, you can fully customize the tests, and for example provide a gazetteer with the locations of hardware stores (in the capitals format) if you want to flag records around hardware stores.</p>
@@ -307,56 +306,45 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <h2 class="hasAnchor">
 <a href="#summary-and-visualization" class="anchor"></a>Summary and visualization</h2>
 <p>You cane easily summarize the results of <code>clean_coordinates</code> either with the <code>report</code> option or via <code>summary</code>. If <code>report == T</code> the summary is written to the working directory as a .txt file, if <code>report</code> is a character, it is the path to which the summary file will be written, Alternatively, you can get a summary of the number of records flagged with <code>summary</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#via the report option</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># via the report option</span>
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl)
 ## OGR data source with driver: ESRI Shapefile 
 ## Source: "C:\Users\alexander.zizka\Documents\R\win-library\3.6\CoordinateCleaner\sea.EXT", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
-<span class="co">#flags &lt;- clean_coordinates(exmpl, report = T)</span>
+<span class="co"># flags &lt;- clean_coordinates(exmpl, report = T)</span>
 
-<span class="co">#via summary</span>
+<span class="co"># via summary</span>
 <span class="kw">summary</span>(flags)
 ##     .val     .equ     .zer     .cap     .cen     .sea     .otl     .gbf 
-##        0        0        0        0        0      147        0        0 
+##        0        0        0        0        0      152        0        0 
 ##    .inst .summary 
-##        0      147</code></pre></div>
+##        0      152</code></pre></div>
 </div>
 <div id="exclude-flagged-records" class="section level1">
 <h1 class="hasAnchor">
 <a href="#exclude-flagged-records" class="anchor"></a>Exclude flagged records</h1>
 <p>The output of <code>clean_coordinates</code> is in the same order as the input, thus you can easily exclude flagged records.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#exclude records flagged by any test</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># exclude records flagged by any test</span>
 clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.summary, ]
 
-<span class="co">#exclude records flagged by the centroids test</span>
+<span class="co"># exclude records flagged by the centroids test</span>
 clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.cen, ]</code></pre></div>
 <div id="individual-tests-using-the-pipe" class="section level2">
 <h2 class="hasAnchor">
 <a href="#individual-tests-using-the-pipe" class="anchor"></a>Individual tests using the pipe</h2>
 <p>Alternatively, you can run the individual functions in a pipe compatible way:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cleaned &lt;-<span class="st">  </span>exmpl<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>()<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()
 ## OGR data source with driver: ESRI Shapefile 
 ## Source: "C:\Users\alexander.zizka\Documents\R\win-library\3.6\CoordinateCleaner\sea.EXT", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank</code></pre></div>
 <p>In this way, you can also add the individual test results as columns to your intial data.frame:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exmpl <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>),
-           <span class="dt">sea =</span> <span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>), <span class="dt">sea =</span> <span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(., 
+    <span class="dt">value =</span> <span class="st">"flagged"</span>))
 ## OGR data source with driver: ESRI Shapefile 
 ## Source: "C:\Users\alexander.zizka\Documents\R\win-library\3.6\CoordinateCleaner\sea.EXT", layer: "ne_50m_land"
 ## with 1420 features
@@ -365,16 +353,16 @@ clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.cen, ]<
 ## # A tibble: 250 x 6
 ##    species decimallongitude decimallatitude countries val   sea  
 ##    &lt;fct&gt;              &lt;dbl&gt;           &lt;dbl&gt; &lt;fct&gt;     &lt;lgl&gt; &lt;lgl&gt;
-##  1 s                   48.2           -19.0 MDG       TRUE  TRUE 
-##  2 c                   48.5           -24.8 MDG       TRUE  FALSE
-##  3 t                   44.1           -16.0 MDG       TRUE  FALSE
-##  4 p                   48.0           -14.7 MDG       TRUE  TRUE 
-##  5 e                   48.2           -24.1 MDG       TRUE  FALSE
-##  6 y                   49.0           -25.9 MDG       TRUE  FALSE
-##  7 u                   47.3           -13.1 MDG       TRUE  FALSE
-##  8 x                   44.2           -18.0 MDG       TRUE  TRUE 
-##  9 q                   48.4           -13.3 MDG       TRUE  FALSE
-## 10 h                   43.8           -16.8 MDG       TRUE  FALSE
+##  1 t                   47.9           -21.6 MDG       TRUE  TRUE 
+##  2 g                   43.2           -25.3 MDG       TRUE  FALSE
+##  3 b                   42.7           -25.5 MDG       TRUE  FALSE
+##  4 p                   42.5           -12.0 MDG       TRUE  FALSE
+##  5 e                   45.3           -14.7 MDG       TRUE  FALSE
+##  6 f                   47.1           -24.8 MDG       TRUE  TRUE 
+##  7 v                   43.6           -13.3 MDG       TRUE  FALSE
+##  8 d                   46.3           -23.1 MDG       TRUE  TRUE 
+##  9 b                   47.0           -14.3 MDG       TRUE  FALSE
+## 10 w                   47.1           -21.3 MDG       TRUE  TRUE 
 ## # ... with 240 more rows</code></pre></div>
 </div>
 </div>

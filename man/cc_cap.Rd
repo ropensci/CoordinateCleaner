@@ -55,7 +55,7 @@ geo-referenced occurrence records in biological databases are often
 erroneously geo-referenced to capitals.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

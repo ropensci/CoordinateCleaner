@@ -88,7 +88,7 @@ and approximated as Euclidean distances for datasets/taxa with 10,000 to
 skipped.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

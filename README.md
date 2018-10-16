@@ -1,6 +1,6 @@
 # CoordinateCleaner v2.0-2
 [![Build Status](https://travis-ci.com/ropensci/CoordinateCleaner.svg?branch=master)](https://travis-ci.com/ropensci/CoordinateCleaner)
-[![codecov](https://codecov.io/gh/azizka/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/azizka/CoordinateCleaner)
+[![codecov](https://codecov.io/gh/ropensci/CoordinateCleaner/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)

@@ -69,12 +69,12 @@ Flags datasets with periodicity patterns indicative of a rasterized
 (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 combination of autocorrelation and sliding-window outlier detection to
 identify periodicity patterns in the data. See 
-\url{https://azizka.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+\url{https://ropensci.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
 for further details and 
 a description of the algorithm
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

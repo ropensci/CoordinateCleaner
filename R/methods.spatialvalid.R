@@ -179,7 +179,7 @@ plot.spatialvalid <- function(x,
 #' @export
 #' @method summary spatialvalid
 summary.spatialvalid <- function(object, ...) {
-  out <- object[, grep("\\.", names(object))]
+  out <- dplyr::select(object, starts_with("."))
   out <- apply(out, 2, "!")
   out <- apply(out, 2, "sum")
   return(out)

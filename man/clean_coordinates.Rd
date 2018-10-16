@@ -186,7 +186,7 @@ longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 \note{
 Always tests for coordinate validity: non-numeric or missing
 coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
-See \url{https://azizka.github.io/CoordinateCleaner/} for more details
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 and tutorials.
 }
 \examples{

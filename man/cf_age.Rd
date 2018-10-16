@@ -80,7 +80,7 @@ replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
 records are tested. Distance are calculated as Euclidean distance.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

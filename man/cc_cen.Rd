@@ -59,7 +59,7 @@ countries and provinces. Poorly geo-referenced occurrence records in
 biological databases are often erroneously geo-referenced to centroids.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

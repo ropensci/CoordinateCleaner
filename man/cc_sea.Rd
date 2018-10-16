@@ -55,7 +55,7 @@ want to flag records in the open ocean, consider using a buffered landmass
 reference, e.g.: \code{\link{buffland}}.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner/} for more
+See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{

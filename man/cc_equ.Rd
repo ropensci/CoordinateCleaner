@@ -37,7 +37,7 @@ Removes or flags records with equal latitude and longitude coordinates, either e
 absolute. Equal coordinates can often indicate data entry errors.
 }
 \note{
-See \url{https://azizka.github.io/CoordinateCleaner} for more
+See \url{https://ropensci.github.io/CoordinateCleaner} for more
 details and tutorials.
 }
 \examples{
