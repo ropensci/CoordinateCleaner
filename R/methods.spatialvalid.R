@@ -178,8 +178,10 @@ plot.spatialvalid <- function(x,
 
 #' @export
 #' @method summary spatialvalid
+#' @importFrom tidyselect starts_with
+#' @importFrom dplyr select
 summary.spatialvalid <- function(object, ...) {
-  out <- dplyr::select(object, starts_with("."))
+  out <- dplyr::select(object, tidyselect::starts_with("."))
   out <- apply(out, 2, "!")
   out <- apply(out, 2, "sum")
   return(out)
