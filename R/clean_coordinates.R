@@ -28,7 +28,7 @@
 #' Depending on the \code{outliers_mtp} and \code{outliers.td} arguments either
 #' flags records that are a minimum distance away from all other records of
 #' this species (\code{outliers_td}) or records that are outside a multiple of
-#' the interquartile range of minimum distances to the next neighbour of this
+#' the interquartile range of minimum distances to the next neighbor of this
 #' species (\code{outliers_mtp}). Three different methods are available 
 #' for the outlier test: "If
 #' \dQuote{outlier} a boxplot method is used and records are flagged as
