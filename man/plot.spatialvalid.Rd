@@ -24,7 +24,7 @@ background map. Default = ggplot::borders()}
 \item{clean}{logical.  If TRUE, non-flagged coordinates are included in the
 map.}
 
-\item{details}{logical. If TRUE, occurrences are colour-coded by the type of
+\item{details}{logical. If TRUE, occurrences are color-coded by the type of
 flag.}
 
 \item{pts_size}{numeric. The point size for the plot.}

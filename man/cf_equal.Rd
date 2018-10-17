@@ -8,7 +8,7 @@ cf_equal(x, min_age = "min_ma", max_age = "max_ma", value = "clean",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+\item{x}{data.frame. Containing fossil records with taxon names, ages, 
 and geographic coordinates.}
 
 \item{min_age}{character string. The column with the minimum age. Default

@@ -10,7 +10,7 @@ cf_range(x, lon = "decimallongitude", lat = "decimallatitude",
   uniq_loc = FALSE, value = "clean", verbose = TRUE)
 }
 \arguments{
-\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+\item{x}{data.frame. Containing fossil records with taxon names, ages, 
 and geographic coordinates.}
 
 \item{lon}{character string. The column with the longitude coordinates.

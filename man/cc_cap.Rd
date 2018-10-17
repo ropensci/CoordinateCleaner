@@ -21,7 +21,7 @@ Default = \dQuote{decimallatitude}.}
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
 
-\item{buffer}{The buffer around each capital coordinate (the centre of the
+\item{buffer}{The buffer around each capital coordinate (the center of the
 city), where records should be flagged as problematic. Units depend on geod.
 Default = 10 kilometers.}
 

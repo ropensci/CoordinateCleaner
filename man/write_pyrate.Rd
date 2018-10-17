@@ -9,7 +9,7 @@ write_pyrate(x, status, fname, taxon = "accepted_name",
   path = getwd(), replicates = 1, cutoff = NULL, random = TRUE)
 }
 \arguments{
-\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+\item{x}{data.frame. Containing fossil records with taxon names, ages, 
 and geographic coordinates.}
 
 \item{status}{a vector of character strings of length \code{nrow(x)}.

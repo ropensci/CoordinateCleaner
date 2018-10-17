@@ -11,7 +11,7 @@ cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   verbose = TRUE)
 }
 \arguments{
-\item{x}{data.frame. Containing fossil records, conaining taxon names, ages, 
+\item{x}{data.frame. Containing fossil records with taxon names, ages, 
 and geographic coordinates.}
 
 \item{lon}{character string. The column with the longitude coordinates.
@@ -74,7 +74,7 @@ step a distance matrix of geographic distances among all records is
 calculate. Subsequently a similar distance matrix of temporal distances
 among all records is calculated based on a single point selected by random
 between the minimum and maximum age for each record. The mean distance for
-each point to all neighbours is calculated for both matrices and spatial and
+each point to all neighbors is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
 \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}

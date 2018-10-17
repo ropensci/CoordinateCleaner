@@ -41,7 +41,7 @@ Depending on the \sQuote{value} argument:
 \item{\dQuote{dataset}}{a \code{data.frame} with the
 the test summary statistics for each dataset in \code{x}}
 \item{\dQuote{clean}}{a \code{data.frame} containing only
-records from datatsets in \code{x} that passed the tests}
+records from datasets in \code{x} that passed the tests}
 \item{\dQuote{flagged}}{a logical vector of the same length as
 rows in \code{x}, with TRUE = test passed and
 FALSE = test failed/potentially problematic.}
