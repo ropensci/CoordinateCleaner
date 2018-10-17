@@ -9,7 +9,6 @@ old
 .travis.yml
 Code.Rproj
 Tutorials
-NEWS.md
 vignettes/mammal_example.csv
 vignettes/tutorial_s3_example_input_data
 CONTRIBUTING.md
