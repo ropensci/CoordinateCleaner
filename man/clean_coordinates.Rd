@@ -197,15 +197,17 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
                     decimallatitude = runif(250, min = -26, max = -11))
 
 test <- clean_coordinates(x = exmpl, 
-                          tests = c("capitals", "centroids", 
+                          tests = c("centroids", 
                                     "equal", "gbif", "zeros"))
                                     
 \dontrun{
-#run a selection of tests
+#run more tests
 test <- clean_coordinates(x = exmpl, 
-                          tests = c("capitals", "seas"))
-
-
+                          tests = c("capitals", 
+                          "centroids","equal", 
+                          "gbif", "institutions", 
+                          "outliers","seas", 
+                          "zeros"))
 }
                                  
                                     

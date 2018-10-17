@@ -98,7 +98,7 @@ NULL
 #' Information Facility \url{www.gbif.org} \item Wikipedia
 #' \url{www.wikipedia.org} \item Geonames \url{www.geonames.org} \item The Global
 #' Registry of Biodiversity Repositories \url{www.grbio.org} \item Index
-#' Herbariorum \url{http://sciweb.nybg.org/Science2/IndexHerbariorum.asp}
+#' Herbariorum \url{http://sweetgum.nybg.org/science/ih/}
 #' \item Botanic Gardens Conservation International \url{https://www.bgci.org/}
 #' }
 #' @keywords gazetteers

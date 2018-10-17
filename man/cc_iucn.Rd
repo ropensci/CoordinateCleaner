@@ -41,13 +41,13 @@ problematic . Default = \dQuote{clean}.
 \description{
 Removes or flags records outside of the provided natural range polygon, on a per species basis. 
 Expects one entry per species. See the example or 
-\url{http://www.iucnredlist.org/technical-documents/spatial-data} for 
+\url{https://www.iucnredlist.org/resources/spatial-data-download} for 
 the required polygon structure.
 }
 \details{
 Download natural range maps in suitable format for amphibians, birds,
 mammals and reptiles
-from \url{http://www.iucnredlist.org/technical-documents/spatial-data}.
+from \url{https://www.iucnredlist.org/resources/spatial-data-download}.
 Note: the buffer radius is in degrees, thus will differ slightly between
 different latitudes.
 }
