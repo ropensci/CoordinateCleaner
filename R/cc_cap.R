@@ -12,7 +12,7 @@
 #' Default = \dQuote{decimallatitude}.
 #' @param species character string. The column with the species identity. Only
 #' required if verify = TRUE.
-#' @param buffer The buffer around each capital coordinate (the centre of the
+#' @param buffer The buffer around each capital coordinate (the center of the
 #' city), where records should be flagged as problematic. Units depend on geod.
 #' Default = 10 kilometers.
 #' @param geod logical. If TRUE the radius around each capital is calculated

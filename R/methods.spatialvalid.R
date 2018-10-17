@@ -21,7 +21,7 @@ is.spatialvalid <- function(x) {
 #' background map. Default = ggplot::borders()
 #' @param clean logical.  If TRUE, non-flagged coordinates are included in the
 #' map.
-#' @param details logical. If TRUE, occurrences are colour-coded by the type of
+#' @param details logical. If TRUE, occurrences are color-coded by the type of
 #' flag.
 #' @param pts_size numeric. The point size for the plot.
 #' @param font_size numeric. The font size for the legend and axes

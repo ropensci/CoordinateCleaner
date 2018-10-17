@@ -9,7 +9,7 @@
 #' calculate. Subsequently a similar distance matrix of temporal distances
 #' among all records is calculated based on a single point selected by random
 #' between the minimum and maximum age for each record. The mean distance for
-#' each point to all neighbours is calculated for both matrices and spatial and
+#' each point to all neighbors is calculated for both matrices and spatial and
 #' temporal distances are scaled to the same range. The sum of these distanced
 #' is then tested against the interquantile range and flagged as an outlier if
 #' \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
