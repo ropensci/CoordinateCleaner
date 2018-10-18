@@ -75,7 +75,7 @@ each point to all neighbors is calculated and the sum of these distances
 is then tested against the interquantile range and flagged as an outlier if
 \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 times, to account for dating uncertainty. Records are flagged as outliers
-if they are flagged by a fraction of more than \sQuote{flag.thres}
+if they are flagged by a fraction of more than \sQuote{flag.thresh}
 replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
 records are tested. Distance are calculated as Euclidean distance.
 }
