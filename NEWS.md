@@ -1,3 +1,9 @@
+CoordinateCleaner 2.0-3 (2018-10-22)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Removed convenience functionality to only download data from rnaturalearth at first use, to comply with CRAN guidelines
+
 
 CoordinateCleaner 2.0-2 (2018-10-12)
 =========================

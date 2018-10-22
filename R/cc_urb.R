@@ -53,25 +53,29 @@ cc_urb <- function(x,
   # check for reference data. 
   if (is.null(ref)) {
     message("Downloading urban areas via rnaturalearth")
-    path <- file.path(system.file(package = "CoordinateCleaner"), "urb.EXT")
-    file <- file.path(path,"ne_50m_urban_areas.shp")
+    # path <- file.path(system.file(package = "CoordinateCleaner"), "urb.EXT")
+    # file <- file.path(path,"ne_50m_urban_areas.shp")
+    # 
+    # #Download if file does not exist yet
+    # if(!file.exists(file)) {
+    #   ref <- rnaturalearth::ne_download(scale = 'medium', 
+    #                                     type = 'urban_areas',
+    #                                     destdir = path,
+    #                                     load = FALSE)
+    # }
+    # 
+    # #load reference
+    # ref <- rgdal::readOGR(path, 
+    #                       paste("ne_50m_urban_areas", sep = ""), 
+    #                       encoding = "UTF-8",
+    #                       stringsAsFactors = FALSE, 
+    #                       use_iconv = TRUE)
+    # ref@data[ref@data == "-99" | 
+    #            ref@data == "-099"] <- NA
     
-    #Download if file does not exist yet
-    if(!file.exists(file)) {
-      ref <- rnaturalearth::ne_download(scale = 'medium', 
-                                        type = 'urban_areas',
-                                        destdir = path,
-                                        load = FALSE)
-    }
+      ref <- rnaturalearth::ne_download(scale = 'medium',
+                                        type = 'urban_areas')
     
-    #load reference
-    ref <- rgdal::readOGR(path, 
-                          paste("ne_50m_urban_areas", sep = ""), 
-                          encoding = "UTF-8",
-                          stringsAsFactors = FALSE, 
-                          use_iconv = TRUE)
-    ref@data[ref@data == "-99" | 
-               ref@data == "-099"] <- NA
      sp::proj4string(ref) <- ""
   } else {
     #Enable sf formatted custom references
