@@ -1,2 +1,2 @@
-# Version 2.0-2
-This is a major update improving functionality and adapting the package to rOpenSci guidelines. I have now fixed the notes from the Readme.md from the last submission.
+# Version 2.0-3
+A minor update to fix problems on Debian systems caused by attempts to write to folders other than the tmpdir. I have removed the problematic code, it was convenient functionality, to prevent downloading reference data from the web at every use and had entered the package during the review porcess at rOpenSci, sorry about that.
