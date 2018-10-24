@@ -155,7 +155,7 @@ test_that("cc_outl works", {
 # cc_sea
 test_that("cc_sea works", {
   cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = 
-                                                         "small", 
+                                                         "medium", 
                                                        type = 'land', 
                                                        category = "physical")
 
@@ -168,12 +168,12 @@ test_that("cc_sea works", {
   expect_is(cc_sea(exmpl, value = "clean", ref = cust_ref1), "data.frame")
   
   # custom reference
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 185)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 187)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 187)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 187)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 185)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 185)
 
   # speedup
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 185)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 187)
   
   expect_error(cc_sea(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
