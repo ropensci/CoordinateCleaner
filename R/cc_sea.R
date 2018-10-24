@@ -14,10 +14,10 @@
 #' 
 #' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer.
 #' Can be any SpatialPolygonsDataFrame, but the structure must be identical to
-#' rnaturalearth::ne_download(scale = 10, type = 'land', category = 'physical').  
-#' Default = rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
+#' rnaturalearth::ne_download(scale = 110, type = 'land', category = 'physical').  
+#' Default = rnaturalearth::ne_download(scale = 110, type = 'land', category = 'physical')
 #' @param scale the scale of the default reference, as downloaded from natural earth. 
-#' Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 50.
+#' Must be one of 10, 50, 110. Higher numbers equal higher detail. Default = 110.
 #' @param speedup logical. Using heuristic to speed up the analysis for large data sets
 #'  with many records per location.
 #' @inheritParams cc_cap
