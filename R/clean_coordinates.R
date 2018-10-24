@@ -143,7 +143,7 @@
 #'                     decimallatitude = runif(250, min = -26, max = -11))
 #' 
 #' test <- clean_coordinates(x = exmpl, 
-#'                           tests = c("equal", "zeros"))
+#'                           tests = c("equal"))
 #'                                     
 #'\dontrun{
 #' #run more tests
