@@ -73,7 +73,10 @@
 #'             
 #'           
 #'   #run test
+#'   \dontrun{
 #'   cd_round(inp, value = "dataset")
+#'   }
+#'   
 #' 
 #' @export
 #' @importFrom stats complete.cases

@@ -102,7 +102,10 @@ details and tutorials.
             
           
   #run test
+  \dontrun{
   cd_round(inp, value = "dataset")
+  }
+  
 
 }
 \seealso{

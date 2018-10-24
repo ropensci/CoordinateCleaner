@@ -152,7 +152,7 @@
 #'                           tests = c("capitals", 
 #'                           "centroids","equal", 
 #'                           "gbif", "institutions", 
-#'                           "outliers","seas", 
+#'                           "outliers", 
 #'                           "zeros"))
 #'}
 #'                                  
