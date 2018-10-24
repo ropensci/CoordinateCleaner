@@ -1,20 +1,23 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "CoordinateCleaner",
-  "description": "Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://github.com/azizka/CoordinateCleaner/wiki> for more details and tutorials.",
+  "description": "Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets.",
   "name": "CoordinateCleaner: Automated Cleaning of Occurrence Records from Biological Collections",
-  "codeRepository": "https://azizka.github.io/CoordinateCleaner/",
-  "issueTracker": "https://github.com/azizka/CoordinateCleaner/issues",
+  "codeRepository": "https://ropensci.github.io/CoordinateCleaner/",
+  "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "version": "3.6.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2018-07-30 r75016)",
+  "runtimePlatform": "R Under development (unstable) (2018-10-22 r75479)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -26,7 +29,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "alexander.zizka@bioenv.gu.se"
+      "email": "zizka.alexander@gmail.com"
     }
   ],
   "contributor": [
@@ -101,7 +104,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "alexander.zizka@bioenv.gu.se"
+      "email": "zizka.alexander@gmail.com"
     }
   ],
   "softwareSuggestions": [
@@ -322,13 +325,29 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "tidyselect",
+      "name": "tidyselect",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=tidyselect"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     }
   ],
-  "releaseNotes": "https://github.com/azizka/CoordinateCleaner/blob/master/NEWS.md",
-  "readme": "https://github.com/azizka/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "1265.697KB",
-  "contIntegration": ["https://travis-ci.com/azizka/CoordinateCleaner", "https://codecov.io/gh/azizka/CoordinateCleaner"],
-  "relatedLink": "https://CRAN.R-project.org/package=CoordinateCleaner"
+  "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
+  "fileSize": "1102.632KB",
+  "contIntegration": [
+    "https://travis-ci.com/azizka/CoordinateCleaner",
+    "https://codecov.io/gh/azizka/CoordinateCleaner"
+  ],
+  "relatedLink": "https://CRAN.R-project.org/package=CoordinateCleaner",
+  "developmentStatus": "https://www.repostatus.org/#active"
 }
