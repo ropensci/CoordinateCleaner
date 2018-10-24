@@ -48,7 +48,7 @@ cc_sea <- function(x,
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
                    ref = NULL,
-                   scale = 10,
+                   scale = 110,
                    value = "clean",
                    speedup = TRUE, 
                    verbose = TRUE){
