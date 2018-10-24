@@ -143,8 +143,7 @@
 #'                     decimallatitude = runif(250, min = -26, max = -11))
 #' 
 #' test <- clean_coordinates(x = exmpl, 
-#'                           tests = c("centroids", 
-#'                                     "equal", "gbif", "zeros"))
+#'                           tests = c("equal", "gbif", "zeros"))
 #'                                     
 #'\dontrun{
 #' #run more tests
@@ -152,7 +151,7 @@
 #'                           tests = c("capitals", 
 #'                           "centroids","equal", 
 #'                           "gbif", "institutions", 
-#'                           "outliers", 
+#'                           "outliers", "seas", 
 #'                           "zeros"))
 #'}
 #'                                  
