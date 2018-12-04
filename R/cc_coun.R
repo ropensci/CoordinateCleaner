@@ -76,7 +76,7 @@ cc_coun <- function(x,
   ref <- raster::crop(ref, raster::extent(dat) + 1)
 
   # get country from coordinates and compare with provided country
-  country <- sp::over(x = dat, y = ref)[, "iso_a3"]
+  country <- sp::over(x = dat, y = ref)[, "iso_a3_eh"]
   out <- as.character(country) == as.character(unlist(x[, iso3]))
   out[is.na(out)] <- FALSE # marine records are set to False
 

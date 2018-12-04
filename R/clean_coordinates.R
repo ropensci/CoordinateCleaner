@@ -56,8 +56,8 @@
 #' @param species a character string. A vector of the same length as rows in x,
 #' with the species identity for each record.  If missing, the outliers test is
 #' skipped.
-#' @param countries a character string. A vector of the same length as rows in
-#' x, with country information for each record in ISO3 format.  If missing, the
+#' @param countries a character string. The column with the country assignment of
+#' each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 #' countries test is skipped.
 #' @param tests a vector of character strings, indicating which tests to run. 
 #' See details for all tests available. Default = c("capitals", "centroids", 
@@ -72,7 +72,7 @@
 #' \sQuote{provinces} only province (adm-1) centroids are tested.  Default =
 #' \sQuote{both}.
 #' @param inst_rad numeric. The radius around biodiversity institutions
-#' coordinates in degrees. Default = 0.001.
+#' coordinates in metres. Default = 100.
 #' @param outliers_method The method used for outlier testing. See details.
 #' @param outliers_mtp numeric. The multiplier for the interquartile range of
 #' the outlier test.  If NULL \code{outliers.td} is used.  Default = 5.
