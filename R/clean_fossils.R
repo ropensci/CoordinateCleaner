@@ -149,7 +149,7 @@ clean_fossils <- function(x,
 
   ## Equal coordinates
   if ("equal" %in% tests) {
-    equ <- cc_equ(x,
+    out$equ <- cc_equ(x,
       lon = lon, lat = lat, verbose = verbose, value = "flagged",
       test = "absolute"
     )
