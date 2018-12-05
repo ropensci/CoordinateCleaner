@@ -216,7 +216,7 @@ clean_fossils <- function(x,
   if ("temprange" %in% tests) {
     # always over entire dataset
     test <- x
-    trg <- cf_range(
+    out$trg <- cf_range(
       x = test, taxon = "", min_age = min_age, max_age = max_age,
       lon = lon, lat = lat, method = outliers_method, 
       mltpl = outliers_threshold,
