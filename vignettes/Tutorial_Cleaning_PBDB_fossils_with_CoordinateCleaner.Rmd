@@ -6,7 +6,7 @@ output:
     number_sections: true
     citation_package: natbib
 vignette: >
-  %\VignetteIndexEntry{Cleaning GBIF data for the use in biogeography}
+  %\VignetteIndexEntry{Cleaning fossil data for the use in biogeography and palaeontology}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
