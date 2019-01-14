@@ -1,12 +1,10 @@
-# CoordinateCleaner v2.0-3
+# CoordinateCleaner v2.0-4
 [![Build Status](https://travis-ci.org/ropensci/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/ropensci/CoordinateCleaner)
 [![codecov.io](https://codecov.io/github/ropensci/coordinatecleaner/graphs/badge.svg?branch=master)](https://codecov.io/github/ropensci/CoordinateCleaner)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
-***Note: the documentation of CoordinateCleaner has moved to https://ropensci.github.io/CoordinateCleaner/.***
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 

@@ -28,7 +28,8 @@ Default = 1 kilometer.}
 \item{geod}{logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE
 the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = T.}
+in this case buffer is in degrees. Default = TRUE. See https://seethedatablog.wordpress.com/ 
+for detail and credits.}
 
 \item{test}{a character string. Specifying the details of the test. One of
 c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for

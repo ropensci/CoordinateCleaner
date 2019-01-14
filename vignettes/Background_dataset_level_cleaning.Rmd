@@ -149,6 +149,7 @@ dat0 <- raster(dat.t1)%>%
   rasterToPoints()%>%
   as.data.frame()%>%
   mutate(layer = ifelse(layer == 0, NA, layer))%>%
+  mutate(layer = as.character(layer)) %>% 
   mutate(layer = parse_factor(layer, levels = c(NA,"1")))%>%
   mutate(ds = "Error fraction 0")
 
@@ -157,6 +158,7 @@ dat02 <- raster(dat.t1)%>%
   rasterToPoints()%>%
   as.data.frame()%>%
   mutate(layer = ifelse(layer == 0, NA, layer))%>%
+  mutate(layer = as.character(layer)) %>% 
   mutate(layer = parse_factor(layer, levels = c(NA,"1")))%>%
   mutate(ds = "Error fraction 0.2")
 
@@ -165,6 +167,7 @@ dat08 <- raster(dat.t1)%>%
   rasterToPoints()%>%
   as.data.frame()%>%
   mutate(layer = ifelse(layer == 0, NA, layer))%>%
+  mutate(layer = as.character(layer)) %>% 
   mutate(layer = parse_factor(layer, levels = c(NA,"1")))%>%
   mutate(ds = "Error fraction 0.5")
 
@@ -173,6 +176,7 @@ dat1 <- raster(dat.t1)%>%
   rasterToPoints()%>%
   as.data.frame()%>%
   mutate(layer = ifelse(layer == 0, NA, layer))%>%
+  mutate(layer = as.character(layer)) %>% 
   mutate(layer = parse_factor(layer, levels = c(NA,"1")))%>%
   mutate(ds = "Error fraction 1")
 

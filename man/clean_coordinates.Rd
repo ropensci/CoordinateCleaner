@@ -33,8 +33,8 @@ Default = \dQuote{decimallatitude}.}
 with the species identity for each record.  If missing, the outliers test is
 skipped.}
 
-\item{countries}{a character string. A vector of the same length as rows in
-x, with country information for each record in ISO3 format.  If missing, the
+\item{countries}{a character string. The column with the country assignment of
+each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 countries test is skipped.}
 
 \item{tests}{a vector of character strings, indicating which tests to run.
@@ -54,7 +54,7 @@ meters. Default = 1000.}
 \sQuote{both}.}
 
 \item{inst_rad}{numeric. The radius around biodiversity institutions
-coordinates in degrees. Default = 0.001.}
+coordinates in metres. Default = 100.}
 
 \item{outliers_method}{The method used for outlier testing. See details.}
 

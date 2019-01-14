@@ -1,8 +1,16 @@
+CoordinateCleaner 2.0-4 (2019-01-14)
+=========================
+
+### MINOR IMPROVEMENTS
+  * minor bugfix with cc_cap
+  * corrected duplicated vignette index entries 
+  
+  
 CoordinateCleaner 2.0-3 (2018-10-22)
 =========================
 
 ### MINOR IMPROVEMENTS
-  * Removed convenience functionality to only download data from rnaturalearth at first use, to comply with CRAN guidelines
+  * removed convenience functionality to only download data from rnaturalearth at first use, to comply with CRAN guidelines
 
 
 CoordinateCleaner 2.0-2 (2018-10-12)

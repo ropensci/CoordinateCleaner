@@ -54,6 +54,7 @@ test_that("cc_cen works", {
 test_that("cc_coun works", {
   
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
+  names(cust_ref1)[names(cust_ref1) == "iso_a3"] <- "iso_a3_eh"
   cust_ref2 <- cust_ref1
   proj4string(cust_ref2) <- ""
   cust_ref3 <- spTransform(cust_ref1, 

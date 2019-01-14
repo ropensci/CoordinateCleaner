@@ -1,2 +1,2 @@
-# Version 2.0-3
-A minor update to fix problems on Debian systems caused by attempts to write to folders other than the tmpdir. I have removed the problematic code, it was convenient functionality, to prevent downloading reference data from the web at every use and had entered the package during the review porcess at rOpenSci, sorry about that.
+# Version 2.0-4
+A update to fix some minor bugs, including vignettes with duplicated index names.
