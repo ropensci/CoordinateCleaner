@@ -19,14 +19,14 @@ Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo
 | Country capitals                                              | cc_cap                                                    | -                |-| 0%                                   |
 | Political unit centroids                                      | cc_cen                                                    | -  |-| 0%                                   |
 | Coordinates  in-congruent with additional location information | cc_count                                                  | coord_within    |errorcheck, quickclean| 100%                                 |
-| Coordinates assigned to GBIF headquaters                      | cc_gbif                                                   | -                |-| 0%                                   |
+| Coordinates assigned to GBIF headquarters                      | cc_gbif                                                   | -                |-| 0%                                   |
 | Coordinates assigned to the location of biodiversity institutions  |    cc_inst                                     | -                |-| 0%                                   |
 | Coordinates outside natural range                             | cc_iucn                                                  |-                 |-| 0%                                   |
 | Spatial outliers                                              | cc_outl                                                   | -                |outliers| 50%, biogeo uses environmental distance                                   |
 | Coordinates within the ocean                                  | cc_sea                                                    | -                |-| 0%                                   |
 | Coordinates in urban area                                     | cc_urb                                                    | -                |-| 0%                                   |
 | Coordinate conversion error                                   | dc_ddmm                                                   | -                |-| 0%                                   |
-| Rounded coordinates/rasterized collection                    | dc_round                                                  | -                |precisioncheck| 20%, biogeo test for predefined rasaters                                   |
+| Rounded coordinates/rasterized collection                    | dc_round                                                  | -                |precisioncheck| 20%, biogeo test for predefined rasters                                   |
 | Fossils: invalid age range                                    | tc_equal                                                  | -                |-| 0%                                   |
 | Fossils: excessive age range                                  | tc_range                                                  | -                |-| 0%                                   |
 | Fossils: temporal outlier                                     | tc_outl                                                   | -                |-| 0%                                   |

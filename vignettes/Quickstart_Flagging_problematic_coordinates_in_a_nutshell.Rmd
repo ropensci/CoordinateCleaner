@@ -120,7 +120,7 @@ cleaned <-  exmpl%>%
   cc_zero()
 ```
 
-In this way, you can also add the individual test results as columns to your intial data.frame:
+In this way, you can also add the individual test results as columns to your initial data.frame:
 
 ```{r, collapse = T, tidy = T, message = F, warning = F}
 exmpl %>%

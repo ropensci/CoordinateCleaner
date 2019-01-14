@@ -43,7 +43,7 @@
 #' 
 #' @aliases CleanCoordinatesFOS
 #' 
-#' @param x data.frame. Containing fossil records, conaining taxon names, ages, 
+#' @param x data.frame. Containing fossil records, containing taxon names, ages, 
 #' and geographic coordinates..
 #' @param min_age character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.

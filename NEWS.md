@@ -28,7 +28,7 @@ CoordinateCleaner 2.0-2 (2018-10-12)
   
 ### MINOR IMPROVEMENTS
 
-  * reduced packages size, by switching to data download from rnauralearth for urbanareas and landmass
+  * reduced packages size, by switching to data download from rnaturalearth for urbanareas and landmass
   * fixed issue with names of plot.spatialvalid
   * grouped functions on documentation webpage
   * fixed broken links in the help pages
@@ -60,13 +60,13 @@ CoordinateCleaner 1.2-1 (2018-06-08)
   * Simplified internal code structure of wrapper functions
   
 ### MINOR IMPROVEMENTS
-  * adapted package to Ropensci reviews
+  * adapted package to rOpenSci reviews
   
 ### DEPRECATED AND DEFUNCT
   * CleanCoordinates deprecated, replaced by clean_coordinates
   * CleanCoordinatesDS deprecated, replaced by clean_dataset
   * CleanCoordinatesFOS deprecated, replaced by clean_fossils
-  * WritePyrate deprecated, replaced by writ_pyrate
+  * WritePyrate deprecated, replaced by write_pyrate
 
 CoordinateCleaner 1.1-1 (2018-05-15)
 =========================
@@ -84,7 +84,7 @@ CoordinateCleaner 1.1-0 (2018-04-08)
 
 ### MINOR IMPROVEMENTS
 
-  * Adaption of code to ROpensci guidelines
+  * Adaption of code to rOpenSci guidelines
 
 ### BUG FIXES
 

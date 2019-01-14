@@ -6,7 +6,7 @@
 #' 
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic. Units depend on geod.  
-#' Default = 1 kilometer.
+#' Default = 1 kilometre.
 #' @param test a character string. Specifying the details of the test. One of
 #' c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 #' country and province centroids.

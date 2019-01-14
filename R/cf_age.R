@@ -6,7 +6,7 @@
 #' The outlier detection is based on an interquantile range test. A temporal
 #' distance matrix among all records is calculated based on a single point selected by random
 #' between the minimum and maximum age for each record. The mean distance for
-#' each point to all neighbors is calculated and the sum of these distances
+#' each point to all neighbours is calculated and the sum of these distances
 #' is then tested against the interquantile range and flagged as an outlier if
 #' \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
 #' times, to account for dating uncertainty. Records are flagged as outliers

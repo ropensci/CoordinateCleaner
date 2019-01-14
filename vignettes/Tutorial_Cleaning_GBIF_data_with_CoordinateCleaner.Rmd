@@ -137,7 +137,7 @@ clean <- dat%>%
   cc_dupl()
 ```
 
-In this way, you can also add the individual test results as columns to your intial data.frame:
+In this way, you can also add the individual test results as columns to your initial data.frame:
 
 ```{r, eval = FALSE}
 dat %>%
@@ -147,7 +147,7 @@ dat %>%
 ```
 
 ### Temporal outliers
-While the `cc_outl` function identifies geographic outliers, record in GBIF migh also have doubtfull temporal information, i.e. for the time of collection, which can be problematic for example for analuses of range dynamics. The `cf_age` function used for fossil cleaning can also be used to check GBIF records for temporal outliers.
+While the `cc_outl` function identifies geographic outliers, record in GBIF migh also have doubtful temporal information, i.e. for the time of collection, which can be problematic for example for analyses of range dynamics. The `cf_age` function used for fossil cleaning can also be used to check GBIF records for temporal outliers.
 
 ```{r, r, eval = TRUE, collapse = TRUE}
 flags <- cf_age(x = dat_cl,

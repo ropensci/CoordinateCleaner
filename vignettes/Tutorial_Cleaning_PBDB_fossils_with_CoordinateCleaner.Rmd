@@ -50,7 +50,7 @@ dat <- paleobioDB::pbdb_occurrences(base_name = "Magnoliopsida", vocab = "pbdb",
 rownames(dat) <- NULL
 ```
 
-Alternatively, CoordinateCleaner includes an example dataset, downloaded from paleobioDB as specified above. We will use thisone for now.
+Alternatively, CoordinateCleaner includes an example dataset, downloaded from paleobioDB as specified above. We will use this one for now.
 
 ```{r, eval = TRUE, collapse = TRUE, echo = FALSE}
 data(pbdb_example)

@@ -78,7 +78,7 @@ ggplot()+
 
 The default settings of the outlier test flagged `r sum(!outl)` outliers out of `r nrow(lnx)` records. A comparison with the natural range of the species shows that the test performed quite well with the default settings: all American records were flagged correctly as outliers and most Eurasian records were not flagged. However there are some potential issues, since three isolated records in Asia where also flagged as potential outliers, although they likely are valid records. In this case the isolated position of those records is not an error, but probably rather due the extremely low sampling and data availability across large parts of Asia. `cc_outl` offers two options to improve the results 1) tweaking test sensitivity and 2) accounting for sampling intensity.
 
-## Tweaking test sensititvity
+## Tweaking test sensitivity
 We can make the outlier detection more conservative using the `mltpl` argument of `cc_outl`. We'll increase mltpl to 6, meaning that the mean distance of a record to all other records must be more than 6 times the interquantile range of the mean distance of all points.
 
 ```{r, warning = F, message = F, collapse = T}

@@ -133,7 +133,7 @@ Some problems with biological collection data are not apparent from individual r
 
 1. An erroneous conversion of coordinates in degree minute annotation into decimal degrees, where the decimal sign is erroneously translated into the decimal delimiter, e.g. 10°30' to 10.3 °. This is a problem that has been observed in particular for older data sets.
 
-2. A periodicity in the decimals of a data set, as will arise when coordinates are either rounded or recorded in a raster format and coordinates represent raster cell centers. This problem represents low precision rather than errors, but can also be fatal, if undetected and taken as actual localities, for example in distribution modelling.
+2. A periodicity in the decimals of a data set, as will arise when coordinates are either rounded or recorded in a raster format and coordinates represent raster cell centres. This problem represents low precision rather than errors, but can also be fatal, if undetected and taken as actual localities, for example in distribution modelling.
 
 # 1. Conversion errors between degree-minute and decimal-degree annotation (`cd_ddmm`)
 ## Background
@@ -360,7 +360,7 @@ Species occurrence records with coordinates often do not represent point occurre
 ## Algorithm and implementation
 The sensitivity of the algorithms presented in the main text test can be customized based on the raster regularity and the fraction of biased records in a dataset (`T1`), the geographic extent of the raster(`reg.dist.min` and `reg.dist.max`) and the number of raster nodes (`reg.out.thresh`). 
 
-```{r, echo = F, evaluate = T, warning = F, fig.show = T, fig.height = 8, fig.cap = fig$cap("fig_patternCoordinates", "The diagnostic plots retrived from `cd_round` for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset.")}
+```{r, echo = F, evaluate = T, warning = F, fig.show = T, fig.height = 8, fig.cap = fig$cap("fig_patternCoordinates", "The diagnostic plots retrieved from `cd_round` for two datasets with 1000 records each. The upper panel shows an unbias dataset, the lower panel shows a dataset with 10% records from a rasterized sampling (a two degree raster in this case). The left panel shows the distribution of geographic coordinates, the right panel shows the autocorrelation plot. The green vertical lines mark flagged outliers, the red horizontal lines show the flagged most common distance. The logical heading indicates the flag: TRUE = not flagged and FALSE = flagged. The test identified the biased dataset.")}
 simDS <- function(n.rec,
                   K = 3,
                   data.range.min = -40, data.range.max = 40,
@@ -510,7 +510,7 @@ ggplot(plo.sum)+
 
 
 ## A practical example
-The follwoing example illustrates the use of `cd_round`.
+The following example illustrates the use of `cd_round`.
 
 ```{r, echo = F, evaluate = T, warning = F, fig.show = T, fig.height = 8, message = F}
 
@@ -547,4 +547,4 @@ par(mfrow = c(2,2))
 cd_round(dat, value = "dataset", test = "lon")
 ```
 
-If `value = "dataset"` the output of cd_round is a table indicating the number of regualr outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.
+If `value = "dataset"` the output of cd_round is a table indicating the number of regular outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.
