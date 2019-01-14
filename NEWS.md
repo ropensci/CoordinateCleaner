@@ -4,6 +4,7 @@ CoordinateCleaner 2.0-4 (2019-01-14)
 ### MINOR IMPROVEMENTS
   * minor bugfix with cc_cap
   * corrected duplicated vignette index entries 
+  * updated maintainer email
   
   
 CoordinateCleaner 2.0-3 (2018-10-22)
