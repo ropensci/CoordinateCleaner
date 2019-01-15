@@ -16,7 +16,7 @@ clean_fossils(x, lon = "lng", lat = "lat", min_age = "min_ma",
   value = "spatialvalid", verbose = TRUE, report = FALSE)
 }
 \arguments{
-\item{x}{data.frame. Containing fossil records, conaining taxon names, ages,
+\item{x}{data.frame. Containing fossil records, containing taxon names, ages,
 and geographic coordinates..}
 
 \item{lon}{character string. The column with the longitude coordinates.

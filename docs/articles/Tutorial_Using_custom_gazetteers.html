@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@
 
     
     
-<p>CoordinateCleaner identifies potentially erroneous geographic records with coordinates assigned to the sea, countr coordinate, country capitals, urban areas, institutions, the GBIF headquaters and countries based on the comparison with geographic gazetteers (i.e. reference databases). All of these functoins include default reference databases compiled from various sources. These default references have been selected suitable for regional to global analyses. They will also work for smaller scale analyses, but in some case differen references might be desireable and available. this could be for instance centroids of small scale political units, a different set of urban areas, or a different coastline when working with coastal species. To account for this, each <em>CoordinateCleaner</em> function using a gazetter has a <code>ref</code> argument to specify custom gazetteers.</p>
-<p>We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The prurpose of <code>cc_sea</code> is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometers, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus <em>Avicennia</em>.</p>
+<p>CoordinateCleaner identifies potentially erroneous geographic records with coordinates assigned to the sea, countr coordinate, country capitals, urban areas, institutions, the GBIF headquarters and countries based on the comparison with geographic gazetteers (i.e. reference databases). All of these functions include default reference databases compiled from various sources. These default references have been selected suitable for regional to global analyses. They will also work for smaller scale analyses, but in some case different references might be desirable and available. this could be for instance centroids of small scale political units, a different set of urban areas, or a different coastline when working with coastal species. To account for this, each <em>CoordinateCleaner</em> function using a gazetteer has a <code>ref</code> argument to specify custom gazetteers.</p>
+<p>We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The purpose of <code>cc_sea</code> is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometres, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus <em>Avicennia</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rgbif)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
@@ -125,7 +125,7 @@ dat &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw
 <span class="co"># run with default gazetteer</span>
 outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(dat, <span class="dt">value =</span> <span class="st">"flagged"</span>)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpYfmvmA", layer: "ne_110m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpiOeODy", layer: "ne_110m_land"
 ## with 127 features
 ## It has 3 fields
 

@@ -58,7 +58,7 @@ extinction status for each sample. Creates files in the working directory!
 The replicate option allows the user to generate several replicates of the
 data set in a single input file, each time re-drawing the ages of the
 occurrences at random from uniform distributions with boundaries MinT and
-MaxT. The replicates can be analyzed in different runs (see PyRate command
+MaxT. The replicates can be analysed in different runs (see PyRate command
 -j) and combining the results of these replicates is a way to account for
 the uncertainty of the true ages of the fossil occurrences. Examples:
 replicates=1 (default, generates 1 data set), replicates=10 (generates 10

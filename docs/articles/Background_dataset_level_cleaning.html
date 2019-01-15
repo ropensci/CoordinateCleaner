@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
 <p>Some problems with biological collection data are not apparent from individual records, but rather linked to properties of an entire data set. The CleanCoordinatesDS function can use dataset properties to flag three types of potential problems, under the assumption that these problems will effect many records in a dataset from the same source (but not necessarily all):</p>
 <ol style="list-style-type: decimal">
 <li><p>An erroneous conversion of coordinates in degree minute annotation into decimal degrees, where the decimal sign is erroneously translated into the decimal delimiter, e.g. 10°30’ to 10.3 °. This is a problem that has been observed in particular for older data sets.</p></li>
-<li><p>A periodicity in the decimals of a data set, as will arise when coordinates are either rounded or recorded in a raster format and coordinates represent raster cell centers. This problem represents low precision rather than errors, but can also be fatal, if undetected and taken as actual localities, for example in distribution modelling.</p></li>
+<li><p>A periodicity in the decimals of a data set, as will arise when coordinates are either rounded or recorded in a raster format and coordinates represent raster cell centres. This problem represents low precision rather than errors, but can also be fatal, if undetected and taken as actual localities, for example in distribution modelling.</p></li>
 </ol>
 </div>
 <div id="conversion-errors-between-degree-minute-and-decimal-degree-annotation-cd_ddmm" class="section level1">
@@ -203,13 +203,13 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>(<span class="dt">x =</span> dat, <span class="dt">diagnostic =</span> <span class="ot">TRUE</span>, <span class="dt">value =</span> <span class="st">"dataset"</span>, <span class="dt">mat_size =</span> <span class="dv">100</span>)</code></pre></div>
 <figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-3-1.png"><figcaption></figcaption></figure><pre><code>##        binomial.pvalue perc.difference  pass
-## clean           0.9617          -0.224  TRUE
+## clean           0.2181           0.120  TRUE
 ## biased          0.0000           1.873 FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#inspect geographic extent of the flagged dataset to exclude island or patchy habitat</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 0.5651056</code></pre>
+<pre><code>## [1] 0.05867052</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(biased<span class="op">$</span>decimallongitude)</code></pre></div>
-<pre><code>## [1] 178.5241</code></pre>
+<pre><code>## [1] 175.2033</code></pre>
 <p>The diagnostic plots clearly show the biased distribution of decimals in the biased dataset and the large geographic extent excludes islands or patchy habitats as cause of this distribution.</p>
 </div>
 </div>
@@ -238,14 +238,14 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <div id="a-practical-example-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-practical-example-1" class="anchor"></a>A practical example</h2>
-<p>The follwoing example illustrates the use of <code>cd_round</code>.</p>
+<p>The following example illustrates the use of <code>cd_round</code>.</p>
 <figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-5-1.png"><figcaption></figcaption></figure><pre><code>##        dataset lon.n.outliers lon.n.regular.distance lon.regular.distance
-## biased  biased             24                      5                 0.18
+## biased  biased              4                      3                    1
 ## clean    clean              0                      0                   NA
 ##        summary
 ## biased   FALSE
 ## clean     TRUE</code></pre>
-<p>If <code>value = "dataset"</code> the output of cd_round is a table indicating the number of regualr outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.</p>
+<p>If <code>value = "dataset"</code> the output of cd_round is a table indicating the number of regular outliers (i.e. the raster nodes) and indicating which datasets have been flagged. Additionally, the diagnostic plots clearly show the rasterized pattern in the biased dataset and confirm the automated flag.</p>
 </div>
 </div>
   </div>

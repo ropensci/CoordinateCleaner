@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ lnx &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> lnx, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,
   <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp4O59Gp", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp4oNEIz", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
@@ -156,9 +156,9 @@ plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>The default settings of the outlier test flagged 17 outliers out of 23980 records. A comparison with the natural range of the species shows that the test performed quite well with the default settings: all American records were flagged correctly as outliers and most Eurasian records were not flagged. However there are some potential issues, since three isolated records in Asia where also flagged as potential outliers, although they likely are valid records. In this case the isolated position of those records is not an error, but probably rather due the extremely low sampling and data availability across large parts of Asia. <code>cc_outl</code> offers two options to improve the results 1) tweaking test sensitivity and 2) accounting for sampling intensity.</p>
 </div>
-<div id="tweaking-test-sensititvity" class="section level2">
+<div id="tweaking-test-sensitivity" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tweaking-test-sensititvity" class="anchor"></a>Tweaking test sensititvity</h2>
+<a href="#tweaking-test-sensitivity" class="anchor"></a>Tweaking test sensitivity</h2>
 <p>We can make the outlier detection more conservative using the <code>mltpl</code> argument of <code>cc_outl</code>. We’ll increase mltpl to 6, meaning that the mean distance of a record to all other records must be more than 6 times the interquantile range of the mean distance of all points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outl_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">mltpl =</span> <span class="dv">6</span>)
 
@@ -212,7 +212,7 @@ squ &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> squ, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,
   <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp4O59Gp", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp4oNEIz", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
@@ -343,7 +343,7 @@ rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iuc
       <li>
 <a href="#the-case-of-the-european-lynx">1. The case of the European lynx</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#testing-for-geographic-outliers-defaults">Testing for geographic outliers, defaults</a></li>
-      <li><a href="#tweaking-test-sensititvity">Tweaking test sensititvity</a></li>
+      <li><a href="#tweaking-test-sensitivity">Tweaking test sensitivity</a></li>
       <li><a href="#correcting-for-sampling-intensity">Correcting for sampling intensity</a></li>
       </ul>
 </li>

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
       </span>
     </div>
 
@@ -250,7 +250,7 @@ clean &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>()<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>()</code></pre></div>
-<p>In this way, you can also add the individual test results as columns to your intial data.frame:</p>
+<p>In this way, you can also add the individual test results as columns to your initial data.frame:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>),
@@ -259,7 +259,7 @@ clean &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <div id="temporal-outliers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#temporal-outliers" class="anchor"></a>Temporal outliers</h3>
-<p>While the <code>cc_outl</code> function identifies geographic outliers, record in GBIF migh also have doubtfull temporal information, i.e. for the time of collection, which can be problematic for example for analuses of range dynamics. The <code>cf_age</code> function used for fossil cleaning can also be used to check GBIF records for temporal outliers.</p>
+<p>While the <code>cc_outl</code> function identifies geographic outliers, record in GBIF migh also have doubtful temporal information, i.e. for the time of collection, which can be problematic for example for analyses of range dynamics. The <code>cf_age</code> function used for fossil cleaning can also be used to check GBIF records for temporal outliers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cf_age.html">cf_age</a></span>(<span class="dt">x =</span> dat_cl,
                 <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>,
                 <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>,
