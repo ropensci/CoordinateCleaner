@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-5 (2019-01-15)
+=========================
+
+### MINOR IMPROVEMENTS
+  * fixed broken url to the CIA factbook
+  
+
 CoordinateCleaner 2.0-4 (2019-01-14)
 =========================
 
