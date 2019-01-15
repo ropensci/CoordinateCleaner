@@ -10,14 +10,14 @@
   "codeRepository": "https://ropensci.github.io/CoordinateCleaner/",
   "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "version": "3.6.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2018-10-22 r75479)",
+  "runtimePlatform": "R Under development (unstable) (2019-01-12 r75982)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -29,7 +29,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "zizka.alexander@gmail.com"
+      "email": "alexander.zizka@idiv.de"
     }
   ],
   "contributor": [
@@ -104,7 +104,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "zizka.alexander@gmail.com"
+      "email": "alexander.zizka@idiv.de"
     }
   ],
   "softwareSuggestions": [
@@ -343,7 +343,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "1102.632KB",
+  "fileSize": "1102.863KB",
   "contIntegration": [
     "https://travis-ci.com/azizka/CoordinateCleaner",
     "https://codecov.io/gh/azizka/CoordinateCleaner"
