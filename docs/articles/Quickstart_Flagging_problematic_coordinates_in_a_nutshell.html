@@ -126,12 +126,12 @@ exmpl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocum
 <span class="co">#run all tests</span>
 dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>, <span class="st">"centroids"</span>, <span class="st">"countries"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>, <span class="st">"urban"</span>, <span class="st">"zeros"</span>), <span class="dt">countries =</span> <span class="st">"countries"</span>)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpeiS8hp", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpAHcKbh", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank 
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpeiS8hp", layer: "ne_50m_urban_areas"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpAHcKbh", layer: "ne_50m_urban_areas"
 ## with 2143 features
 ## It has 4 fields
 ## Integer64 fields read as strings:  scalerank
@@ -311,7 +311,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#via the report option</span>
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpeiS8hp", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpAHcKbh", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
@@ -320,9 +320,9 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <span class="co">#via summary</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)
 ##     .val     .equ     .zer     .cap     .cen     .sea     .otl     .gbf 
-##        0        0        0        0        0      162        0        0 
+##        0        0        0        0        0      166        0        0 
 ##    .inst .summary 
-##        0      162</code></pre></div>
+##        0      166</code></pre></div>
 </div>
 <div id="exclude-flagged-records" class="section level1">
 <h1 class="hasAnchor">
@@ -349,7 +349,7 @@ clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.cen, ]<
 <span class="st">  </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>()<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpeiS8hp", layer: "ne_110m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpAHcKbh", layer: "ne_110m_land"
 ## with 127 features
 ## It has 3 fields</code></pre></div>
 <p>In this way, you can also add the individual test results as columns to your initial data.frame:</p>
@@ -358,22 +358,22 @@ clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.cen, ]<
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>),
            <span class="dt">sea =</span> <span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>))
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpeiS8hp", layer: "ne_110m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpAHcKbh", layer: "ne_110m_land"
 ## with 127 features
 ## It has 3 fields
 ## # A tibble: 250 x 6
 ##    species decimallongitude decimallatitude countries val   sea  
 ##    &lt;fct&gt;              &lt;dbl&gt;           &lt;dbl&gt; &lt;fct&gt;     &lt;lgl&gt; &lt;lgl&gt;
-##  1 u                   49.6           -21.1 MDG       TRUE  FALSE
-##  2 h                   45.1           -22.9 MDG       TRUE  TRUE 
-##  3 f                   48.8           -24.8 MDG       TRUE  FALSE
-##  4 p                   44.1           -13.1 MDG       TRUE  FALSE
-##  5 c                   49.3           -12.9 MDG       TRUE  TRUE 
-##  6 w                   45.7           -21.1 MDG       TRUE  TRUE 
-##  7 e                   48.9           -18.3 MDG       TRUE  TRUE 
-##  8 m                   44.2           -18.6 MDG       TRUE  TRUE 
-##  9 u                   44.6           -14.2 MDG       TRUE  FALSE
-## 10 i                   42.1           -16.0 MDG       TRUE  FALSE
+##  1 z                   46.3           -16.9 MDG       TRUE  TRUE 
+##  2 z                   43.6           -20.3 MDG       TRUE  FALSE
+##  3 c                   46.1           -16.4 MDG       TRUE  TRUE 
+##  4 f                   50.3           -14.8 MDG       TRUE  FALSE
+##  5 k                   44.1           -22.1 MDG       TRUE  TRUE 
+##  6 q                   46.3           -14.8 MDG       TRUE  FALSE
+##  7 x                   49.8           -25.0 MDG       TRUE  FALSE
+##  8 p                   48.5           -21.9 MDG       TRUE  FALSE
+##  9 t                   48.6           -25.2 MDG       TRUE  FALSE
+## 10 t                   42.8           -20.5 MDG       TRUE  FALSE
 ## # ... with 240 more rows</code></pre></div>
 </div>
 </div>

@@ -53,7 +53,7 @@ NULL
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
-#' \url{http://opengeocode.org/download/cow.php}
+#' \url{https://www.cia.gov/library/publications/the-world-factbook/}
 #' \url{http://thematicmapping.org/downloads/world_borders.php}
 #' @keywords gazetteers
 #' @examples
