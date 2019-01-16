@@ -1,3 +1,9 @@
+CoordinateCleaner 2.0-6 (2019-01-16)
+=========================
+
+### MINOR IMPROVEMENTS
+  * further url fixes
+
 CoordinateCleaner 2.0-5 (2019-01-15)
 =========================
 

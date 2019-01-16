@@ -1,7 +1,7 @@
 Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
-Version: 2.0-5
+Version: 2.0-6
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@idiv.de",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = "ctb"),
