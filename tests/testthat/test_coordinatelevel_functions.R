@@ -52,7 +52,7 @@ test_that("cc_cen works", {
 
 ## cc_coun
 test_that("cc_coun works", {
-  
+skip_on_cran()
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
   names(cust_ref1)[names(cust_ref1) == "iso_a3"] <- "iso_a3_eh"
   cust_ref2 <- cust_ref1
@@ -98,6 +98,7 @@ test_that("cc_gbif works", {
 
 # cc_inst
 test_that("cc_inst works", {
+skip_on_cran()
   t.inst <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
                                     decimallongitude = c(12.58, 12.585, 12.58),
                                     decimallatitude = c(55.67, 55.676, 55.67),
@@ -125,6 +126,7 @@ test_that("cc_inst works", {
 
 # cc_iucn
 test_that("cc_iucn works", {
+skip_on_cran()
   expect_equal(sum(cc_iucn(x = exmpl, range = range_emp, value = "flagged")),
                nrow(exmpl))
   expect_true(sum(cc_iucn(x = exmpl, range = range, value = "flagged")) > 0)
@@ -132,6 +134,7 @@ test_that("cc_iucn works", {
 
 
 test_that("cc_outl works", {
+skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
@@ -155,6 +158,7 @@ test_that("cc_outl works", {
 
 # cc_sea
 test_that("cc_sea works", {
+skip_on_cran()
   cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = 
                                                          "medium", 
                                                        type = 'land', 
@@ -183,6 +187,7 @@ test_that("cc_sea works", {
 # CC_urb
 
 test_that("cc_urb works", {
+skip_on_cran()
   cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')
   
   city_exmpl <- data.frame(species = letters[1:10], 
@@ -214,6 +219,7 @@ exmpl <- data.frame(exmpl,
 
 
 test_that("cc_dupl works", {
+skip_on_cran()
   expect_equal(sum(cc_dupl(x = exmpl, value = "flagged")), 251)
   expect_equal(sum(cc_dupl(x = exmpl, 
                            additions = c("collector", 

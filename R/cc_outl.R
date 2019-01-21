@@ -17,7 +17,8 @@
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
 #' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation.
+#' the distance matrix calculation. The test is skipped for species with less than \code{min_occs},
+#'  geographically unique records.
 #' 
 #' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
 #' in any given location. To account for this, the sampling_cor option fetches 
@@ -43,6 +44,10 @@
 #' Indicates the quantile of sampling in which outliers should be ignored. For instance, 
 #' if \code{sampling_thresh} == 0.25, records in the 25% worst sampled countries will 
 #' not be flagged as outliers. Default = 0 (no sampling correction).
+#' @param min_occs Minimum number of greographically unique datapoints needed for a species to be tested. 
+#' This is necessary for reliable outlier estimation for methods other than 'distance'.
+#' Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+#' Default is to 7. If method == distance, consider a lower threshold.
 #' @inheritParams cc_cap
 #' 
 #' @inherit cc_cap return
@@ -80,7 +85,8 @@ cc_outl <- function(x,
                     tdi = 1000, 
                     value = "clean",
                     sampling_thresh = 0,
-                    verbose = TRUE) {
+                    verbose = TRUE,
+                    min_occs = 7) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
@@ -90,14 +96,18 @@ cc_outl <- function(x,
     message("Testing geographic outliers")
   }
   
-  # split up into species
+   # split up into species
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
   test <- lapply(splist, "duplicated")
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
-  splist <- splist[test > 7]
+  splist <- splist[test >= min_occs]
+  
+  if(any(test < min_occs)){
+    warning(sprintf("Species with less than %o unique records will not be tested.", min_occs))
+  }
 
   # create raster for raster approximation  of large datasets
   if(any(test >= 10000)){
@@ -116,7 +126,7 @@ cc_outl <- function(x,
   flags <- lapply(splist, function(k) {
     test <- nrow(k[!duplicated(k), ])
 
-    if (test > 7) {
+    if (test >= min_occs) {
       if(nrow(k) <= 10000){
         # Calculate distance between individual points
         dist <- geosphere::distm(k[, c(lon, lat)], 
@@ -165,6 +175,8 @@ cc_outl <- function(x,
           mins <- apply(dist, 1, sum) / rowSums(wm)
         }
       }
+    }else{
+      warning(sprintf("Only species with more than "))
     }
     
     ## Absolute distance test with mean interpoint distance
@@ -268,9 +280,6 @@ cc_outl <- function(x,
   out[flags] <- FALSE
 
   if (verbose) {
-    
-    
-    
     if (value == "ids") {
       if(value == "clean"){
         message(sprintf("Removed %s records.", length(flags)))

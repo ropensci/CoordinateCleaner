@@ -16,6 +16,7 @@ test <- data.frame(species = c(letters[1:9], "z"),
 
 # cf_range
 test_that("cf_range identifies existing bias", {
+  skip_on_cran()
   #return value
   expect_is(cf_range(test, value = "flagged", taxon = ""), "logical")
   expect_is(cf_range(test, value = "clean", taxon = ""), "data.frame")
@@ -50,6 +51,7 @@ test_that("cf_range identifies existing bias", {
 
 #cf_age
 test_that("cf_age runs", {
+  skip_on_cran()
   #return value
   expect_is(cf_age(test, value = "flagged", taxon = ""), "logical")
   expect_is(cf_age(test, value = "clean", taxon = ""), "data.frame")
@@ -89,6 +91,7 @@ test <- data.frame(species = c(letters[1:10], rep("z", 2)),
                              runif(n = 11, min = 0, max = 5), 65))
 
 test_that("cf_outl identifies existing bias", {
+  skip_on_cran()
   #return value
   expect_is(cf_outl(test, value = "flagged", taxon = ""), "logical")
   expect_is(cf_outl(test, value = "clean", taxon = ""), "data.frame")
@@ -106,10 +109,7 @@ test_that("cf_outl identifies existing bias", {
   expect_equal(sum(cf_outl(test, value = "flagged", 
                            method = "mad", 
                            taxon = "")), 10)
-  
-  
-  
-  
+
 })
 
 

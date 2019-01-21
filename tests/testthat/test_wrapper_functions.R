@@ -15,6 +15,7 @@ exmpl <- data.frame(species = sp,
 
 
 test_that("clean_coordinates produces correct output", {
+  skip("message")
   t1 <- clean_coordinates(x = exmpl)
   expect_equal(ncol(t1), 14)
   expect_equal(nrow(t1), 250)
@@ -32,6 +33,7 @@ test_that("clean_coordinates produces correct output", {
 })
 
 test_that("clean_coordinates countries argument produces correct output", {
+  skip("message")
   #skip_on_cran()
   expect_equal(sum(
     clean_coordinates(x = exmpl, countries = "ISO3", 
@@ -62,6 +64,7 @@ test <- rbind(clean, bias)
 
 
 test_that("dataset level cleaning works", {
+  skip("message")
   #test activated
   expect_is(clean_dataset(test), "data.frame")
   expect_is(clean_dataset(test, tests = c("ddmm")), "data.frame")
@@ -98,6 +101,7 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 
 
 test_that("fossil wrapper cleaning works", {
+  skip("message")
   expect_is(clean_fossils(exmpl), "spatialvalid")
   expect_equal(sum(clean_fossils(exmpl)$.summary), 249)
 })
@@ -111,6 +115,7 @@ test_that("fossil wrapper cleaning works", {
 test.str1 <- "test.pdf"
 
 test_that("WritePyRate interal functions work", {
+  skip("message")
   expect_is(CoordinateCleaner:::.NoExtension(test.str1), "character")
   expect_equal(CoordinateCleaner:::.NoExtension(test.str1), "test")
 })

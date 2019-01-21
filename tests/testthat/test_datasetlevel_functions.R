@@ -18,6 +18,7 @@ test <- rbind(clean, bias)
 
 #cd_round
 test_that("cd_round identifies existing bias", {
+  skip_on_cran()
   #test target
   ## multiple datasets
   expect_equal(mean(cd_round(test, value = "dataset", 
@@ -77,6 +78,7 @@ prob <-  data.frame(species = letters[1:10],
 test <- rbind(prob,clean)
 
 test_that("cd_ddmm identifies existing bias", {
+  skip_on_cran()
   t1 <- cd_ddmm(test, value = "dataset")
   expect_is(t1, "data.frame")
   expect_equal(sum(t1$pass), 1)
