@@ -1,6 +1,4 @@
-# Version 2.0-6
-Reply to the last round of review (v2.0-5)
-Found the following (possibly) invalid URLs: http://opengeocode.org/download/cow.php
-
-We have now removed all instance of this url from the package. Please excuse the inconveniences.
+# Version 2.0-7
+Reply to the last round of review (v2.0-6)
+Reduced testing time on CRAN by skipping time-intense test on CRAN.
 

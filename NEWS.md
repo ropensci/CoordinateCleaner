@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-7 (2019-01-22)
+=========================
+
+### MINOR IMPROVEMENTS
+  * added citation
+  * reduced testing time on CRAN
+
 CoordinateCleaner 2.0-6 (2019-01-16)
 =========================
 
