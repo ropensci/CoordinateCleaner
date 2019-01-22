@@ -149,7 +149,7 @@ dat %>%
 ### Temporal outliers
 While the `cc_outl` function identifies geographic outliers, record in GBIF migh also have doubtful temporal information, i.e. for the time of collection, which can be problematic for example for analyses of range dynamics. The `cf_age` function used for fossil cleaning can also be used to check GBIF records for temporal outliers.
 
-```{r, r, eval = TRUE, collapse = TRUE}
+```{r, eval = TRUE, collapse = TRUE}
 flags <- cf_age(x = dat_cl,
                 lon = "decimalLongitude",
                 lat = "decimalLatitude",

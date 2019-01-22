@@ -6,7 +6,8 @@
 \usage{
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", method = "quantile", mltpl = 5, tdi = 1000,
-  value = "clean", sampling_thresh = 0, verbose = TRUE)
+  value = "clean", sampling_thresh = 0, verbose = TRUE,
+  min_occs = 7)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -42,6 +43,11 @@ not be flagged as outliers. Default = 0 (no sampling correction).}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
+
+\item{min_occs}{Minimum number of greographically unique datapoints needed for a species to be tested. 
+This is necessary for reliable outlier estimation for methods other than 'distance'.
+Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+Default is to 7. If method == distance, consider a lower threshold.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -68,7 +74,8 @@ distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
 record of the species is > \code{tdi}. For species with records from > 10000
 unique locations a random sample of 1000 records is used for 
-the distance matrix calculation.
+the distance matrix calculation. The test is skipped for species with less than \code{min_occs},
+ geographically unique records.
 
 The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
 in any given location. To account for this, the sampling_cor option fetches 
