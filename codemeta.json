@@ -10,7 +10,7 @@
   "codeRepository": "https://ropensci.github.io/CoordinateCleaner/",
   "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -343,11 +343,104 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "1102.907KB",
+  "fileSize": "1104.041KB",
   "contIntegration": [
     "https://travis-ci.com/azizka/CoordinateCleaner",
     "https://codecov.io/gh/azizka/CoordinateCleaner"
   ],
   "relatedLink": "https://CRAN.R-project.org/package=CoordinateCleaner",
-  "developmentStatus": "https://www.repostatus.org/#active"
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Alexander",
+          "familyName": "Zizka"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Daniele",
+          "familyName": "Silvestro"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Tobias",
+          "familyName": "Andermann"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Josue",
+          "familyName": "Azevedo"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Camila",
+          "familyName": "Duarte Ritter"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Daniel",
+          "familyName": "Edler"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Harith",
+          "familyName": "Farooq"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Andrei",
+          "familyName": "Herdean"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Maria",
+          "familyName": "Ariza"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Ruud",
+          "familyName": "Scharn"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sten",
+          "familyName": "Svanteson"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Niklas",
+          "familyName": "Wengstrom"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Vera",
+          "familyName": "Zizka"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alexandre",
+          "familyName": "Antonelli"
+        }
+      ],
+      "name": "CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases",
+      "identifier": "10.1111/2041-210X.13152",
+      "url": "https://github.com/ropensci/CoordinateCleaner",
+      "paginiation": "0",
+      "@id": "https://doi.org/10.1111/2041-210X.13152",
+      "sameAs": "https://doi.org/10.1111/2041-210X.13152",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "0",
+        "datePublished": "2019",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "Methods in Ecology and Evolution"
+        }
+      }
+    }
+  ]
 }

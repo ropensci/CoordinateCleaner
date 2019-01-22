@@ -147,7 +147,7 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CoordinateCleaner)
 
 <span class="co">#obtain data from GBIF via rgbif</span>
-dat &lt;-<span class="st"> </span><span class="kw">occ_search</span>(<span class="dt">scientificName =</span> <span class="st">"Panthera leo"</span>, <span class="dt">limit =</span> <span class="dv">5000</span>, 
+dat &lt;-<span class="st"> </span><span class="kw">occ_search</span>(<span class="dt">scientificName =</span> <span class="st">"Panthera leo"</span>, <span class="dt">limit =</span> <span class="dv">5000</span>,
                   <span class="dt">return =</span> <span class="st">"data"</span>, <span class="dt">hasCoordinate =</span> T)
 
 <span class="co"># names(dat) #a lot of columns</span>
@@ -156,16 +156,15 @@ dat &lt;-<span class="st"> </span><span class="kw">occ_search</span>(<span class
 dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(species, decimalLongitude, decimalLatitude, countryCode, individualCount,
          gbifID, family, taxonRank, coordinateUncertaintyInMeters, year,
-         basisOfRecord, institutionCode, datasetName) 
+         basisOfRecord, institutionCode, datasetName)
 
 <span class="co"># remove records without coordinates</span>
 dat &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(decimalLongitude))<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(decimalLatitude))</code></pre></div>
-</div>
-<div id="visualize-the-data-on-a-map" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualize-the-data-on-a-map" class="anchor"></a>Visualize the data on a map</h2>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(decimalLatitude))
+
+
+## Visualize the data on a map</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#plot data to get an overview</span>
 wm &lt;-<span class="st"> </span><span class="kw">borders</span>(<span class="st">"world"</span>, <span class="dt">colour=</span><span class="st">"gray50"</span>, <span class="dt">fill=</span><span class="st">"gray50"</span>)
 <span class="kw">ggplot</span>()<span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()<span class="op">+</span><span class="st"> </span>wm <span class="op">+</span>
@@ -173,7 +172,7 @@ wm &lt;-<span class="st"> </span><span class="kw">borders</span>(<span class="st
              <span class="dt">colour =</span> <span class="st">"darkred"</span>, <span class="dt">size =</span> <span class="fl">0.5</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure">
-<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-4-1.png" alt="\label{fig:al}Occurrence records for Panthera leo obtained from GBIF." width="672"><p class="caption">
+<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-5-1.png" alt="\label{fig:al}Occurrence records for Panthera leo obtained from GBIF." width="672"><p class="caption">
 Occurrence records for Panthera leo obtained from GBIF.
 </p>
 </div>
@@ -216,7 +215,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(flags, <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>, <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>)</code></pre></div>
 <div class="figure">
-<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-5-1.png" alt="\label{fig:automated}Records flagged by the automated cleaning." width="672"><p class="caption">
+<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-6-1.png" alt="\label{fig:automated}Records flagged by the automated cleaning." width="672"><p class="caption">
 Records flagged by the automated cleaning.
 </p>
 </div>
@@ -300,7 +299,7 @@ dat_cl &lt;-<span class="st"> </span>dat_cl[flags, ]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Remove records with low coordinate precision</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/hist">hist</a></span>(dat_cl<span class="op">$</span>coordinateUncertaintyInMeters <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>, <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
 <div class="figure">
-<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-10-1.png" alt="\label{fig:automated}A histogram of the coordinate precision in the dataset.." width="672"><p class="caption">
+<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-11-1.png" alt="\label{fig:automated}A histogram of the coordinate precision in the dataset.." width="672"><p class="caption">
 A histogram of the coordinate precision in the dataset..
 </p>
 </div>
@@ -390,7 +389,7 @@ plo &lt;-<span class="st"> </span><span class="kw">fortify</span>(nat_range)
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>,
         <span class="dt">axis.title =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># run cc_iucn()</span>
 range_flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> dat_cl,
@@ -403,7 +402,7 @@ range_flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 
 dat_fin &lt;-<span class="st"> </span>dat_cl[range_flags, ]</code></pre></div>
 <div class="figure">
-<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-16-1.png" alt="\label{fig:final}The dataset of occurrence of lions after different cleaning phases." width="672"><p class="caption">
+<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-17-1.png" alt="\label{fig:final}The dataset of occurrence of lions after different cleaning phases." width="672"><p class="caption">
 The dataset of occurrence of lions after different cleaning phases.
 </p>
 </div>
@@ -420,7 +419,7 @@ The dataset of occurrence of lions after different cleaning phases.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out.ddmm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>(dat_cl, <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>, <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>, 
                     <span class="dt">ds =</span> <span class="st">"species"</span>, <span class="dt">diagnostic =</span> T, <span class="dt">diff =</span> <span class="dv">1</span>,
                     <span class="dt">value =</span> <span class="st">"dataset"</span>)</code></pre></div>
-<p><img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 <p>This looks good. The test indicates a slightly higher fraction of records with decimals below .60 than expected at random, but this is within the expected range and thus the test indicates no bias, which is confirmed by the diagnostic plot. In the case of a strong bias, the green points would be clustered in the bottom left quarter of the plot.</p>
 </div>
 <div id="test-for-rasterized-sampling" class="section level2">
@@ -436,7 +435,7 @@ out.round &lt;-<span class="st"> </span><span class="kw"><a href="../reference/c
                       <span class="dt">graphs =</span> T)
 ## Testing for rasterized collection</code></pre></div>
 <div class="figure">
-<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-18-1.png" alt="\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag." width="672"><p class="caption">
+<img src="Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner_files/figure-html/unnamed-chunk-19-1.png" alt="\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag." width="672"><p class="caption">
 Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag.
 </p>
 </div>
@@ -560,7 +559,6 @@ Diagnostic plots testing for rasterized sampling or excessive rounding. The left
 <a href="#identifying-erroneous-coordinates-with-coordinatecleaner">Identifying erroneous coordinates with <em>CoordinateCleaner</em></a><ul class="nav nav-pills nav-stacked">
 <li><a href="#install-coordinatecleaner">Install <code>CoordinateCleaner</code></a></li>
       <li><a href="#set-up-libraries-and-data">Set up libraries and data</a></li>
-      <li><a href="#visualize-the-data-on-a-map">Visualize the data on a map</a></li>
       <li><a href="#use-coordinatecleaner-to-automatically-flag-problematic-records">Use <em>CoordinateCleaner</em> to automatically flag problematic records</a></li>
       </ul>
 </li>

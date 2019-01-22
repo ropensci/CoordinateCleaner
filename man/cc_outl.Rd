@@ -44,10 +44,10 @@ not be flagged as outliers. Default = 0 (no sampling correction).}
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
 
-\item{min_occs}{Minimum number of greographically unique datapoints needed for a species to be tested. 
-This is necessary for reliable outlier estimation for methods other than 'distance'.
+\item{min_occs}{Minimum number of geographically unique datapoints needed for a species to be tested. 
+This is necessary for reliable outlier estimation.
 Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
-Default is to 7. If method == distance, consider a lower threshold.}
+Default is to 7. If \code{method == 'distance'}, consider a lower threshold.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -74,7 +74,7 @@ distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
 record of the species is > \code{tdi}. For species with records from > 10000
 unique locations a random sample of 1000 records is used for 
-the distance matrix calculation. The test is skipped for species with less than \code{min_occs},
+the distance matrix calculation. The test skipps species with less than \code{min_occs},
  geographically unique records.
 
 The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
