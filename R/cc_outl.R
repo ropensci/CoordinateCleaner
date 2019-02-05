@@ -100,7 +100,7 @@ cc_outl <- function(x,
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
-  test <- lapply(splist, "duplicated")
+  test <- lapply(splist, function(k){duplicated(k[, c(species, lon,lat)])})
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
   splist <- splist[test >= min_occs]
