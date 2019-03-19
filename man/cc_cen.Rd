@@ -5,8 +5,9 @@
 \title{Identify Coordinates in Vicinity of Country and Province Centroids}
 \usage{
 cc_cen(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", buffer = 1000, geod = TRUE, test = "both",
-  ref = NULL, verify = FALSE, value = "clean", verbose = TRUE)
+  species = "species", buffer = 1000, min_area = NULL, geod = TRUE,
+  test = "both", ref = NULL, verify = FALSE, value = "clean",
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -24,6 +25,8 @@ required if verify = TRUE.}
 \item{buffer}{numerical. The buffer around each province or country
 centroid, where records should be flagged as problematic. Units depend on geod.  
 Default = 1 kilometre.}
+
+\item{min_area}{numberical. The minimum area in sqkm that whose centroid should be checked.}
 
 \item{geod}{logical. If TRUE the radius around each capital is calculated
 based on a sphere, buffer is in meters and independent of latitude. If FALSE

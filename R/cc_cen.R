@@ -7,6 +7,7 @@
 #' @param buffer numerical. The buffer around each province or country
 #' centroid, where records should be flagged as problematic. Units depend on geod.  
 #' Default = 1 kilometre.
+#' @param min_area numerical. The minimum polygon area in sqkm whose centroid should be checked.
 #' @param test a character string. Specifying the details of the test. One of
 #' c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 #' country and province centroids.
@@ -42,6 +43,7 @@ cc_cen <- function(x,
                    lat = "decimallatitude", 
                    species = "species",
                    buffer = 1000,
+                   min_area = NULL,
                    geod = TRUE,
                    test = "both", 
                    ref = NULL,
@@ -72,12 +74,19 @@ cc_cen <- function(x,
 
   if (is.null(ref)) {
     ref <- CoordinateCleaner::countryref
-
+    
     switch(test, country = {
       ref <- ref[ref$type == "country", ]
     }, province = {
       ref <- ref[ref$type == "province", ]
     })
+    
+    # if min_area area is not null
+    if (!is.null(min_area)) { 
+      # remove missing and too small 
+      ref <- ref[ref$area_sqkm > min_area & !is.na(ref$area_sqkm), ] 
+    }
+    
   } else {
     proj4string(ref) <- wgs84
     warning("assuming lat/lon for centroids.ref")
