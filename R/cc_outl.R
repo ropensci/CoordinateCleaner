@@ -75,6 +75,7 @@
 #' @importFrom sp over SpatialPoints
 #' @importFrom dplyr left_join
 #' @importFrom raster crop extent ncell res setValues
+#' @importFrom rgbif occ_count
 #' 
 cc_outl <- function(x, 
                     lon = "decimallongitude", 
@@ -106,7 +107,9 @@ cc_outl <- function(x,
   splist <- splist[test >= min_occs]
   
   if(any(test < min_occs)){
-    warning(sprintf("Species with less than %o unique records will not be tested.", min_occs))
+    warning(sprintf(
+      "Species with less than %o unique records will not be tested.", 
+      min_occs))
   }
 
   # create raster for raster approximation  of large datasets

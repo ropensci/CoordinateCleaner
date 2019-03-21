@@ -25,7 +25,8 @@ df <- data.frame(species = c("e"), row.names = c("a"))
 range_emp <- SpatialPolygonsDataFrame(range, data = as.data.frame(df_miss))
 range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
 
-wgs84 <- '+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'
+wgs84 <- 
+  '+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'
 
 # run tests
 ## cc_cap
