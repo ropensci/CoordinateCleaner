@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
       </span>
     </div>
 
@@ -202,16 +202,16 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 ## Testing zero coordinates
 ## Flagged 7 records.
 ## Testing country capitals
-## Flagged 16 records.
+## Flagged 17 records.
 ## Testing country centroids
 ## Flagged 11 records.
 ## Testing country identity
-## Flagged 165 records.
+## Flagged 166 records.
 ## Testing GBIF headquarters, flagging records around Copenhagen
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 188 of 2714 records, EQ = 0.07.
+## Flagged 190 of 2826 records, EQ = 0.07.
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(flags, <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>, <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>)</code></pre></div>
 <div class="figure">
@@ -220,10 +220,10 @@ Records flagged by the automated cleaning.
 </p>
 </div>
 <pre><code>##     .val     .equ     .zer     .cap     .cen     .con     .gbf    .inst 
-##        0        9        7       16       11      165        0        0 
+##        0        9        7       17       11      166        0        0 
 ## .summary 
-##      188</code></pre>
-<p>The automatic test flagged 6.9% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
+##      190</code></pre>
+<p>The automatic test flagged 6.7% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Exclude problematic records</span>
 dat_cl &lt;-<span class="st"> </span>dat[flags<span class="op">$</span>.summary,]
 
@@ -267,26 +267,28 @@ clean &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
                 <span class="dt">max_age =</span> <span class="st">"year"</span>, 
                 <span class="dt">value =</span> <span class="st">"flagged"</span>)
 ## Testing temporal outliers on taxon level
-## Flagged 237 records.
+## Flagged 254 records.
 
 dat_cl[<span class="op">!</span>flags, <span class="st">"year"</span>]
-##   [1] 1995 1995 1995 1995 1995 1995 1994 1994 1994 1994 1994 1994 1993 1992
-##  [15] 1992 1992 1992 1992 1992 1992 1991 1991 1991 1990 1989 1989 1989 1989
-##  [29] 1989 1989 1989 1989 1987 1987 1987 1986 1986 1985 1985 1985 1984 1984
-##  [43] 1984 1984 1984 1984 1983 1983 1983 1983 1983 1983 1983 1983 1983 1983
-##  [57] 1982 1982 1981 1981 1980 1980 1980 1980 1980 1980 1980 1980 1978 1978
-##  [71] 1974 1972 1972 1972 1970 1970 1970 1970 1970 1970 1970 1970 1969 1969
-##  [85] 1969 1969 1969 1969 1969 1968 1968 1968 1968 1967 1967 1967 1967 1967
-##  [99] 1966 1966 1966 1966 1966 1966 1966 1965 1964 1963 1960 1959 1959 1959
-## [113] 1958 1958 1951 1949 1949 1948 1948 1948 1948 1948 1948 1948 1948 1948
-## [127] 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948
-## [141] 1948 1948 1948 1941 1941 1941 1941 1939 1937 1937 1937 1937 1937 1937
-## [155] 1937 1936 1936 1931 1931 1931 1931 1931 1930 1930 1930 1930 1930 1929
-## [169] 1929 1929 1929 1929 1929 1929 1929 1928 1928 1928 1928 1928 1928 1928
-## [183] 1928 1927 1927 1927 1927 1927 1927 1927 1927 1927 1927 1927 1927 1927
-## [197] 1927 1927 1927 1927 1923 1923 1922 1920 1920 1913 1912 1912 1912 1912
-## [211] 1912 1912 1912 1911 1911 1911 1911 1911 1911 1911 1909 1906 1905 1905
-## [225] 1905 1905 1905 1905 1905 1898 1898 1885 1882 1800 1800 1800 1700
+##   [1] 1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 1996
+##  [15] 1996 1995 1995 1995 1995 1995 1995 1994 1994 1994 1994 1994 1994 1993
+##  [29] 1992 1992 1992 1992 1992 1992 1992 1991 1991 1991 1990 1989 1989 1989
+##  [43] 1989 1989 1989 1989 1989 1987 1987 1987 1986 1986 1985 1985 1985 1984
+##  [57] 1984 1984 1984 1984 1984 1983 1983 1983 1983 1983 1983 1983 1983 1983
+##  [71] 1983 1982 1982 1982 1981 1981 1980 1980 1980 1980 1980 1980 1980 1980
+##  [85] 1978 1978 1974 1972 1972 1972 1970 1970 1970 1970 1970 1970 1970 1970
+##  [99] 1969 1969 1969 1969 1969 1969 1969 1968 1968 1968 1968 1967 1967 1967
+## [113] 1967 1967 1966 1966 1966 1966 1966 1966 1966 1965 1964 1963 1960 1959
+## [127] 1959 1959 1958 1958 1951 1949 1949 1948 1948 1948 1948 1948 1948 1948
+## [141] 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948 1948
+## [155] 1948 1948 1948 1948 1948 1941 1941 1941 1941 1939 1937 1937 1937 1937
+## [169] 1937 1937 1937 1936 1936 1931 1931 1931 1931 1931 1930 1930 1930 1930
+## [183] 1930 1929 1929 1929 1929 1929 1929 1929 1929 1928 1928 1928 1928 1928
+## [197] 1928 1928 1928 1928 1927 1927 1927 1927 1927 1927 1927 1927 1927 1927
+## [211] 1927 1927 1927 1927 1927 1927 1927 1923 1923 1922 1920 1920 1913 1912
+## [225] 1912 1912 1912 1912 1912 1912 1911 1911 1911 1911 1911 1911 1911 1909
+## [239] 1906 1905 1905 1905 1905 1905 1905 1905 1898 1898 1885 1882 1800 1800
+## [253] 1800 1700
 
 dat_cl &lt;-<span class="st"> </span>dat_cl[flags, ]</code></pre></div>
 </div>
@@ -312,9 +314,9 @@ dat_cl &lt;-<span class="st"> </span>dat_cl <span class="op">%&gt;%</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat<span class="op">$</span>basisOfRecord)
 ## 
 ##     FOSSIL_SPECIMEN   HUMAN_OBSERVATION MACHINE_OBSERVATION 
-##                 443                1912                   3 
+##                 443                2021                   3 
 ##     MATERIAL_SAMPLE         OBSERVATION  PRESERVED_SPECIMEN 
-##                  28                   1                 203 
+##                  28                   1                 206 
 ##             UNKNOWN 
 ##                 124
 
@@ -326,7 +328,7 @@ dat_cl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>individualCount)</code></pre></div>
 <pre><code>## 
 ##  0  1  2  3  4  5  6  8  9 11 14 15 20 
-##  1 45 37  6  7  5  5  1  3  3  1  1  1</code></pre>
+##  1 45 36  5  5  5  5  1  1  3  1  1  1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(individualCount <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(individualCount))<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(individualCount <span class="op">&lt;</span><span class="st"> </span><span class="dv">99</span> <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(individualCount)) <span class="co"># high counts are not a problem</span></code></pre></div>
@@ -334,24 +336,24 @@ dat_cl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Age of records</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>year)</code></pre></div>
 <pre><code>## 
-## 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 
-##   15    5   12   81   23   11    6   21    9    6   27   35   32   36   55 
-## 2011 2012 2013 2014 2015 2016 2017 2018 
-##   63   92   94  181  192  162  275  252</code></pre>
+## 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 
+##    5   10   80   23   11    6   22    9    7   30   46   32   38   57   66 
+## 2012 2013 2014 2015 2016 2017 2018 2019 
+##   92  102  213  193  167  278  268   17</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">1945</span>) <span class="co"># remove records from before second world war</span></code></pre></div>
 <p>On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We’ll not treat taxonomic cleaning here, but if you need to, check out the <a href="https://ropensci.org/tutorials/taxize_tutorial.html">taxize R package</a> or the <a href="http://tnrs.iplantcollaborative.org/">taxonomic name resolution service</a> (plants only).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>family) <span class="co">#that looks good</span>
 ## 
 ## Felidae 
-##    1685
+##    1772
 dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(family <span class="op">==</span><span class="st"> 'Felidae'</span>)
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>taxonRank) <span class="co"># this is also good</span>
 ## 
 ##    SPECIES SUBSPECIES 
-##        791        894</code></pre></div>
+##        801        971</code></pre></div>
 <p>We excluded almost 50% of the initial data points with the data cleaning, and the general picture has improved considerably. We confined the records mostly to what can be considered current day distribution of the species of interest (Fig. ).</p>
 <p>We have, however, also lost quite a number of records. In general, there is no “one-size-fits-it-all” for data quality of geographic species occurrence records. Of course highest coordinate precision is desirable, but what is acceptable will strongly depend on the downstream analyses. For species distribution modelling, usually high precision is necessary e.g. 1-10 km, but for other analyses such as biogeographic reconstructions using tectonic plates, a record might be considered good enough quality, as long as it is on the right continent. As another example for conservation purposes it might be sufficient to know that a species is present within a certain country.</p>
 </div>
@@ -398,7 +400,7 @@ range_flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference
                        <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>,
                        <span class="dt">value =</span> <span class="st">"flagged"</span>)
 ## Testing natural ranges
-## Flagged 56 records.
+## Flagged 58 records.
 
 dat_fin &lt;-<span class="st"> </span>dat_cl[range_flags, ]</code></pre></div>
 <div class="figure">

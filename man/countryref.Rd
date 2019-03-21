@@ -5,15 +5,18 @@
 \alias{countryref}
 \title{Country Centroids and Country Capitals}
 \format{A data frame with 5,142 observations on 10 variables.
-#' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
-\item{iso2}{ISO-2 code for each country, in case of provinces also referring to the country.} \item{name}{a
-factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
+#' \describe{ 
+\item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
+\item{iso2}{ISO-2 code for each country, in case of provinces also referring to the country.} 
+\item{name}{a factor; name of the country or province.} 
+\item{adm1_code}{adm code for countries and provinces.} 
 \item{type}{identifying if the entry refers to a country or province level.} 
-\item{centroid.lon}{Longitude of the country centroid}
-\item{centroid.lat}{Latitude of the country centroid}
-\item{capital}{Name of the country capital, empty for provinces}
-\item{capital.lon}{Longitude of the country capital}
-\item{capital.lat}{Latitude of the country capital}}}
+\item{centroid.lon}{Longitude of the country centroid.}
+\item{centroid.lat}{Latitude of the country centroid.}
+\item{capital}{Name of the country capital, empty for provinces.}
+\item{capital.lon}{Longitude of the country capital.}
+\item{capital.lat}{Latitude of the country capital.}
+\item{area_sqkm}{The area of the country or prvoince.}}}
 \source{
 CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 Washington, DC.

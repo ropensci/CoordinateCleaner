@@ -14,9 +14,11 @@ vignettes/mammal_example.csv
 vignettes/tutorial_s3_example_input_data
 CONTRIBUTING.md
 docs/
+vignettes/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.Rmd
+vignettes/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd
 vignettes/Quickstart_how_to_run
-vignettes/Quickstart_clean_coordinates
-vignettes/Quickstart_clean_fossils
+vignettes/Quickstart_clean_coordinates.Rmd
+vignettes/Quickstart_clean_fossils.Rmd
 vignettes/Tutorial_geographic_outliers.Rmd
 vignettes/Background_comparison_other_software.Rmd
 vignettes/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.Rmd
@@ -25,6 +27,8 @@ vignettes/Background_the_institutions_database.Rmd
 vignettes/Tutorial_Using_custom_gazetteers.Rmd
 ^_pkgdown\.yml$
 ^docs$
+vignettes/apa.csl
+vignettes/CoordinateCleaner.bib
 vignettes/examples
 vignettes/inst
 sea.EXT/

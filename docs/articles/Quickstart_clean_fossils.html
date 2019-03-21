@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
       </span>
     </div>
 
@@ -113,11 +113,9 @@
 
 <span class="co"># Simulate example data</span>
 minages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="dv">0</span>, <span class="dv">65</span>)
-exmpl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">accepted_name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-                    <span class="dt">lng =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>),
-                    <span class="dt">lat =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>),
-                    <span class="dt">min_ma =</span> minages,
-                    <span class="dt">max_ma =</span> minages <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="fl">0.1</span>, <span class="dv">65</span>))
+exmpl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">accepted_name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">250</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), 
+    <span class="dt">lng =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="dv">42</span>, <span class="dt">max =</span> <span class="dv">51</span>), <span class="dt">lat =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="dt">min =</span> <span class="op">-</span><span class="dv">26</span>, <span class="dt">max =</span> <span class="op">-</span><span class="dv">11</span>), 
+    <span class="dt">min_ma =</span> minages, <span class="dt">max_ma =</span> minages <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">250</span>, <span class="fl">0.1</span>, <span class="dv">65</span>))
 
 <span class="co"># Run fossil test</span>
 test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_fossils.html">clean_fossils</a></span>(<span class="dt">x =</span> exmpl)

@@ -1,3 +1,12 @@
+CoordinateCleaner 2.0-8 (2019-03-21)
+=========================
+
+### MINOR IMPROVEMENTS
+  * moved vignettes to online documentation
+  * added an area column to the countryref dataset
+  * fixed some minor spelling issues in the documentation
+
+
 CoordinateCleaner 2.0-7 (2019-01-22)
 =========================
 

@@ -65,7 +65,7 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
       </span>
     </div>
 
@@ -154,14 +154,16 @@ Coordinates are based on the Central Intelligence Agency World Factbook  <a href
     <p>A data frame with 5,142 observations on 10 variables.
 #'</p><dl class='dl-horizontal'>
 <dt>iso3</dt><dd><p>ISO-3 code for each country, in case of provinces also referring to the country.</p></dd>
-<dt>iso2</dt><dd><p>ISO-2 code for each country, in case of provinces also referring to the country.</p></dd> <dt>name</dt><dd><p>a
-factor; name of the country or province.</p></dd> <dt>adm1_code</dt><dd><p>adm code for countries and provinces</p></dd> 
+<dt>iso2</dt><dd><p>ISO-2 code for each country, in case of provinces also referring to the country.</p></dd> 
+<dt>name</dt><dd><p>a factor; name of the country or province.</p></dd> 
+<dt>adm1_code</dt><dd><p>adm code for countries and provinces.</p></dd> 
 <dt>type</dt><dd><p>identifying if the entry refers to a country or province level.</p></dd> 
-<dt>centroid.lon</dt><dd><p>Longitude of the country centroid</p></dd>
-<dt>centroid.lat</dt><dd><p>Latitude of the country centroid</p></dd>
-<dt>capital</dt><dd><p>Name of the country capital, empty for provinces</p></dd>
-<dt>capital.lon</dt><dd><p>Longitude of the country capital</p></dd>
-<dt>capital.lat</dt><dd><p>Latitude of the country capital</p></dd></dl>
+<dt>centroid.lon</dt><dd><p>Longitude of the country centroid.</p></dd>
+<dt>centroid.lat</dt><dd><p>Latitude of the country centroid.</p></dd>
+<dt>capital</dt><dd><p>Name of the country capital, empty for provinces.</p></dd>
+<dt>capital.lon</dt><dd><p>Longitude of the country capital.</p></dd>
+<dt>capital.lat</dt><dd><p>Latitude of the country capital.</p></dd>
+<dt>area_sqkm</dt><dd><p>The area of the country or prvoince.</p></dd></dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
@@ -175,19 +177,19 @@ Washington, DC.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>countryref</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>countryref</span>)</div><div class='output co'>#&gt;   iso3 iso2 adm1_code        name    type centroid.lon centroid.lat    capital
-#&gt; 1  ABW   AW       ABW       Aruba country    -69.97700       12.517 Oranjestad
-#&gt; 2  ABW   AW       ABW       Aruba country    -69.96667       12.500 Oranjestad
+#&gt; 1  ABW   AW       ABW       Aruba country    -69.96667       12.500 Oranjestad
+#&gt; 2  ABW   AW       ABW       Aruba country    -69.97700       12.517 Oranjestad
 #&gt; 3  AFG   AF       AFG Afghanistan country     65.21600       33.677      Kabul
 #&gt; 4  AFG   AF       AFG Afghanistan country     65.00000       33.000      Kabul
-#&gt; 5  AGO   AO       AGO      Angola country     17.54400      -12.296     Luanda
-#&gt; 6  AGO   AO       AGO      Angola country     18.50000      -12.500     Luanda
-#&gt;   capital.lon capital.lat
-#&gt; 1      -70.03       12.52
-#&gt; 2      -70.03       12.52
-#&gt; 3       69.18       34.52
-#&gt; 4       69.18       34.52
-#&gt; 5       13.22       -8.83
-#&gt; 6       13.22       -8.83</div></pre>
+#&gt; 5  AGO   AO       AGO      Angola country     18.50000      -12.500     Luanda
+#&gt; 6  AGO   AO       AGO      Angola country     17.54400      -12.296     Luanda
+#&gt;   capital.lon capital.lat    area_sqkm
+#&gt; 1      -70.03       12.52     169.7664
+#&gt; 2      -70.03       12.52     169.7664
+#&gt; 3       69.18       34.52  642181.6164
+#&gt; 4       69.18       34.52  642181.6164
+#&gt; 5       13.22       -8.83 1244654.3135
+#&gt; 6       13.22       -8.83 1244654.3135</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

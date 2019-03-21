@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
       </span>
     </div>
 
@@ -328,7 +328,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(cl<span class="op">$</span>geogscale)</code></pre></div>
 <pre><code>## 
 ## small collection          outcrop       local area            basin 
-##             1952             1748               79                0</code></pre>
+##             1953             1747               79                0</code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
 <div id="time" class="section level2">
@@ -339,7 +339,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(cl<span class="op">$</span>late_age))
 ## 
 ##  63.3    66  70.6  93.5  93.9 100.5 
-##    53   139     8     3     3    21
+##    53   138     8     3     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> late_age))
@@ -350,7 +350,7 @@ fl_rec &lt;-<span class="st"> </span>dat[<span class="op">!</span>flags<span cla
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(cl<span class="op">$</span>early_age))
 ## 
 ##  70.6  83.5  99.6 100.5 105.3   113 
-##   127     9     3    11     3    21
+##   126     9     3    11     3    21
 
 <span class="kw">ggplot</span>(cl)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> early_age))
