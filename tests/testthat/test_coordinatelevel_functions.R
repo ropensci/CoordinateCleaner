@@ -132,7 +132,7 @@ skip_on_cran()
   expect_true(sum(cc_iucn(x = exmpl, range = range, value = "flagged")) > 0)
 })
 
-
+# cc_outl
 test_that("cc_outl works", {
 skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
@@ -184,7 +184,7 @@ skip_on_cran()
                "undefined columns selected")
 })
 
-# CC_urb
+# cc_urb
 
 test_that("cc_urb works", {
 skip_on_cran()
