@@ -20,3 +20,4 @@ sea.EXT/
 urb.EXT/
 cran-comments.md
 vignettes/
+pre_submission_tests.R

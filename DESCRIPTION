@@ -30,5 +30,4 @@ Depends: R (>= 3.5.0)
 Imports: dplyr, geosphere, ggplot2, graphics, methods, raster, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: countrycode, covr, knitr, maps, paleobioDB, rgbif, rmarkdown, testthat
-VignetteBuilder: knitr
+Suggests: covr, knitr, rmarkdown, testthat
