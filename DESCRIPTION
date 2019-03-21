@@ -27,7 +27,7 @@ License: GPL-3
 URL: https://ropensci.github.io/CoordinateCleaner/
 BugReports: https://github.com/ropensci/CoordinateCleaner/issues
 Depends: R (>= 3.5.0)
-Imports: dplyr, geosphere, ggplot2, graphics, methods, raster, rgbif, rgeos, rgdal(>= 1.11.4), rnaturalearth, stats, sp, tidyselect, utils
+Imports: dplyr, geosphere, ggplot2, graphics, methods, raster, rgbif, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: covr, knitr, rmarkdown, testthat
