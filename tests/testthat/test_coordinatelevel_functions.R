@@ -137,15 +137,15 @@ test_that("cc_outl works", {
 skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 169)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                           sampling_thresh = 0.2, mltpl = 0.1)), 212)
+                           sampling_thresh = 0.2, mltpl = 0.1)), 205)
   
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 
-                           tdi = .001)), 39)
+                           tdi = .001)), 16)
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", tdi = 10000)), 250)
