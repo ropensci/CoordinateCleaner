@@ -7,7 +7,7 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg)](https://doi.org/10.5281/zenodo.2539408)
 
-**There is a bug with the outlier test in version 2.0-8, for now, please skip this test or use the previous version 2.0-7**
+**There was a bug in the cc_outl function in previsous versions, so for outlier testing make sure to use version 2.0-9 or higher.**
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 

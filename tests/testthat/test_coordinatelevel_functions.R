@@ -7,7 +7,7 @@ require(dplyr)
 # setup test data
 set.seed(1)
 lon <- runif(250, min = 42, max = 51)
-set.seed(1)
+set.seed(2)
 lat <- runif(250, min = -26, max = -11)
 exmpl <- data.frame(species = sample(letters[-1], size = 250, replace = TRUE),
                     decimallongitude = lon,
@@ -138,15 +138,15 @@ test_that("cc_outl works", {
 skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 169)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 200)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                           sampling_thresh = 0.2, mltpl = 0.1)), 205)
-  
+                           sampling_thresh = 0.2, mltpl = 0.1)), 242)
+
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 
-                           tdi = .001)), 16)
+                           tdi = .001)), 11)
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", tdi = 10000)), 250)
@@ -174,12 +174,12 @@ skip_on_cran()
   expect_is(cc_sea(exmpl, value = "clean", ref = cust_ref1), "data.frame")
   
   # custom reference
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 187)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 185)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 185)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 98)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 98)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 98)
 
   # speedup
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 187)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 98)
   
   expect_error(cc_sea(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")

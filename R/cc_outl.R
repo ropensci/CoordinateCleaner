@@ -102,6 +102,7 @@ cc_outl <- function(x,
   
   # remove duplicate records and make sure that there are at least two records
   test <- lapply(splist, function(k){duplicated(k[, c(species, lon,lat)])})
+  #test <- lapply(splist, "duplicated")
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
   splist <- splist[test >= min_occs]
@@ -179,7 +180,7 @@ cc_outl <- function(x,
         }
       }
     }else{
-      warning(sprintf("Only species with more than "))
+      warning(sprintf("Only species with less than %s records", min_occs))
     }
     
     ## Absolute distance test with mean interpoint distance
@@ -193,16 +194,14 @@ cc_outl <- function(x,
     ## Quantile based test, with mean interpoint distances
     if (method == "quantile") {
       quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
-      out <- which(mins < quo[1] - stats::IQR(mins) * mltpl | mins > quo[2] +
-                     stats::IQR(mins) * mltpl)
+      out <- which(mins > quo[2] + stats::IQR(mins) * mltpl)
     }
     
     ## MAD (Median absolute deviation) based test, 
     if (method == "mad") {
       quo <- stats::median(mins)
       tester <- stats::mad(mins)
-      out <- which(mins < quo - tester * mltpl | mins > quo + tester *
-                     mltpl)
+      out <- which(mins > quo + tester * mltpl)
     }
     
     if(nrow(k) > 10000){
@@ -281,6 +280,7 @@ cc_outl <- function(x,
   
   out <- rep(TRUE, nrow(x))
   out[flags] <- FALSE
+  
 
   if (verbose) {
     if (value == "ids") {
