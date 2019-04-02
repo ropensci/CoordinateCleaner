@@ -94,17 +94,17 @@ cc_outl <- function(x,
                     min_occs = 7,
                     thinning = FALSE,
                     thinning_res = 0.5) {
-
+  
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
-
-
+  
+  
   if (verbose) {
     message("Testing geographic outliers")
   }
   
-   # split input up into species
+  # split input up into species
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
@@ -121,55 +121,71 @@ cc_outl <- function(x,
       "Species with less than %o unique records will not be tested.", 
       min_occs))
   }
-
-  # create raster for raster approximation if there are large datasets or spatial thinning is activated
+  
+  # create raster for raster approximation if there are large 
+  # datasets or spatial thinning is activated
   if(any(test >= 10000) | thinning){
     warning("Using raster approximation.")
-    # create a raster with extent similar to all points, and unique IDs as cell values
-    ras <- ras_create(x = x, lat = lat, lon = lon, thinning_res = thinning_res)
+    # create a raster with extent similar to all points, 
+    # and unique IDs as cell values
+    ras <- ras_create(x = x, 
+                      lat = lat, 
+                      lon = lon, 
+                      thinning_res = thinning_res)
   }
   
   # identify points for flagging
   flags <- lapply(splist, function(k) {
-
+    
     # calculate the distance matrix between all points for the outlier tests
-    ## for small datasets and without thinning, simply a distance matrix using geospheric distance
-      if(nrow(k) <= 10000 & !thinning){ 
+    ## for small datasets and without thinning, 
+    ## simply a distance matrix using geospheric distance
+    if(nrow(k) <= 10000 & !thinning){ 
+      
+      #distance calculation
+      dist <- geosphere::distm(k[, c(lon, lat)], 
+                               fun = geosphere::distHaversine) / 1000
+      
+      # set diagonale to NA, so it does not influence the mean
+      dist[dist == 0] <- NA
+      
+    }else{ 
+      # raster approximation for large datasets and thinning
+      # get a distance matrix of raster midpoints, with the row 
+      # and colnames giving the cell IDs
+      
+      # if the raster distance is used due to large dataset and 
+      # not for thinning, account for the number of points per gridcell
+      if(thinning){
+        dist_obj <- ras_dist(x = k, 
+                             lat = lat, 
+                             lon = lon,
+                             ras = ras, 
+                             weights = FALSE)
         
-        #distance calculation
-        dist <- geosphere::distm(k[, c(lon, lat)], 
-                                 fun = geosphere::distHaversine) / 1000
+        # the point IDS
+        pts <-  dist_obj$pts
         
-        # set diagonale to NA, so it does not influence the mean
-        dist[dist == 0] <- NA
-
-      }else{ 
-        # raster approximation for large datasets and thinning
-        # get a distance matrix of raster midpoints, with the row and colnames giving the cell IDs
-
-        # if the raster distance is used due to large dataset and not for thinning, account for the number of points per gridcell
-        if(thinning){
-          dist_obj <- ras_dist(x = k, lat = lat, lon = lon, ras = ras, weights = FALSE)
-         
-           # the point IDS
-          pts <-  dist_obj$pts
-          
-          # the distance matrix 
-          dist <- dist_obj$dist
-
-        }else{
-          dist_obj <-  ras_dist(x = k, lat = lat, lon = lon, ras = ras, weights = TRUE)
-          
-          # the point IDS
-          pts <-  dist_obj$pts
-          
-          # the distance matrix 
-          dist <- dist_obj$dist
-          
-          # a weight matrix to weight each distance by the number of points in it
-          wm <- dist_obj$wm
-        }
+        # the distance matrix 
+        dist <- dist_obj$dist
+        
+      }else{
+        dist_obj <-  ras_dist(x = k, 
+                              lat = lat, 
+                              lon = lon,
+                              ras = ras, 
+                              weights = TRUE)
+        
+        # the point IDS
+        pts <-  dist_obj$pts
+        
+        # the distance matrix 
+        dist <- dist_obj$dist
+        
+        # a weight matrix to weight each distance by the number of points in it
+        wm <- dist_obj$wm
       }
+    }
     
     # calculate the outliers for the different methods
     ##  distance method useing absolute distance
@@ -179,13 +195,14 @@ cc_outl <- function(x,
       if(sampling_thresh > 0){
         stop("Sampling correction impossible for method 'distance'" )
       }
-
+      
       # calculate the minimum distance to any next point
       mins <- apply(dist, 1, min, na.rm = TRUE)
       
       # outliers based on absolute distance threshold
       out <- which(mins > tdi)
-    }else{ # for the other methods the mean must be claculated depending on if the raster method is used
+    }else{ # for the other methods the mean must be claculated 
+      # depending on if the raster method is used
       # get row means
       if(nrow(k) >= 10000 & !thinning){
         # get mean distance to all other points
@@ -217,7 +234,8 @@ cc_outl <- function(x,
       out <- which(mins > quo + tester * mltpl)
     }
     
-    # Identify the outlier points depending on if the raster approximation was used
+    # Identify the outlier points depending on 
+    # if the raster approximation was used
     if(nrow(k) > 10000 | thinning){
       # create output object
       if (length(out) == 0) {
@@ -297,7 +315,7 @@ cc_outl <- function(x,
   out <- rep(TRUE, nrow(x))
   out[flags] <- FALSE
   
-
+  
   if (verbose) {
     if (value == "ids") {
       if(value == "clean"){
@@ -313,7 +331,7 @@ cc_outl <- function(x,
       }
     }
   }
-
+  
   switch(value, 
          clean = return(x[out, ]), 
          flagged = return(out), 
