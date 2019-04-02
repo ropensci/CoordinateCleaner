@@ -327,7 +327,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "1114.077KB",
+  "fileSize": "1115.444KB",
   "contIntegration": [
     "https://travis-ci.com/azizka/CoordinateCleaner",
     "https://codecov.io/gh/azizka/CoordinateCleaner"
