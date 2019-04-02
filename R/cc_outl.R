@@ -48,6 +48,10 @@
 #' This is necessary for reliable outlier estimation.
 #' Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
+#' @param thinning forces a raster approximation for the distance calculation. 
+#' This is routinely used for species with more than 10,000 records for computational reasons, 
+#' but can be enforced for smaller datasets, which is reommended when sampling is very uneven. Default = T.
+#' @param thinning_res The resolution for the spatial thinning in decimal degrees. Default = 0.5.
 #' @inheritParams cc_cap
 #' 
 #' @inherit cc_cap return
@@ -87,130 +91,140 @@ cc_outl <- function(x,
                     value = "clean",
                     sampling_thresh = 0,
                     verbose = TRUE,
-                    min_occs = 7) {
+                    min_occs = 7,
+                    thinning = FALSE,
+                    thinning_res = 0.5) {
 
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
 
+
   if (verbose) {
     message("Testing geographic outliers")
   }
   
-   # split up into species
+   # split input up into species
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
-  test <- lapply(splist, function(k){duplicated(k[, c(species, lon,lat)])})
-  #test <- lapply(splist, "duplicated")
+  test <- lapply(splist, function(k){duplicated(k[, c(species, lon, lat)])})
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
+  
+  # only select species with more than min_occs records
   splist <- splist[test >= min_occs]
   
+  # issue warning if species are omitted due to few records
   if(any(test < min_occs)){
     warning(sprintf(
       "Species with less than %o unique records will not be tested.", 
       min_occs))
   }
 
-  # create raster for raster approximation  of large datasets
-  if(any(test >= 10000)){
-    warning("large dataset. Using raster approximation.")
-    
-    # get data extend
-    ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)]))
-    # create raster
-    # using a raster that is 1deg by 1 deg globally
-    ras <- raster::raster(x = ex, nrow = 180, ncol = 360) 
-    vals <- seq_len(raster::ncell(ras))
-    ras <- raster::setValues(ras, vals)
+  # create raster for raster approximation if there are large datasets or spatial thinning is activated
+  if(any(test >= 10000) | thinning){
+    warning("Using raster approximation.")
+    # create a raster with extent similar to all points, and unique IDs as cell values
+    ras <- ras_create(x = x, lat = lat, lon = lon, thinning_res = thinning_res)
   }
-
-  # loop over species and run outlier test
+  
+  # identify points for flagging
   flags <- lapply(splist, function(k) {
-    test <- nrow(k[!duplicated(k), ])
 
-    if (test >= min_occs) {
-      if(nrow(k) <= 10000){
-        # Calculate distance between individual points
+    # calculate the distance matrix between all points for the outlier tests
+    ## for small datasets and without thinning, simply a distance matrix using geospheric distance
+      if(nrow(k) <= 10000 & !thinning){ 
+        
+        #distance calculation
         dist <- geosphere::distm(k[, c(lon, lat)], 
                                  fun = geosphere::distHaversine) / 1000
+        
+        # set diagonale to NA, so it does not influence the mean
         dist[dist == 0] <- NA
-        
-        if(method == "distance"){
-          # get minimum distance to all other points
-          mins <- apply(dist, 1, min, na.rm = TRUE)
+
+      }else{ 
+        # raster approximation for large datasets and thinning
+        # get a distance matrix of raster midpoints, with the row and colnames giving the cell IDs
+
+        # if the raster distance is used due to large dataset and not for thinning, account for the number of points per gridcell
+        if(thinning){
+          dist_obj <- ras_dist(x = k, lat = lat, lon = lon, ras = ras, weights = FALSE)
+         
+           # the point IDS
+          pts <-  dist_obj$pts
+          
+          # the distance matrix 
+          dist <- dist_obj$dist
+
         }else{
-          # get mean distance to all other points
-          mins <- apply(dist, 1, mean, na.rm = TRUE)
-        }
-        
-      }else{
-        # assign points to raster cells 
-        pts <- raster::extract(x = ras, y = sp::SpatialPoints(k[, c(lon, lat)]))
-        midp <- data.frame(raster::rasterToPoints(ras))
-        midp <- midp[midp$layer %in% unique(pts),]
-        midp <- midp[match(unique(pts), midp$layer),]
-        
-        # calculate geospheric distance between raster cells with points
-        dist <- geosphere::distm(midp[, c("x", "y")], 
-                                 fun = geosphere::distHaversine) / 1000
-        
-        # approximate within cell distance as half 
-        # the cell size, assumin 1 deg = 100km
-        # this is crude, but doesn't really matter
-        dist[dist == 0] <- 100 * mean(raster::res(ras)) / 2
-        
-        dist <- as.data.frame(dist, row.names = as.integer(midp$layer))
-        names(dist) <- midp$layer
-        
-        # weight matrix to account for the number of points per cell
-        cou <- table(pts)
-        cou <- cou[match(unique(pts), names(cou))]
-        wm <- outer(cou, cou)
-        
-        # multiply matrix elements to get weightend sum
-        dist <- round(dist * wm, 0)
-        
-        if(method == "distance"){
-          mins <- apply(dist, 1, min, na.rm = TRUE)
-        }else{
-          # get row means
-          mins <- apply(dist, 1, sum) / rowSums(wm)
+          dist_obj <-  ras_dist(x = k, lat = lat, lon = lon, ras = ras, weights = TRUE)
+          
+          # the point IDS
+          pts <-  dist_obj$pts
+          
+          # the distance matrix 
+          dist <- dist_obj$dist
+          
+          # a weight matrix to weight each distance by the number of points in it
+          wm <- dist_obj$wm
         }
       }
-    }else{
-      warning(sprintf("Only species with less than %s records", min_occs))
-    }
     
-    ## Absolute distance test with mean interpoint distance
-    if (method == "distance") {
-      out <- which(mins > tdi * 1000)
+    # calculate the outliers for the different methods
+    ##  distance method useing absolute distance
+    if(method == "distance"){
+      
+      # Drop an error if the sampling correction is activated
       if(sampling_thresh > 0){
         stop("Sampling correction impossible for method 'distance'" )
       }
+
+      # calculate the minimum distance to any next point
+      mins <- apply(dist, 1, min, na.rm = TRUE)
+      
+      # outliers based on absolute distance threshold
+      out <- which(mins > tdi)
+    }else{ # for the other methods the mean must be claculated depending on if the raster method is used
+      # get row means
+      if(nrow(k) >= 10000 & !thinning){
+        # get mean distance to all other points
+        mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
+      }else{
+        # get mean distance to all other points
+        mins <-  apply(dist, 1, mean, na.rm = TRUE)
+      }
     }
     
-    ## Quantile based test, with mean interpoint distances
-    if (method == "quantile") {
+    ## the quantile method
+    if(method == "quantile"){
+      # identify the quaniles
       quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
+      
+      # flag all upper outliers
       out <- which(mins > quo[2] + stats::IQR(mins) * mltpl)
     }
     
-    ## MAD (Median absolute deviation) based test, 
+    ## the mad method
     if (method == "mad") {
-      quo <- stats::median(mins)
-      tester <- stats::mad(mins)
+      # get the median
+      quo <- stats::median(mins, na.rm = TRUE)
+      
+      # get the mad stat
+      tester <- stats::mad(mins, na.rm = TRUE)
+      
+      # Identify outliers
       out <- which(mins > quo + tester * mltpl)
     }
     
-    if(nrow(k) > 10000){
+    # Identify the outlier points depending on if the raster approximation was used
+    if(nrow(k) > 10000 | thinning){
       # create output object
       if (length(out) == 0) {
         ret <- NA
       }
       if (length(out) > 0) {
-        ret <- which(pts %in% names(out))
+        ret <- rownames(k)[which(pts %in% gsub("X", "", names(out)))]
       }
     }else{
       # create output object
@@ -223,10 +237,12 @@ cc_outl <- function(x,
     }
     return(ret)
   })
-
+  
+  # turn to numeric and remove NAs
   flags <- as.numeric(as.vector(unlist(flags)))
   flags <- flags[!is.na(flags)]
   
+  # sampling correction for cross country datasets
   if(sampling_thresh > 0){
     # identify countries in the dataset, with point polygon test
     pts <- sp::SpatialPoints(x[flags, c(lon, lat)])

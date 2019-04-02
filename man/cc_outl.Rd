@@ -7,7 +7,7 @@
 cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
   species = "species", method = "quantile", mltpl = 5, tdi = 1000,
   value = "clean", sampling_thresh = 0, verbose = TRUE,
-  min_occs = 7)
+  min_occs = 7, thinning = FALSE, thinning_res = 0.5)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -48,6 +48,12 @@ of records flagged.}
 This is necessary for reliable outlier estimation.
 Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
 Default is to 7. If \code{method == 'distance'}, consider a lower threshold.}
+
+\item{thinning}{forces a raster approximation for the distance calculation. 
+This is routinely used for species with more than 10,000 records for computational reasons, 
+but can be enforced for smaller datasets, which is reommended when sampling is very uneven. Default = T.}
+
+\item{thinning_res}{The resolution for the spatial thinning in decimal degrees. Default = 0.5.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
