@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
       </span>
     </div>
 
@@ -211,7 +211,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 ## Flagged 0 records.
 ## Testing biodiversity institutions
 ## Flagged 0 records.
-## Flagged 190 of 2833 records, EQ = 0.07.
+## Flagged 190 of 2864 records, EQ = 0.07.
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(flags, <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>, <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>)</code></pre></div>
 <div class="figure">
@@ -223,7 +223,7 @@ Records flagged by the automated cleaning.
 ##        0        9        7       17       11      166        0        0 
 ## .summary 
 ##      190</code></pre>
-<p>The automatic test flagged 6.7% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
+<p>The automatic test flagged 6.6% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Exclude problematic records</span>
 dat_cl &lt;-<span class="st"> </span>dat[flags<span class="op">$</span>.summary,]
 
@@ -314,7 +314,7 @@ dat_cl &lt;-<span class="st"> </span>dat_cl <span class="op">%&gt;%</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat<span class="op">$</span>basisOfRecord)
 ## 
 ##     FOSSIL_SPECIMEN   HUMAN_OBSERVATION MACHINE_OBSERVATION 
-##                 443                2028                   3 
+##                 443                2059                   3 
 ##     MATERIAL_SAMPLE         OBSERVATION  PRESERVED_SPECIMEN 
 ##                  28                   1                 206 
 ##             UNKNOWN 
@@ -337,23 +337,23 @@ dat_cl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>year)</code></pre></div>
 <pre><code>## 
 ## 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 
-##    5   10   80   23   11    6   22    9    7   30   46   32   38   57   66 
+##    5   10   80   23   11    6   22    9   11   31   46   32   38   57   66 
 ## 2012 2013 2014 2015 2016 2017 2018 2019 
-##   92  102  213  193  167  279  271   20</code></pre>
+##   93  102  213  194  169  281  271   37</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">1945</span>) <span class="co"># remove records from before second world war</span></code></pre></div>
 <p>On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We’ll not treat taxonomic cleaning here, but if you need to, check out the <a href="https://ropensci.org/tutorials/taxize_tutorial.html">taxize R package</a> or the <a href="http://tnrs.iplantcollaborative.org/">taxonomic name resolution service</a> (plants only).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>family) <span class="co">#that looks good</span>
 ## 
 ## Felidae 
-##    1779
+##    1807
 dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(family <span class="op">==</span><span class="st"> 'Felidae'</span>)
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>taxonRank) <span class="co"># this is also good</span>
 ## 
 ##    SPECIES SUBSPECIES 
-##        806        973</code></pre></div>
+##        813        994</code></pre></div>
 <p>We excluded almost 50% of the initial data points with the data cleaning, and the general picture has improved considerably. We confined the records mostly to what can be considered current day distribution of the species of interest (Fig. ).</p>
 <p>We have, however, also lost quite a number of records. In general, there is no “one-size-fits-it-all” for data quality of geographic species occurrence records. Of course highest coordinate precision is desirable, but what is acceptable will strongly depend on the downstream analyses. For species distribution modelling, usually high precision is necessary e.g. 1-10 km, but for other analyses such as biogeographic reconstructions using tectonic plates, a record might be considered good enough quality, as long as it is on the right continent. As another example for conservation purposes it might be sufficient to know that a species is present within a certain country.</p>
 </div>

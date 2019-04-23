@@ -35,7 +35,7 @@
 #' @export
 #' @importFrom sp CRS SpatialPoints "proj4string<-" over proj4string
 #' @importFrom raster extent crop
-#' @importFrom rnaturalearth ne_download
+#' @importFrom rnaturalearth ne_download ne_file_name
 cc_urb <- function(x,
                    lon = "decimallongitude",
                    lat = "decimallatitude",
@@ -53,30 +53,20 @@ cc_urb <- function(x,
   # check for reference data. 
   if (is.null(ref)) {
     message("Downloading urban areas via rnaturalearth")
-    # path <- file.path(system.file(package = "CoordinateCleaner"), "urb.EXT")
-    # file <- file.path(path,"ne_50m_urban_areas.shp")
-    # 
-    # #Download if file does not exist yet
-    # if(!file.exists(file)) {
-    #   ref <- rnaturalearth::ne_download(scale = 'medium', 
-    #                                     type = 'urban_areas',
-    #                                     destdir = path,
-    #                                     load = FALSE)
-    # }
-    # 
-    # #load reference
-    # ref <- rgdal::readOGR(path, 
-    #                       paste("ne_50m_urban_areas", sep = ""), 
-    #                       encoding = "UTF-8",
-    #                       stringsAsFactors = FALSE, 
-    #                       use_iconv = TRUE)
-    # ref@data[ref@data == "-99" | 
-    #            ref@data == "-099"] <- NA
+    ref <- try(suppressWarnings(rnaturalearth::ne_download(scale = 'medium', 
+                                                           type = 'urban_areas')), 
+               silent = TRUE)
     
-      ref <- rnaturalearth::ne_download(scale = 'medium',
-                                        type = 'urban_areas')
-    
-     sp::proj4string(ref) <- ""
+    if(class(ref) == "try-error"){
+      warning(sprintf("Gazetteer for urban areas not found at\n%s",
+                      rnaturalearth::ne_file_name(scale = 'medium',
+                                                  type = 'urban_areas',
+                                                  full_url = TRUE)))
+      warning("Skipping urban test")
+      switch(value, clean = return(x), flagged = return(rep(NA, nrow(x))))
+    }
+
+    sp::proj4string(ref) <- ""
   } else {
     #Enable sf formatted custom references
     if(!any(is(ref) == "Spatial")){

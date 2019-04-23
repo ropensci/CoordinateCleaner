@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
       </span>
     </div>
 
@@ -127,12 +127,12 @@ dat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_c
     <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>, <span class="st">"urban"</span>, <span class="st">"zeros"</span>), 
     <span class="dt">countries =</span> <span class="st">"countries"</span>)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp2H1lJ9", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpwb1G9D", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank 
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp2H1lJ9", layer: "ne_50m_urban_areas"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpwb1G9D", layer: "ne_50m_urban_areas"
 ## with 2143 features
 ## It has 4 fields
 ## Integer64 fields read as strings:  scalerank
@@ -310,7 +310,7 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># via the report option</span>
 flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl)
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp2H1lJ9", layer: "ne_50m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpwb1G9D", layer: "ne_50m_land"
 ## with 1420 features
 ## It has 3 fields
 ## Integer64 fields read as strings:  scalerank
@@ -319,9 +319,9 @@ flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean
 <span class="co"># via summary</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)
 ##     .val     .equ     .zer     .cap     .cen     .sea     .otl     .gbf 
-##        0        0        0        0        0      143        1        0 
+##        0        0        0        0        0      148        2        0 
 ##    .inst .summary 
-##        0      143</code></pre></div>
+##        0      148</code></pre></div>
 </div>
 <div id="exclude-flagged-records" class="section level1">
 <h1 class="hasAnchor">
@@ -339,29 +339,29 @@ clean &lt;-<span class="st"> </span>exmpl[flags<span class="op">$</span>.cen, ]<
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp2H1lJ9", layer: "ne_110m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpwb1G9D", layer: "ne_110m_land"
 ## with 127 features
 ## It has 3 fields</code></pre></div>
 <p>In this way, you can also add the individual test results as columns to your initial data.frame:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>), <span class="dt">sea =</span> <span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(., 
     <span class="dt">value =</span> <span class="st">"flagged"</span>))
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmp2H1lJ9", layer: "ne_110m_land"
+## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpwb1G9D", layer: "ne_110m_land"
 ## with 127 features
 ## It has 3 fields
 ## # A tibble: 250 x 6
 ##    species decimallongitude decimallatitude countries val   sea  
 ##    &lt;fct&gt;              &lt;dbl&gt;           &lt;dbl&gt; &lt;fct&gt;     &lt;lgl&gt; &lt;lgl&gt;
-##  1 o                   49.2           -22.1 MDG       TRUE  FALSE
-##  2 r                   45.2           -25.6 MDG       TRUE  FALSE
-##  3 d                   48.8           -25.9 MDG       TRUE  FALSE
-##  4 n                   43.8           -16.0 MDG       TRUE  FALSE
-##  5 p                   46.4           -11.1 MDG       TRUE  FALSE
-##  6 o                   50.0           -24.9 MDG       TRUE  FALSE
-##  7 p                   46.2           -20.5 MDG       TRUE  TRUE 
-##  8 j                   43.3           -19.6 MDG       TRUE  FALSE
-##  9 s                   43.2           -19.2 MDG       TRUE  FALSE
-## 10 s                   49.0           -25.2 MDG       TRUE  FALSE
+##  1 w                   47.1           -26.0 MDG       TRUE  FALSE
+##  2 n                   46.3           -25.0 MDG       TRUE  TRUE 
+##  3 z                   43.5           -16.2 MDG       TRUE  FALSE
+##  4 v                   44.8           -13.7 MDG       TRUE  FALSE
+##  5 d                   47.4           -21.3 MDG       TRUE  TRUE 
+##  6 f                   48.8           -18.4 MDG       TRUE  TRUE 
+##  7 g                   47.8           -16.8 MDG       TRUE  TRUE 
+##  8 w                   43.5           -25.0 MDG       TRUE  FALSE
+##  9 y                   49.0           -15.6 MDG       TRUE  TRUE 
+## 10 d                   47.0           -16.4 MDG       TRUE  TRUE 
 ## # ... with 240 more rows</code></pre></div>
 </div>
 </div>

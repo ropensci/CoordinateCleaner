@@ -66,7 +66,7 @@ geo-references, individuals in horticulture/captivity." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ geo-references, individuals in horticulture/captivity.</p>
     <pre class="usage"><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
   <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>sampling_thresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>min_occs</span> <span class='kw'>=</span> <span class='fl'>7</span>)</pre>
+  <span class='kw'>min_occs</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>thinning</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>thinning_res</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,6 +218,16 @@ of records flagged.</p></td>
 This is necessary for reliable outlier estimation.
 Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
 Default is to 7. If <code>method == 'distance'</code>, consider a lower threshold.</p></td>
+    </tr>
+    <tr>
+      <th>thinning</th>
+      <td><p>forces a raster approximation for the distance calculation. 
+This is routinely used for species with more than 10,000 records for computational reasons, 
+but can be enforced for smaller datasets, which is reommended when sampling is very uneven. Default = T.</p></td>
+    </tr>
+    <tr>
+      <th>thinning_res</th>
+      <td><p>The resolution for the spatial thinning in decimal degrees. Default = 0.5.</p></td>
     </tr>
     </table>
     
@@ -381,19 +391,23 @@ details and tutorials.</p>
 #&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
+#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 1 records.</span></div><div class='output co'>#&gt;   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+#&gt;  [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [97]  TRUE  TRUE  TRUE  TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 92 records.</span></div><div class='output co'>#&gt;   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [13]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+#&gt;  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [49] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+#&gt;  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+#&gt;  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [97] FALSE FALSE FALSE FALSE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

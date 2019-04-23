@@ -92,7 +92,7 @@ Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.}
 
 \item{seas_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
 for the seas test. If NULL, the
-rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
+rnaturalearth::ne_download(scale = 110, type = 'land', category = 'physical')
 dataset is used.}
 
 \item{seas_scale}{The scale of the default landmass reference. Must be one of 10, 50, 110.

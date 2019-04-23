@@ -1,2 +1,2 @@
-# Version 2.0-9
-A minor, but necessary bug fix on one of the package functions
+# Version 2.0-10
+Improved the error handling and messaging in cases the download of internet resources failed, as requested by CRAN. Added a reference for the methodology in the Description as suggested by CRAN.

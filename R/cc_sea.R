@@ -72,36 +72,30 @@ cc_sea <- function(x,
     if(!scale %in%  c(10, 50, 110)){
       stop("scale must be one of c(10,50,110)")
     }
+
+    # ref <- rnaturalearth::ne_download(scale = scale,
+    #                                   type = 'land',
+    #                                   category = 'physical',
+    #                                   load = TRUE)
     
-    # path <- file.path(system.file(package = "CoordinateCleaner"), "sea.EXT")
-    # file <- file.path(path, paste("ne_", scale, "m_land.shp", sep = ""))
-    # 
-    # #Download if file does not exist yet
-    # if(!file.exists(file)) {
-    #   ref <- rnaturalearth::ne_download(scale = scale, 
-    #                                     type = 'land', 
-    #                                     category = 'physical',
-    #                                     destdir = path,
-    #                                     load = FALSE)
-    # }
     
-    # #load reference
-    # ref <- rgdal::readOGR(path, 
-    #                       paste("ne_", scale, "m_land", sep = ""), 
-    #                       encoding = "UTF-8",
-    #                       stringsAsFactors = FALSE, 
-    #                       use_iconv = TRUE)
-    # ref@data[ref@data == "-99" | 
-    #                  ref@data == "-099"] <- NA
-    # 
-    #Crop to the spatial extent of the points
+    ref <- try(suppressWarnings(rnaturalearth::ne_download(scale = scale,
+                                                           type = 'land',
+                                                           category = 'physical',
+                                                           load = TRUE)), 
+               silent = TRUE)
     
-      ref <- rnaturalearth::ne_download(scale = scale,
-                                        type = 'land',
-                                        category = 'physical',
-                                        load = TRUE)
-    
-    ref <- raster::crop(ref, raster::extent(pts) + 1)
+    if(class(ref) == "try-error"){
+      warning(sprintf("Gazetteer for land mass not found at\n%s",
+                      rnaturalearth::ne_file_name(scale = scale,
+                                                  type = 'land',
+                                                  category = 'physical',
+                                                  full_url = TRUE)))
+      warning("Skipping sea test")
+      switch(value, clean = return(x), flagged = return(rep(NA, nrow(x))))
+    }else{
+      ref <- raster::crop(ref, raster::extent(pts) + 1)
+    }
   } else {
     ref <- reproj(ref)
   }

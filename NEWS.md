@@ -1,3 +1,11 @@
+CoordinateCleaner 2.0-10 (2019-04-23)
+=========================
+
+### MINOR IMPROVEMENTS
+  * improved error handling by cc_sea and cc_urb, in case the defaultreference cannot be obtained from the web
+  * added a reference for the methodology to the description file
+
+
 CoordinateCleaner 2.0-9 (2019-04-02)
 =========================
 
