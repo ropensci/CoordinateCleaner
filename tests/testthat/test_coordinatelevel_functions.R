@@ -140,9 +140,15 @@ skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 200)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                           sampling_thresh = 0.2, mltpl = 0.1)), 242)
-
+  
+  
+  if(class(try(rgbif::occ_count(country = "DEU"))) == "try-error"){
+    expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
+                             sampling_thresh = 0.2, mltpl = 0.1)), 200) 
+  }else{
+    expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
+                             sampling_thresh = 0.2, mltpl = 0.1)), 242) 
+  }
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 

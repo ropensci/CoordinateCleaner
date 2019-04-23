@@ -276,40 +276,46 @@ cc_outl <- function(x,
       )
     }
     
-    # get country area from naturalearth
-    ref <- rnaturalearth::ne_countries(scale = "medium")
-    sp::proj4string(ref) <- ""
-    area <- data.frame(country = ref@data$iso_a3, 
-                       area = geosphere::areaPolygon(ref))
-    area <- area[!is.na(area$area),]
-    area <- area[!is.na(area$country),]
+    if(class(try(rgbif::occ_count(country = "DEU"))) == "try-error"){
+      warnings("Could not retrive records number from GBIF, skipping sampling correction")
+    }else{
+      # get country area from naturalearth
+      ref <- rnaturalearth::ne_countries(scale = "medium")
+      sp::proj4string(ref) <- ""
+      area <- data.frame(country = ref@data$iso_a3, 
+                         area = geosphere::areaPolygon(ref))
+      area <- area[!is.na(area$area),]
+      area <- area[!is.na(area$country),]
+      
+      # get number of records in GBIF per country as proxy for sampling intensity
+      nrec <- vapply(area$country, 
+                     FUN = function(k){rgbif::occ_count(country = k)},
+                     FUN.VALUE = 1)##get record count
+      nrec <- data.frame(country = area$country, 
+                         recs = unlist(nrec), 
+                         row.names = NULL)
+      
+      # normalize by area
+      nrec_norm <- dplyr::left_join(nrec, area, by = "country")
+      nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
+      ref <- raster::crop(ref, raster::extent(pts) + 1)
+      
+      # get country from coordinates and compare with provided country
+      country <- sp::over(x = pts, y = ref)[, "iso_a3"]
+      
+      # get the sampling for the flagged countries
+      thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
+      s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]
+      s_flagged <- s_flagged > thresh
+      
+      #treat countries with no country information as FALSE
+      s_flagged[is.na(s_flagged)] <- FALSE
+      
+      # Only retain those flags with sampling higher than threshold
+      flags <- flags[s_flagged]
+    }
     
-    # get number of records in GBIF per country as proxy for sampling intensity
-    nrec <- vapply(area$country, 
-                   FUN = function(k){rgbif::occ_count(country = k)},
-                   FUN.VALUE = 1)##get record count
-    nrec <- data.frame(country = area$country, 
-                       recs = unlist(nrec), 
-                       row.names = NULL)
     
-    # normalize by area
-    nrec_norm <- dplyr::left_join(nrec, area, by = "country")
-    nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
-    ref <- raster::crop(ref, raster::extent(pts) + 1)
-    
-    # get country from coordinates and compare with provided country
-    country <- sp::over(x = pts, y = ref)[, "iso_a3"]
-    
-    # get the sampling for the flagged countries
-    thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
-    s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]
-    s_flagged <- s_flagged > thresh
-    
-    #treat countries with no country information as FALSE
-    s_flagged[is.na(s_flagged)] <- FALSE
-    
-    # Only retain those flags with sampling higher than threshold
-    flags <- flags[s_flagged]
   }
   
   out <- rep(TRUE, nrow(x))
