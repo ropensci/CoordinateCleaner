@@ -72,13 +72,6 @@ cc_sea <- function(x,
     if(!scale %in%  c(10, 50, 110)){
       stop("scale must be one of c(10,50,110)")
     }
-
-    # ref <- rnaturalearth::ne_download(scale = scale,
-    #                                   type = 'land',
-    #                                   category = 'physical',
-    #                                   load = TRUE)
-    
-    
     ref <- try(suppressWarnings(rnaturalearth::ne_download(scale = scale,
                                                            type = 'land',
                                                            category = 'physical',
