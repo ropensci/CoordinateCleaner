@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
       </span>
     </div>
 
@@ -122,37 +122,37 @@
 <h2 class="hasAnchor">
 <a href="#testing-for-geographic-outliers-defaults" class="anchor"></a>Testing for geographic outliers, defaults</h2>
 <p>We will first download occurrence records for <em>Lynx lynx</em> from www.gbif.org using the rgbif package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data from GBIF</span>
-lnx &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Lynx lynx"</span>, <span class="dt">limit =</span> <span class="dv">200000</span>,
-         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">species =</span> key, <span class="dt">decimallongitude =</span> decimalLongitude, 
-         <span class="dt">decimallatitude =</span> decimalLatitude, countrycode)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Load data from GBIF</span></a>
+<a class="sourceLine" id="cb1-2" title="2">lnx &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Lynx lynx"</span>, <span class="dt">limit =</span> <span class="dv">200000</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3">         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="dt">species =</span> key, <span class="dt">decimallongitude =</span> decimalLongitude, </a>
+<a class="sourceLine" id="cb1-5" title="5">         <span class="dt">decimallatitude =</span> decimalLatitude, countrycode)</a></code></pre></div>
 <p>You can then run the default <code>cc_outl</code> test.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run basic coordinate cleaning</span>
-flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> lnx, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,
-  <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))
-## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpqAmhRn", layer: "ne_50m_land"
-## with 1420 features
-## It has 3 fields
-## Integer64 fields read as strings:  scalerank
-
-lnx &lt;-<span class="st"> </span>lnx[flags<span class="op">$</span>.summary,]
-
-<span class="co"># Default outlier detection</span>
-outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>)
-
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))
-
-<span class="co"># visualize occurrence records</span>
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Run basic coordinate cleaning</span></a>
+<a class="sourceLine" id="cb2-2" title="2">flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> lnx, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpmYpeRF", layer: "ne_50m_land"</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">## with 1420 features</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">## It has 3 fields</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">## Integer64 fields read as strings:  scalerank</span></a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10">lnx &lt;-<span class="st"> </span>lnx[flags<span class="op">$</span>.summary,]</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co"># Default outlier detection</span></a>
+<a class="sourceLine" id="cb2-13" title="13">outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
+<a class="sourceLine" id="cb2-14" title="14"></a>
+<a class="sourceLine" id="cb2-15" title="15">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))</a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co"># visualize occurrence records</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb2-21" title="21">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>The default settings of the outlier test flagged 17 outliers out of 23980 records. A comparison with the natural range of the species shows that the test performed quite well with the default settings: all American records were flagged correctly as outliers and most Eurasian records were not flagged. However there are some potential issues, since three isolated records in Asia where also flagged as potential outliers, although they likely are valid records. In this case the isolated position of those records is not an error, but probably rather due the extremely low sampling and data availability across large parts of Asia. <code>cc_outl</code> offers two options to improve the results 1) tweaking test sensitivity and 2) accounting for sampling intensity.</p>
 </div>
@@ -160,19 +160,19 @@ plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <h2 class="hasAnchor">
 <a href="#tweaking-test-sensitivity" class="anchor"></a>Tweaking test sensitivity</h2>
 <p>We can make the outlier detection more conservative using the <code>mltpl</code> argument of <code>cc_outl</code>. We’ll increase mltpl to 6, meaning that the mean distance of a record to all other records must be more than 6 times the interquantile range of the mean distance of all points.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outl_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">mltpl =</span> <span class="dv">6</span>)
-
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_<span class="dv">6</span>))
-
-<span class="co"># visualize occurrence records</span>
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">outl_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">mltpl =</span> <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_<span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># visualize occurrence records</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb3-9" title="9">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>This improved the results and the dataset might be acceptable for most analyses. Tweaking the test sensitivity is an easy measure and only requires a general idea of how disjunct sampling in a dataset is and how important falsely flagged records (false positives for the test) compared to falsely retained records (false negatives for the test) are for downstream analyses. Only the two very isolated records in eastern Asia remain problematic. These records represent an extreme case, due to the rare combination of the extremely large distribution range of the species and the extremely sparse sampling over huge areas.</p>
 </div>
@@ -180,20 +180,20 @@ plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <h2 class="hasAnchor">
 <a href="#correcting-for-sampling-intensity" class="anchor"></a>Correcting for sampling intensity</h2>
 <p><code>cc_outl</code> enables to account for uneven sampling, on a country level using the <code>sampling_thresh</code> argument. Based on the assumption that in areas (i.e. countries) of high sampling species are more likely to be recorded and hence the distance of any correct occurrence record to the next record of the same species will be small, <code>sampling_thresh</code> can avoid the flagging of records from countries with very low general availability of occurrence records. If <code>sampling_thresh</code> is larger than zero, <code>cc_outl</code> uses the density of biological occurrence records available for a country from the Global Biodiversity Information Facility as proxy of sampling in this country. Based on the statistical distribution of the record density across all countries, flagged records from countries in the lower <code>sampling_thres</code> percentile, are never considered outliers. For instance, when <code>sampling_thresh</code> equals 0.25, records from the 25% least densely sampled countries cannot be flagged as outliers.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run outlier test</span>
-outl_samp&lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">mltpl =</span> <span class="dv">6</span>,  <span class="dt">sampling_thresh =</span> <span class="fl">0.25</span>)
-
-<span class="co"># visualize occurrence records</span>
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_samp))
-
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Run outlier test</span></a>
+<a class="sourceLine" id="cb4-2" title="2">outl_samp&lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(lnx, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">mltpl =</span> <span class="dv">6</span>,  <span class="dt">sampling_thresh =</span> <span class="fl">0.25</span>)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># visualize occurrence records</span></a>
+<a class="sourceLine" id="cb4-5" title="5">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_samp))</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb4-10" title="10">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Correcting for sampling the records in Eastern China are now correctly assigned and the entire natural range of <em>Lynx lynx</em> is included in the dataset. However a record in Bolivia is now falsely included in the dataset. The extreme case of the lynx illustrates inherent limits of automated geographic outlier testing, since a true error (the record in Bolivia) is less distant than some of the correct records (in northern China) under similar sampling conditions.</p>
 </div>
@@ -203,52 +203,52 @@ plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <a href="#the-case-of-the-red-squirrel" class="anchor"></a>2. The case of the red squirrel</h1>
 <p>The Red squirrel (<em>Sciurus vulgaris</em>) is widespread throughout Eurasia and has 214729 records in the Global Biodiversity Information Facility (www.gbif.org). The sampling in the natural range is highly clustered in Europe with few records across Asia. Additionally, the dataset includes multiple records that are likely erroneous in the Americas and South Africa. The biased sampling effort towards Europe, together with the large distribution range of the species make the use of geographic outlier detection for data cleaning challenging. Still, <code>cc_outl</code> can help to improve the data set. Since this is a large dataset, the test will automatically use a raster-based distance approximation for the calculation of the distance matrix, as for all species with more than 10,000 records.</p>
 <p>Again, we will download occurrence records from www.gbif.org and then run <code>cc_outl</code> with default settings.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data from GBIF</span>
-squ &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Lynx lynx"</span>, <span class="dt">limit =</span> <span class="dv">200000</span>,
-         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">species =</span> key, decimallongitude, decimallatitude, countrycode,
-         <span class="dt">hasCoordinate =</span> T)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run basic coordinate cleaning</span>
-flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> squ, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,
-  <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))
-## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpqAmhRn", layer: "ne_50m_land"
-## with 1420 features
-## It has 3 fields
-## Integer64 fields read as strings:  scalerank
-
-squ &lt;-<span class="st"> </span>squ[flags<span class="op">$</span>.summary,]
-
-<span class="co"># Default outlier detection</span>
-outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(squ, <span class="dt">value =</span> <span class="st">"flagged"</span>)
-
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))
-
-<span class="co"># visualize occurrence records</span>
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Load data from GBIF</span></a>
+<a class="sourceLine" id="cb5-2" title="2">squ &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Lynx lynx"</span>, <span class="dt">limit =</span> <span class="dv">200000</span>,</a>
+<a class="sourceLine" id="cb5-3" title="3">         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="dt">species =</span> key, decimallongitude, decimallatitude, countrycode,</a>
+<a class="sourceLine" id="cb5-5" title="5">         <span class="dt">hasCoordinate =</span> T)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Run basic coordinate cleaning</span></a>
+<a class="sourceLine" id="cb6-2" title="2">flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="dt">x =</span> squ, <span class="dt">tests =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"capitals"</span>,</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>,<span class="st">"seas"</span>,<span class="st">"zeros"</span>))</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpmYpeRF", layer: "ne_50m_land"</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">## with 1420 features</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">## It has 3 fields</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">## Integer64 fields read as strings:  scalerank</span></a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10">squ &lt;-<span class="st"> </span>squ[flags<span class="op">$</span>.summary,]</a>
+<a class="sourceLine" id="cb6-11" title="11"></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co"># Default outlier detection</span></a>
+<a class="sourceLine" id="cb6-13" title="13">outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(squ, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))</a>
+<a class="sourceLine" id="cb6-16" title="16"></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co"># visualize occurrence records</span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb6-21" title="21">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-22" title="22"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-24" title="24"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-25" title="25"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>The default test flagged 21504 of 193225 records. A comparison with the natural range shows that all erroneous records in the Americas and South Africa where identified correctly. Unfortunately the strong sampling bias towards Europe has also let to a flagging of potentially correct East Asian records. We will again use the sampling thresh argument to address this and avoid the false flagging of records in Eastern Asia.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run outlier test</span>
-outl_samp&lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(squ, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">sampling_thresh =</span> <span class="fl">0.25</span>)
-
-<span class="co"># visualize occurrence records</span>
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_samp))
-
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Run outlier test</span></a>
+<a class="sourceLine" id="cb7-2" title="2">outl_samp&lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>(squ, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">sampling_thresh =</span> <span class="fl">0.25</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co"># visualize occurrence records</span></a>
+<a class="sourceLine" id="cb7-5" title="5">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl_samp))</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb7-10" title="10">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>This improved the results significantly and the cleaned dataset seems a good representation of the natural distribution of <em>Sciurus vulgaris</em>. However, similar to the example of the Eurasian lynx, the result is not perfect, since the records in Korea and Japan are flagged as outliers. Hence additional or alternative data cleaning methods might be necessary.</p>
 </div>
@@ -256,81 +256,81 @@ plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
 <h1 class="hasAnchor">
 <a href="#natural-ranges-instead-of-outlier-detection" class="anchor"></a>3. Natural ranges instead of outlier detection</h1>
 <p>The examples above showed the potential and caveats of <code>cc_outl</code>. If the inclusion of all records from the natural range, also in the periphery (as for the most eastern Asian records for the squirrel) and the exclusion of all records outside there of is crucial for downstream analyses and no reasonable balance between Type I and Type II error can be found, other approaches to identify “outlier” records might be more appropriate. If additional information on species natural ranges is available, for instance from the [International Union for the Conservation of Nature] (<a href="http://www.iucnredlist.org/technical-documents/spatial-data" class="uri">http://www.iucnredlist.org/technical-documents/spatial-data</a>) (as is the case for all amphibians, birds, mammals, and reptiles), you can use the <code>cc_iucn</code> function of <em>CoordinateCleaner</em> to exclude records outside this range. <code>cc_iucn</code> directly accepts the IUCN format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#load the IUCN range for the Red squirrel. </span>
-<span class="co">#These are not provided with CoordinateCleaner and </span>
-<span class="co">#need to be downloaded seperately from www.iucn.org</span>
-sq_range &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="st">"inst"</span>, <span class="dt">layer =</span> <span class="st">"species_20025"</span>)
-## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\Dropbox (iDiv)\research_projects\29_CoordinateCleaner\CoordinateCleaner\vignettes\inst", layer: "species_20025"
-## with 2 features
-## It has 22 fields
-sq_range<span class="op">@</span>data<span class="op">$</span>species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(squ<span class="op">$</span>species) <span class="co">#replace species name by GBIF ID to synchronize betwee records and range polygon</span>
-
-<span class="co"># run natural range test</span>
-rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> squ, <span class="dt">range =</span> sq_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)
-
-<span class="co"># plot results</span>
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>rang))
-
-nat_range &lt;-<span class="st"> </span><span class="kw">fortify</span>(sq_range)
-
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> nat_range, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group), <span class="dt">fill =</span> <span class="st">"green"</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">col =</span> <span class="st">"grey50"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co">#load the IUCN range for the Red squirrel. </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#These are not provided with CoordinateCleaner and </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#need to be downloaded seperately from www.iucn.org</span></a>
+<a class="sourceLine" id="cb8-4" title="4">sq_range &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn =</span> <span class="st">"inst"</span>, <span class="dt">layer =</span> <span class="st">"species_20025"</span>)</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">## Source: "C:\Users\az64mycy\Dropbox (iDiv)\research_projects\29_CoordinateCleaner\CoordinateCleaner\vignettes\inst", layer: "species_20025"</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">## with 2 features</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">## It has 22 fields</span></a>
+<a class="sourceLine" id="cb8-9" title="9">sq_range<span class="op">@</span>data<span class="op">$</span>species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(squ<span class="op">$</span>species) <span class="co">#replace species name by GBIF ID to synchronize betwee records and range polygon</span></a>
+<a class="sourceLine" id="cb8-10" title="10"></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co"># run natural range test</span></a>
+<a class="sourceLine" id="cb8-12" title="12">rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> squ, <span class="dt">range =</span> sq_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
+<a class="sourceLine" id="cb8-13" title="13"></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co"># plot results</span></a>
+<a class="sourceLine" id="cb8-15" title="15">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(squ, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>rang))</a>
+<a class="sourceLine" id="cb8-16" title="16"></a>
+<a class="sourceLine" id="cb8-17" title="17">nat_range &lt;-<span class="st"> </span><span class="kw">fortify</span>(sq_range)</a>
+<a class="sourceLine" id="cb8-18" title="18"></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> nat_range, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group), <span class="dt">fill =</span> <span class="st">"green"</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">col =</span> <span class="st">"grey50"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb8-23" title="23">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>If no such information is available, ranges can be generated ad-hoc. <code>cc_iucn</code> can be applied for multiple species, assuming a <code>SpatialPolygonDataFrame</code> similar in structure to the data provided by the IUCN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create custom range polygon for the lynx</span>
-## define the polygon shape
-lx_range &lt;-<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">170</span>, <span class="dv">138</span>, <span class="dv">83</span>, <span class="dv">36</span>, <span class="dv">14</span>, <span class="op">-</span><span class="dv">10</span>), 
-                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">35</span>, <span class="dv">67</span>, <span class="dv">80</span>, <span class="dv">69</span>, <span class="dv">32</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">35</span>)))
-lx_range &lt;-<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(lx_range), <span class="dt">ID =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"A"</span>))
-
-## define projection
-wgs84 &lt;-<span class="st"> "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span>
-lx_range &lt;-<span class="st"> </span><span class="kw">SpatialPolygons</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(lx_range), <span class="dt">proj4string =</span> <span class="kw">CRS</span>(wgs84))
-
-## creat dataset in same format as for the quirrel; species = species name, in this case the GBIF ID
-
-df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">species =</span> <span class="dv">2435240</span>, <span class="dt">row.names =</span> <span class="st">"A"</span>)
-lx_range &lt;-<span class="st"> </span><span class="kw">SpatialPolygonsDataFrame</span>(lx_range, <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(df))
-
-<span class="co"># run natural range test</span>
-rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> lnx, <span class="dt">range =</span> lx_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)
-
-<span class="co"># plot results</span>
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>rang))
-
-nat_range &lt;-<span class="st"> </span><span class="kw">fortify</span>(lx_range)
-
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> nat_range, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat), <span class="dt">fill =</span> <span class="st">"green"</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">col =</span> <span class="st">"grey50"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Create custom range polygon for the lynx</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co">## define the polygon shape</span></a>
+<a class="sourceLine" id="cb9-3" title="3">lx_range &lt;-<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">-10</span>, <span class="dv">50</span>, <span class="dv">170</span>, <span class="dv">138</span>, <span class="dv">83</span>, <span class="dv">36</span>, <span class="dv">14</span>, <span class="dv">-10</span>), </a>
+<a class="sourceLine" id="cb9-4" title="4">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">35</span>, <span class="dv">67</span>, <span class="dv">80</span>, <span class="dv">69</span>, <span class="dv">32</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">35</span>)))</a>
+<a class="sourceLine" id="cb9-5" title="5">lx_range &lt;-<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(lx_range), <span class="dt">ID =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"A"</span>))</a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co">## define projection</span></a>
+<a class="sourceLine" id="cb9-8" title="8">wgs84 &lt;-<span class="st"> "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span></a>
+<a class="sourceLine" id="cb9-9" title="9">lx_range &lt;-<span class="st"> </span><span class="kw">SpatialPolygons</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(lx_range), <span class="dt">proj4string =</span> <span class="kw">CRS</span>(wgs84))</a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">## creat dataset in same format as for the quirrel; species = species name, in this case the GBIF ID</span></a>
+<a class="sourceLine" id="cb9-12" title="12"></a>
+<a class="sourceLine" id="cb9-13" title="13">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">species =</span> <span class="dv">2435240</span>, <span class="dt">row.names =</span> <span class="st">"A"</span>)</a>
+<a class="sourceLine" id="cb9-14" title="14">lx_range &lt;-<span class="st"> </span><span class="kw">SpatialPolygonsDataFrame</span>(lx_range, <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(df))</a>
+<a class="sourceLine" id="cb9-15" title="15"></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="co"># run natural range test</span></a>
+<a class="sourceLine" id="cb9-17" title="17">rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> lnx, <span class="dt">range =</span> lx_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
+<a class="sourceLine" id="cb9-18" title="18"></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="co"># plot results</span></a>
+<a class="sourceLine" id="cb9-20" title="20">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(lnx, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>rang))</a>
+<a class="sourceLine" id="cb9-21" title="21"></a>
+<a class="sourceLine" id="cb9-22" title="22">nat_range &lt;-<span class="st"> </span><span class="kw">fortify</span>(lx_range)</a>
+<a class="sourceLine" id="cb9-23" title="23"></a>
+<a class="sourceLine" id="cb9-24" title="24"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-25" title="25"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> nat_range, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat), <span class="dt">fill =</span> <span class="st">"green"</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">col =</span> <span class="st">"grey50"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-27" title="27"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb9-28" title="28">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-29" title="29"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-30" title="30"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-31" title="31"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-32" title="32"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_geographic_outliers_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p><code>cc_iucn</code> supports occurrence record datasets and range polygons containing multiple species, so that for instance a set of occurrence records from all mammals can clean using the IUCN shape file containing all mammal natural ranges. IUCN and custom polygons can also be combined, if their structure is adapted</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## adapt the structure of the lynx polygon
-lx_range<span class="op">@</span>data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(sq_range<span class="op">@</span>data))), <span class="dt">row.names =</span> <span class="st">"A"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(lx_range<span class="op">@</span>data) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(sq_range<span class="op">@</span>data)
-
-<span class="co"># Combine ranges</span>
-nat_range &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(sq_range, lx_range) 
-
-<span class="co"># Combine records</span>
-dat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(squ, lnx)
-
-<span class="co"># run natural range test</span>
-rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> dat, <span class="dt">range =</span> nat_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co">## adapt the structure of the lynx polygon</span></a>
+<a class="sourceLine" id="cb10-2" title="2">lx_range<span class="op">@</span>data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(sq_range<span class="op">@</span>data))), <span class="dt">row.names =</span> <span class="st">"A"</span>)</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(lx_range<span class="op">@</span>data) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(sq_range<span class="op">@</span>data)</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="co"># Combine ranges</span></a>
+<a class="sourceLine" id="cb10-6" title="6">nat_range &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(sq_range, lx_range) </a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co"># Combine records</span></a>
+<a class="sourceLine" id="cb10-9" title="9">dat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(squ, lnx)</a>
+<a class="sourceLine" id="cb10-10" title="10"></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co"># run natural range test</span></a>
+<a class="sourceLine" id="cb10-12" title="12">rang &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_iucn.html">cc_iucn</a></span>(<span class="dt">x =</span> dat, <span class="dt">range =</span> nat_range, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a></code></pre></div>
 </div>
   </div>
 

@@ -1,3 +1,9 @@
+CoordinateCleaner 2.0-11 (2019-04-24)
+=========================
+
+### MINOR IMPROVEMENTS
+  * changes to the description file
+
 CoordinateCleaner 2.0-10 (2019-04-23)
 =========================
 

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
       </span>
     </div>
 
@@ -109,58 +109,58 @@
     
 <p>CoordinateCleaner identifies potentially erroneous geographic records with coordinates assigned to the sea, countr coordinate, country capitals, urban areas, institutions, the GBIF headquarters and countries based on the comparison with geographic gazetteers (i.e. reference databases). All of these functions include default reference databases compiled from various sources. These default references have been selected suitable for regional to global analyses. They will also work for smaller scale analyses, but in some case different references might be desirable and available. this could be for instance centroids of small scale political units, a different set of urban areas, or a different coastline when working with coastal species. To account for this, each <em>CoordinateCleaner</em> function using a gazetteer has a <code>ref</code> argument to specify custom gazetteers.</p>
 <p>We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The purpose of <code>cc_sea</code> is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometres, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus <em>Avicennia</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rgbif)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CoordinateCleaner)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(viridis)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sp)
-
-<span class="co">#download data from GBIF</span>
-dat &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Avicennia"</span>, <span class="dt">limit =</span> <span class="dv">1000</span>,
-         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">species =</span> name, <span class="dt">decimallongitude =</span> decimalLongitude, 
-         <span class="dt">decimallatitude =</span> decimalLatitude, countryCode)
-
-<span class="co"># run with default gazetteer</span>
-outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(dat, <span class="dt">value =</span> <span class="st">"flagged"</span>)
-## OGR data source with driver: ESRI Shapefile 
-## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpeid126", layer: "ne_110m_land"
-## with 127 features
-## It has 3 fields
-
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(dat, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))
-
-<span class="co">#plot results</span>
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rgbif)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CoordinateCleaner)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(viridis)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sp)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#download data from GBIF</span></a>
+<a class="sourceLine" id="cb1-9" title="9">dat &lt;-<span class="st"> </span>rgbif<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/rgbif/topics/occ_search">occ_search</a></span>(<span class="dt">scientificName =</span> <span class="st">"Avicennia"</span>, <span class="dt">limit =</span> <span class="dv">1000</span>,</a>
+<a class="sourceLine" id="cb1-10" title="10">         <span class="dt">hasCoordinate =</span> T, <span class="dt">return =</span> <span class="st">"data"</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">species =</span> name, <span class="dt">decimallongitude =</span> decimalLongitude, </a>
+<a class="sourceLine" id="cb1-12" title="12">         <span class="dt">decimallatitude =</span> decimalLatitude, countryCode)</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co"># run with default gazetteer</span></a>
+<a class="sourceLine" id="cb1-15" title="15">outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(dat, <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpCsElrO", layer: "ne_110m_land"</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">## with 127 features</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">## It has 3 fields</span></a>
+<a class="sourceLine" id="cb1-20" title="20"></a>
+<a class="sourceLine" id="cb1-21" title="21">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(dat, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))</a>
+<a class="sourceLine" id="cb1-22" title="22"></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#plot results</span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb1-27" title="27">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-30" title="30"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_Using_custom_gazetteers_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <p>A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. <em>CoordinateCleaner</em> comes with a one degree buffered reference (<code>buffland</code>). In case a narrower or distance true buffer is necessary, you can provide any SpatialPolygonsDataFrame similar in structure to <code>buffland</code> via the <code>ref</code> argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The buffered custom gazetteer</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"buffland"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(buffland)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># The buffered custom gazetteer</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"buffland"</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(buffland)</a></code></pre></div>
 <p><img src="Tutorial_Using_custom_gazetteers_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="co"># run with custom gazetteer</span>
-outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(dat, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">ref =</span> buffland)
-
-plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(dat, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))
-
-<span class="co">#plot results</span>
-<span class="kw">ggplot</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, 
-             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co"># run with custom gazetteer</span></a>
+<a class="sourceLine" id="cb3-3" title="3">outl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(dat, <span class="dt">value =</span> <span class="st">"flagged"</span>, <span class="dt">ref =</span> buffland)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5">plo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(dat, <span class="dt">outlier =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="op">!</span>outl))</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#plot results</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">borders</span>(<span class="dt">fill =</span> <span class="st">"grey60"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> plo, </a>
+<a class="sourceLine" id="cb3-11" title="11">             <span class="kw">aes</span>(<span class="dt">x =</span> decimallongitude, <span class="dt">y =</span> decimallatitude, <span class="dt">col =</span> outlier))<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw">scale_color_viridis</span>(<span class="dt">discrete =</span> T, <span class="dt">name =</span> <span class="st">"Flagged outlier"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
 <p><img src="Tutorial_Using_custom_gazetteers_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
   </div>
 

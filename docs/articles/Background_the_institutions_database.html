@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
       </span>
     </div>
 
@@ -119,13 +119,13 @@
 <div id="data-compilation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-compilation" class="anchor"></a>Data compilation</h2>
-<p>We compiled names of biodiversity institutions from six different sources (<a href="#fig_sources">Figure 1</a>) <span class="citation">(BGCI 2017; Index Herbariorum 2017; The Global Registry of Biodiversity Repositories 2017; Wikipedia 2017; Global Biodiveristy Information Facility 2017; GeoNames 2017)</span> and geo-referenced them using the Google maps API via the ggmap package in R <span class="citation">(Kahle and Wickham 2013)</span> using institution names and, if this yielded no results the institutions address. For those records that did not yield any results we used opencage via the opencage R-package <span class="citation">(Salmon 2017)</span> for geo-referencing. We manually geo-referenced those institutions that could not be geo-referenced automatically (c. 50%) using the WWW and Google earth <span class="citation">(Google Inc 2017)</span>. In total the database comprises almost 9700 geo-referenced institutions (and another 2500 entries for which geo-referencing was not possible, either to problems with non-English names or geographic ambiguities). The spatial extent of the database is global (<a href="#fig_raster">Figure 2</a>), but we acknowledge that there is a focus on English-speaking countries and countries using the Roman alphabet (See <a href="#fig_continent">Figure 3</a> and <a href="#fig_country">Figure 4</a>). This is partly a bias due to the data compilation process. We hope that this bias can be overcome by future contributions to the database from researchers in non-English speaking and non-Roman alphabet countries. In general, we acknowledge that the database may not be complete and created a webmask at (<a href="http://biodiversity-institutions.surge.sh/" class="uri">http://biodiversity-institutions.surge.sh/</a>) were researchers can easily submit their institution or a comment on an existing institution. The webpage also includes an overview on the institutions included in the dataset.</p>
+<p>We compiled names of biodiversity institutions from six different sources (<a href="#fig_sources">Figure 1</a>) <span class="citation">(BGCI 2017; Index Herbariorum 2017; The Global Registry of Biodiversity Repositories 2017; Wikipedia 2017; Global Biodiveristy Information Facility 2017; GeoNames 2017)</span> and geo-referenced them using the Google maps API via the ggmap package in R <span class="citation">(Kahle and Wickham 2013)</span> using institution names and, if this yielded no results the institutions address. For those records that did not yield any results we used opencage via the opencage R-package <span class="citation">(Salmon 2017)</span> for geo-referencing. We manually geo-referenced those institutions that could not be geo-referenced automatically (c. 50%) using the WWW and Google earth <span class="citation">(Google Inc 2017)</span>. In total the database comprises almost 9700 geo-referenced institutions (and another 2500 entries for which geo-referencing was not possible, either to problems with non-English names or geographic ambiguities). The spatial extent of the database is global (<a href="#fig_raster">Figure 2</a>), but we acknowledge that there is a focus on English-speaking countries and countries using the Roman alphabet (See <a href="#fig_continent">Figure 3</a> and <a href="#fig_country">Figure 4</a>). This is partly a bias due to the data compilation process. We hope that this bias can be overcome by future contributions to the database from researchers in non-English speaking and non-Roman alphabet countries. In general, we acknowledge that the database may not be complete and created a webmask at (<a href="http://biodiversity-institutions.surge.sh/" class="uri">http://biodiversity-institutions.surge.sh/</a>) were researchers can easily submit their institution or a comment on an existing institution. The webpage also includes an overview on the institutions included in the dataset.</p>
 <figure><a name="fig_sources"></a><img src="Background_the_institutions_database_files/figure-html/fig1-1.png"><figcaption></figcaption></figure>
 </div>
 <div id="data-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-structure" class="anchor"></a>Data structure</h2>
-<p>In addition to the name and geographic coordinates for each institution, the database includes information on the type of the institutions (“type”, e.g. “herbarium” or “university”, see <a href="#fig_continent">Figure 3</a>), the source from where we obtained the name of the institution (“source”), the precision of the coordinates (“geocoding.precision.m” and “geocoding.issue”) as well as the city and address (when available, “city” and “address”). The quality of the meta-data might vary among different sources). Furthermore, the database includes a column identifying if the respective institution is located within a protected area <span class="citation">(UNEP-WCMC and IUCN 2017)</span>, and if this is the case, the World Database of Protected Areas ID of the respective protected area (WDPA, shape file available at: <a href="https://www.protectedplanet.net/" class="uri">https://www.protectedplanet.net/</a>). We include this flag, as biodiversity institutions within protected areas might or might not be relevant for coordinate cleaning, depending on downstream analyses.</p>
+<p>In addition to the name and geographic coordinates for each institution, the database includes information on the type of the institutions (“type”, e.g. “herbarium” or “university”, see <a href="#fig_continent">Figure 3</a>), the source from where we obtained the name of the institution (“source”), the precision of the coordinates (“geocoding.precision.m” and “geocoding.issue”) as well as the city and address (when available, “city” and “address”). The quality of the meta-data might vary among different sources). Furthermore, the database includes a column identifying if the respective institution is located within a protected area <span class="citation">(UNEP-WCMC and IUCN 2017)</span>, and if this is the case, the World Database of Protected Areas ID of the respective protected area (WDPA, shape file available at: <a href="https://www.protectedplanet.net/" class="uri">https://www.protectedplanet.net/</a>). We include this flag, as biodiversity institutions within protected areas might or might not be relevant for coordinate cleaning, depending on downstream analyses.</p>
 <figure><a name="fig_raster"></a><img src="Background_the_institutions_database_files/figure-html/fig2-1.png"><figcaption></figcaption></figure><figure><a name="fig_continent"></a><img src="Background_the_institutions_database_files/figure-html/fig3-1.png"><figcaption></figcaption></figure><figure><a name="fig_country"></a><img src="Background_the_institutions_database_files/figure-html/fig4-1.png"><figcaption></figcaption></figure>
 </div>
 <div id="data-accessability" class="section level2">
@@ -139,13 +139,13 @@
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-BGCI-BotanicGardensConservationInternational2017">
-<p>BGCI. 2017. “Botanic Gardens Conservation International.” <a href="https://www.bgci.org/" class="uri">https://www.bgci.org/</a>.</p>
+<p>BGCI. 2017. “Botanic Gardens Conservation International.” <a href="https://www.bgci.org/">https://www.bgci.org/</a>.</p>
 </div>
 <div id="ref-GeoNames2017">
 <p>GeoNames. 2017. “Www.geonames.org.”</p>
 </div>
 <div id="ref-GlobalBiodiveristyInformationFacility2017">
-<p>Global Biodiveristy Information Facility. 2017. “List of data publishers.” <a href="www.gbif.org/publisher/search" class="uri">www.gbif.org/publisher/search</a>.</p>
+<p>Global Biodiveristy Information Facility. 2017. “List of data publishers.” <a href="www.gbif.org/publisher/search">www.gbif.org/publisher/search</a>.</p>
 </div>
 <div id="ref-GoogleInc2017">
 <p>Google Inc. 2017. “Google Earth Pro, 7.1.7.2606.”</p>
@@ -154,19 +154,19 @@
 <p>Index Herbariorum. 2017. “http://sciweb.nybg.org/Science2/IndexHerbariorum.asp.”</p>
 </div>
 <div id="ref-Kahle2013">
-<p>Kahle, David, and Hadley Wickham. 2013. “ggmap: Spatial Visualization with ggplot2.” <em>R J</em> 5 (1): 144–61. <a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf" class="uri">http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf</a>.</p>
+<p>Kahle, David, and Hadley Wickham. 2013. “ggmap: Spatial Visualization with ggplot2.” <em>R J</em> 5 (1): 144–61. <a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf">http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf</a>.</p>
 </div>
 <div id="ref-Salmon2017">
-<p>Salmon, Maëlle. 2017. <em>opencage: Interface to the OpenCage API</em>. <a href="https://cran.r-project.org/package=opencage" class="uri">https://cran.r-project.org/package=opencage</a>.</p>
+<p>Salmon, Maëlle. 2017. <em>opencage: Interface to the OpenCage API</em>. <a href="https://cran.r-project.org/package=opencage">https://cran.r-project.org/package=opencage</a>.</p>
 </div>
 <div id="ref-TheGlobalRegistryofBiodiversityRepositories2017">
-<p>The Global Registry of Biodiversity Repositories. 2017. “Www.grbio.org.” <a href="www.grbio.org" class="uri">www.grbio.org</a>.</p>
+<p>The Global Registry of Biodiversity Repositories. 2017. “Www.grbio.org.” <a href="www.grbio.org">www.grbio.org</a>.</p>
 </div>
 <div id="ref-UNEP-WCMCandIUCN2017">
 <p>UNEP-WCMC and IUCN. 2017. “Protected Planet; The World Database on Protected Areas (WDPA)/The Global Database on Protected Areas Management Effectiveness (GD-PAME) [on-line],[Jun 2017]. Available at www.protectedplanet.net.”</p>
 </div>
 <div id="ref-Wikipedia2017">
-<p>Wikipedia. 2017. “List of zoos by country.” <a href="https://en.wikipedia.org/wiki/List%7B%5C_%7Dof%7B%5C_%7Dzoos%7B%5C_%7Dby%7B%5C_%7Dcountry" class="uri">https://en.wikipedia.org/wiki/List{\_}of{\_}zoos{\_}by{\_}country</a>.</p>
+<p>Wikipedia. 2017. “List of zoos by country.” <a href="https://en.wikipedia.org/wiki/List%7B%5C_%7Dof%7B%5C_%7Dzoos%7B%5C_%7Dby%7B%5C_%7Dcountry">https://en.wikipedia.org/wiki/List{\_}of{\_}zoos{\_}by{\_}country</a>.</p>
 </div>
 </div>
 </div>
