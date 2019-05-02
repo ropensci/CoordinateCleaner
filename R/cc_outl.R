@@ -50,7 +50,7 @@
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
 #' @param thinning forces a raster approximation for the distance calculation. 
 #' This is routinely used for species with more than 10,000 records for computational reasons, 
-#' but can be enforced for smaller datasets, which is reommended when sampling is very uneven. Default = T.
+#' but can be enforced for smaller datasets, which is reommended when sampling is very uneven.
 #' @param thinning_res The resolution for the spatial thinning in decimal degrees. Default = 0.5.
 #' @inheritParams cc_cap
 #' 

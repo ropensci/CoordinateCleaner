@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-12 (2019-05-2)
+=========================
+
+### MINOR IMPROVEMENTS
+  * improved documentation of cc_outl
+  
+  
 CoordinateCleaner 2.0-11 (2019-04-24)
 =========================
 
