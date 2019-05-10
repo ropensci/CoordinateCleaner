@@ -121,9 +121,16 @@ cc_outl <- function(x,
       "Species with less than %o unique records will not be tested.", 
       min_occs))
   }
-  
+ 
   # create raster for raster approximation if there are large 
-  # datasets or spatial thinning is activated
+  # datasets or spatial thinning is activated 
+  if(all(test < min_occs)){
+    switch(value, 
+           clean = return(x), 
+           flagged = return(rep(TRUE, nrow(x))), 
+           ids = return(1:nrow(x)))
+  }
+
   if(any(test >= 10000) | thinning){
     warning("Using raster approximation.")
     # create a raster with extent similar to all points, 

@@ -82,7 +82,7 @@ is used.  Alternatives must be identical in structure.}
 
 \item{value}{a character string defining the output value. See the value
 section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-\sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.}
+\sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
