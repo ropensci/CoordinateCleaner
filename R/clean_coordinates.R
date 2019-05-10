@@ -98,7 +98,7 @@
 #' Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.
 #' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
 #' for the seas test. If NULL, the 
-#' rnaturalearth::ne_download(scale = 110, type = 'land', category = 'physical') 
+#' rnaturalearth::ne_download(=scale = 110, type = 'land', category = 'physical') 
 #' dataset is used.
 #' @param seas_scale The scale of the default landmass reference. Must be one of 10, 50, 110.
 #' Higher numbers equal higher detail. Default = 50.
@@ -107,7 +107,7 @@
 #' reference gazetteers.
 #' @param value a character string defining the output value. See the value
 #' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-#' \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.
+#' \sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.
 #' @param report logical or character.  If TRUE a report file is written to the
 #' working directory, summarizing the cleaning results. If a character, the
 #' path to which the file should be written.  Default = FALSE.
