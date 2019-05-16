@@ -99,6 +99,9 @@ cc_outl <- function(x,
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
   
+  # standardizing rownames
+  rownames(x) <- 1:nrow(x)
+  
   
   if (verbose) {
     message("Testing geographic outliers")
