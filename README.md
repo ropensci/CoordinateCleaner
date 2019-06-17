@@ -37,13 +37,13 @@ See [News](https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md) fo
 # Installation
 ## Stable from CRAN
 
-```{r}
+```r
 install.packages("CoordinateCleaner")
 library(CoordinateCleaner)
 ```
 
 ## Developmental using devtools
-```{r}
+```r
 devtools::install_github("ropensci/CoordinateCleaner")
 library(CoordinateCleaner)
 ```
@@ -51,7 +51,7 @@ library(CoordinateCleaner)
 # Usage
 A simple example:
 
-```{r}
+```r
 # Simulate example data
 minages <- runif(250, 0, 65)
 exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
