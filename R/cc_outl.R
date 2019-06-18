@@ -150,16 +150,7 @@ cc_outl <- function(x,
     # calculate the distance matrix between all points for the outlier tests
     ## for small datasets and without thinning, 
     ## simply a distance matrix using geospheric distance
-    if(nrow(k) <= 10000 & !thinning){ 
-      
-      #distance calculation
-      dist <- geosphere::distm(k[, c(lon, lat)], 
-                               fun = geosphere::distHaversine) / 1000
-      
-      # set diagonale to NA, so it does not influence the mean
-      dist[dist == 0] <- NA
-      
-    }else{ 
+    if(any(nrow(k) >= 10000 | thinning)){ 
       # raster approximation for large datasets and thinning
       # get a distance matrix of raster midpoints, with the row 
       # and colnames giving the cell IDs
@@ -195,6 +186,13 @@ cc_outl <- function(x,
         # a weight matrix to weight each distance by the number of points in it
         wm <- dist_obj$wm
       }
+    }else{ 
+      #distance calculation
+      dist <- geosphere::distm(k[, c(lon, lat)], 
+                               fun = geosphere::distHaversine) / 1000
+      
+      # set diagonale to NA, so it does not influence the mean
+      dist[dist == 0] <- NA
     }
     
     # calculate the outliers for the different methods
