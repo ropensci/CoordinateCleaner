@@ -1,3 +1,9 @@
+CoordinateCleaner 2.0-13 (2019-06-18)
+=========================
+
+### MINOR IMPROVEMENTS
+  * fixed the "ras not found" bug in cc_outl
+  
 CoordinateCleaner 2.0-12 (2019-05-2)
 =========================
 

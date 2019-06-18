@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
       </span>
     </div>
 
@@ -127,12 +127,12 @@
 <a class="sourceLine" id="cb1-11" title="11">    <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>, <span class="st">"urban"</span>, <span class="st">"zeros"</span>), </a>
 <a class="sourceLine" id="cb1-12" title="12">    <span class="dt">countries =</span> <span class="st">"countries"</span>)</a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpQn3EGL", layer: "ne_50m_land"</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpKIwkKi", layer: "ne_50m_land"</span></a>
 <a class="sourceLine" id="cb1-15" title="15"><span class="co">## with 1420 features</span></a>
 <a class="sourceLine" id="cb1-16" title="16"><span class="co">## It has 3 fields</span></a>
 <a class="sourceLine" id="cb1-17" title="17"><span class="co">## Integer64 fields read as strings:  scalerank </span></a>
 <a class="sourceLine" id="cb1-18" title="18"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpQn3EGL", layer: "ne_50m_urban_areas"</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpKIwkKi", layer: "ne_50m_urban_areas"</span></a>
 <a class="sourceLine" id="cb1-20" title="20"><span class="co">## with 2143 features</span></a>
 <a class="sourceLine" id="cb1-21" title="21"><span class="co">## It has 4 fields</span></a>
 <a class="sourceLine" id="cb1-22" title="22"><span class="co">## Integer64 fields read as strings:  scalerank</span></a>
@@ -310,7 +310,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># via the report option</span></a>
 <a class="sourceLine" id="cb4-2" title="2">flags &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clean_coordinates.html">clean_coordinates</a></span>(exmpl)</a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpQn3EGL", layer: "ne_50m_land"</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpKIwkKi", layer: "ne_50m_land"</span></a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="co">## with 1420 features</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="co">## It has 3 fields</span></a>
 <a class="sourceLine" id="cb4-7" title="7"><span class="co">## Integer64 fields read as strings:  scalerank</span></a>
@@ -319,9 +319,9 @@
 <a class="sourceLine" id="cb4-10" title="10"><span class="co"># via summary</span></a>
 <a class="sourceLine" id="cb4-11" title="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)</a>
 <a class="sourceLine" id="cb4-12" title="12"><span class="co">##     .val     .equ     .zer     .cap     .cen     .sea     .otl     .gbf </span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">##        0        0        0        0        0      135        0        0 </span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">##        0        0        0        0        0      169        0        0 </span></a>
 <a class="sourceLine" id="cb4-14" title="14"><span class="co">##    .inst .summary </span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">##        0      135</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">##        0      169</span></a></code></pre></div>
 </div>
 <div id="exclude-flagged-records" class="section level1">
 <h1 class="hasAnchor">
@@ -339,29 +339,29 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">cleaned &lt;-<span class="st"> </span>exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cap.html">cc_cap</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_cen.html">cc_cen</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_dupl.html">cc_dupl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_equ.html">cc_equ</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="st">    </span><span class="kw"><a href="../reference/cc_gbif.html">cc_gbif</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_inst.html">cc_inst</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_outl.html">cc_outl</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/cc_zero.html">cc_zero</a></span>()</a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpQn3EGL", layer: "ne_110m_land"</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpKIwkKi", layer: "ne_110m_land"</span></a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="co">## with 127 features</span></a>
 <a class="sourceLine" id="cb6-6" title="6"><span class="co">## It has 3 fields</span></a></code></pre></div>
 <p>In this way, you can also add the individual test results as columns to your initial data.frame:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">exmpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">val =</span> <span class="kw"><a href="../reference/cc_val.html">cc_val</a></span>(., <span class="dt">value =</span> <span class="st">"flagged"</span>), <span class="dt">sea =</span> <span class="kw"><a href="../reference/cc_sea.html">cc_sea</a></span>(., </a>
 <a class="sourceLine" id="cb7-2" title="2">    <span class="dt">value =</span> <span class="st">"flagged"</span>))</a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="co">## OGR data source with driver: ESRI Shapefile </span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpQn3EGL", layer: "ne_110m_land"</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpKIwkKi", layer: "ne_110m_land"</span></a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="co">## with 127 features</span></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="co">## It has 3 fields</span></a>
 <a class="sourceLine" id="cb7-7" title="7"><span class="co">## # A tibble: 250 x 6</span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="co">##    species decimallongitude decimallatitude countries val   sea  </span></a>
 <a class="sourceLine" id="cb7-9" title="9"><span class="co">##    &lt;fct&gt;              &lt;dbl&gt;           &lt;dbl&gt; &lt;fct&gt;     &lt;lgl&gt; &lt;lgl&gt;</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">##  1 k                   46.6           -14.7 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">##  2 j                   43.8           -11.4 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">##  3 j                   46.4           -15.3 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">##  4 s                   46.2           -13.4 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">##  5 f                   49.2           -14.2 MDG       TRUE  TRUE </span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">##  6 r                   45.4           -16.4 MDG       TRUE  TRUE </span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">##  7 j                   45.5           -18.6 MDG       TRUE  TRUE </span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">##  8 v                   44.1           -14.5 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co">##  9 i                   49.6           -18.1 MDG       TRUE  FALSE</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="co">## 10 r                   47.2           -19.2 MDG       TRUE  TRUE </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">##  1 o                   49.5           -11.1 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">##  2 k                   42.7           -22.8 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">##  3 o                   48.8           -11.6 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">##  4 f                   43.9           -19.4 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">##  5 m                   47.3           -19.3 MDG       TRUE  TRUE </span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">##  6 c                   42.5           -11.2 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">##  7 e                   46.8           -25.0 MDG       TRUE  TRUE </span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">##  8 d                   43.1           -25.6 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">##  9 b                   50.2           -16.3 MDG       TRUE  FALSE</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">## 10 h                   47.4           -23.9 MDG       TRUE  TRUE </span></a>
 <a class="sourceLine" id="cb7-20" title="20"><span class="co">## # ... with 240 more rows</span></a></code></pre></div>
 </div>
 </div>

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
       </span>
     </div>
 
@@ -198,13 +198,13 @@
 <a class="sourceLine" id="cb1-18" title="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb1-19" title="19"><span class="kw"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span>(<span class="dt">x =</span> dat, <span class="dt">diagnostic =</span> <span class="ot">TRUE</span>, <span class="dt">value =</span> <span class="st">"dataset"</span>, <span class="dt">mat_size =</span> <span class="dv">100</span>)</a></code></pre></div>
 <figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-3-1.png"><figcaption></figcaption></figure><pre><code>##        binomial.pvalue perc.difference  pass
-## clean           0.2348           0.114  TRUE
-## biased          0.0000           1.873 FALSE</code></pre>
+## clean            0.358           0.063  TRUE
+## biased           0.000           1.873 FALSE</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">#inspect geographic extent of the flagged dataset to exclude island or patchy habitat</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(biased<span class="op">$</span>decimallongitude)</a></code></pre></div>
-<pre><code>## [1] 0.4998117</code></pre>
+<pre><code>## [1] 3.274181</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(biased<span class="op">$</span>decimallongitude)</a></code></pre></div>
-<pre><code>## [1] 178.5867</code></pre>
+<pre><code>## [1] 175.1158</code></pre>
 <p>The diagnostic plots clearly show the biased distribution of decimals in the biased dataset and the large geographic extent excludes islands or patchy habitats as cause of this distribution.</p>
 </div>
 </div>
@@ -235,7 +235,7 @@
 <a href="#a-practical-example-1" class="anchor"></a>A practical example</h2>
 <p>The following example illustrates the use of <code>cd_round</code>.</p>
 <figure><img src="Background_dataset_level_cleaning_files/figure-html/unnamed-chunk-5-1.png"><figcaption></figcaption></figure><pre><code>##        dataset lon.n.outliers lon.n.regular.distance lon.regular.distance
-## biased  biased              6                      2                    1
+## biased  biased              8                      4                    1
 ## clean    clean              0                      0                   NA
 ##        summary
 ## biased   FALSE

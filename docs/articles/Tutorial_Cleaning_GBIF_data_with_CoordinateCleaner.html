@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
       </span>
     </div>
 
@@ -206,12 +206,12 @@ Occurrence records for Panthera leo obtained from GBIF.
 <a class="sourceLine" id="cb4-19" title="19"><span class="co">## Testing country centroids</span></a>
 <a class="sourceLine" id="cb4-20" title="20"><span class="co">## Flagged 11 records.</span></a>
 <a class="sourceLine" id="cb4-21" title="21"><span class="co">## Testing country identity</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">## Flagged 166 records.</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">## Flagged 169 records.</span></a>
 <a class="sourceLine" id="cb4-23" title="23"><span class="co">## Testing GBIF headquarters, flagging records around Copenhagen</span></a>
 <a class="sourceLine" id="cb4-24" title="24"><span class="co">## Flagged 0 records.</span></a>
 <a class="sourceLine" id="cb4-25" title="25"><span class="co">## Testing biodiversity institutions</span></a>
 <a class="sourceLine" id="cb4-26" title="26"><span class="co">## Flagged 0 records.</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">## Flagged 190 of 2864 records, EQ = 0.07.</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">## Flagged 193 of 2946 records, EQ = 0.07.</span></a>
 <a class="sourceLine" id="cb4-28" title="28"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(flags)</a>
 <a class="sourceLine" id="cb4-29" title="29"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(flags, <span class="dt">lon =</span> <span class="st">"decimalLongitude"</span>, <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>)</a></code></pre></div>
 <div class="figure">
@@ -220,9 +220,9 @@ Records flagged by the automated cleaning.
 </p>
 </div>
 <pre><code>##     .val     .equ     .zer     .cap     .cen     .con     .gbf    .inst 
-##        0        9        7       17       11      166        0        0 
+##        0        9        7       17       11      169        0        0 
 ## .summary 
-##      190</code></pre>
+##      193</code></pre>
 <p>The automatic test flagged 6.6% of the records. For the purpose of this tutorial we will exclude the flagged records, but in general it is recommendable to explore them further.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">#Exclude problematic records</span></a>
 <a class="sourceLine" id="cb6-2" title="2">dat_cl &lt;-<span class="st"> </span>dat[flags<span class="op">$</span>.summary,]</a>
@@ -314,11 +314,11 @@ A histogram of the coordinate precision in the dataset..
 <a class="sourceLine" id="cb11-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat<span class="op">$</span>basisOfRecord)</a>
 <a class="sourceLine" id="cb11-8" title="8"><span class="co">## </span></a>
 <a class="sourceLine" id="cb11-9" title="9"><span class="co">##     FOSSIL_SPECIMEN   HUMAN_OBSERVATION MACHINE_OBSERVATION </span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="co">##                 443                2059                   3 </span></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="co">##                 443                2138                   3 </span></a>
 <a class="sourceLine" id="cb11-11" title="11"><span class="co">##     MATERIAL_SAMPLE         OBSERVATION  PRESERVED_SPECIMEN </span></a>
 <a class="sourceLine" id="cb11-12" title="12"><span class="co">##                  28                   1                 206 </span></a>
 <a class="sourceLine" id="cb11-13" title="13"><span class="co">##             UNKNOWN </span></a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="co">##                 124</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">##                 127</span></a>
 <a class="sourceLine" id="cb11-15" title="15"></a>
 <a class="sourceLine" id="cb11-16" title="16">dat_cl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(dat_cl, basisOfRecord <span class="op">==</span><span class="st"> "HUMAN_OBSERVATION"</span> <span class="op">|</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-17" title="17"><span class="st">                         </span>basisOfRecord <span class="op">==</span><span class="st"> "OBSERVATION"</span> <span class="op">|</span></a>
@@ -337,23 +337,23 @@ A histogram of the coordinate precision in the dataset..
 <a class="sourceLine" id="cb15-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>year)</a></code></pre></div>
 <pre><code>## 
 ## 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 
-##    5   10   80   23   11    6   22    9   11   31   46   32   38   57   66 
+##    5   10   80   23   11    6   23   11   11   32   46   31   40   57   67 
 ## 2012 2013 2014 2015 2016 2017 2018 2019 
-##   93  102  213  194  169  281  271   37</code></pre>
+##   95  102  213  198  171  281  277   87</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">1945</span>) <span class="co"># remove records from before second world war</span></a></code></pre></div>
 <p>On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We’ll not treat taxonomic cleaning here, but if you need to, check out the <a href="https://ropensci.org/tutorials/taxize_tutorial.html">taxize R package</a> or the <a href="http://tnrs.iplantcollaborative.org/">taxonomic name resolution service</a> (plants only).</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>family) <span class="co">#that looks good</span></a>
 <a class="sourceLine" id="cb18-2" title="2"><span class="co">## </span></a>
 <a class="sourceLine" id="cb18-3" title="3"><span class="co">## Felidae </span></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="co">##    1807</span></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="co">##    1877</span></a>
 <a class="sourceLine" id="cb18-5" title="5">dat_cl &lt;-<span class="st"> </span>dat_cl<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(family <span class="op">==</span><span class="st"> 'Felidae'</span>)</a>
 <a class="sourceLine" id="cb18-7" title="7"></a>
 <a class="sourceLine" id="cb18-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(dat_cl<span class="op">$</span>taxonRank) <span class="co"># this is also good</span></a>
 <a class="sourceLine" id="cb18-9" title="9"><span class="co">## </span></a>
 <a class="sourceLine" id="cb18-10" title="10"><span class="co">##    SPECIES SUBSPECIES </span></a>
-<a class="sourceLine" id="cb18-11" title="11"><span class="co">##        813        994</span></a></code></pre></div>
+<a class="sourceLine" id="cb18-11" title="11"><span class="co">##        835       1042</span></a></code></pre></div>
 <p>We excluded almost 50% of the initial data points with the data cleaning, and the general picture has improved considerably. We confined the records mostly to what can be considered current day distribution of the species of interest (Fig. ).</p>
 <p>We have, however, also lost quite a number of records. In general, there is no “one-size-fits-it-all” for data quality of geographic species occurrence records. Of course highest coordinate precision is desirable, but what is acceptable will strongly depend on the downstream analyses. For species distribution modelling, usually high precision is necessary e.g. 1-10 km, but for other analyses such as biogeographic reconstructions using tectonic plates, a record might be considered good enough quality, as long as it is on the right continent. As another example for conservation purposes it might be sufficient to know that a species is present within a certain country.</p>
 </div>
@@ -400,7 +400,7 @@ A histogram of the coordinate precision in the dataset..
 <a class="sourceLine" id="cb21-6" title="6">                       <span class="dt">lat =</span> <span class="st">"decimalLatitude"</span>,</a>
 <a class="sourceLine" id="cb21-7" title="7">                       <span class="dt">value =</span> <span class="st">"flagged"</span>)</a>
 <a class="sourceLine" id="cb21-8" title="8"><span class="co">## Testing natural ranges</span></a>
-<a class="sourceLine" id="cb21-9" title="9"><span class="co">## Flagged 58 records.</span></a>
+<a class="sourceLine" id="cb21-9" title="9"><span class="co">## Flagged 62 records.</span></a>
 <a class="sourceLine" id="cb21-10" title="10"></a>
 <a class="sourceLine" id="cb21-11" title="11">dat_fin &lt;-<span class="st"> </span>dat_cl[range_flags, ]</a></code></pre></div>
 <div class="figure">
