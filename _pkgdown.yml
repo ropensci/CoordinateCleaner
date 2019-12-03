@@ -11,3 +11,11 @@ reference:
 - title: Fossil cleaning
   contents:
   - has_concept("fossils")
+
+extra_packages:
+  - tidyverse
+  - viridis
+  - caret
+  - msm
+  - countrycode
+  - cran/speciesgeocodeR
