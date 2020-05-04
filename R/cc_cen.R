@@ -79,7 +79,7 @@ cc_cen <- function(x,
       ref <- ref[ref$type == "province", ]
     })
   } else {
-    proj4string(ref) <- wgs84
+    #proj4string(ref) <- wgs84
     warning("assuming lat/lon for centroids.ref")
   }
 

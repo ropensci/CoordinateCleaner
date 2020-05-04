@@ -7,17 +7,36 @@
 \alias{is.spatialvalid}
 \title{Geographic Cleaning of Coordinates from Biologic Collections}
 \usage{
-clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", countries = NULL, tests = c("capitals",
-  "centroids", "equal", "gbif", "institutions", "outliers", "seas",
-  "zeros"), capitals_rad = 10000, centroids_rad = 1000,
-  centroids_detail = "both", inst_rad = 100,
-  outliers_method = "quantile", outliers_mtp = 5, outliers_td = 1000,
-  outliers_size = 7, range_rad = 0, zeros_rad = 0.5,
-  capitals_ref = NULL, centroids_ref = NULL, country_ref = NULL,
-  inst_ref = NULL, range_ref = NULL, seas_ref = NULL,
-  seas_scale = 50, urban_ref = NULL, value = "spatialvalid",
-  verbose = TRUE, report = FALSE)
+clean_coordinates(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  countries = NULL,
+  tests = c("capitals", "centroids", "equal", "gbif", "institutions", "outliers",
+    "seas", "zeros"),
+  capitals_rad = 10000,
+  centroids_rad = 1000,
+  centroids_detail = "both",
+  inst_rad = 100,
+  outliers_method = "quantile",
+  outliers_mtp = 5,
+  outliers_td = 1000,
+  outliers_size = 7,
+  range_rad = 0,
+  zeros_rad = 0.5,
+  capitals_ref = NULL,
+  centroids_ref = NULL,
+  country_ref = NULL,
+  inst_ref = NULL,
+  range_ref = NULL,
+  seas_ref = NULL,
+  seas_scale = 50,
+  urban_ref = NULL,
+  value = "spatialvalid",
+  verbose = TRUE,
+  report = FALSE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -214,8 +233,9 @@ summary(test)
 
 }
 \seealso{
-Other Wrapper functions: \code{\link{clean_dataset}},
-  \code{\link{clean_fossils}}
+Other Wrapper functions: 
+\code{\link{clean_dataset}()},
+\code{\link{clean_fossils}()}
 }
 \concept{Wrapper functions}
 \keyword{Coordinate}

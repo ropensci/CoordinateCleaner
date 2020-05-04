@@ -4,7 +4,9 @@
 \name{institutions}
 \alias{institutions}
 \title{Global Locations of Biodiversity Institutions}
-\format{A data frame with 12170 observations on 12 variables.}
+\format{
+A data frame with 12170 observations on 12 variables.
+}
 \source{
 Compiled from various sources: \itemize{ \item Global Biodiversity
 Information Facility \url{www.gbif.org} \item Wikipedia

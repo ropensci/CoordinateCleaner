@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-13 (2020-05-04)
+=========================
+
+### MINOR IMPROVEMENTS
+  * fixed a bug in cc_cen when setting an alternative reference
+  
+
 CoordinateCleaner 2.0-13 (2019-06-18)
 =========================
 

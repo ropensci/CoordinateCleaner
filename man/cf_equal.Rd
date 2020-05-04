@@ -4,8 +4,13 @@
 \alias{cf_equal}
 \title{Identify Fossils with equal min and max age}
 \usage{
-cf_equal(x, min_age = "min_ma", max_age = "max_ma", value = "clean",
-  verbose = TRUE)
+cf_equal(
+  x,
+  min_age = "min_ma",
+  max_age = "max_ma",
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing fossil records with taxon names, ages, 
@@ -49,8 +54,10 @@ cf_equal(x, value = "flagged")
 
 }
 \seealso{
-Other fossils: \code{\link{cf_age}}, \code{\link{cf_outl}},
-  \code{\link{cf_range}}
+Other fossils: 
+\code{\link{cf_age}()},
+\code{\link{cf_outl}()},
+\code{\link{cf_range}()}
 }
 \concept{fossils}
 \keyword{Fossils}

@@ -4,11 +4,22 @@
 \alias{cf_outl}
 \title{Identify Outlier Records in Space and Time}
 \usage{
-cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
-  method = "quantile", size_thresh = 7, mltpl = 5, replicates = 5,
-  flag_thresh = 0.5, uniq_loc = FALSE, value = "clean",
-  verbose = TRUE)
+cf_outl(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  min_age = "min_ma",
+  max_age = "max_ma",
+  taxon = "accepted_name",
+  method = "quantile",
+  size_thresh = 7,
+  mltpl = 5,
+  replicates = 5,
+  flag_thresh = 0.5,
+  uniq_loc = FALSE,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing fossil records with taxon names, ages, 
@@ -104,8 +115,10 @@ cf_outl(x, value = "flagged", taxon = "")
 
 }
 \seealso{
-Other fossils: \code{\link{cf_age}},
-  \code{\link{cf_equal}}, \code{\link{cf_range}}
+Other fossils: 
+\code{\link{cf_age}()},
+\code{\link{cf_equal}()},
+\code{\link{cf_range}()}
 }
 \concept{fossils}
 \keyword{Coordinate}

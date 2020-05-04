@@ -4,9 +4,15 @@
 \alias{cc_coun}
 \title{Identify Coordinates Outside their Reported Country}
 \usage{
-cc_coun(x, lon = "decimallongitude", lat = "decimallatitude",
-  iso3 = "countrycode", value = "clean", ref = NULL,
-  verbose = TRUE)
+cc_coun(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  iso3 = "countrycode",
+  value = "clean",
+  ref = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -62,13 +68,19 @@ cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong.
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_dupl}},
-  \code{\link{cc_equ}}, \code{\link{cc_gbif}},
-  \code{\link{cc_inst}}, \code{\link{cc_iucn}},
-  \code{\link{cc_outl}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

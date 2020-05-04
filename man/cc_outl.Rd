@@ -4,10 +4,21 @@
 \alias{cc_outl}
 \title{Identify Geographic Outliers in Species Distributions}
 \usage{
-cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", method = "quantile", mltpl = 5, tdi = 1000,
-  value = "clean", sampling_thresh = 0, verbose = TRUE,
-  min_occs = 7, thinning = FALSE, thinning_res = 0.5)
+cc_outl(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  method = "quantile",
+  mltpl = 5,
+  tdi = 1000,
+  value = "clean",
+  sampling_thresh = 0,
+  verbose = TRUE,
+  min_occs = 7,
+  thinning = FALSE,
+  thinning_res = 0.5
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -109,13 +120,19 @@ cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
-  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
-  \code{\link{cc_iucn}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

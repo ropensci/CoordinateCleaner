@@ -1,7 +1,7 @@
 Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
-Version: 2.0-12
+Version: 2.0-14
 Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@idiv.de",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = "ctb"),
@@ -29,6 +29,6 @@ BugReports: https://github.com/ropensci/CoordinateCleaner/issues
 Depends: R (>= 3.5.0)
 Imports: dplyr, geosphere, ggplot2, graphics, methods, raster, rgbif, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Suggests: covr, knitr, maps, rmarkdown, testthat
 SystemRequirements: GDAL (>= 2.0.1)
