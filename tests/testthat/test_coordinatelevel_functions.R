@@ -54,8 +54,10 @@ test_that("cc_cen works", {
 ## cc_coun
 test_that("cc_coun works", {
 skip_on_cran()
+  
+  exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), decimallongitude = c(8, 40), countrycode = c("DEU", "DEU"))
+  
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
-  names(cust_ref1)[names(cust_ref1) == "iso_a3"] <- "iso_a3_eh"
   cust_ref2 <- cust_ref1
   proj4string(cust_ref2) <- ""
   cust_ref3 <- spTransform(cust_ref1, 
@@ -65,8 +67,13 @@ skip_on_cran()
   expect_is(cc_coun(exmpl, value = "flagged"), "logical")
   expect_is(cc_coun(exmpl, value = "clean"), "data.frame")
   
+  #customized references
+  expect_equal(nrow(cc_coun(x = exmpl2)), 1)
+  expect_error(cc_coun(x = exmpl2, ref = ref1, ref_col = "test"))
+  expect_error(cc_coun(x = exmpl2, ref = ref2))
+  expect_equal(nrow(cc_coun(x = exmpl2, ref = ref2, ref_col = "iso_a3")), 1)
   
-  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref1)), 0)
+  
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref2)), 0)
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
   

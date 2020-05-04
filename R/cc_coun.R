@@ -12,9 +12,17 @@
 #' Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 #' \code{rnaturalearth::ne_countries(scale = "medium")}.  
 #' Default = \code{rnaturalearth::ne_countries(scale = "medium")}
+#' @param ref_col the column name in the reference dataset, containing the relevant
+#' ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+#' codes in the reference dataset. See notes.
 #' @inheritParams cc_cen
 #' 
 #' @inherit cc_cap return
+#' 
+#' @note The ref_col argument allows to adapt the function to the structure of
+#' alternative reference datasets. For instance, for 
+#' \code{rnaturalearth::ne_countries(scale = "small")}, the default will fail, 
+#' but ref_col = "iso_a3" will work.
 #' 
 #' @note With the default reference, records are flagged if they fall 
 #' outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
@@ -44,6 +52,7 @@ cc_coun <- function(x,
                     iso3 = "countrycode",
                     value = "clean", 
                     ref = NULL, 
+                    ref_col = "iso_a3_eh",
                     verbose = TRUE) {
 
   # check function arguments for validity
@@ -76,7 +85,7 @@ cc_coun <- function(x,
   ref <- raster::crop(ref, raster::extent(dat) + 1)
 
   # get country from coordinates and compare with provided country
-  country <- sp::over(x = dat, y = ref)[, "iso_a3_eh"]
+  country <- sp::over(x = dat, y = ref)[, ref_col]
   out <- as.character(country) == as.character(unlist(x[, iso3]))
   out[is.na(out)] <- FALSE # marine records are set to False
 

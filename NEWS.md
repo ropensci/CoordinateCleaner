@@ -3,6 +3,7 @@ CoordinateCleaner 2.0-13 (2020-05-04)
 
 ### MINOR IMPROVEMENTS
   * fixed a bug in cc_cen when setting an alternative reference
+  * added the ref_col argument to cc_coun to customize the column with ISO codes in the reference data
   
 
 CoordinateCleaner 2.0-13 (2019-06-18)
