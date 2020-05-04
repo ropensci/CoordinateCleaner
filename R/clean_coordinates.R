@@ -91,6 +91,9 @@
 #' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
 #' reference for the countries test. If NULL, the
 #' \code{rnaturalearth:ne_countries('medium')} dataset is used.
+#' @param country_refcol the column name in the reference dataset, containing the relevant
+#' ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+#' codes in the reference dataset. See notes.
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
 #' biodiversity institution test. If NULL, the \code{institutions} dataset
 #' is used.  Alternatives must be identical in structure.
@@ -131,6 +134,11 @@
 #' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 #' See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
+#' 
+#' @note The country_refcol argument allows to adapt the function to the structure of
+#' alternative reference datasets. For instance, for 
+#' \code{rnaturalearth::ne_countries(scale = "small")}, the default will fail, 
+#' but country_refcol = "iso_a3" will work.
 #' 
 #' @keywords Coordinate cleaning wrapper
 #' @family Wrapper functions
@@ -185,6 +193,7 @@ clean_coordinates <- function(x,
                              capitals_ref = NULL, 
                              centroids_ref = NULL, 
                              country_ref = NULL, 
+                             country_refcol = "iso_a3_eh",
                              inst_ref = NULL, 
                              range_ref = NULL,
                              seas_ref = NULL, 
@@ -286,7 +295,11 @@ clean_coordinates <- function(x,
   ## Country check
   if ("countries" %in% tests) {
     out$con <- cc_coun(x,
-      lon = lon, lat = lat, iso3 = countries, ref = country_ref,
+      lon = lon, 
+      lat = lat, 
+      iso3 = countries, 
+      ref = country_ref,
+      ref_col = country_refcol,
       verbose = verbose, value = "flagged"
     )
   }
