@@ -60,7 +60,7 @@ cc_sea <- function(x,
     message("Testing sea coordinates")
   }
   
-  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
   
   # heuristic to speedup - reduce to individual locations, 
   #overwritten later in cases speedup == FALSE
@@ -95,8 +95,24 @@ cc_sea <- function(x,
   
   # run test
   if(speedup){
+    ## -----
+    ## MDSumner@gmail.com 2020-05-06
+    ## over() uses identicalCRS() and doesn't know that these are trivially 
+    ## the same
+    # +proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs 
+    # +proj=longlat +datum=WGS84 +no_defs 
+    ## so if there's continuing trouble do this because it's always assumed
+    ## the same as rnaturalearth anyway:
+    ## #
+    ## #suppressWarnings(sp::proj4string(pts) <- sp::CRS(sp::proj4string(ref)))
+    ## #
+    ## alternatively, do it above - get the proj4string(ref) and pass it into 
+    ## SpatialPoints (the sf and sp won't transform for you bizarrely so you 
+    ## have to make sure they are the same and in this case they already are
+    ## -----
     ## point-in-polygon test
     out <- sp::over(x = pts, y = ref)[, 1]
+    
     out <- !is.na(out)
     out <- data.frame(sp::coordinates(pts), out)
     
