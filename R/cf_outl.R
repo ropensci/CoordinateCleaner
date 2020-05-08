@@ -65,6 +65,9 @@ cf_outl <- function(x,
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("quantile", "mad"))
+  
+  #reset the rownames
+  rownames(x) <- NULL
 
   # report analyses step
   if (verbose) {

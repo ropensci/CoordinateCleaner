@@ -6,6 +6,7 @@ CoordinateCleaner 2.0-14 (2020-05-04)
   * added the ref_col argument to cc_coun to customize the column with ISO codes in the reference data
   * adapted code to changes in sp and rgdal
   * defunct CleanCoordinates, CleanCoordinatesDS, and CleanCoordinatesFOS
+  *reset rownames in clean_Coordinates and cc_outl, to tolerate data.frames with unordered rownames
   
 
 CoordinateCleaner 2.0-13 (2019-06-18)

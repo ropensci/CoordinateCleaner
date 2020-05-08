@@ -206,6 +206,9 @@ clean_coordinates <- function(x,
   match.arg(value, choices = c("spatialvalid", "flagged", "clean"))
   match.arg(centroids_detail, choices = c("both", "country", "provinces"))
   match.arg(outliers_method, choices = c("distance", "quantile", "mad"))
+  
+  #reset the rownames
+  rownames(x) <- NULL
 
   # check column names
   nams <- c(lon, lat, species, countries)
