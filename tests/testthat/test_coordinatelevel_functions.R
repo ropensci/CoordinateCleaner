@@ -54,12 +54,13 @@ test_that("cc_cen works", {
 ## cc_coun
 test_that("cc_coun works", {
 skip_on_cran()
-  
+  library(rnaturalearthdata)
   exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), decimallongitude = c(8, 40), countrycode = c("DEU", "DEU"))
   
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
   cust_ref2 <- cust_ref1
-  proj4string(cust_ref2) <- ""
+  names(cust_ref2)[45] <- "iso_a3_eh"
+  
   cust_ref3 <- spTransform(cust_ref1, 
                            CRS(wgs84))
   
@@ -69,12 +70,12 @@ skip_on_cran()
   
   #customized references
   expect_equal(nrow(cc_coun(x = exmpl2)), 1)
-  expect_error(cc_coun(x = exmpl2, ref = ref1, ref_col = "test"))
-  expect_error(cc_coun(x = exmpl2, ref = ref2))
-  expect_equal(nrow(cc_coun(x = exmpl2, ref = ref2, ref_col = "iso_a3")), 1)
+  expect_error(cc_coun(x = exmpl2, ref = cust_ref1, ref_col = "test"))
+  expect_error(cc_coun(x = exmpl2, ref = cust_ref2))
+  expect_equal(nrow(cc_coun(x = exmpl2, ref = cust_ref2, ref_col = "iso_a3_eh")), 1)
   
   
-  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref2)), 0)
+  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref1)), 0)
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
   
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
@@ -122,10 +123,15 @@ skip_on_cran()
                            geod = FALSE, buffer = 0.01)), 251)
   
   expect_equal(sum(cc_inst(x = t.inst, 
-                           value = "flagged", verify = T)), 253)
+                           value = "flagged",
+                           verify = T)), 
+               253)
   expect_equal(sum(cc_inst(x = t.inst, 
-                           value = "flagged", verify = T, 
-                           geod = FALSE, buffer = 100)), 252)
+                           value = "flagged", 
+                           verify = T, 
+                           geod = FALSE, 
+                           buffer = 100)), 
+               252)
   
   expect_error(cc_inst(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")

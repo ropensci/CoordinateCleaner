@@ -46,8 +46,7 @@ is.spatialvalid <- function(x) {
 #' @export
 #' @method plot spatialvalid
 #' @importFrom raster crop
-#' @importFrom ggplot2 fortify aes_string geom_polygon coord_fixed theme_bw theme element_text geom_point scale_colour_manual scale_shape_manual element_blank
-
+#' @importFrom ggplot2 borders fortify aes_string geom_polygon coord_fixed map_data theme_bw theme element_text geom_point scale_colour_manual scale_shape_manual element_blank
 plot.spatialvalid <- function(x, 
                               lon = "decimallongitude",
                               lat = "decimallatitude",

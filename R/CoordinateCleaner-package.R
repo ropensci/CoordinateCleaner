@@ -65,7 +65,7 @@ NULL
 #' head(countryref)
 NULL
 
-#' Deprecated functions in CoordinateCleaener
+#' Defunct functions in CoordinateCleaener
 #' 
 #' These functions still work but will be removed (defunct) in the next version.
 #' 
@@ -81,7 +81,7 @@ NULL
 #'  instead
 #' }
 #' 
-#' @name CoordinateCleaner-deprecated
+#' @name CoordinateCleaner-defunct
 NULL
 
 

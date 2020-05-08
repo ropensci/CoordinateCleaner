@@ -59,7 +59,7 @@ cc_gbif <- function(x,
   }
   
   # set default projection
-  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
 
   dat <- sp::SpatialPoints(x[, c(lon, lat)], 
                            proj4string = sp::CRS(wgs84))

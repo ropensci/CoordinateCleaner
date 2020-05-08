@@ -52,7 +52,7 @@ cc_coun <- function(x,
                     iso3 = "countrycode",
                     value = "clean", 
                     ref = NULL, 
-                    ref_col = "iso_a3_eh",
+                    ref_col = "iso_a3",
                     verbose = TRUE) {
 
   # check function arguments for validity

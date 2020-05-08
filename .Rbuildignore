@@ -10,8 +10,6 @@ old
 .travis.yml
 Code.Rproj
 Tutorials
-vignettes/mammal_example.csv
-vignettes/tutorial_s3_example_input_data
 CONTRIBUTING.md
 docs/
 ^_pkgdown\.yml$
@@ -19,5 +17,5 @@ docs/
 sea.EXT/
 urb.EXT/
 cran-comments.md
-vignettes/
 pre_submission_tests.R
+^vignettes$

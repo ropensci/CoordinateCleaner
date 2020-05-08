@@ -28,6 +28,7 @@ clean_coordinates(
   capitals_ref = NULL,
   centroids_ref = NULL,
   country_ref = NULL,
+  country_refcol = "iso_a3_eh",
   inst_ref = NULL,
   range_ref = NULL,
   seas_ref = NULL,
@@ -101,6 +102,10 @@ Alternatives must be identical in structure.}
 \item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative
 reference for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium')} dataset is used.}
+
+\item{country_refcol}{the column name in the reference dataset, containing the relevant
+ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+codes in the reference dataset. See notes.}
 
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
 biodiversity institution test. If NULL, the \code{institutions} dataset
@@ -207,6 +212,11 @@ Always tests for coordinate validity: non-numeric or missing
 coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 and tutorials.
+
+The country_refcol argument allows to adapt the function to the structure of
+alternative reference datasets. For instance, for
+\code{rnaturalearth::ne_countries(scale = "small")}, the default will fail,
+but country_refcol = "iso_a3" will work.
 }
 \examples{
 
