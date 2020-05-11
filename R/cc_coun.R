@@ -13,7 +13,7 @@
 #' \code{rnaturalearth::ne_countries(scale = "medium")}.  
 #' Default = \code{rnaturalearth::ne_countries(scale = "medium")}
 #' @param ref_col the column name in the reference dataset, containing the relevant
-#' ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+#' ISO codes for matching. Default is to "iso_a3_eh" which refers to the ISO-3
 #' codes in the reference dataset. See notes.
 #' @inheritParams cc_cen
 #' 

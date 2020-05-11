@@ -25,9 +25,6 @@ df <- data.frame(species = c("e"), row.names = c("a"))
 range_emp <- SpatialPolygonsDataFrame(range, data = as.data.frame(df_miss))
 range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
 
-wgs84 <- 
-  '+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'
-
 # run tests
 ## cc_cap
 test_that("cc_cap works", {
@@ -55,16 +52,14 @@ test_that("cc_cen works", {
 test_that("cc_coun works", {
 skip_on_cran()
   library(rnaturalearthdata)
-  exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), decimallongitude = c(8, 40), countrycode = c("DEU", "DEU"))
+  exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), 
+                        decimallongitude = c(8, 40),
+                        countrycode = c("DEU", "DEU"))
   
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
   cust_ref2 <- cust_ref1
   names(cust_ref2)[45] <- "iso_a3_eh"
-  
-  cust_ref3 <- spTransform(cust_ref1, 
-                           CRS(wgs84))
-  
-  
+
   expect_is(cc_coun(exmpl, value = "flagged"), "logical")
   expect_is(cc_coun(exmpl, value = "clean"), "data.frame")
   
@@ -185,10 +180,7 @@ skip_on_cran()
                                                        category = "physical")
 
   proj4string(cust_ref2) <- ""
-  cust_ref3 <- spTransform(cust_ref1, 
-                           CRS(wgs84))
-  
-  
+
   expect_is(cc_sea(exmpl, value = "flagged", ref = cust_ref1), "logical")
   expect_is(cc_sea(exmpl, value = "clean", ref = cust_ref1), "data.frame")
   

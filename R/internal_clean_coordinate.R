@@ -22,6 +22,19 @@ ras_create <- function(x, lat, lon,  thinning_res){
   # get data extend
   ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)])) + thinning_res * 2
   
+  # check for boundary conditions
+  if(ex[1] < -180 | ex[2] > 180 | ex[3] < -90 | ex[4] >90){
+    warning("fixing raster boundaries, assuming lat/lon projection")
+    
+    if(ex[1] < -180){ex[1] <- -180}
+    
+    if(ex[2] > 180){ex[2] <- 180}
+    
+    if(ex[3] < -90){ex[3] <- -90}
+    
+    if(ex[4] > 90){ex[4] <- 90}
+  }
+  
   # create raster
   ras <- raster::raster(x = ex, resolution = thinning_res)
   

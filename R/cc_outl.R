@@ -50,7 +50,7 @@
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
 #' @param thinning forces a raster approximation for the distance calculation. 
 #' This is routinely used for species with more than 10,000 records for computational reasons, 
-#' but can be enforced for smaller datasets, which is reommended when sampling is very uneven.
+#' but can be enforced for smaller datasets, which is recommended when sampling is very uneven.
 #' @param thinning_res The resolution for the spatial thinning in decimal degrees. Default = 0.5.
 #' @inheritParams cc_cap
 #' 
@@ -99,8 +99,10 @@ cc_outl <- function(x,
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
   
-  # standardizing rownames
-  rownames(x) <- 1:nrow(x)
+  # standardizing rownames to account for dataframe with 
+  # unsorted rownames
+  init_ids <- rownames(x)
+  rownames(x) <- NULL
   
   
   if (verbose) {
@@ -125,17 +127,21 @@ cc_outl <- function(x,
       min_occs))
   }
  
-  # create raster for raster approximation if there are large 
-  # datasets or spatial thinning is activated 
+  #Return values in case all species have less than the minimum number of occurrences
   if(all(test < min_occs)){
     switch(value, 
            clean = return(x), 
            flagged = return(rep(TRUE, nrow(x))), 
-           ids = return(1:nrow(x)))
+           ids = return(init_ids))
   }
-
-  if(any(test >= 10000) | thinning){
+  
+  # create a flag for raster approximation, in case 
+  # thinning=TRUE or there are species with many records
+  record_numbers <- unlist(lapply(splist, nrow))
+  
+  if(any(record_numbers >= 10000) | thinning){ #Thanks to Barnaby Walker & Shawn Laffan
     warning("Using raster approximation.")
+
     # create a raster with extent similar to all points, 
     # and unique IDs as cell values
     ras <- ras_create(x = x, 
@@ -144,13 +150,22 @@ cc_outl <- function(x,
                       thinning_res = thinning_res)
   }
   
+
   # identify points for flagging
   flags <- lapply(splist, function(k) {
     
+    # Set raster flag inc ase thinning= TRUE,
+    # or this particualr species has 100000 or more records
+    if(nrow(k) >= 10000 | thinning){
+      raster_flag <- TRUE
+    }else{
+      raster_flag <- FALSE
+    }
+
     # calculate the distance matrix between all points for the outlier tests
     ## for small datasets and without thinning, 
     ## simply a distance matrix using geospheric distance
-    if(any(nrow(k) >= 10000 | thinning)){ 
+    if(raster_flag){ 
       # raster approximation for large datasets and thinning
       # get a distance matrix of raster midpoints, with the row 
       # and colnames giving the cell IDs
@@ -198,7 +213,6 @@ cc_outl <- function(x,
     # calculate the outliers for the different methods
     ##  distance method useing absolute distance
     if(method == "distance"){
-      
       # Drop an error if the sampling correction is activated
       if(sampling_thresh > 0){
         stop("Sampling correction impossible for method 'distance'" )
@@ -212,7 +226,7 @@ cc_outl <- function(x,
     }else{ # for the other methods the mean must be claculated 
       # depending on if the raster method is used
       # get row means
-      if(nrow(k) >= 10000 & !thinning){
+      if(raster_flag & !thinning){
         # get mean distance to all other points
         mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
       }else{
@@ -227,7 +241,7 @@ cc_outl <- function(x,
       quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
       
       # flag all upper outliers
-      out <- which(mins > quo[2] + stats::IQR(mins) * mltpl)
+      out <- which(mins > (quo[2] + stats::IQR(mins) * mltpl))
     }
     
     ## the mad method
@@ -239,12 +253,12 @@ cc_outl <- function(x,
       tester <- stats::mad(mins, na.rm = TRUE)
       
       # Identify outliers
-      out <- which(mins > quo + tester * mltpl)
+      out <- which(mins > (quo + tester * mltpl))
     }
     
     # Identify the outlier points depending on 
     # if the raster approximation was used
-    if(nrow(k) > 10000 | thinning){
+    if(raster_flag){
       # create output object
       if (length(out) == 0) {
         ret <- NA
@@ -290,7 +304,7 @@ cc_outl <- function(x,
       # get country area from naturalearth
       ref <- rnaturalearth::ne_countries(scale = "medium")
       sp::proj4string(ref) <- ""
-      area <- data.frame(country = ref@data$iso_a3, 
+      area <- data.frame(country = ref@data$iso_a2, 
                          area = geosphere::areaPolygon(ref))
       area <- area[!is.na(area$area),]
       area <- area[!is.na(area$country),]
@@ -309,7 +323,7 @@ cc_outl <- function(x,
       ref <- raster::crop(ref, raster::extent(pts) + 1)
       
       # get country from coordinates and compare with provided country
-      country <- sp::over(x = pts, y = ref)[, "iso_a3"]
+      country <- sp::over(x = pts, y = ref)[, "iso_a2"]
       
       # get the sampling for the flagged countries
       thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
@@ -349,5 +363,5 @@ cc_outl <- function(x,
   switch(value, 
          clean = return(x[out, ]), 
          flagged = return(out), 
-         ids = return(flags))
+         ids = return(init_ids[flags]))
 }

@@ -208,7 +208,7 @@ clean_coordinates <- function(x,
   match.arg(outliers_method, choices = c("distance", "quantile", "mad"))
   
   #reset the rownames
-  rownames(x) <- NULL
+  #rownames(x) <- NULL
 
   # check column names
   nams <- c(lon, lat, species, countries)
