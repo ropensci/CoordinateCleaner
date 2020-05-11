@@ -14,8 +14,6 @@ CONTRIBUTING.md
 docs/
 ^_pkgdown\.yml$
 ^docs$
-sea.EXT/
-urb.EXT/
 cran-comments.md
 pre_submission_tests.R
 ^vignettes$

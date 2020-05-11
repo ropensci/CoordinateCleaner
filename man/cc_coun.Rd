@@ -36,7 +36,7 @@ Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
 
 \item{ref_col}{the column name in the reference dataset, containing the relevant
-ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+ISO codes for matching. Default is to "iso_a3_eh" which refers to the ISO-3
 codes in the reference dataset. See notes.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number

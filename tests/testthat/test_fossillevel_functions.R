@@ -16,7 +16,7 @@ test <- data.frame(species = c(letters[1:9], "z"),
 
 # cf_range
 test_that("cf_range identifies existing bias", {
-  skip_on_cran()
+#  skip_on_cran()
   #return value
   expect_is(cf_range(test, value = "flagged", taxon = ""), "logical")
   expect_is(cf_range(test, value = "clean", taxon = ""), "data.frame")

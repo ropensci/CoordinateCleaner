@@ -17,7 +17,7 @@ A data frame with 5,142 observations on 10 variables.
 \item{capital}{Name of the country capital, empty for provinces.}
 \item{capital.lon}{Longitude of the country capital.}
 \item{capital.lat}{Latitude of the country capital.}
-\item{area_sqkm}{The area of the country or prvoince.}}
+\item{area_sqkm}{The area of the country or province.}}
 }
 \source{
 CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},

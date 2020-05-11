@@ -4,12 +4,5 @@
 .Ruserdata
 .Rhistory
 Package.Rproj
-XXX_TESTING.R
-old
-vignettes/mammal_example.csv
-vignettes/tutorial_s3_example_input_data
 vignettes/inst
-new_georeferences.txt
-sea.EXT/
-urb.EXT/
 pre_submission_tests.R
