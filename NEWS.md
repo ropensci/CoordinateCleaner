@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-15 (2020-05-04)
+=========================
+
+### MINOR IMPROVEMENTS
+  * adapted the url format in the description files
+
+
 CoordinateCleaner 2.0-14 (2020-05-04)
 =========================
 

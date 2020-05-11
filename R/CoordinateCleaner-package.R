@@ -97,8 +97,8 @@ NULL
 #' @docType data
 #' @format A data frame with 12170 observations on 12 variables.
 #' @source Compiled from various sources: \itemize{ \item Global Biodiversity
-#' Information Facility \url{www.gbif.org} \item Wikipedia
-#' \url{www.wikipedia.org} \item Geonames \url{www.geonames.org} \item The Global
+#' Information Facility \url{https://www.gbif.org/} \item Wikipedia
+#' \url{https://www.wikipedia.org/} \item Geonames \url{https://www.geonames.org/} \item The Global
 #' Registry of Biodiversity Repositories \item Index
 #' Herbariorum \url{http://sweetgum.nybg.org/science/ih/}
 #' \item Botanic Gardens Conservation International \url{https://www.bgci.org/}
