@@ -321,7 +321,7 @@ clean_coordinates <- function(x,
       value = "ids", verbose = verbose
     )
     otl <- rep(TRUE, nrow(x))
-    otl[otl_flag] <- FALSE
+    otl[as.numeric(otl_flag)] <- FALSE
     out$otl <- otl
   }
 

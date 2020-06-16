@@ -10,14 +10,14 @@
   "codeRepository": "https://ropensci.github.io/CoordinateCleaner/",
   "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "version": "4.1.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2020-05-10 r78402)",
+  "runtimePlatform": "R Under development (unstable) (2020-06-03 r78637)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -231,6 +231,11 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "grDevices",
+      "name": "grDevices"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
@@ -339,7 +344,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "1115.598KB",
+  "fileSize": "1116.02KB",
   "contIntegration": [
     "https://travis-ci.com/azizka/CoordinateCleaner",
     "https://codecov.io/gh/azizka/CoordinateCleaner"
