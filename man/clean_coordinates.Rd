@@ -28,7 +28,7 @@ clean_coordinates(
   capitals_ref = NULL,
   centroids_ref = NULL,
   country_ref = NULL,
-  country_refcol = "iso_a3_eh",
+  country_refcol = "iso_a3",
   inst_ref = NULL,
   range_ref = NULL,
   seas_ref = NULL,

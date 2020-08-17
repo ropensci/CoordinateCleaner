@@ -23,7 +23,12 @@ exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
 
 
 #run all tests
-dat <- clean_coordinates(exmpl, tests = c("capitals", "centroids", "countries", "equal", "gbif", "institutions", "outliers", "seas", "urban", "zeros"), countries = "countries")
+dat <- clean_coordinates(exmpl,
+                         tests = c("capitals", "centroids", "countries", 
+                                   "equal", "gbif", "institutions", 
+                                   "outliers", "seas", "urban", "zeros"), 
+                         countries = "countries",
+                         country_refcol = "iso_a3")
 
 #only run the validity test
 dat <- clean_coordinates(exmpl, tests = c(""))

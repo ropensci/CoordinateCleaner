@@ -171,7 +171,7 @@ In addition to  the name and geographic coordinates for each institution, the da
 ```{r fig2, echo = F, evaluate = T, warning = F, fig.show = T, fig.cap = fig$cap("fig_raster", "Global density of biodiversity institutions in the `institutions` database.")}
 #number per 100km x 100 km grid cell
 #reference raster
-ras <- raster::raster("C:/Users/az64mycy/Dropbox (iDiv)/research_projects/29_CoordinateCleaner/CoordinateCleaner/vignettes/inst/ANNUAL_NDVI.tif")
+ras <- raster::raster("C:/Users/az64mycy/Dropbox (iDiv)/research_projects/00_CoordinateCleaner/CoordinateCleaner/vignettes/inst/ANNUAL_NDVI.tif")
 
 #projections
 wgs1984 <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
@@ -179,7 +179,8 @@ behr <- CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS
 
 #select and reproject institutions
 abu <- institutions%>%
-  dplyr::select(species = type, decimallongitude, decimallatitude)
+  dplyr::select(species = type, decimallongitude, decimallatitude) %>% 
+  filter(!is.na(decimallongitude))
 
 abu.b <- abu%>%
   dplyr::select(decimallongitude, decimallatitude)%>%

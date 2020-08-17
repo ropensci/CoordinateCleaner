@@ -82,7 +82,7 @@ cc_coun <- function(x,
   # prepare data
   dat <- sp::SpatialPoints(x[, c(lon, lat)])
   sp::proj4string(ref) <- ""
-  ref <- raster::crop(ref, raster::extent(dat) + 1)
+  #ref <- raster::crop(ref, raster::extent(dat) + 1)
 
   # get country from coordinates and compare with provided country
   country <- sp::over(x = dat, y = ref)[, ref_col]

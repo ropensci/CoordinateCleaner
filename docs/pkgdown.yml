@@ -1,5 +1,5 @@
-pandoc: '2.6'
-pkgdown: 1.3.0
+pandoc: 2.7.2
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   Background_comparison_other_software: Background_comparison_other_software.html
@@ -11,4 +11,5 @@ articles:
   Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner: Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html
   Tutorial_geographic_outliers: Tutorial_geographic_outliers.html
   Tutorial_Using_custom_gazetteers: Tutorial_Using_custom_gazetteers.html
+last_built: 2020-06-19T09:01Z
 

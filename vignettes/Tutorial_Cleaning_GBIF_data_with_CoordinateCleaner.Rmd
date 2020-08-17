@@ -107,7 +107,7 @@ dat <- dat %>%
 dat <- dat%>%
   filter(!is.na(decimalLongitude))%>%
   filter(!is.na(decimalLatitude))
-
+```
 
 ## Visualize the data on a map
 ```{r, eval = TRUE, message = F, warning = F, fig.cap = "\\label{fig:al}Occurrence records for Panthera leo obtained from GBIF."}
@@ -131,11 +131,16 @@ As a first step we will run the automatic cleaning algorithm of CoordinateCleane
 #convert country code from ISO2c to ISO3c
 dat$countryCode <-  countrycode(dat$countryCode, origin =  'iso2c', destination = 'iso3c')
 
+
+cc_coun
+
 #flag problems
 dat <- data.frame(dat)
-flags <- clean_coordinates(x = dat, lon = "decimalLongitude", lat = "decimalLatitude",
-                          countries = "countryCode", 
-                          species = "species",
+flags <- clean_coordinates(x = dat, 
+                           lon = "decimalLongitude", 
+                           lat = "decimalLatitude",
+                           countries = "countryCode",
+                           species = "species",
                           tests = c("capitals", "centroids", "equal","gbif", "institutions",
                                     "zeros", "countries")) # most test are on by default
 summary(flags)

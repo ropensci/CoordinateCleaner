@@ -8,21 +8,29 @@
 
 <title>Country Centroids and Country Capitals — countryref • CoordinateCleaner</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +38,12 @@
 
 
 
-<meta property="og:title" content="Country Centroids and Country Capitals — countryref" />
 
+<meta property="og:title" content="Country Centroids and Country Capitals — countryref" />
 <meta property="og:description" content="A data.frame with coordinates of country and province centroids and country
 capitals as reference for the clean_coordinates, cc_cen and cc_cap functions.
 Coordinates are based on the Central Intelligence Agency World Factbook  https://www.cia.gov/library/publications/the-world-factbook/ and http://thematicmapping.org/downloads/world_borders.php." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,7 +74,7 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-16</span>
       </span>
     </div>
 
@@ -73,7 +82,7 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,9 +129,13 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -130,29 +143,29 @@ Coordinates are based on the Central Intelligence Agency World Factbook  https:/
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Country Centroids and Country Capitals</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/CoordinateCleaner/blob/master/R/CoordinateCleaner-package.R'><code>R/CoordinateCleaner-package.R</code></a></small>
     <div class="hidden name"><code>countryref.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>A <code>data.frame</code> with coordinates of country and province centroids and country
 capitals as reference for the <code><a href='clean_coordinates.html'>clean_coordinates</a></code>, <code><a href='cc_cen.html'>cc_cen</a></code> and <code><a href='cc_cap.html'>cc_cap</a></code> functions.
 Coordinates are based on the Central Intelligence Agency World Factbook  <a href='https://www.cia.gov/library/publications/the-world-factbook/'>https://www.cia.gov/library/publications/the-world-factbook/</a> and <a href='http://thematicmapping.org/downloads/world_borders.php'>http://thematicmapping.org/downloads/world_borders.php</a>.</p>
-    
     </div>
 
-        
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>A data frame with 5,142 observations on 10 variables.
-#'</p><dl class='dl-horizontal'>
+#'</p><dl'>
 <dt>iso3</dt><dd><p>ISO-3 code for each country, in case of provinces also referring to the country.</p></dd>
 <dt>iso2</dt><dd><p>ISO-2 code for each country, in case of provinces also referring to the country.</p></dd> 
 <dt>name</dt><dd><p>a factor; name of the country or province.</p></dd> 
@@ -163,20 +176,20 @@ Coordinates are based on the Central Intelligence Agency World Factbook  <a href
 <dt>capital</dt><dd><p>Name of the country capital, empty for provinces.</p></dd>
 <dt>capital.lon</dt><dd><p>Longitude of the country capital.</p></dd>
 <dt>capital.lat</dt><dd><p>Latitude of the country capital.</p></dd>
-<dt>area_sqkm</dt><dd><p>The area of the country or prvoince.</p></dd></dl>
-    
+<dt>area_sqkm</dt><dd><p>The area of the country or province.</p></dd>
+</dl>
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>CENTRAL INTELLIGENCE AGENCY (2014) <em>The World Factbook</em>,
 Washington, DC.</p>
 <p><a href='https://www.cia.gov/library/publications/the-world-factbook/'>https://www.cia.gov/library/publications/the-world-factbook/</a>
 <a href='http://thematicmapping.org/downloads/world_borders.php'>http://thematicmapping.org/downloads/world_borders.php</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>countryref</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>countryref</span>)</div><div class='output co'>#&gt;   iso3 iso2 adm1_code        name    type centroid.lon centroid.lat    capital
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>countryref</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>countryref</span>)</div><div class='output co'>#&gt;   iso3 iso2 adm1_code        name    type centroid.lon centroid.lat    capital
 #&gt; 1  ABW   AW       ABW       Aruba country    -69.96667       12.500 Oranjestad
 #&gt; 2  ABW   AW       ABW       Aruba country    -69.97700       12.517 Oranjestad
 #&gt; 3  AFG   AF       AFG Afghanistan country     65.21600       33.677      Kabul
@@ -191,19 +204,13 @@ Washington, DC.</p>
 #&gt; 5       13.22       -8.83 1244654.3135
 #&gt; 6       13.22       -8.83 1244654.3135</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -211,13 +218,16 @@ Washington, DC.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

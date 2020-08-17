@@ -30,6 +30,6 @@ BugReports: https://github.com/ropensci/CoordinateCleaner/issues
 Depends: R (>= 3.5.0)
 Imports: dplyr, geosphere, ggplot2, graphics, grDevices, methods, raster, rgbif, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: covr, knitr, rmarkdown, testthat, rnaturalearthdata, maps
 SystemRequirements: GDAL (>= 2.0.1)
