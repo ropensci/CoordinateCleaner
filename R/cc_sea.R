@@ -86,8 +86,6 @@ cc_sea <- function(x,
                                                   full_url = TRUE)))
       warning("Skipping sea test")
       switch(value, clean = return(x), flagged = return(rep(NA, nrow(x))))
-    }else{
-      ref <- raster::crop(ref, raster::extent(pts) + 1)
     }
   } else {
     ref <- reproj(ref)

@@ -1,3 +1,10 @@
+CoordinateCleaner 2.0-16 (2020-08-18)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Fixed a bug that occasionally caused invalid polygons for cc_coun and cc_sea
+  * Added references for country centroids from other sources
+
 CoordinateCleaner 2.0-16 (2020-06-19)
 =========================
 
