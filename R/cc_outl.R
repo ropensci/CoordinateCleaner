@@ -320,7 +320,7 @@ cc_outl <- function(x,
         # normalize by area
         nrec_norm <- dplyr::left_join(nrec, area, by = "country")
         nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
-        ref <- raster::crop(ref, raster::extent(pts) + 1)
+        #ref <- raster::crop(ref, raster::extent(pts) + 1)
         
         # get country from coordinates and compare with provided country
         country <- sp::over(x = pts, y = ref)[, "iso_a2"]

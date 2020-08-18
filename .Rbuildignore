@@ -16,4 +16,4 @@ docs/
 ^docs$
 cran-comments.md
 pre_submission_tests.R
-^vignettes$
+^articles$

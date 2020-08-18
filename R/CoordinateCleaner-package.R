@@ -41,24 +41,28 @@ NULL
 #' 
 #' @name countryref
 #' @docType data
-#' @format A data frame with 5,142 observations on 10 variables.
+#' @format A data frame with 5,305 observations on 13 variables.
 #' #' \describe{ 
 #' \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
 #' \item{iso2}{ISO-2 code for each country, in case of provinces also referring to the country.} 
-#' \item{name}{a factor; name of the country or province.} 
 #' \item{adm1_code}{adm code for countries and provinces.} 
+#' \item{name}{a factor; name of the country or province.} 
 #' \item{type}{identifying if the entry refers to a country or province level.} 
 #' \item{centroid.lon}{Longitude of the country centroid.}
 #' \item{centroid.lat}{Latitude of the country centroid.}
 #' \item{capital}{Name of the country capital, empty for provinces.}
 #' \item{capital.lon}{Longitude of the country capital.}
 #' \item{capital.lat}{Latitude of the country capital.}
-#' \item{area_sqkm}{The area of the country or province.}}
+#' \item{area_sqkm}{The area of the country or province.}
+#' \item{uncertaintyRadiusMeters}{The uncertainty of the country centroid.}
+#' \item{source}{The data source. Currently only available for \url{http://geo-locate.org}}}
+#' 
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
 #' \url{https://www.cia.gov/library/publications/the-world-factbook/}
 #' \url{http://thematicmapping.org/downloads/world_borders.php}
+#' \url{http://geo-locate.org}
 #' @keywords gazetteers
 #' @examples
 #' 

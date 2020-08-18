@@ -7,6 +7,8 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg)](https://doi.org/10.5281/zenodo.2539408)
 
+**There were some changes to the documentation of CoordinateCleaner with version 2.0-17. You can find three vignettes on cleaning point occurrence records (for instance from www.gbif.org), fossil data and using custom gazetteers with the package now. Additional information on dataset-level cleaning and identifying geographic outliers can be found [here]().**
+
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 
 * General coordinate validity
