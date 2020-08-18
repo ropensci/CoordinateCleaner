@@ -35,7 +35,8 @@ NULL
 #' 
 #' A \code{data.frame} with coordinates of country and province centroids and country
 #' capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
-#' Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/library/publications/the-world-factbook/} and \url{http://thematicmapping.org/downloads/world_borders.php}.
+#' Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/library/publications/the-world-factbook/},
+#' \url{http://thematicmapping.org/downloads/world_borders.php} and geolocate \url{http://geo-locate.org}.
 #' 
 #' 
 #' @name countryref
