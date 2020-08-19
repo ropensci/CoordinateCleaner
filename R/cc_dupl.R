@@ -16,7 +16,7 @@
 #' 
 #' @inherit cc_cap return
 #' 
-#' @note See \url{https://ropensci.github.io/CoordinateCleaner} for more
+#' @note See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 #' details and tutorials.
 #' 
 #' @keywords Coordinate cleaning
