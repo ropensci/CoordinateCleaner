@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>NEWS.utf8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CoordinateCleaner</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning point occurrence data (GBIF)</a>
+    </li>
+    <li>
+      <a href="mo_setup.html">Cleaning fossil records (PBDB)</a>
+    </li>
+    <li>
+      <a href="mo_setup.html">Using custom gazetteers</a>
+    </li>
+    <li>
+      <a href="mo_setup.html">Geographic outliers</a>
+    </li>
+    <li>
+      <a href="mo_setup.html">Dataset level cleaning</a>
+    </li>
+    <li>
+      <a href="mo_setup.html">The biodiveristy institutions database</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner">GitHub</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="coordinatecleaner-2.0-16-2020-08-18" class="section level1">
+<h1>CoordinateCleaner 2.0-16 (2020-08-18)</h1>
+<div id="minor-improvements" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>Fixed a bug that occasionally caused invalid polygons for cc_coun and cc_sea</li>
+<li>Added references for country centroids from other sources</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-16-2020-06-19" class="section level1">
+<h1>CoordinateCleaner 2.0-16 (2020-06-19)</h1>
+<div id="minor-improvements-1" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>added an option to adapt the geographic extent to the plotting method for objects of class “spatialvalid”</li>
+<li>fixed a bug with the handling of the outlier test in clean_coordinates</li>
+<li>improved the handling of large data.frames in the plotting method for objects of class “spatialvalid”</li>
+<li>readapted the default country columns name to the rnaturalearth colmn names</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-15-2020-05-04" class="section level1">
+<h1>CoordinateCleaner 2.0-15 (2020-05-04)</h1>
+<div id="minor-improvements-2" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>adapted the url format in the description files</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-14-2020-05-04" class="section level1">
+<h1>CoordinateCleaner 2.0-14 (2020-05-04)</h1>
+<div id="minor-improvements-3" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>fixed a bug in cc_cen when setting an alternative reference</li>
+<li>added the ref_col argument to cc_coun to customize the column with ISO codes in the reference data</li>
+<li>adapted code to changes in sp and rgdal</li>
+<li>defunct CleanCoordinates, CleanCoordinatesDS, and CleanCoordinatesFOS</li>
+<li>fixed issue with input data.frame with unordered rownames in cc_outl</li>
+<li>fixed the ‘ras not found’ bug in cc_outl</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-13-2019-06-18" class="section level1">
+<h1>CoordinateCleaner 2.0-13 (2019-06-18)</h1>
+<div id="minor-improvements-4" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>addressed the “ras not found” bug in cc_outl</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-12-2019-05-2" class="section level1">
+<h1>CoordinateCleaner 2.0-12 (2019-05-2)</h1>
+<div id="minor-improvements-5" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>improved documentation of cc_outl</li>
+<li>improved handling of rownames in cc_outl</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-11-2019-04-24" class="section level1">
+<h1>CoordinateCleaner 2.0-11 (2019-04-24)</h1>
+<div id="minor-improvements-6" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>changes to the description file</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-10-2019-04-23" class="section level1">
+<h1>CoordinateCleaner 2.0-10 (2019-04-23)</h1>
+<div id="minor-improvements-7" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>improved error handling by cc_sea and cc_urb, in case the default reference cannot be obtained from the web</li>
+<li>added a reference for the methodology to the description file</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-9-2019-04-02" class="section level1">
+<h1>CoordinateCleaner 2.0-9 (2019-04-02)</h1>
+<div id="minor-improvements-8" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>recoded cc_outl, and added a thinning argument to account for sampling bias</li>
+<li>fixed a bug with the cc_outl test, that produced erroneous flags under some settings of mltpl</li>
+<li>extended the example dataset for the coordinate level-test suite to be more realistic</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-8-2019-03-21" class="section level1">
+<h1>CoordinateCleaner 2.0-8 (2019-03-21)</h1>
+<div id="minor-improvements-9" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>moved vignettes to online documentation</li>
+<li>added an area column to the countryref dataset</li>
+<li>fixed some minor spelling issues in the documentation</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-7-2019-01-22" class="section level1">
+<h1>CoordinateCleaner 2.0-7 (2019-01-22)</h1>
+<div id="minor-improvements-10" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>added citation</li>
+<li>reduced testing time on CRAN</li>
+<li>improved documentation of the cc_outl function</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-6-2019-01-16" class="section level1">
+<h1>CoordinateCleaner 2.0-6 (2019-01-16)</h1>
+<div id="minor-improvements-11" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>further url fixes</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-5-2019-01-15" class="section level1">
+<h1>CoordinateCleaner 2.0-5 (2019-01-15)</h1>
+<div id="minor-improvements-12" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>fixed broken url to the CIA factbook</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-4-2019-01-14" class="section level1">
+<h1>CoordinateCleaner 2.0-4 (2019-01-14)</h1>
+<div id="minor-improvements-13" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>minor bugfix with cc_cap</li>
+<li>corrected duplicated vignette index entries</li>
+<li>updated maintainer email</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-3-2018-10-22" class="section level1">
+<h1>CoordinateCleaner 2.0-3 (2018-10-22)</h1>
+<div id="minor-improvements-14" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>removed convenience functionality to only download data from rnaturalearth at first use, to comply with CRAN guidelines</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-2-2018-10-12" class="section level1">
+<h1>CoordinateCleaner 2.0-2 (2018-10-12)</h1>
+<div id="major-improvements" class="section level3">
+<h3>MAJOR IMPROVEMENTS</h3>
+<ul>
+<li>tutorial on outlier detection on the bookdown documentation</li>
+<li>tutorial on using custom gazetteers</li>
+<li>rasterisation heuristic in cc_outl</li>
+<li>added sampling correction to cc_outl<br />
+</li>
+<li>added verify option to cc_inst</li>
+<li>transfer to rOpenSci</li>
+</ul>
+</div>
+<div id="minor-improvements-15" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>reduced packages size, by switching to data download from rnaturalearth for urbanareas and landmass</li>
+<li>fixed issue with names of plot.spatialvalid</li>
+<li>grouped functions on documentation webpage</li>
+<li>fixed broken links in the help pages ’ improved documentation structure</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-2.0-1-2018-06-08" class="section level1">
+<h1>CoordinateCleaner 2.0-1 (2018-06-08)</h1>
+<div id="major-improvements-1" class="section level3">
+<h3>MAJOR IMPROVEMENTS</h3>
+<ul>
+<li>changed and more consistent naming scheme for the functions</li>
+</ul>
+</div>
+<div id="minor-improvements-16" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>fixed typos in Readme</li>
+<li>set a download from naturalearth as default for cc_urb</li>
+<li>reduced vignette memory use and size</li>
+<li>enables sf format for custom references</li>
+<li>added speedup option for cc_sea</li>
+<li>added webpage (<a href="https://azizka.github.io/CoordinateCleaner/" class="uri">https://azizka.github.io/CoordinateCleaner/</a>)</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-1.2-1-2018-06-08" class="section level1">
+<h1>CoordinateCleaner 1.2-1 (2018-06-08)</h1>
+<div id="major-improvements-2" class="section level3">
+<h3>MAJOR IMPROVEMENTS</h3>
+<ul>
+<li>Adapted function and argument names consistently to underscore_case</li>
+<li>Simplified internal code structure of wrapper functions</li>
+</ul>
+</div>
+<div id="minor-improvements-17" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>adapted package to rOpenSci reviews</li>
+</ul>
+</div>
+<div id="deprecated-and-defunct" class="section level3">
+<h3>DEPRECATED AND DEFUNCT</h3>
+<ul>
+<li>CleanCoordinates deprecated, replaced by clean_coordinates</li>
+<li>CleanCoordinatesDS deprecated, replaced by clean_dataset</li>
+<li>CleanCoordinatesFOS deprecated, replaced by clean_fossils</li>
+<li>WritePyrate deprecated, replaced by write_pyrate</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-1.1-1-2018-05-15" class="section level1">
+<h1>CoordinateCleaner 1.1-1 (2018-05-15)</h1>
+<div id="minor-improvements-18" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>Switched documentation and NAMESPACE generation to roxygen2</li>
+<li>Switched from sapply to vapply</li>
+<li>Improved code readability</li>
+</ul>
+</div>
+</div>
+<div id="coordinatecleaner-1.1-0-2018-04-08" class="section level1">
+<h1>CoordinateCleaner 1.1-0 (2018-04-08)</h1>
+<div id="new-features" class="section level3">
+<h3>NEW FEATURES</h3>
+</div>
+<div id="minor-improvements-19" class="section level3">
+<h3>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>Adaption of code to rOpenSci guidelines</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level3">
+<h3>BUG FIXES</h3>
+</div>
+<div id="deprecated-and-defunct-1" class="section level3">
+<h3>DEPRECATED AND DEFUNCT</h3>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

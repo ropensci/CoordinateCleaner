@@ -1,0 +1,449 @@
+{
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
+  "@type": "SoftwareSourceCode",
+  "identifier": "CoordinateCleaner",
+  "description": "Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) doi:10.1111/2041-210X.13152.",
+  "name": "CoordinateCleaner: Automated Cleaning of Occurrence Records from Biological Collections",
+  "codeRepository": "https://ropensci.github.io/CoordinateCleaner/",
+  "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "2.0.16",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "4.1.0",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R Under development (unstable) (2020-06-03 r78637)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Alexander",
+      "familyName": "Zizka",
+      "email": "alexander.zizka@idiv.de"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Daniele",
+      "familyName": "Silvestro"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Tobias",
+      "familyName": "Andermann"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Josue",
+      "familyName": "Azevedo"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Camila",
+      "familyName": "Duarte Ritter"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Daniel",
+      "familyName": "Edler"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Harith",
+      "familyName": "Farooq"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Andrei",
+      "familyName": "Herdean"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Maria",
+      "familyName": "Ariza"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ruud",
+      "familyName": "Scharn"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Sten",
+      "familyName": "Svanteson"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Niklas",
+      "familyName": "Wengstrom"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Vera",
+      "familyName": "Zizka"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Alexandre",
+      "familyName": "Antonelli"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Alexander",
+      "familyName": "Zizka",
+      "email": "alexander.zizka@idiv.de"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rnaturalearthdata",
+      "name": "rnaturalearthdata",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rnaturalearthdata"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "maps",
+      "name": "maps",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=maps"
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "dplyr",
+      "name": "dplyr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=dplyr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "geosphere",
+      "name": "geosphere",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=geosphere"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "graphics",
+      "name": "graphics"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "grDevices",
+      "name": "grDevices"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "raster",
+      "name": "raster",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=raster"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgbif",
+      "name": "rgbif",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgbif"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgeos",
+      "name": "rgeos",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgeos"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rgdal",
+      "name": "rgdal",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgdal"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rnaturalearth",
+      "name": "rnaturalearth",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rnaturalearth"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "sp",
+      "name": "sp",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=sp"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tidyselect",
+      "name": "tidyselect",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=tidyselect"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "https://sysreqs.r-hub.io/get/gdal"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "https://sysreqs.r-hub.io/get/libgdal"
+    }
+  ],
+  "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
+  "fileSize": "1116.02KB",
+  "contIntegration": [
+    "https://travis-ci.com/azizka/CoordinateCleaner",
+    "https://codecov.io/gh/azizka/CoordinateCleaner"
+  ],
+  "relatedLink": "https://CRAN.R-project.org/package=CoordinateCleaner",
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Alexander",
+          "familyName": "Zizka"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Daniele",
+          "familyName": "Silvestro"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Tobias",
+          "familyName": "Andermann"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Josue",
+          "familyName": "Azevedo"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Camila",
+          "familyName": "Duarte Ritter"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Daniel",
+          "familyName": "Edler"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Harith",
+          "familyName": "Farooq"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Andrei",
+          "familyName": "Herdean"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Maria",
+          "familyName": "Ariza"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Ruud",
+          "familyName": "Scharn"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sten",
+          "familyName": "Svanteson"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Niklas",
+          "familyName": "Wengstrom"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Vera",
+          "familyName": "Zizka"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alexandre",
+          "familyName": "Antonelli"
+        }
+      ],
+      "name": "CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases",
+      "identifier": "10.1111/2041-210X.13152",
+      "url": "https://github.com/ropensci/CoordinateCleaner",
+      "paginiation": "-7",
+      "@id": "https://doi.org/10.1111/2041-210X.13152",
+      "sameAs": "https://doi.org/10.1111/2041-210X.13152",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "10",
+        "datePublished": "2019",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "Methods in Ecology and Evolution"
+        }
+      }
+    }
+  ],
+  "copyrightHolder": {},
+  "funder": {}
+}

@@ -1,19 +1,29 @@
-name: lcvplants
+name: CoordinateCleaner
 output_dir: docs
 navbar:
-  title: lcvplants
+  title: CoordinateCleaner
   type: inverse
   left:
   - text: Home
     icon: fa-home 
     href: index.html
-  - text: Tutorials
+  - text: Articles
     menu:
-      - text: Taxonomic name resolution using lcvplants
+      - text: Cleaning point occurrence data (GBIF)
+        href: vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.html
+      - text: Cleaning fossil records (PBDB)
+        href: mo_setup.html
+      - text: Using custom gazetteers
+        href: mo_setup.html
+      - text: Geographic outliers
+        href: mo_setup.html
+      - text: Dataset level cleaning
+        href: mo_setup.html
+      - text: The biodiveristy institutions database
         href: mo_setup.html
   right:
   - text: GitHub
-    href: https://github.com/idiv-biodiversity/lcvplants
+    href: https://github.com/ropensci/CoordinateCleaner
 output:
   html_document:
     lib_dir: site_libs
