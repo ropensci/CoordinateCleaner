@@ -12,15 +12,15 @@ navbar:
       - text: Cleaning point occurrence data (GBIF)
         href: vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.html
       - text: Cleaning fossil records (PBDB)
-        href: mo_setup.html
+        href: vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.html
       - text: Using custom gazetteers
-        href: mo_setup.html
+        href: vignettes/Using_custom_gazetters.html
       - text: Geographic outliers
-        href: mo_setup.html
+        href: articles/Geographic_outliers.html
       - text: Dataset level cleaning
-        href: mo_setup.html
+        href: articles/Dataset_level_cleaning.html
       - text: The biodiveristy institutions database
-        href: mo_setup.html
+        href: The_institutions_database.html
   right:
   - text: GitHub
     href: https://github.com/ropensci/CoordinateCleaner

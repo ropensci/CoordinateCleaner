@@ -1,8 +1,8 @@
 # CoordinateCleaner v2.0-17
 [![Build Status](https://travis-ci.org/ropensci/CoordinateCleaner.svg?branch=master)](https://travis-ci.org/ropensci/CoordinateCleaner)
 [![codecov.io](https://codecov.io/github/ropensci/coordinatecleaner/graphs/badge.svg?branch=master)](https://codecov.io/github/ropensci/CoordinateCleaner)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cran.r-project.org/package=CoordinateCleaner)
-[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/CoordinateCleaner)](https://cranlogs.r-pkg.org:443/badges/CoordinateCleaner)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner)](https://cranlogs.r-pkg.org:443/badges/grand-total/CoordinateCleaner)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/CoordinateCleaner)](http://cranlogs.r-pkg.org/badges/CoordinateCleaner)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg)](https://doi.org/10.5281/zenodo.2539408)

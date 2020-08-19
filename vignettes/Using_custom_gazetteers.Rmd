@@ -12,7 +12,7 @@ CoordinateCleaner identifies potentially erroneous geographic records with coord
 
 We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The purpose of `cc_sea` is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometres, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus *Avicennia*.
 
-```{r, warning = F, message = F, collapse = T}
+```{r, warning = F, message = F, collapse = T, fig.width=8, fig.height=6}
 library(CoordinateCleaner)
 library(dplyr)
 library(ggplot2)
@@ -50,7 +50,7 @@ ggplot()+
 
 A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. *CoordinateCleaner* comes with a one degree buffered reference (`buffland`). In case a narrower or distance true buffer is necessary, you can provide any SpatialPolygonsDataFrame similar in structure to `buffland` via the `ref` argument.
 
-```{r, warning = F, message = F, collapse = T}
+```{r, warning = F, message = F, collapse = T, fig.width=8, fig.height=6}
 # The buffered custom gazetteer
 data("buffland")
 plot(buffland)

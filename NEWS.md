@@ -1,4 +1,4 @@
-CoordinateCleaner 2.0-16 (2020-08-18)
+CoordinateCleaner 2.0-17 (2020-08-18)
 =========================
 
 ### MINOR IMPROVEMENTS
@@ -12,7 +12,7 @@ CoordinateCleaner 2.0-16 (2020-06-19)
   * added an option to adapt the geographic extent to the plotting method for objects of class "spatialvalid"
   * fixed a bug with the handling of the outlier test in clean_coordinates
   * improved the handling of large data.frames in the plotting method for objects of class "spatialvalid"
-  * readapted the default country columns name to the rnaturalearth colmn names
+  * readapted the default country columns name to the rnaturalearth column names
 
 
 CoordinateCleaner 2.0-15 (2020-05-04)

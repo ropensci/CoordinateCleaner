@@ -90,7 +90,7 @@ plot.spatialvalid <- function(x,
   # if multiple failed, first in order
   inv <- x[, grep("\\.", names(x))]
   
-  # Somtimes names from gbif have multiple dots
+  # Sometimes names from gbif have multiple dots
   inv <- inv[, sapply(inv, "is.logical")]
 
   flgs <- names(inv)[unlist(lapply(apply(inv != 1, 1, "which"), "[", 1), 
