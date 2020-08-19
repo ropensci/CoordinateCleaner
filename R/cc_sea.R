@@ -31,8 +31,7 @@
 #' @family Coordinates
 #' 
 #' @examples
-#' 
-#' x <- data.frame(species = letters[1:10], 
+#' #' x <- data.frame(species = letters[1:10], 
 #'                 decimallongitude = runif(10, -30, 30), 
 #'                 decimallatitude = runif(10, -30, 30))
 #'                 

@@ -100,7 +100,7 @@ the number of occurrence records available
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 
 number of records per square kilometre in this country. 
-See for \url{https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 an example and further explanation of the outlier test.
 }
 \note{
