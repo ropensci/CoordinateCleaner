@@ -75,10 +75,6 @@ captivity/horticulture.
 Note: the buffer radius is in degrees, thus will differ slightly between
 different latitudes.
 }
-\note{
-See \url{https://ropensci.github.io/CoordinateCleaner} for more
-details and tutorials.
-}
 \examples{
 
 x <- data.frame(species = letters[1:10], 
