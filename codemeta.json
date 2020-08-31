@@ -16,7 +16,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R Under development (unstable) (2020-08-30 r79091)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -391,7 +391,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "129189.476KB",
+  "fileSize": "129191.1KB",
   "contIntegration": ["https://travis-ci.org/ropensci/CoordinateCleaner", "https://codecov.io/github/ropensci/CoordinateCleaner"],
   "relatedLink": ["https://ropensci.github.io/CoordinateCleaner/", "https://CRAN.R-project.org/package=CoordinateCleaner"],
   "developmentStatus": "https://www.repostatus.org/#active",
@@ -490,5 +490,9 @@
   ],
   "copyrightHolder": {},
   "funder": {},
-  "keywords": ["r", "r-package", "rstats"]
+  "keywords": [
+    "r",
+    "r-package",
+    "rstats"
+  ]
 }
