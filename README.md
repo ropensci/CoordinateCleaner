@@ -6,6 +6,7 @@
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/CoordinateCleaner)](https://cranlogs.r-pkg.org:443/badges/CoordinateCleaner)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg)](https://doi.org/10.5281/zenodo.2539408)
+[![rOpenSci peer-review](https://badges.ropensci.org/210_status.svg)](https://github.com/ropensci/software-review/issues/210)
 
 **There were some changes to the documentation of CoordinateCleaner with version 2.0-17. You can find three vignettes on cleaning point occurrence records (for instance from www.gbif.org), fossil data and using custom gazetteers with the package now. Additional information on dataset-level cleaning and identifying geographic outliers can be found [here](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152).**
 
