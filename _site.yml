@@ -19,8 +19,8 @@ navbar:
         href: articles/Geographic_outliers.html
       - text: Dataset level cleaning
         href: articles/Dataset_level_cleaning.html
-      - text: The biodiveristy institutions database
-        href: The_institutions_database.html
+      - text: Comparison other software
+        href: Comparison_other_software.html
   right:
   - text: GitHub
     href: https://github.com/ropensci/CoordinateCleaner
