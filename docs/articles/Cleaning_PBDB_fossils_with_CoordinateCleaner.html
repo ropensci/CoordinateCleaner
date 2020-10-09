@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -58,6 +58,9 @@
     </li>
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
       <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
@@ -251,11 +254,11 @@
 <span class="no">cl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span>(<span class="no">cl</span>, <span class="kw">taxon</span> <span class="kw">=</span> <span class="st">"taxon_name"</span>, <span class="kw">lat</span> <span class="kw">=</span> <span class="st">"lat"</span>, <span class="kw">lon</span> <span class="kw">=</span> <span class="st">"lng"</span>,
               <span class="kw">min_age</span> <span class="kw">=</span> <span class="st">"late_age"</span>, <span class="kw">max_age</span> <span class="kw">=</span> <span class="st">"early_age"</span>)
 <span class="co">## Testing spatio-temporal outliers on taxon level</span>
-<span class="co">## Removed 33 records.</span></pre></body></html></div>
+<span class="co">## Removed 32 records.</span></pre></body></html></div>
 <p>Done! To check how many records have been flagged in total, you can compare the two datasets.</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">dat</span>) - <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">cl</span>)</pre></body></html></div>
-<pre><code>## [1] 692</code></pre>
-<p>All test combined have removed about 692 records (13.8%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
+<pre><code>## [1] 691</code></pre>
+<p>All test combined have removed about 691 records (13.8%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
 <p>So far so good, we have significantly refined the data for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run <em>CoordinateCleaner</em>. You can connect all functions directly in a row using the magrittr pipe (%&gt;%) operator.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">cl</span> <span class="kw">&lt;-</span> <span class="no">dat</span><span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span>(<span class="kw">lat</span> <span class="kw">=</span> <span class="st">"lat"</span>, <span class="kw">lon</span> <span class="kw">=</span> <span class="st">"lng"</span>)<span class="kw">%&gt;%</span>
@@ -300,13 +303,13 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">cl</span>$<span class="no">phylum</span>)
 <span class="co">## </span>
 <span class="co">## Spermatophyta </span>
-<span class="co">##          4308</span>
+<span class="co">##          4309</span>
 
 <span class="co">#2. Taxonomic level of identification</span>
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">cl</span>$<span class="no">taxon_rank</span>)
 <span class="co">## </span>
 <span class="co">##  subclass   species     genus     class    family     order subfamily </span>
-<span class="co">##         7      3337       536       271       124        20         0</span></pre></body></html></div>
+<span class="co">##         7      3338       536       271       124        20         0</span></pre></body></html></div>
 <p>The required taxonomic level of course depends on the downstream analyses, but here we will exclude everything other than genus or species, which is a reasonable approach for most PyRate analyses.</p>
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">cl</span> <span class="kw">&lt;-</span> <span class="no">cl</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">taxon_rank</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"species"</span>, <span class="st">"genus"</span>))</pre></body></html></div>
@@ -318,7 +321,7 @@
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">cl</span>$<span class="no">geogscale</span>)</pre></body></html></div>
 <pre><code>## 
 ## small collection          outcrop       local area            basin 
-##             1951             1750               78                0</code></pre>
+##             1952             1750               78                0</code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
 <div id="time" class="section level2">
@@ -329,7 +332,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">cl</span>$<span class="no">late_age</span>))
 <span class="co">## </span>
 <span class="co">##  63.3    66  70.6  93.5  93.9 100.5 </span>
-<span class="co">##    52   139     8     3     3    21</span>
+<span class="co">##    54   139     8     3     3    21</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">cl</span>)+
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">late_age</span>))
@@ -368,7 +371,7 @@
 <div id="conclusions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
-<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-76.46 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
+<p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-76.48 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
 <p><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-1.png" width="672"><img src="Cleaning_PBDB_fossils_with_CoordinateCleaner_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
 <p>#Writing the result to disk in PyRate format</p>
 <p>If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, <a href="https://github.com/dsilvestro/PyRate">PyRate</a> might be useful for you. You can use the <code>write_pyrate</code> function of <em>CoordinateCleaner</em> to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the <code>status</code> argument of <code>write_pyrate</code>. If you want to specify a path were to save the file, use the <code>path</code> argument instead of <code>fname</code>.</p>

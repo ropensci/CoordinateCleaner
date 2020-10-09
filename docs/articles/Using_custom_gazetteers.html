@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -58,6 +58,9 @@
     </li>
     <li>
       <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
+    </li>
+    <li>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
       <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
@@ -121,7 +124,7 @@
 <span class="co"># run with default gazetteer</span>
 <span class="no">outl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cc_sea.html">cc_sea</a></span>(<span class="no">dat</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"flagged"</span>)
 <span class="co">## OGR data source with driver: ESRI Shapefile </span>
-<span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\Rtmpc97312", layer: "ne_110m_land"</span>
+<span class="co">## Source: "C:\Users\az64mycy\AppData\Local\Temp\RtmpEb6luF", layer: "ne_110m_land"</span>
 <span class="co">## with 127 features</span>
 <span class="co">## It has 3 fields</span>
 
@@ -136,12 +139,16 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>()+
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()+
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"bottom"</span>)</pre></body></html></div>
-<p><img src="Using_custom_gazetteers_files/figure-html/unnamed-chunk-1-1.png" width="768"></p>
+<div class="figure">
+<img src="../../../../../Dropbox%20(iDiv)/research_projects/00_CoordinateCleaner/CoordinateCleaner/vignettes/cusgaz1-1.png" alt=""><p class="caption">plot of chunk cusgaz1</p>
+</div>
 <p>A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. <em>CoordinateCleaner</em> comes with a one degree buffered reference (<code>buffland</code>). In case a narrower or distance true buffer is necessary, you can provide any SpatialPolygonsDataFrame similar in structure to <code>buffland</code> via the <code>ref</code> argument.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># The buffered custom gazetteer</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"buffland"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">buffland</span>)</pre></body></html></div>
-<p><img src="Using_custom_gazetteers_files/figure-html/unnamed-chunk-2-1.png" width="768"></p>
+<div class="figure">
+<img src="../../../../../Dropbox%20(iDiv)/research_projects/00_CoordinateCleaner/CoordinateCleaner/vignettes/cusgaz2-1.png" alt=""><p class="caption">plot of chunk cusgaz2</p>
+</div>
 <div class="sourceCode" id="cb3"><html><body><pre class="r">
 <span class="co"># run with custom gazetteer</span>
 <span class="no">outl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cc_sea.html">cc_sea</a></span>(<span class="no">dat</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"flagged"</span>, <span class="kw">ref</span> <span class="kw">=</span> <span class="no">buffland</span>)
@@ -157,7 +164,9 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>()+
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()+
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"bottom"</span>)</pre></body></html></div>
-<p><img src="Using_custom_gazetteers_files/figure-html/unnamed-chunk-2-2.png" width="768"></p>
+<div class="figure">
+<img src="../../../../../Dropbox%20(iDiv)/research_projects/00_CoordinateCleaner/CoordinateCleaner/vignettes/cusgaz2-2.png" alt=""><p class="caption">plot of chunk cusgaz2</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
