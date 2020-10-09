@@ -391,7 +391,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "129329.109KB",
+  "fileSize": "129328.154KB",
   "contIntegration": ["https://travis-ci.org/ropensci/CoordinateCleaner", "https://codecov.io/github/ropensci/CoordinateCleaner"],
   "relatedLink": ["https://ropensci.github.io/CoordinateCleaner/", "https://CRAN.R-project.org/package=CoordinateCleaner"],
   "developmentStatus": "https://www.repostatus.org/#active",
@@ -494,5 +494,10 @@
     "r",
     "r-package",
     "rstats"
-  ]
+  ],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/210",
+    "provider": "https://ropensci.org"
+  }
 }
