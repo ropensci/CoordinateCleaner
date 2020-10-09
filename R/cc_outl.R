@@ -17,7 +17,7 @@
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
 #' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation. The test skipps species with less than \code{min_occs},
+#' the distance matrix calculation. The test skipps species with fewer than \code{min_occs},
 #'  geographically unique records.
 #' 
 #' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
@@ -46,7 +46,7 @@
 #' not be flagged as outliers. Default = 0 (no sampling correction).
 #' @param min_occs Minimum number of geographically unique datapoints needed for a species to be tested. 
 #' This is necessary for reliable outlier estimation.
-#' Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+#' Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
 #' @param thinning forces a raster approximation for the distance calculation. 
 #' This is routinely used for species with more than 10,000 records for computational reasons, 
@@ -123,7 +123,7 @@ cc_outl <- function(x,
   # issue warning if species are omitted due to few records
   if(any(test < min_occs)){
     warning(sprintf(
-      "Species with less than %o unique records will not be tested.", 
+      "Species with fewer than %o unique records will not be tested.", 
       min_occs))
   }
  
