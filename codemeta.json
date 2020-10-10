@@ -391,9 +391,9 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "129426.507KB",
+  "fileSize": "129426.512KB",
   "contIntegration": ["https://travis-ci.org/ropensci/CoordinateCleaner", "https://codecov.io/github/ropensci/CoordinateCleaner"],
-  "relatedLink": ["https://ropensci.github.io/CoordinateCleaner/", "https://CRAN.R-project.org/package=CoordinateCleaner"],
+  "relatedLink": "https://ropensci.github.io/CoordinateCleaner/",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
