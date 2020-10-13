@@ -173,7 +173,9 @@ skip_on_cran()
 
 # cc_sea
 test_that("cc_sea works", {
-skip_on_cran()
+  skip_on_cran()
+  skip_if_offline()
+  
   cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = 
                                                          "medium", 
                                                        type = 'land', 
@@ -199,7 +201,9 @@ skip_on_cran()
 # cc_urb
 
 test_that("cc_urb works", {
-skip_on_cran()
+  skip_on_cran()
+  skip_if_offline()
+  
   cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')
   
   city_exmpl <- data.frame(species = letters[1:10], 

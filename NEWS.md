@@ -1,3 +1,9 @@
+CoordinateCleaner 2.0-19 (2020-10-13)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Adaption of the Description file style.
+  
 CoordinateCleaner 2.0-18 (2020-10-09)
 =========================
 
