@@ -50,8 +50,8 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. A vector of the same length as rows in x,
-with the species identity for each record.  If missing, the outliers test is
-skipped.}
+with the species identity for each record.  If NULL, \code{tests} must not
+include the "outliers" or "duplicates" tests.}
 
 \item{countries}{a character string. The column with the country assignment of
 each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
