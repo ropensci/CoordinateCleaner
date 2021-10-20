@@ -1,6 +1,7 @@
-# Version 2.0-19
+# Version 2.0-20
 
-As requested, DOI in angle brackets now, thanks. Passes checks without internet connection.
+Fixing a warning resulting from vignette building in the previous version (2.0-18) on CRAN. 
 
-From the previous submission:
-Implemented following a note by CRAN that the package testing failed if a certain internet resource was not available. The relevant functions do fail with an informative message, and I have no precomputed the vignettes that need internet resources as suggested here: https://ropensci.org/technotes/2019/12/08/precompute-vignettes/.
+Additionally, change of maintainer email, due to a change in institution.
+
+The package has been removed from CRAN due to slow response time. Response time was slow because I am on parental leave.

@@ -30,8 +30,6 @@
 #' which indicates rounding and thus low precision. The default values are
 #' empirically optimized by with GBIF data, but should probably be adapted.
 #' 
-#' @aliases CleanCoordinatesDS
-#' 
 #' @param ds a character string. The column with the dataset of each record. In
 #' case \code{x} should be treated as a single dataset, identical for all
 #' records. Default = \dQuote{dataset}.

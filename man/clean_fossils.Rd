@@ -2,7 +2,6 @@
 % Please edit documentation in R/clean_fossils.R
 \name{clean_fossils}
 \alias{clean_fossils}
-\alias{CleanCoordinatesFOS}
 \title{Geographic and Temporal Cleaning of Records from Fossil Collections}
 \usage{
 clean_fossils(
@@ -59,7 +58,7 @@ See details for all tests available. Default = c("centroids",
 each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 countries test is skipped.}
 
-\item{centroids_rad}{numeric. The radius around capital coordinates in
+\item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to
@@ -152,7 +151,7 @@ step a distance matrix of geographic distances among all records is
 calculate. Subsequently a similar distance matrix of temporal distances
 among all records is calculated based on a single point selected by random
 between the minimum and maximum age for each record. The mean distance for
-each point to all neighbors is calculated for both matrices and spatial and
+each point to all neighbours is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
 \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}

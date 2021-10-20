@@ -8,6 +8,11 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+```{r clgbif1, echo = F, eval = T}
+knitr::opts_chunk$set(fig.width = 7,  fig.path = "cusgaz-")
+```
+
+
 CoordinateCleaner identifies potentially erroneous geographic records with coordinates assigned to the sea, countr coordinate, country capitals, urban areas, institutions, the GBIF headquarters and countries based on the comparison with geographic gazetteers (i.e. reference databases). All of these functions include default reference databases compiled from various sources. These default references have been selected suitable for regional to global analyses. They will also work for smaller scale analyses, but in some case different references might be desirable and available. this could be for instance centroids of small scale political units, a different set of urban areas, or a different coastline when working with coastal species. To account for this, each *CoordinateCleaner* function using a gazetteer has a `ref` argument to specify custom gazetteers.
 
 We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The purpose of `cc_sea` is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometres, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus *Avicennia*.

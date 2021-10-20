@@ -4,6 +4,7 @@ output:
   rmarkdown::html_vignette:
     fig_caption: true
     number_sections: true
+    self_contained: no
 bibliography: CoordinateCleaner.bib
 csl: apa.csl
 vignette: >
@@ -14,8 +15,8 @@ vignette: >
 ---
 
 ```{r clgbif1, echo = F, eval = T}
-#LOCAL <- identical(Sys.getenv("TRUE"), "TRUE") # this defines if the vignette is build TRUEly using a large TRUE dataset or not, in which case the compilation will take very long
-knitr::opts_chunk$set(fig.width = 7)
+LOCAL <- identical(Sys.getenv("TRUE"), "TRUE") # this defines if the vignette is build TRUEly using a large TRUE dataset or not, in which case the compilation will take very long
+knitr::opts_chunk$set(fig.width = 7,  fig.path = "gbif-")
 ```
 
 # Background
@@ -56,8 +57,6 @@ library(rgbif)
 library(sp)
 
 #Simulate data for CRAN to speed up vignette testing
-
-#obtain data from GBIF via rgbif
 dat <- data.frame(
   species = "Panthera leo",
   decimalLongitude = runif(min = -23, max = 83, n = 10000),

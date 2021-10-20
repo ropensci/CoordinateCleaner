@@ -51,7 +51,7 @@
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 #' 
-#' @aliases CleanCoordinates summary.spatialvalid is.spatialvalid
+#' @aliases summary.spatialvalid is.spatialvalid
 #' 
 #' @param species a character string. A vector of the same length as rows in x,
 #' with the species identity for each record.  If NULL, \code{tests} must not
@@ -65,7 +65,7 @@
 #' "seas", "zeros")
 #' @param capitals_rad numeric. The radius around capital coordinates in
 #' meters. Default = 10000.
-#' @param centroids_rad numeric. The radius around capital coordinates in
+#' @param centroids_rad numeric. The radius around centroid coordinates in
 #' meters. Default = 1000.
 #' @param centroids_detail a \code{character string}. If set to
 #' \sQuote{country} only country (adm-0) centroids are tested, if set to

@@ -70,26 +70,6 @@ NULL
 #' head(countryref)
 NULL
 
-#' Defunct functions in CoordinateCleaener
-#' 
-#' These functions still work but will be removed (defunct) in the next version.
-#' 
-#' \itemize{
-#'  \item \code{\link{CleanCoordinates}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_coordinates}}
-#'  instead
-#'  \item \code{\link{CleanCoordinatesDS}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_dataset}}
-#'  instead
-#'  \item \code{\link{CleanCoordinatesFOS}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_fossils}}
-#'  instead
-#' }
-#' 
-#' @name CoordinateCleaner-defunct
-NULL
-
-
 
 #' Global Locations of Biodiversity Institutions
 #' 

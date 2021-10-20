@@ -2,8 +2,10 @@ CoordinateCleaner 2.0-20 (2021-10-08)
 =========================
 
 ### MINOR IMPROVEMENTS
-  * Fixing typos in vignette
-  * Fixing CRAN warning with rebuilding vignettes
+  * Fixed typos in vignette
+  * Fixed CRAN warning with rebuilding vignettes
+  * Removed defunct functions
+  * Added wordlist
 
 CoordinateCleaner 2.0-19 (2020-10-13)
 =========================

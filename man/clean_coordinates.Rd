@@ -2,7 +2,6 @@
 % Please edit documentation in R/clean_coordinates.R
 \name{clean_coordinates}
 \alias{clean_coordinates}
-\alias{CleanCoordinates}
 \alias{summary.spatialvalid}
 \alias{is.spatialvalid}
 \title{Geographic Cleaning of Coordinates from Biologic Collections}
@@ -65,7 +64,7 @@ See details for all tests available. Default = c("capitals", "centroids",
 \item{capitals_rad}{numeric. The radius around capital coordinates in
 meters. Default = 10000.}
 
-\item{centroids_rad}{numeric. The radius around capital coordinates in
+\item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to

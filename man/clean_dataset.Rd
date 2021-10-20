@@ -2,7 +2,6 @@
 % Please edit documentation in R/clean_dataset.R
 \name{clean_dataset}
 \alias{clean_dataset}
-\alias{CleanCoordinatesDS}
 \title{Coordinate Cleaning using Dataset Properties}
 \usage{
 clean_dataset(
