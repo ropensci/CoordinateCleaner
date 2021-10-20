@@ -17,7 +17,7 @@
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
 #' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation. The test skipps species with fewer than \code{min_occs},
+#' the distance matrix calculation. The test skips species with fewer than \code{min_occs},
 #'  geographically unique records.
 #' 
 #' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort

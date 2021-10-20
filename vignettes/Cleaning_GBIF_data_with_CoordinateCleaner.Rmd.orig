@@ -343,7 +343,7 @@ This looks good. The test indicates a slightly higher fraction of records with d
 ## Test for rasterized sampling
 As a second step we will use the `cd_round` function to identify datasets with a significant proportion of coordinates that have been collected in large scale lattice designs. These records might have a low precision and might therefore be problematic for some analyses. For instance presence derived from a 1 degree grid of a national atlas might be to coarse for small scale species distribution models. 
 
-```{r clgbif19, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.height = 6, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autoorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
+```{r clgbif19, eval = TRUE, echo = T, warning = F, eval = T, collapse = T, fig.height = 6, fig.cap = "\\label{fig:final}Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autocorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."}
 par(mfrow = c(2,2), mar = rep(2, 4))
 out.round <- cd_round(dat_fin, lon = "decimalLongitude", 
                       lat = "decimalLatitude", 

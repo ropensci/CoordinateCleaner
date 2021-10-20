@@ -35,7 +35,7 @@ Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo
 | Fossils: excessive age range                                  | tc_range                                                  | -                |-| 0%                                   |
 | Fossils: temporal outlier                                     | tc_outl                                                   | -                |-| 0%                                   |
 | Fossils: PyRate interface                                     | WritePyrate                                               | -                |-| 0%                                   |
-| Wrapper functions to run all test                             | CleanCoordinates, CleanCoordinatesDS, CleanCoordiantesFOS | -                |-| 0%                                   |
+| Wrapper functions to run all test                             | CleanCoordinates, CleanCoordinatesDS, CleanCoordinatesFOS | -                |-| 0%                                   |
 | Database of biodiversity institutions                          | institutions                                              | -                |-| 0%                                   |
 | Taxonomic cleaning                                            | -                                                         | tax_no_epithet   |-| 0%                                   |
 | Missing date                                                  | -                                                         | date_missing     |-| 0%                                   |

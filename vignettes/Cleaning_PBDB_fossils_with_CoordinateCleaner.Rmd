@@ -78,7 +78,7 @@ ggplot()+ coord_fixed()+ wm +
 ```
 
 # CoordinateCleaner
- CoordianteCleaner includes a suite of automated tests to identify problems common to biological and palaebiological databases.
+ CoordinateCleaner includes a suite of automated tests to identify problems common to biological and palaebiological databases.
 
 ## Spatial issues
 We'll first check coordinate validity to check if all coordinates are numeric and part of a lat/lon coordinate reference system using `cc_val`.
@@ -318,7 +318,7 @@ ggplot()+ coord_fixed()+ wm +
 
 #Writing the result to disk in PyRate format
 
-If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, [PyRate](https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of *CoordinateCleaner* to write ready-to-use PyRate input files from your now cleaned dataset to disk. To to so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
+If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, [PyRate](https://github.com/dsilvestro/PyRate) might be useful for you. You can use the `write_pyrate` function of *CoordinateCleaner* to write ready-to-use PyRate input files from your now cleaned dataset to disk. To do so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the `status` argument of `write_pyrate`. If you want to specify a path were to save the file, use the `path` argument instead of `fname`.
 
 ```{r, message = F, warning = F, eval = F, fig.height = 6}
 # replace  blanks in taxon names
