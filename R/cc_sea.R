@@ -31,7 +31,6 @@
 #' @family Coordinates
 #' 
 #' @examples
-#' 
 #' x <- data.frame(species = letters[1:10], 
 #'                 decimallongitude = runif(10, -30, 30), 
 #'                 decimallatitude = runif(10, -30, 30))
@@ -86,8 +85,6 @@ cc_sea <- function(x,
                                                   full_url = TRUE)))
       warning("Skipping sea test")
       switch(value, clean = return(x), flagged = return(rep(NA, nrow(x))))
-    }else{
-      ref <- raster::crop(ref, raster::extent(pts) + 1)
     }
   } else {
     ref <- reproj(ref)

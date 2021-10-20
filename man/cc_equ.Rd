@@ -42,10 +42,6 @@ problematic . Default = \dQuote{clean}.
 Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors.
 }
-\note{
-See \url{https://ropensci.github.io/CoordinateCleaner} for more
-details and tutorials.
-}
 \examples{
 
 x <- data.frame(species = letters[1:10], 

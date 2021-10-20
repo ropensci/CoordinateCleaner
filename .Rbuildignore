@@ -16,4 +16,9 @@ docs/
 ^docs$
 cran-comments.md
 pre_submission_tests.R
-^vignettes$
+^articles$
+_site.yml
+index.Rmd
+vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.Rmd.orig
+Using_custom_gazetteers.Rmd.orig
+^\.github$

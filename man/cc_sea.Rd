@@ -66,7 +66,6 @@ See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 details and tutorials.
 }
 \examples{
-
 x <- data.frame(species = letters[1:10], 
                 decimallongitude = runif(10, -30, 30), 
                 decimallatitude = runif(10, -30, 30))

@@ -6,18 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Automated Cleaning of Occurrence Records from Biological Collections • CoordinateCleaner</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Automated Cleaning of Occurrence Records from Biological Collections">
-<meta property="og:description" content="Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) doi:10.1111/2041-210X.13152.">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) &lt;doi:10.1111/2041-210X.13152&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,31 +54,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
+      <a href="articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
+      <a href="articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
-      <a href="articles/Background_the_institutions_database.html">Background - The institutions database</a>
+      <a href="articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
-    </li>
-    <li>
-      <a href="articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
-    </li>
-    <li>
-      <a href="articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
-    </li>
-    <li>
-      <a href="articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
-    </li>
-    <li>
-      <a href="articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
-    </li>
-    <li>
-      <a href="articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
+      <a href="articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -85,7 +71,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -94,14 +87,15 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="coordinatecleaner-v20-13" class="section level1">
+<div id="coordinatecleaner-v20-19" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#coordinatecleaner-v20-13" class="anchor"></a>CoordinateCleaner v2.0-13</h1></div>
+<a href="#coordinatecleaner-v20-19" class="anchor"></a>CoordinateCleaner v2.0-19</h1></div>
 
-<p><strong>There was a bug in the cc_outl function in previsous versions, so for outlier testing make sure to use version 2.0-9 or higher.</strong></p>
+<p><strong>There were some changes to the documentation of CoordinateCleaner with version 2.0-17. You can find three vignettes on cleaning point occurrence records (for instance from www.gbif.org), fossil data and using custom gazetteers with the package now. Additional information on dataset-level cleaning and identifying geographic outliers can be found <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152">here</a>.</strong></p>
 <p>Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for</p>
 <ul>
 <li>General coordinate validity</li>
@@ -123,7 +117,7 @@
 <li>Equal minimum and maximum ages (fossils)</li>
 <li>Spatio-temporal outliers (fossils)</li>
 </ul>
-<p>CoordinateCleaner can be particularly useful to improve data quality when using data from GBIF (e.g. obtained with <a href="https://github.com/ropensci/rgbif">rgbif</a>) or the Paleobiology database (e.g. obtained with <a href="https://github.com/ropensci/paleobioDB">paleobioDB</a>) for historical biogeography (e.g. with <a href="https://CRAN.R-project.org/package=BioGeoBEARS">BioGeoBEARS</a> or <a href="https://CRAN.R-project.org/package=phytools">phytools</a>), automated conservation assessment (e.g. with <a href="https://github.com/azizka/speciesgeocodeR/wiki">speciesgeocodeR</a> or <a href="https://CRAN.R-project.org/package=ConR">conR</a>) or species distribution modelling (e.g. with <a href="https://CRAN.R-project.org/package=dismo">dismo</a> or <a href="https://CRAN.R-project.org/package=sdm">sdm</a>). See <a href="https://github.com/ropensci/scrubr">scrubr</a> and <a href="https://github.com/ropensci/taxize">taxize</a> for complementary taxonomic cleaning or <a href="https://github.com/cran/biogeo">biogeo</a> for correcting spatial coordinate errors. You can find a detailed comparison of the functionality of <code>CoordinateCleaner</code>, <code>scrubr</code>, and <code>biogeo</code> <a href="https://ropensci.github.io/CoordinateCleaner/articles/comparison_other_software.html">here</a>.</p>
+<p>CoordinateCleaner can be particularly useful to improve data quality when using data from GBIF (e.g. obtained with <a href="https://github.com/ropensci/rgbif">rgbif</a>) or the Paleobiology database (e.g. obtained with <a href="https://github.com/ropensci/paleobioDB">paleobioDB</a>) for historical biogeography (e.g. with <a href="https://CRAN.R-project.org/package=BioGeoBEARS">BioGeoBEARS</a> or <a href="https://CRAN.R-project.org/package=phytools">phytools</a>), automated conservation assessment (e.g. with <a href="https://github.com/azizka/speciesgeocodeR/wiki">speciesgeocodeR</a> or <a href="https://CRAN.R-project.org/package=ConR">conR</a>) or species distribution modelling (e.g. with <a href="https://CRAN.R-project.org/package=dismo">dismo</a> or <a href="https://CRAN.R-project.org/package=sdm">sdm</a>). See <a href="https://github.com/ropensci/scrubr">scrubr</a> and <a href="https://github.com/ropensci/taxize">taxize</a> for complementary taxonomic cleaning or <a href="https://github.com/cran/biogeo">biogeo</a> for correcting spatial coordinate errors.</p>
 <p>See <a href="https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md">News</a> for update information.</p>
 </div>
 <div id="installation" class="section level1">
@@ -132,54 +126,54 @@
 <div id="stable-from-cran" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stable-from-cran" class="anchor"></a>Stable from CRAN</h2>
-<pre class="{r}"><code>install.packages("CoordinateCleaner")
-library(CoordinateCleaner)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"CoordinateCleaner"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CoordinateCleaner</span>)</pre></div>
 </div>
 <div id="developmental-using-devtools" class="section level2">
 <h2 class="hasAnchor">
 <a href="#developmental-using-devtools" class="anchor"></a>Developmental using devtools</h2>
-<pre class="{r}"><code>devtools::install_github("ropensci/CoordinateCleaner")
-library(CoordinateCleaner)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"ropensci/CoordinateCleaner"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CoordinateCleaner</span>)</pre></div>
 </div>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
 <p>A simple example:</p>
-<pre class="{r}"><code># Simulate example data
-minages &lt;- runif(250, 0, 65)
-exmpl &lt;- data.frame(species = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11),
-                    min_ma = minages,
-                    max_ma = minages + runif(250, 0.1, 65),
-                    dataset = "clean")
+<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># Simulate example data</span>
+<span class="no">minages</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">250</span>, <span class="fl">0</span>, <span class="fl">65</span>)
+<span class="no">exmpl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">species</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="no">letters</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">250</span>, <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+                    <span class="kw">decimallongitude</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">250</span>, <span class="kw">min</span> <span class="kw">=</span> <span class="fl">42</span>, <span class="kw">max</span> <span class="kw">=</span> <span class="fl">51</span>),
+                    <span class="kw">decimallatitude</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">250</span>, <span class="kw">min</span> <span class="kw">=</span> -<span class="fl">26</span>, <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">11</span>),
+                    <span class="kw">min_ma</span> <span class="kw">=</span> <span class="no">minages</span>,
+                    <span class="kw">max_ma</span> <span class="kw">=</span> <span class="no">minages</span> + <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">250</span>, <span class="fl">0.1</span>, <span class="fl">65</span>),
+                    <span class="kw">dataset</span> <span class="kw">=</span> <span class="st">"clean"</span>)
 
-# Run record-level tests
-rl &lt;- clean_coordinates(x = exmpl)
-summary(rl)
-plot(rl)
+<span class="co"># Run record-level tests</span>
+<span class="no">rl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/clean_coordinates.html">clean_coordinates</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">exmpl</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">rl</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">rl</span>)
 
-# Dataset level 
-dsl &lt;- clean_dataset(exmpl)
+<span class="co"># Dataset level </span>
+<span class="no">dsl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/clean_dataset.html">clean_dataset</a></span>(<span class="no">exmpl</span>)
 
-# For fossils
-fl &lt;- clean_fossils(x = exmpl,
-                          taxon = "species",
-                          lon = "decimallongitude", 
-                          lat = "decimallatitude")
-summary(fl)
+<span class="co"># For fossils</span>
+<span class="no">fl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/clean_fossils.html">clean_fossils</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">exmpl</span>,
+                          <span class="kw">taxon</span> <span class="kw">=</span> <span class="st">"species"</span>,
+                          <span class="kw">lon</span> <span class="kw">=</span> <span class="st">"decimallongitude"</span>,
+                          <span class="kw">lat</span> <span class="kw">=</span> <span class="st">"decimallatitude"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">fl</span>)
 
-# Alternative example using the pipe
-library(tidyverse)
+<span class="co"># Alternative example using the pipe</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 
-cl &lt;- exmpl %&gt;%
-  cc_val()%&gt;%
-  cc_cap()%&gt;%
-  cd_ddmm()%&gt;%
-  cf_range(lon = "decimallongitude", 
-           lat = "decimallatitude", 
-           taxon  ="species")</code></pre>
+<span class="no">cl</span> <span class="kw">&lt;-</span> <span class="no">exmpl</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/cc_val.html">cc_val</a></span>()<span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/cc_cap.html">cc_cap</a></span>()<span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/cd_ddmm.html">cd_ddmm</a></span>()<span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/cf_range.html">cf_range</a></span>(<span class="kw">lon</span> <span class="kw">=</span> <span class="st">"decimallongitude"</span>,
+           <span class="kw">lat</span> <span class="kw">=</span> <span class="st">"decimallatitude"</span>,
+           <span class="kw">taxon</span>  <span class="kw">=</span><span class="st">"species"</span>)</pre></div>
 </div>
 <div id="documentation" class="section level1">
 <h1 class="hasAnchor">
@@ -194,17 +188,19 @@ cl &lt;- exmpl %&gt;%
 <div id="citation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h1>
-<p>Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte Ritter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V &amp; Antonelli A (in press) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution, 0:0-0, <a href="doi:10.1111/2041-210X.13152" class="uri">doi:10.1111/2041-210X.13152</a>, <a href="https://github.com/ropensci/CoordinateCleaner" class="uri">https://github.com/ropensci/CoordinateCleaner</a></p>
+<p>Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte Ritter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V &amp; Antonelli A (2019) CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution, 10(5):744-751, <a href="doi:10.1111/2041-210X.13152" class="uri">doi:10.1111/2041-210X.13152</a>, <a href="https://github.com/ropensci/CoordinateCleaner" class="uri">https://github.com/ropensci/CoordinateCleaner</a></p>
 <p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/ropensci_footer.png" alt="ropensci_footer"></a></p>
 </div>
 
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=CoordinateCleaner">https://​cloud.r-project.org/​package=CoordinateCleaner</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/ropensci/CoordinateCleaner/">https://​github.com/​ropensci/​CoordinateCleaner/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ropensci/CoordinateCleaner/issues">https://​github.com/​ropensci/​CoordinateCleaner/​issues</a>
 </li>
@@ -214,6 +210,12 @@ cl &lt;- exmpl %&gt;%
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
 <div class="citation">
@@ -235,27 +237,31 @@ cl &lt;- exmpl %&gt;%
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/ropensci/CoordinateCleaner"><img src="https://travis-ci.org/ropensci/CoordinateCleaner.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/github/ropensci/CoordinateCleaner"><img src="https://codecov.io/github/ropensci/coordinatecleaner/graphs/badge.svg?branch=master" alt="codecov.io"></a></li>
-<li><a href="https://cran.r-project.org/package=CoordinateCleaner"><img src="http://www.r-pkg.org/badges/version/CoordinateCleaner" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner"><img src="http://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner" alt="downloads"></a></li>
-<li><a href="http://cranlogs.r-pkg.org/badges/CoordinateCleaner"><img src="http://cranlogs.r-pkg.org/badges/CoordinateCleaner" alt="rstudio mirror downloads"></a></li>
+<li><a href="https://cranlogs.r-pkg.org:443/badges/CoordinateCleaner"><img src="https://www.r-pkg.org/badges/version/CoordinateCleaner" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cranlogs.r-pkg.org:443/badges/grand-total/CoordinateCleaner"><img src="https://cranlogs.r-pkg.org/badges/grand-total/CoordinateCleaner" alt="downloads"></a></li>
+<li><a href="https://cranlogs.r-pkg.org:443/badges/CoordinateCleaner"><img src="https://cranlogs.r-pkg.org/badges/CoordinateCleaner" alt="rstudio mirror downloads"></a></li>
 <li><a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.2539408"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg" alt="DOI"></a></li>
+<li><a href="https://github.com/ropensci/software-review/issues/210"><img src="https://badges.ropensci.org/210_status.svg" alt="rOpenSci peer-review"></a></li>
 </ul>
 </div>
 </div>
 </div>
+
 
       <footer><div class="copyright">
   <p>Developed by Alexander Zizka.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

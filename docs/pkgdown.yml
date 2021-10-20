@@ -1,14 +1,10 @@
-pandoc: '2.6'
-pkgdown: 1.3.0
+pandoc: 2.7.3
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
-  Background_comparison_other_software: Background_comparison_other_software.html
-  Background_dataset_level_cleaning: Background_dataset_level_cleaning.html
-  Background_the_institutions_database: Background_the_institutions_database.html
-  Quickstart_clean_fossils: Quickstart_clean_fossils.html
-  Quickstart_Flagging_problematic_coordinates_in_a_nutshell: Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html
-  Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner: Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html
-  Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner: Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html
-  Tutorial_geographic_outliers: Tutorial_geographic_outliers.html
-  Tutorial_Using_custom_gazetteers: Tutorial_Using_custom_gazetteers.html
+  Cleaning_GBIF_data_with_CoordinateCleaner: Cleaning_GBIF_data_with_CoordinateCleaner.html
+  Cleaning_PBDB_fossils_with_CoordinateCleaner: Cleaning_PBDB_fossils_with_CoordinateCleaner.html
+  Comparison_other_software: Comparison_other_software.html
+  Using_custom_gazetteers: Using_custom_gazetteers.html
+last_built: 2020-10-13T13:52Z
 

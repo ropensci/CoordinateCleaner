@@ -8,21 +8,29 @@
 
 <title>Identify Outlier Records in Space and Time — cf_outl • CoordinateCleaner</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +38,12 @@
 
 
 
-<meta property="og:title" content="Identify Outlier Records in Space and Time — cf_outl" />
 
+<meta property="og:title" content="Identify Outlier Records in Space and Time — cf_outl" />
 <meta property="og:description" content="Removes or flags records of fossils that are spatio-temporal outliers based on
 interquantile ranges. Records are flagged if they are either extreme in time
 or space, or both." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@ or space, or both." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,7 +74,7 @@ or space, or both." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -73,7 +82,7 @@ or space, or both." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -88,31 +97,16 @@ or space, or both." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
+      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
-      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
-    </li>
-    <li>
-      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
+      <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -120,9 +114,13 @@ or space, or both." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -130,30 +128,40 @@ or space, or both." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Identify Outlier Records in Space and Time</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/CoordinateCleaner/blob/master/R/cf_outl.R'><code>R/cf_outl.R</code></a></small>
     <div class="hidden name"><code>cf_outl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Removes or flags records of fossils that are spatio-temporal outliers based on
 interquantile ranges. Records are flagged if they are either extreme in time
 or space, or both.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>cf_outl</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>min_age</span> <span class='kw'>=</span> <span class='st'>"min_ma"</span>, <span class='kw'>max_age</span> <span class='kw'>=</span> <span class='st'>"max_ma"</span>, <span class='kw'>taxon</span> <span class='kw'>=</span> <span class='st'>"accepted_name"</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>size_thresh</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>replicates</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>flag_thresh</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>uniq_loc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>cf_outl</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
+  <span class='kw'>min_age</span> <span class='kw'>=</span> <span class='st'>"min_ma"</span>,
+  <span class='kw'>max_age</span> <span class='kw'>=</span> <span class='st'>"max_ma"</span>,
+  <span class='kw'>taxon</span> <span class='kw'>=</span> <span class='st'>"accepted_name"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
+  <span class='kw'>size_thresh</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>replicates</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>flag_thresh</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>uniq_loc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -232,14 +240,13 @@ Default = T.</p></td>
 of records flagged.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
 problematic . Default = &#8220;clean&#8221;.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The outlier detection is based on an interquantile range test. In a first
@@ -255,53 +262,41 @@ times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than &#8216;flag.thres&#8217;
 replicates. Only datasets/taxa comprising more than &#8216;size_thresh&#8217;
 records are tested. Note that geographic distances are calculated as
-geospheric distances for datasets (or taxa) with less than 10,000 records
+geospheric distances for datasets (or taxa) with fewer than 10,000 records
 and approximated as Euclidean distances for datasets/taxa with 10,000 to
 25,000 records. Datasets/taxa comprising more than 25,000 records are
 skipped.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>See <a href='https://ropensci.github.io/CoordinateCleaner/'>https://ropensci.github.io/CoordinateCleaner/</a> for more
 details and tutorials.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other fossils: <code><a href='cf_age.html'>cf_age</a></code>,
-  <code><a href='cf_equal.html'>cf_equal</a></code>, <code><a href='cf_range.html'>cf_range</a></code></p></div>
-    
+    <div class='dont-index'><p>Other fossils: 
+<code><a href='cf_age.html'>cf_age</a>()</code>,
+<code><a href='cf_equal.html'>cf_equal</a>()</code>,
+<code><a href='cf_range.html'>cf_range</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>minages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>25</span>), <span class='fl'>62.5</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"z"</span>, <span class='fl'>2</span>)),
-                <span class='kw'>lng</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>16</span>), <span class='fl'>75</span>, <span class='fl'>7</span>),
-                <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>)),
+<span class='no'>minages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>25</span>), <span class='fl'>62.5</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"z"</span>, <span class='fl'>2</span>)),
+                <span class='kw'>lng</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>16</span>), <span class='fl'>75</span>, <span class='fl'>7</span>),
+                <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>)),
                 <span class='kw'>min_ma</span> <span class='kw'>=</span> <span class='no'>minages</span>,
-                <span class='kw'>max_ma</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>minages</span>[<span class='fl'>1</span>:<span class='fl'>11</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='fl'>65</span>))
+                <span class='kw'>max_ma</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>minages</span>[<span class='fl'>1</span>:<span class='fl'>11</span>] + <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='fl'>65</span>))
 
 <span class='fu'>cf_outl</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>taxon</span> <span class='kw'>=</span> <span class='st'>""</span>)</div><div class='output co'>#&gt; <span class='message'>Testing spatio-temporal outliers on dataset level</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallatitude not found. Using lat instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: decimallongitude not found. Using lng instead.</span></div><div class='output co'>#&gt; <span class='message'>Flagged 2 records.</span></div><div class='output co'>#&gt;     1     2     3     4     5     6     7     8     9    10    11    12 
 #&gt;  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE </div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -309,13 +304,16 @@ details and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

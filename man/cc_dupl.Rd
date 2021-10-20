@@ -49,10 +49,6 @@ from the same species can make up the bulk of records in a biological
 collection database, but are undesirable for many analyses. Both can be
 flagged with this function, the former given enough additional information.
 }
-\note{
-See \url{https://ropensci.github.io/CoordinateCleaner} for more
-details and tutorials.
-}
 \examples{
 
 x <- data.frame(species = letters[1:10], 

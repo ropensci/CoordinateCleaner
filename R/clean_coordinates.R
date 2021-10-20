@@ -51,11 +51,11 @@
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 #' 
-#' @aliases CleanCoordinates summary.spatialvalid is.spatialvalid
+#' @aliases summary.spatialvalid is.spatialvalid
 #' 
 #' @param species a character string. A vector of the same length as rows in x,
-#' with the species identity for each record.  If missing, the outliers test is
-#' skipped.
+#' with the species identity for each record.  If NULL, \code{tests} must not
+#' include the "outliers" or "duplicates" tests.
 #' @param countries a character string. The column with the country assignment of
 #' each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 #' countries test is skipped.
@@ -65,7 +65,7 @@
 #' "seas", "zeros")
 #' @param capitals_rad numeric. The radius around capital coordinates in
 #' meters. Default = 10000.
-#' @param centroids_rad numeric. The radius around capital coordinates in
+#' @param centroids_rad numeric. The radius around centroid coordinates in
 #' meters. Default = 1000.
 #' @param centroids_detail a \code{character string}. If set to
 #' \sQuote{country} only country (adm-0) centroids are tested, if set to
@@ -193,7 +193,7 @@ clean_coordinates <- function(x,
                              capitals_ref = NULL, 
                              centroids_ref = NULL, 
                              country_ref = NULL, 
-                             country_refcol = "iso_a3_eh",
+                             country_refcol = "iso_a3",
                              inst_ref = NULL, 
                              range_ref = NULL,
                              seas_ref = NULL, 
@@ -322,7 +322,7 @@ clean_coordinates <- function(x,
     )
     otl <- rep(TRUE, nrow(x))
     names(otl) <- seq_len(nrow(x))
-    otl[otl_flag] <- FALSE
+    otl[as.numeric(otl_flag)] <- FALSE
     out$otl <- otl
   }
 

@@ -4,7 +4,7 @@
 #' (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 #' combination of autocorrelation and sliding-window outlier detection to
 #' identify periodicity patterns in the data. See 
-#' \url{https://ropensci.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+#' \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 #' for further details and 
 #' a description of the algorithm
 #' 

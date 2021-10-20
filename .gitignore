@@ -4,5 +4,7 @@
 .Ruserdata
 .Rhistory
 Package.Rproj
-vignettes/inst
+articles/inst
 pre_submission_tests.R
+inst/doc
+/docs/articles/inst/

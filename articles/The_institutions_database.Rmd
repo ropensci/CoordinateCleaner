@@ -1,0 +1,179 @@
+---
+title: "A global gazetteer of biodiversity institutions"
+output: rmarkdown::html_vignette
+bibliography: CoordinateCleaner.bib
+vignette: >
+  %\VignetteIndexEntry{A global gazetteer of biodiversity institutions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteSuggests{caret}
+  %\VignetteSuggests{viridis}
+  %\VignetteSuggests{countrycode}
+  %\VignetteSuggests{tidyverse}
+---
+
+```{r setup, include=FALSE, message = F, warning = FALSE}
+library(caret)
+library(CoordinateCleaner)
+library(countrycode)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(raster)
+library(viridis)
+```
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+   fig.height=8, 
+   fig.width=8
+)
+```
+
+
+```{r, echo = F, message = FALSE, warning = FALSE}
+data(institutions)
+institutions <- filter(institutions, !is.na(decimallongitude))
+institutions$source <- trimws(institutions$source)
+```
+
+## Background
+Most of the geographic species occurrence records publicly available from aggregated databases such as the Global Biodiversity Information Facility (GBIF), are either based on collected specimens stored in a museum, university, botanical garden, herbarium or zoo, or on human observations, e.g. vegetation surveys or citizen science projects. A relatively common error in the geographic information of these records are coordinates assigned to the physical location of the institution hosting the specimen. The reasons for these errors may include among others individuals escaped from horticulture, specimens erroneously geo-reference to their physical location as well as records based on pictures taken by laymen in zoos or botanical gardens. These records are problematic as the conditions at these locations do not represent the species' natural habitat and might in fact differ considerably from them.
+
+To identify these records, CoordinateCleaner includes a novel geo-referenced global database of biodiversity institutions - defined here as institutions that generally are concerned with biodiversity research and/or hosting collections of living or mounted biological specimens. We implement a cleaning check using this database as gazetteer in the `cc_inst` function and the `institutions` argument of the `clean_coordinates` function of the *CoordinateCleaner* R-package. Furthermore, we hope that this database can prove useful beyond cleaning geographic records, for instance to assess sampling biases in biological collections.
+
+
+## Data compilation
+We compiled names of biodiversity institutions from six different sources [@BGCI-BotanicGardensConservationInternational2017; @IndexHerbariorum2017;@TheGlobalRegistryofBiodiversityRepositories2017; @Wikipedia2017; @GlobalBiodiveristyInformationFacility2017; @GeoNames2017] and geo-referenced them using the Google maps API via the ggmap package in R [@Kahle2013] using institution names and, if this yielded no results the institutions address. For those records that did not yield any results we used opencage via the opencage R-package [@Salmon2017] for geo-referencing. We manually geo-referenced those institutions that could not be geo-referenced automatically (c. 50%) using the WWW and Google Earth [@GoogleInc2017]. In total the database comprises almost 9700 geo-referenced institutions (and another 2500 entries for which geo-referencing was not possible, either to problems with non-English names or geographic ambiguities). The spatial extent of the database is global, but we acknowledge that there is a focus on English-speaking countries and countries using the Roman alphabet. This is partly a bias due to the data compilation process. We hope that this bias can be overcome by future contributions to the database from researchers in non-English speaking and non-Roman alphabet countries. In general, we acknowledge that the database may not be complete and created a webmask at (http://biodiversity-institutions.surge.sh/) were researchers can easily submit their institution or a comment on an existing institution. The webpage also includes an overview on the institutions included in the dataset.
+
+
+```{r fig1, echo = F, evaluate = T, warning = F, fig.show = T}
+plo <- institutions
+
+plo$source <- factor(plo$source, levels = names(sort(table(plo$source))))
+
+ggplot(data = plo)+
+  geom_bar(aes(x = source))+
+  xlab("Source")+
+  ylab("Count")+
+  theme_bw()
+```
+
+
+
+## Data structure
+In addition to  the name and geographic coordinates for each institution, the database includes information on the type of the institutions ("type", e.g. "herbarium" or "university"), the source from where we obtained the name of the institution ("source"), the precision of the coordinates ("geocoding.precision.m" and "geocoding.issue") as well as the city and address (when available, "city" and "address"). The quality of the meta-data might vary among different sources). Furthermore, the database includes a column identifying if the respective institution is located within a protected area [@UNEP-WCMCandIUCN2017], and if this is the case, the World Database of Protected Areas ID of the respective protected area (WDPA, shape file available at: https://www.protectedplanet.net/). We include this flag, as biodiversity institutions within protected areas might or might not be relevant for coordinate cleaning, depending on downstream analyses.
+
+
+
+
+```{r fig2, echo = F, evaluate = T, warning = F, fig.show = T}
+#number per 100km x 100 km grid cell
+#reference raster
+ras <- raster::raster("C:/Users/az64mycy/Dropbox (iDiv)/research_projects/00_CoordinateCleaner/CoordinateCleaner/articles/inst/ANNUAL_NDVI.tif")
+
+#projections
+wgs1984 <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+behr <- CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs')
+
+#select and reproject institutions
+abu <- institutions%>%
+  dplyr::select(species = type, decimallongitude, decimallatitude) %>% 
+  filter(!is.na(decimallongitude))
+
+abu.b <- abu%>%
+  dplyr::select(decimallongitude, decimallatitude)%>%
+  sp::SpatialPoints(proj4string = wgs1984)%>%
+  spTransform(behr)
+
+abu <- abu.b %>% 
+  rasterize(ras, fun ="count") %>% 
+  raster::rasterToPoints()%>%
+  data.frame()
+
+ggplot()+
+  geom_raster(data = abu, aes(x = x, y = y, fill = log(layer)))+
+  scale_fill_gradient2(low = "blue", mid = "yellow", high = "red", midpoint = 2, name = "Number of\ninstitutions\n[log]")+
+  xlab("Longitude")+
+  ylab("Latitude")+
+  theme_bw()+
+  coord_fixed()+
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        strip.background=element_blank(),
+        legend.position = c(0.09, 0.35))
+
+```
+
+
+
+```{r fig3, echo = F, evaluate = T, warning = F, fig.show = T}
+#Institutions per continent
+cont <- institutions%>%
+  mutate(continent = countrycode(country, origin = "iso3c", destination = "continent"))
+
+
+sor <- cont%>%
+  group_by(continent)%>%
+  summarize(numb = n())%>%
+  arrange(numb)
+
+
+plo <- cont%>%
+  mutate(continent = factor(cont$continent, levels = sor$continent))%>%
+  filter(!is.na(continent))%>%
+  filter(!is.na(type))
+  
+
+ggplot(data = plo)+
+  geom_bar(aes(x = continent))+
+  theme(axis.text= element_text(angle = 90, size = 5))+
+  facet_wrap(~type, ncol = 2)+
+  ylab("Count")+
+  xlab("Institution type")+
+  theme_bw()
+
+```
+
+
+
+```{r fig4, echo = F, evaluate = T, warning = F, fig.show = T}
+#institutions per country
+sor <- institutions%>%
+  group_by(country)%>%
+  summarize(numb = n())%>%
+  arrange(numb)
+
+sor <- sor[(nrow(sor) - 10):nrow(sor),]
+
+sor2 <- sor %>%
+  mutate(country = countrycode::countrycode(country, origin = "iso3c", destination = "country.name.en"))
+
+plo <- institutions%>%
+  filter(!is.na(country))%>%
+  filter(country %in% sor$country)%>%
+  mutate(country = countrycode::countrycode(country, origin = "iso3c", destination = "country.name.en"))
+
+
+plo <- plo%>%
+  mutate(country = factor(plo$country, levels = sor2$country))
+
+
+plo$country <- gsub("United Kingdom of Great Britain and Northern Ireland", "UK", plo$country)
+plo$country <- gsub("United States of America", "USA", plo$country)
+
+plo <- plo%>%
+  mutate(country = factor(plo$country, levels = c(sor2$country[1:8], "UK", "USA")))
+
+ggplot(data = plo)+
+  geom_bar(aes(x = country))+
+  theme(axis.text= element_text(angle = 90, size = 5))+
+  ylab("Count")+
+  theme_bw()+
+  theme(axis.title.x = element_blank())
+```
+
+## Data accessability
+The database is open-source and available as R data file (.rda) as part of the *CoordinateCleaner* package either from [CRAN](https://cran.r-project.org/web/packages/CoordinateCleaner/index.html) or [GitHub](https://github.com/ropensci/CoordinateCleaner) under a CC-BY license. We acknowledge, that this database is not complete and can constantly be improved, any feedback can be provided via the GitHub page of \emph{CoordinateCleaner} (https://github.com/ropensci/CoordinateCleaner/). 
+
+# References

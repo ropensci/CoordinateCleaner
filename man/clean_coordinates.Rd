@@ -2,7 +2,6 @@
 % Please edit documentation in R/clean_coordinates.R
 \name{clean_coordinates}
 \alias{clean_coordinates}
-\alias{CleanCoordinates}
 \alias{summary.spatialvalid}
 \alias{is.spatialvalid}
 \title{Geographic Cleaning of Coordinates from Biologic Collections}
@@ -28,7 +27,7 @@ clean_coordinates(
   capitals_ref = NULL,
   centroids_ref = NULL,
   country_ref = NULL,
-  country_refcol = "iso_a3_eh",
+  country_refcol = "iso_a3",
   inst_ref = NULL,
   range_ref = NULL,
   seas_ref = NULL,
@@ -50,8 +49,8 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. A vector of the same length as rows in x,
-with the species identity for each record.  If missing, the outliers test is
-skipped.}
+with the species identity for each record.  If NULL, \code{tests} must not
+include the "outliers" or "duplicates" tests.}
 
 \item{countries}{a character string. The column with the country assignment of
 each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
@@ -65,7 +64,7 @@ See details for all tests available. Default = c("capitals", "centroids",
 \item{capitals_rad}{numeric. The radius around capital coordinates in
 meters. Default = 10000.}
 
-\item{centroids_rad}{numeric. The radius around capital coordinates in
+\item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to

@@ -1,6 +1,7 @@
-# Version 2.0-15
+# Version 2.0-20
 
-I have now adapted the format of the URLs, which had triggered a note during the last round of submission as requested. Please excuse the inconveniences.
+Fixing a warning resulting from vignette building in the previous version (2.0-18) on CRAN. 
 
-[From last submission, v2.0-14]
-Adaption to forthcoming changes in rgdal and sp as well as additional minor aditions and bug-fixes
+Additionally, change of maintainer email, due to a change in institution.
+
+The package has been removed from CRAN due to slow response time. Response time was slow because I am on parental leave.

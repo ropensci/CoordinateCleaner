@@ -25,6 +25,9 @@ is.spatialvalid <- function(x) {
 #' flag.
 #' @param pts_size numeric. The point size for the plot.
 #' @param font_size numeric. The font size for the legend and axes
+#' @param zoom_f numeric. the fraction by which to expand the plotting area 
+#' from the occurrence records. Increase, if countries do not show 
+#' up on the background map.
 #' @param \dots arguments to be passed to methods.
 #' @return A plot of the records flagged as potentially erroneous by
 #' \code{\link{clean_coordinates}}.
@@ -45,6 +48,7 @@ is.spatialvalid <- function(x) {
 #' plot(test)
 #' @export
 #' @method plot spatialvalid
+#' @importFrom grDevices extendrange
 #' @importFrom raster crop
 #' @importFrom ggplot2 borders fortify aes_string geom_polygon coord_fixed map_data theme_bw theme element_text geom_point scale_colour_manual scale_shape_manual element_blank
 plot.spatialvalid <- function(x, 
@@ -55,6 +59,7 @@ plot.spatialvalid <- function(x,
                               details = FALSE,
                               pts_size = 1, 
                               font_size = 10,
+                              zoom_f = 0.1,
                               ...) {
   x <- data.frame(x)
 
@@ -62,8 +67,8 @@ plot.spatialvalid <- function(x,
   if (is.null(bgmap)) {
     plo <- ggplot2::ggplot() + 
       ggplot2::borders(fill = "grey60", 
-                       xlim = range(x[lon]), 
-                       ylim = range(x[lat])) +
+                       xlim = extendrange(r = range(x[lon]), f = 0.1), 
+                       ylim = extendrange(r = range(x[lat]), f = 0.1))+
       ggplot2::coord_fixed() +
       ggplot2::theme_bw()
     
@@ -84,6 +89,10 @@ plot.spatialvalid <- function(x,
   # identify failed tests and create flgas column, 
   # if multiple failed, first in order
   inv <- x[, grep("\\.", names(x))]
+  
+  # Sometimes names from gbif have multiple dots
+  inv <- inv[, sapply(inv, "is.logical")]
+
   flgs <- names(inv)[unlist(lapply(apply(inv != 1, 1, "which"), "[", 1), 
                             use.names = FALSE)]
   flgs <- gsub("\\.", "", flgs)

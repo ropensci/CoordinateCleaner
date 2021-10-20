@@ -1,8 +1,8 @@
 Package: CoordinateCleaner
 Type: Package
 Title: Automated Cleaning of Occurrence Records from Biological Collections
-Version: 2.0-15
-Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zizka@idiv.de",
+Version: 2.0-20
+Authors@R: c(person(given = "Alexander", family = "Zizka", email = "zizka.alexander@gmail.com",
                     role = c("aut", "cre")),
              person(given = "Daniele", family = "Silvestro", role = "ctb"),
              person(given = "Tobias", family = "Andermann", role = "ctb"),
@@ -21,15 +21,16 @@ Authors@R: c(person(given = "Alexander", family = "Zizka", email = "alexander.zi
     comment = "Irene reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>"),
              person("Francisco", "Rodriguez-Sanchez", role = "rev",
     comment = "Francisco reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>"))
-Description: Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) doi:10.1111/2041-210X.13152.
+Description: Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) <doi:10.1111/2041-210X.13152>.
 Language: en-gb
 Encoding: UTF-8
 License: GPL-3
 URL: https://ropensci.github.io/CoordinateCleaner/
 BugReports: https://github.com/ropensci/CoordinateCleaner/issues
 Depends: R (>= 3.5.0)
-Imports: dplyr, geosphere, ggplot2, graphics, methods, raster, rgbif, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
+Imports: dplyr, geosphere, ggplot2, graphics, grDevices, methods, raster, rgbif, rgeos, rgdal, rnaturalearth, stats, sp, tidyselect, utils
 LazyData: true
-RoxygenNote: 7.1.0
-Suggests: covr, knitr, rmarkdown, testthat, rnaturalearthdata, maps
+RoxygenNote: 7.1.2
+Suggests: covr, countrycode, knitr, maps, magrittr, paleobioDB, rmarkdown, rnaturalearthdata, testthat, viridis
 SystemRequirements: GDAL (>= 2.0.1)
+VignetteBuilder: knitr

@@ -1,0 +1,30 @@
+name: CoordinateCleaner
+output_dir: docs
+navbar:
+  title: CoordinateCleaner
+  type: inverse
+  left:
+  - text: Home
+    icon: fa-home 
+    href: index.html
+  - text: Articles
+    menu:
+      - text: Cleaning point occurrence data (GBIF)
+        href: vignettes/Cleaning_GBIF_data_with_CoordinateCleaner.html
+      - text: Cleaning fossil records (PBDB)
+        href: vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.html
+      - text: Using custom gazetteers
+        href: vignettes/Using_custom_gazetters.html
+      - text: Geographic outliers
+        href: articles/Geographic_outliers.html
+      - text: Dataset level cleaning
+        href: articles/Dataset_level_cleaning.html
+      - text: Comparison other software
+        href: Comparison_other_software.html
+  right:
+  - text: GitHub
+    href: https://github.com/ropensci/CoordinateCleaner
+output:
+  html_document:
+    lib_dir: site_libs
+    self_contained: no

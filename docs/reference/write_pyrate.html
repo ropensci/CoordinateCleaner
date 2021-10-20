@@ -8,21 +8,29 @@
 
 <title>Create Input Files for PyRate — write_pyrate • CoordinateCleaner</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +38,12 @@
 
 
 
-<meta property="og:title" content="Create Input Files for PyRate — write_pyrate" />
 
+<meta property="og:title" content="Create Input Files for PyRate — write_pyrate" />
 <meta property="og:description" content="Creates the input necessary to run Pyrate, based on a data.frame with fossil
 ages (as derived e.g. from clean_fossils) and a vector of the
 extinction status for each sample. Creates files in the working directory!" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@ extinction status for each sample. Creates files in the working directory!" />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,7 +74,7 @@ extinction status for each sample. Creates files in the working directory!" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -73,7 +82,7 @@ extinction status for each sample. Creates files in the working directory!" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -88,31 +97,16 @@ extinction status for each sample. Creates files in the working directory!" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
+      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
-      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
-    </li>
-    <li>
-      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
+      <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -120,9 +114,13 @@ extinction status for each sample. Creates files in the working directory!" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -130,28 +128,37 @@ extinction status for each sample. Creates files in the working directory!" />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create Input Files for PyRate</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/CoordinateCleaner/blob/master/R/write_pyrate.R'><code>R/write_pyrate.R</code></a></small>
     <div class="hidden name"><code>write_pyrate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Creates the input necessary to run Pyrate, based on a data.frame with fossil
 ages (as derived e.g. from clean_fossils) and a vector of the
 extinction status for each sample. Creates files in the working directory!</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>write_pyrate</span>(<span class='no'>x</span>, <span class='no'>status</span>, <span class='no'>fname</span>, <span class='kw'>taxon</span> <span class='kw'>=</span> <span class='st'>"accepted_name"</span>,
-  <span class='kw'>min_age</span> <span class='kw'>=</span> <span class='st'>"min_ma"</span>, <span class='kw'>max_age</span> <span class='kw'>=</span> <span class='st'>"max_ma"</span>, <span class='kw'>trait</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='kw'>replicates</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>write_pyrate</span>(
+  <span class='no'>x</span>,
+  <span class='no'>status</span>,
+  <span class='no'>fname</span>,
+  <span class='kw'>taxon</span> <span class='kw'>=</span> <span class='st'>"accepted_name"</span>,
+  <span class='kw'>min_age</span> <span class='kw'>=</span> <span class='st'>"min_ma"</span>,
+  <span class='kw'>max_age</span> <span class='kw'>=</span> <span class='st'>"max_ma"</span>,
+  <span class='kw'>trait</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
+  <span class='kw'>replicates</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -162,7 +169,7 @@ and geographic coordinates.</p></td>
     </tr>
     <tr>
       <th>status</th>
-      <td><p>a vector of character strings of length <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(x)</a></code>.
+      <td><p>a vector of character strings of length <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code>.
 Indicating for each record &#8220;extinct&#8221; or &#8220;extant&#8221;.</p></td>
     </tr>
     <tr>
@@ -186,7 +193,7 @@ Default = &#8220;accepted_name&#8221;.</p></td>
     </tr>
     <tr>
       <th>trait</th>
-      <td><p>a numeric vector of length <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(x)</a></code>. Indicating trait
+      <td><p>a numeric vector of length <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code>. Indicating trait
 values for each record. Optional.  Default = NULL.</p></td>
     </tr>
     <tr>
@@ -215,11 +222,10 @@ defaults to TRUE if several replicates are generated (i.e. replicates &gt; 1).
 Examples: random = TRUE (default) random = FALSE (use midpoint ages)</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>PyRate input files in the working directory.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The replicate option allows the user to generate several replicates of the
@@ -230,52 +236,42 @@ MaxT. The replicates can be analysed in different runs (see PyRate command
 the uncertainty of the true ages of the fossil occurrences. Examples:
 replicates=1 (default, generates 1 data set), replicates=10 (generates 10
 random replicates of the data set).</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>See <a href='https://github.com/dsilvestro/PyRate/wiki'>https://github.com/dsilvestro/PyRate/wiki</a> for more details
 and tutorials on PyRate and PyRate input.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>minages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>250</span>, <span class='fl'>0</span>, <span class='fl'>65</span>)
-<span class='no'>exmpl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>accepted_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>letters</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-                    <span class='kw'>lng</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>51</span>),
-                    <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>26</span>, <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>11</span>),
+<span class='no'>minages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>250</span>, <span class='fl'>0</span>, <span class='fl'>65</span>)
+<span class='no'>exmpl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>accepted_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>letters</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+                    <span class='kw'>lng</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>51</span>),
+                    <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>250</span>, <span class='kw'>min</span> <span class='kw'>=</span> -<span class='fl'>26</span>, <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>11</span>),
                     <span class='kw'>min_ma</span> <span class='kw'>=</span> <span class='no'>minages</span>,
-                    <span class='kw'>max_ma</span> <span class='kw'>=</span> <span class='no'>minages</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>250</span>, <span class='fl'>0.1</span>, <span class='fl'>65</span>))
+                    <span class='kw'>max_ma</span> <span class='kw'>=</span> <span class='no'>minages</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>250</span>, <span class='fl'>0.1</span>, <span class='fl'>65</span>))
 
 <span class='co'>#a vector with the status for each record, </span>
 <span class='co'>#make sure species are only classified as either extinct or extant, </span>
 <span class='co'>#otherwise the function will drop an error</span>
 
-<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"extinct"</span>, <span class='st'>"extant"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>exmpl</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"extinct"</span>, <span class='st'>"extant"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>exmpl</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>#or from a list of species</span>
-<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"extinct"</span>, <span class='st'>"extant"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>letters</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>status</span>) <span class='kw'>&lt;-</span> <span class='no'>letters</span>
-<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='no'>status</span>[<span class='no'>exmpl</span>$<span class='no'>accepted_name</span>]</div><span class='co'># NOT RUN {</span>
+<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"extinct"</span>, <span class='st'>"extant"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>letters</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>status</span>) <span class='kw'>&lt;-</span> <span class='no'>letters</span>
+<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='no'>status</span>[<span class='no'>exmpl</span>$<span class='no'>accepted_name</span>]
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>write_pyrate</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>exmpl</span>,<span class='kw'>fname</span> <span class='kw'>=</span> <span class='st'>"test"</span>, <span class='kw'>status</span> <span class='kw'>=</span> <span class='no'>status</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -283,13 +279,16 @@ and tutorials on PyRate and PyRate input.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

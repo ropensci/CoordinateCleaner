@@ -17,7 +17,7 @@
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
 #' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation. The test skipps species with less than \code{min_occs},
+#' the distance matrix calculation. The test skips species with fewer than \code{min_occs},
 #'  geographically unique records.
 #' 
 #' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
@@ -26,7 +26,7 @@
 #' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 #' (the mean distance) for each records is than weighted by the log transformed 
 #' number of records per square kilometre in this country. 
-#' See for \url{https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+#' See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 #' an example and further explanation of the outlier test.
 #' 
 #' @param species character string. The column with the species name. Default
@@ -46,7 +46,7 @@
 #' not be flagged as outliers. Default = 0 (no sampling correction).
 #' @param min_occs Minimum number of geographically unique datapoints needed for a species to be tested. 
 #' This is necessary for reliable outlier estimation.
-#' Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+#' Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
 #' @param thinning forces a raster approximation for the distance calculation. 
 #' This is routinely used for species with more than 10,000 records for computational reasons, 
@@ -123,7 +123,7 @@ cc_outl <- function(x,
   # issue warning if species are omitted due to few records
   if(any(test < min_occs)){
     warning(sprintf(
-      "Species with less than %o unique records will not be tested.", 
+      "Species with fewer than %o unique records will not be tested.", 
       min_occs))
   }
  
@@ -320,7 +320,7 @@ cc_outl <- function(x,
         # normalize by area
         nrec_norm <- dplyr::left_join(nrec, area, by = "country")
         nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
-        ref <- raster::crop(ref, raster::extent(pts) + 1)
+        #ref <- raster::crop(ref, raster::extent(pts) + 1)
         
         # get country from coordinates and compare with provided country
         country <- sp::over(x = pts, y = ref)[, "iso_a2"]
