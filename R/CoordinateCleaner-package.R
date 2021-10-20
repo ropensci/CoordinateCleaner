@@ -74,7 +74,7 @@ NULL
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
-#' \url{https://www.cia.gov/library/publications/the-world-factbook/}
+#' \url{https://www.cia.gov/the-world-factbook/}
 #' \url{http://thematicmapping.org/downloads/world_borders.php}
 #' \url{http://geo-locate.org}
 #' @keywords gazetteers
