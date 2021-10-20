@@ -13,6 +13,20 @@
 #' data("buffland")
 NULL
 
+#'Global Coastlines buffered by -1 degree
+#'
+#'  A \code{SpatialPolygonsDataFrame} with global coastlines, with a -1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify marine species on land without flagging records in estuaries, etc.
+#'
+#' @name buffsea
+#' @docType data
+#' @source 
+#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
+#' @keywords gazetteers
+#' @examples
+#' 
+#' data("buffsea")
+NULL
+
 
 #' CoordinateCleaner
 #' 
