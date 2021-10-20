@@ -4,9 +4,16 @@
 \alias{cc_coun}
 \title{Identify Coordinates Outside their Reported Country}
 \usage{
-cc_coun(x, lon = "decimallongitude", lat = "decimallatitude",
-  iso3 = "countrycode", value = "clean", ref = NULL,
-  verbose = TRUE)
+cc_coun(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  iso3 = "countrycode",
+  value = "clean",
+  ref = NULL,
+  ref_col = "iso_a3",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -28,6 +35,10 @@ Can be any SpatialPolygonsDataFrame, but the structure must be identical to
 \code{rnaturalearth::ne_countries(scale = "medium")}.  
 Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
 
+\item{ref_col}{the column name in the reference dataset, containing the relevant
+ISO codes for matching. Default is to "iso_a3_eh" which refers to the ISO-3
+codes in the reference dataset. See notes.}
+
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
 }
@@ -44,6 +55,11 @@ Such a mismatch can occur for example, if latitude and longitude are
 switched.
 }
 \note{
+The ref_col argument allows to adapt the function to the structure of
+alternative reference datasets. For instance, for 
+\code{rnaturalearth::ne_countries(scale = "small")}, the default will fail, 
+but ref_col = "iso_a3" will work.
+
 With the default reference, records are flagged if they fall 
 outside the terrestrial territory of countries, hence records in territorial waters might be flagged. 
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more
@@ -62,13 +78,19 @@ cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong.
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_dupl}},
-  \code{\link{cc_equ}}, \code{\link{cc_gbif}},
-  \code{\link{cc_inst}}, \code{\link{cc_iucn}},
-  \code{\link{cc_outl}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

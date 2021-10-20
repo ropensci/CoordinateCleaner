@@ -2,22 +2,41 @@
 % Please edit documentation in R/clean_coordinates.R
 \name{clean_coordinates}
 \alias{clean_coordinates}
-\alias{CleanCoordinates}
 \alias{summary.spatialvalid}
 \alias{is.spatialvalid}
 \title{Geographic Cleaning of Coordinates from Biologic Collections}
 \usage{
-clean_coordinates(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", countries = NULL, tests = c("capitals",
-  "centroids", "equal", "gbif", "institutions", "outliers", "seas",
-  "zeros"), capitals_rad = 10000, centroids_rad = 1000,
-  centroids_detail = "both", inst_rad = 100,
-  outliers_method = "quantile", outliers_mtp = 5, outliers_td = 1000,
-  outliers_size = 7, range_rad = 0, zeros_rad = 0.5,
-  capitals_ref = NULL, centroids_ref = NULL, country_ref = NULL,
-  inst_ref = NULL, range_ref = NULL, seas_ref = NULL,
-  seas_scale = 50, urban_ref = NULL, value = "spatialvalid",
-  verbose = TRUE, report = FALSE)
+clean_coordinates(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  countries = NULL,
+  tests = c("capitals", "centroids", "equal", "gbif", "institutions", "outliers",
+    "seas", "zeros"),
+  capitals_rad = 10000,
+  centroids_rad = 1000,
+  centroids_detail = "both",
+  inst_rad = 100,
+  outliers_method = "quantile",
+  outliers_mtp = 5,
+  outliers_td = 1000,
+  outliers_size = 7,
+  range_rad = 0,
+  zeros_rad = 0.5,
+  capitals_ref = NULL,
+  centroids_ref = NULL,
+  country_ref = NULL,
+  country_refcol = "iso_a3",
+  inst_ref = NULL,
+  range_ref = NULL,
+  seas_ref = NULL,
+  seas_scale = 50,
+  urban_ref = NULL,
+  value = "spatialvalid",
+  verbose = TRUE,
+  report = FALSE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -30,8 +49,8 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{species}{a character string. A vector of the same length as rows in x,
-with the species identity for each record.  If missing, the outliers test is
-skipped.}
+with the species identity for each record.  If NULL, \code{tests} must not
+include the "outliers" or "duplicates" tests.}
 
 \item{countries}{a character string. The column with the country assignment of
 each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
@@ -45,7 +64,7 @@ See details for all tests available. Default = c("capitals", "centroids",
 \item{capitals_rad}{numeric. The radius around capital coordinates in
 meters. Default = 10000.}
 
-\item{centroids_rad}{numeric. The radius around capital coordinates in
+\item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to
@@ -83,6 +102,10 @@ Alternatives must be identical in structure.}
 reference for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium')} dataset is used.}
 
+\item{country_refcol}{the column name in the reference dataset, containing the relevant
+ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+codes in the reference dataset. See notes.}
+
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
 biodiversity institution test. If NULL, the \code{institutions} dataset
 is used.  Alternatives must be identical in structure.}
@@ -92,7 +115,7 @@ Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.}
 
 \item{seas_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
 for the seas test. If NULL, the
-rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical')
+rnaturalearth::ne_download(=scale = 110, type = 'land', category = 'physical')
 dataset is used.}
 
 \item{seas_scale}{The scale of the default landmass reference. Must be one of 10, 50, 110.
@@ -104,7 +127,7 @@ reference gazetteers.}
 
 \item{value}{a character string defining the output value. See the value
 section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-\sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.}
+\sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -188,6 +211,11 @@ Always tests for coordinate validity: non-numeric or missing
 coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 and tutorials.
+
+The country_refcol argument allows to adapt the function to the structure of
+alternative reference datasets. For instance, for
+\code{rnaturalearth::ne_countries(scale = "small")}, the default will fail,
+but country_refcol = "iso_a3" will work.
 }
 \examples{
 
@@ -214,8 +242,9 @@ summary(test)
 
 }
 \seealso{
-Other Wrapper functions: \code{\link{clean_dataset}},
-  \code{\link{clean_fossils}}
+Other Wrapper functions: 
+\code{\link{clean_dataset}()},
+\code{\link{clean_fossils}()}
 }
 \concept{Wrapper functions}
 \keyword{Coordinate}

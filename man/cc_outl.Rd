@@ -4,10 +4,21 @@
 \alias{cc_outl}
 \title{Identify Geographic Outliers in Species Distributions}
 \usage{
-cc_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", method = "quantile", mltpl = 5, tdi = 1000,
-  value = "clean", sampling_thresh = 0, verbose = TRUE,
-  min_occs = 7)
+cc_outl(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  method = "quantile",
+  mltpl = 5,
+  tdi = 1000,
+  value = "clean",
+  sampling_thresh = 0,
+  verbose = TRUE,
+  min_occs = 7,
+  thinning = FALSE,
+  thinning_res = 0.5
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -46,8 +57,14 @@ of records flagged.}
 
 \item{min_occs}{Minimum number of geographically unique datapoints needed for a species to be tested. 
 This is necessary for reliable outlier estimation.
-Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
 Default is to 7. If \code{method == 'distance'}, consider a lower threshold.}
+
+\item{thinning}{forces a raster approximation for the distance calculation. 
+This is routinely used for species with more than 10,000 records for computational reasons, 
+but can be enforced for smaller datasets, which is recommended when sampling is very uneven.}
+
+\item{thinning_res}{The resolution for the spatial thinning in decimal degrees. Default = 0.5.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
@@ -74,7 +91,7 @@ distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
 record of the species is > \code{tdi}. For species with records from > 10000
 unique locations a random sample of 1000 records is used for 
-the distance matrix calculation. The test skipps species with less than \code{min_occs},
+the distance matrix calculation. The test skips species with fewer than \code{min_occs},
  geographically unique records.
 
 The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
@@ -83,7 +100,7 @@ the number of occurrence records available
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 
 number of records per square kilometre in this country. 
-See for \url{https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 an example and further explanation of the outlier test.
 }
 \note{
@@ -103,13 +120,19 @@ cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
-  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
-  \code{\link{cc_iucn}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

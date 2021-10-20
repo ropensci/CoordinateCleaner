@@ -25,9 +25,6 @@
 #' 
 #' @inherit cc_cap return
 #' 
-#' @note See \url{https://ropensci.github.io/CoordinateCleaner} for more
-#' details and tutorials.
-#' 
 #' @keywords Coordinate cleaning
 #' @family Coordinates
 #' @examples
@@ -73,7 +70,7 @@ cc_inst <- function(x,
     warnings("Using small buffer check 'geod'")
   }
   # set default projection
-  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
 
   dat <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = sp::CRS(wgs84))
 
@@ -174,7 +171,7 @@ cc_inst <- function(x,
       }
       
       #unflag those records with other records of the same species nearby
-      out[rownames(ref_in)] <- dbch_flag
+      out[rownames(ref_in)] <- unlist(dbch_flag)
     }
   }
 

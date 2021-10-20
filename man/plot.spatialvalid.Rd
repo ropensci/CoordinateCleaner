@@ -4,9 +4,18 @@
 \alias{plot.spatialvalid}
 \title{Plot Method for Class Spatialvalid}
 \usage{
-\method{plot}{spatialvalid}(x, lon = "decimallongitude",
-  lat = "decimallatitude", bgmap = NULL, clean = TRUE,
-  details = FALSE, pts_size = 1, font_size = 10, ...)
+\method{plot}{spatialvalid}(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  bgmap = NULL,
+  clean = TRUE,
+  details = FALSE,
+  pts_size = 1,
+  font_size = 10,
+  zoom_f = 0.1,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of the class \code{spatialvalid} as from
@@ -30,6 +39,10 @@ flag.}
 \item{pts_size}{numeric. The point size for the plot.}
 
 \item{font_size}{numeric. The font size for the legend and axes}
+
+\item{zoom_f}{numeric. the fraction by which to expand the plotting area 
+from the occurrence records. Increase, if countries do not show 
+up on the background map.}
 
 \item{\dots}{arguments to be passed to methods.}
 }

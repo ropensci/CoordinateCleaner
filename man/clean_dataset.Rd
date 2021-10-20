@@ -2,12 +2,18 @@
 % Please edit documentation in R/clean_dataset.R
 \name{clean_dataset}
 \alias{clean_dataset}
-\alias{CleanCoordinatesDS}
 \title{Coordinate Cleaning using Dataset Properties}
 \usage{
-clean_dataset(x, lon = "decimallongitude", lat = "decimallatitude",
-  ds = "dataset", tests = c("ddmm", "periodicity"),
-  value = "dataset", verbose = TRUE, ...)
+clean_dataset(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  ds = "dataset",
+  tests = c("ddmm", "periodicity"),
+  value = "dataset",
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -117,8 +123,9 @@ hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
 \seealso{
 \code{\link{cd_ddmm}} \code{\link{cd_round}}
 
-Other Wrapper functions: \code{\link{clean_coordinates}},
-  \code{\link{clean_fossils}}
+Other Wrapper functions: 
+\code{\link{clean_coordinates}()},
+\code{\link{clean_fossils}()}
 }
 \concept{Wrapper functions}
 \keyword{Coordinate}

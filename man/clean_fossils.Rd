@@ -2,18 +2,33 @@
 % Please edit documentation in R/clean_fossils.R
 \name{clean_fossils}
 \alias{clean_fossils}
-\alias{CleanCoordinatesFOS}
 \title{Geographic and Temporal Cleaning of Records from Fossil Collections}
 \usage{
-clean_fossils(x, lon = "lng", lat = "lat", min_age = "min_ma",
-  max_age = "max_ma", taxon = "accepted_name", tests = c("agesequal",
-  "centroids", "equal", "gbif", "institutions", "spatiotemp", "temprange",
-  "validity", "zeros"), countries = NULL, centroids_rad = 0.05,
-  centroids_detail = "both", inst_rad = 0.001,
-  outliers_method = "quantile", outliers_threshold = 5,
-  outliers_size = 7, outliers_replicates = 5, zeros_rad = 0.5,
-  centroids_ref = NULL, country_ref = NULL, inst_ref = NULL,
-  value = "spatialvalid", verbose = TRUE, report = FALSE)
+clean_fossils(
+  x,
+  lon = "lng",
+  lat = "lat",
+  min_age = "min_ma",
+  max_age = "max_ma",
+  taxon = "accepted_name",
+  tests = c("agesequal", "centroids", "equal", "gbif", "institutions", "spatiotemp",
+    "temprange", "validity", "zeros"),
+  countries = NULL,
+  centroids_rad = 0.05,
+  centroids_detail = "both",
+  inst_rad = 0.001,
+  outliers_method = "quantile",
+  outliers_threshold = 5,
+  outliers_size = 7,
+  outliers_replicates = 5,
+  zeros_rad = 0.5,
+  centroids_ref = NULL,
+  country_ref = NULL,
+  inst_ref = NULL,
+  value = "spatialvalid",
+  verbose = TRUE,
+  report = FALSE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing fossil records, containing taxon names, ages,
@@ -43,7 +58,7 @@ See details for all tests available. Default = c("centroids",
 each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 countries test is skipped.}
 
-\item{centroids_rad}{numeric. The radius around capital coordinates in
+\item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
 \item{centroids_detail}{a \code{character string}. If set to
@@ -82,7 +97,7 @@ is used.  Alternatives must be identical in structure.}
 
 \item{value}{a character string defining the output value. See the value
 section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-\sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.}
+\sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
@@ -136,7 +151,7 @@ step a distance matrix of geographic distances among all records is
 calculate. Subsequently a similar distance matrix of temporal distances
 among all records is calculated based on a single point selected by random
 between the minimum and maximum age for each record. The mean distance for
-each point to all neighbors is calculated for both matrices and spatial and
+each point to all neighbours is calculated for both matrices and spatial and
 temporal distances are scaled to the same range. The sum of these distanced
 is then tested against the interquantile range and flagged as an outlier if
 \eqn{x > IQR(x) + q_75 * mltpl}. The test is replicated \sQuote{replicates}
@@ -144,7 +159,7 @@ times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than \sQuote{flag_thresh}
 replicates. Only datasets/taxa comprising more than \sQuote{size.thresh}
 records are tested. Note that geographic distances are calculated as
-geospheric distances for datasets (or taxa) with less than 10,000 records
+geospheric distances for datasets (or taxa) with fewer than 10,000 records
 and approximated as Euclidean distances for datasets/taxa with 10,000 to
 25,000 records. Datasets/taxa comprising more than 25,000 records are
 skipped.
@@ -172,8 +187,9 @@ summary(test)
 
 }
 \seealso{
-Other Wrapper functions: \code{\link{clean_coordinates}},
-  \code{\link{clean_dataset}}
+Other Wrapper functions: 
+\code{\link{clean_coordinates}()},
+\code{\link{clean_dataset}()}
 }
 \concept{Wrapper functions}
 \keyword{Coordinate}

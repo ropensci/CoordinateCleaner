@@ -4,7 +4,9 @@
 \name{pbdb_example}
 \alias{pbdb_example}
 \title{Example data from the Paleobiologydatabase}
-\format{A data frame with 5000 observations on 36 variables.}
+\format{
+A data frame with 5000 observations on 36 variables.
+}
 \source{
 \itemize{ 
 \item The Paleobiology database \url{https://paleobiodb.org/} 

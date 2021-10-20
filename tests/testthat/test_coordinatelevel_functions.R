@@ -7,7 +7,7 @@ require(dplyr)
 # setup test data
 set.seed(1)
 lon <- runif(250, min = 42, max = 51)
-set.seed(1)
+set.seed(2)
 lat <- runif(250, min = -26, max = -11)
 exmpl <- data.frame(species = sample(letters[-1], size = 250, replace = TRUE),
                     decimallongitude = lon,
@@ -24,8 +24,6 @@ df_miss <- data.frame(species = c("a"), row.names = c("a"))
 df <- data.frame(species = c("e"), row.names = c("a"))
 range_emp <- SpatialPolygonsDataFrame(range, data = as.data.frame(df_miss))
 range <- SpatialPolygonsDataFrame(range, data = as.data.frame(df))
-
-wgs84 <- '+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs'
 
 # run tests
 ## cc_cap
@@ -53,20 +51,26 @@ test_that("cc_cen works", {
 ## cc_coun
 test_that("cc_coun works", {
 skip_on_cran()
+  library(rnaturalearthdata)
+  exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), 
+                        decimallongitude = c(8, 40),
+                        countrycode = c("DEU", "DEU"))
+  
   cust_ref1 <- rnaturalearth::ne_countries(scale = "small")
-  names(cust_ref1)[names(cust_ref1) == "iso_a3"] <- "iso_a3_eh"
   cust_ref2 <- cust_ref1
-  proj4string(cust_ref2) <- ""
-  cust_ref3 <- spTransform(cust_ref1, 
-                           CRS(wgs84))
-  
-  
+  names(cust_ref2)[45] <- "iso_a3_eh"
+
   expect_is(cc_coun(exmpl, value = "flagged"), "logical")
   expect_is(cc_coun(exmpl, value = "clean"), "data.frame")
   
+  #customized references
+  expect_equal(nrow(cc_coun(x = exmpl2)), 1)
+  expect_error(cc_coun(x = exmpl2, ref = cust_ref1, ref_col = "test"))
+  expect_error(cc_coun(x = exmpl2, ref = cust_ref2))
+  expect_equal(nrow(cc_coun(x = exmpl2, ref = cust_ref2, ref_col = "iso_a3_eh")), 1)
+  
   
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref1)), 0)
-  expect_equal(sum(cc_coun(x = exmpl, value = "flagged", ref = cust_ref2)), 0)
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
   
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
@@ -114,10 +118,15 @@ skip_on_cran()
                            geod = FALSE, buffer = 0.01)), 251)
   
   expect_equal(sum(cc_inst(x = t.inst, 
-                           value = "flagged", verify = T)), 253)
+                           value = "flagged",
+                           verify = T)), 
+               253)
   expect_equal(sum(cc_inst(x = t.inst, 
-                           value = "flagged", verify = T, 
-                           geod = FALSE, buffer = 100)), 252)
+                           value = "flagged", 
+                           verify = T, 
+                           geod = FALSE, 
+                           buffer = 100)), 
+               252)
   
   expect_error(cc_inst(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
@@ -132,20 +141,26 @@ skip_on_cran()
   expect_true(sum(cc_iucn(x = exmpl, range = range, value = "flagged")) > 0)
 })
 
-
+# cc_outl
 test_that("cc_outl works", {
 skip_on_cran()
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 175)
+  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 200)
   expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                           sampling_thresh = 0.2, mltpl = 0.1)), 212)
   
+  
+  if(class(try(rgbif::occ_count(country = "DEU"))) == "try-error"){
+    expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
+                             sampling_thresh = 0.2, mltpl = 0.1)), 200) 
+  }else{
+    expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
+                             sampling_thresh = 0.2, mltpl = 0.1)), 242) 
+  }
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 
-                           tdi = .001)), 39)
+                           tdi = .001)), 11)
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", tdi = 10000)), 250)
@@ -158,36 +173,37 @@ skip_on_cran()
 
 # cc_sea
 test_that("cc_sea works", {
-skip_on_cran()
+  skip_on_cran()
+  skip_if_offline()
+  
   cust_ref1 <- cust_ref2 <- rnaturalearth::ne_download(scale = 
                                                          "medium", 
                                                        type = 'land', 
                                                        category = "physical")
 
   proj4string(cust_ref2) <- ""
-  cust_ref3 <- spTransform(cust_ref1, 
-                           CRS(wgs84))
-  
-  
+
   expect_is(cc_sea(exmpl, value = "flagged", ref = cust_ref1), "logical")
   expect_is(cc_sea(exmpl, value = "clean", ref = cust_ref1), "data.frame")
   
   # custom reference
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 187)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 185)
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 185)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged")), 98)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref1)), 98)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", ref = cust_ref2)), 98)
 
   # speedup
-  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 187)
+  expect_equal(sum(cc_sea(x = exmpl, value = "flagged", speedup = FALSE)), 98)
   
   expect_error(cc_sea(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
 })
 
-# CC_urb
+# cc_urb
 
 test_that("cc_urb works", {
-skip_on_cran()
+  skip_on_cran()
+  skip_if_offline()
+  
   cust_ref <- rnaturalearth::ne_download(scale = "medium", type = 'urban_areas')
   
   city_exmpl <- data.frame(species = letters[1:10], 

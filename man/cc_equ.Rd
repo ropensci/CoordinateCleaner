@@ -4,8 +4,14 @@
 \alias{cc_equ}
 \title{Identify Records with Identical lat/lon}
 \usage{
-cc_equ(x, lon = "decimallongitude", lat = "decimallatitude",
-  test = "absolute", value = "clean", verbose = TRUE)
+cc_equ(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  test = "absolute",
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -36,10 +42,6 @@ problematic . Default = \dQuote{clean}.
 Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors.
 }
-\note{
-See \url{https://ropensci.github.io/CoordinateCleaner} for more
-details and tutorials.
-}
 \examples{
 
 x <- data.frame(species = letters[1:10], 
@@ -51,13 +53,19 @@ cc_equ(x, value = "flagged")
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_gbif}},
-  \code{\link{cc_inst}}, \code{\link{cc_iucn}},
-  \code{\link{cc_outl}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

@@ -17,7 +17,7 @@
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
 #' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation. The test skipps species with less than \code{min_occs},
+#' the distance matrix calculation. The test skips species with fewer than \code{min_occs},
 #'  geographically unique records.
 #' 
 #' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
@@ -26,7 +26,7 @@
 #' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 #' (the mean distance) for each records is than weighted by the log transformed 
 #' number of records per square kilometre in this country. 
-#' See for \url{https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html} 
+#' See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 #' an example and further explanation of the outlier test.
 #' 
 #' @param species character string. The column with the species name. Default
@@ -46,8 +46,12 @@
 #' not be flagged as outliers. Default = 0 (no sampling correction).
 #' @param min_occs Minimum number of geographically unique datapoints needed for a species to be tested. 
 #' This is necessary for reliable outlier estimation.
-#' Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+#' Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
 #' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
+#' @param thinning forces a raster approximation for the distance calculation. 
+#' This is routinely used for species with more than 10,000 records for computational reasons, 
+#' but can be enforced for smaller datasets, which is recommended when sampling is very uneven.
+#' @param thinning_res The resolution for the spatial thinning in decimal degrees. Default = 0.5.
 #' @inheritParams cc_cap
 #' 
 #' @inherit cc_cap return
@@ -75,6 +79,7 @@
 #' @importFrom sp over SpatialPoints
 #' @importFrom dplyr left_join
 #' @importFrom raster crop extent ncell res setValues
+#' @importFrom rgbif occ_count
 #' 
 cc_outl <- function(x, 
                     lon = "decimallongitude", 
@@ -86,217 +91,278 @@ cc_outl <- function(x,
                     value = "clean",
                     sampling_thresh = 0,
                     verbose = TRUE,
-                    min_occs = 7) {
-
+                    min_occs = 7,
+                    thinning = FALSE,
+                    thinning_res = 0.5) {
+  
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("distance", "quantile", "mad"))
-
+  
+  # standardizing rownames to account for dataframe with 
+  # unsorted rownames
+  init_ids <- rownames(x)
+  rownames(x) <- NULL
+  
+  
   if (verbose) {
     message("Testing geographic outliers")
   }
   
-   # split up into species
+  # split input up into species
   splist <- split(x, f = as.character(x[[species]]))
   
   # remove duplicate records and make sure that there are at least two records
-  test <- lapply(splist, function(k){duplicated(k[, c(species, lon,lat)])})
+  test <- lapply(splist, function(k){duplicated(k[, c(species, lon, lat)])})
   test <- lapply(test, "!")
   test <- as.vector(unlist(lapply(test, "sum")))
+  
+  # only select species with more than min_occs records
   splist <- splist[test >= min_occs]
   
+  # issue warning if species are omitted due to few records
   if(any(test < min_occs)){
-    warning(sprintf("Species with less than %o unique records will not be tested.", min_occs))
+    warning(sprintf(
+      "Species with fewer than %o unique records will not be tested.", 
+      min_occs))
   }
-
-  # create raster for raster approximation  of large datasets
-  if(any(test >= 10000)){
-    warning("large dataset. Using raster approximation.")
+ 
+  #Return values in case all species have less than the minimum number of occurrences
+  if(all(test < min_occs)){
+    switch(value, 
+           clean = return(x), 
+           flagged = return(rep(TRUE, nrow(x))), 
+           ids = return(init_ids))
+  }else{
     
-    # get data extend
-    ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)]))
-    # create raster
-    # using a raster that is 1deg by 1 deg globally
-    ras <- raster::raster(x = ex, nrow = 180, ncol = 360) 
-    vals <- seq_len(raster::ncell(ras))
-    ras <- raster::setValues(ras, vals)
-  }
-
-  # loop over species and run outlier test
-  flags <- lapply(splist, function(k) {
-    test <- nrow(k[!duplicated(k), ])
-
-    if (test >= min_occs) {
-      if(nrow(k) <= 10000){
-        # Calculate distance between individual points
+    # create a flag for raster approximation, in case 
+    # thinning=TRUE or there are species with many records
+    record_numbers <- unlist(lapply(splist, nrow))
+    
+    if(any(record_numbers >= 10000) | thinning){ #Thanks to Barnaby Walker & Shawn Laffan
+      warning("Using raster approximation.")
+      
+      # create a raster with extent similar to all points, 
+      # and unique IDs as cell values
+      ras <- ras_create(x = x, 
+                        lat = lat, 
+                        lon = lon, 
+                        thinning_res = thinning_res)
+    }
+    
+    
+    # identify points for flagging
+    flags <- lapply(splist, function(k) {
+      
+      # Set raster flag inc ase thinning= TRUE,
+      # or this particualr species has 100000 or more records
+      if(nrow(k) >= 10000 | thinning){
+        raster_flag <- TRUE
+      }else{
+        raster_flag <- FALSE
+      }
+      
+      # calculate the distance matrix between all points for the outlier tests
+      ## for small datasets and without thinning, 
+      ## simply a distance matrix using geospheric distance
+      if(raster_flag){ 
+        # raster approximation for large datasets and thinning
+        # get a distance matrix of raster midpoints, with the row 
+        # and colnames giving the cell IDs
+        
+        # if the raster distance is used due to large dataset and 
+        # not for thinning, account for the number of points per gridcell
+        if(thinning){
+          dist_obj <- ras_dist(x = k, 
+                               lat = lat, 
+                               lon = lon,
+                               ras = ras, 
+                               weights = FALSE)
+          
+          # the point IDS
+          pts <-  dist_obj$pts
+          
+          # the distance matrix 
+          dist <- dist_obj$dist
+          
+        }else{
+          dist_obj <-  ras_dist(x = k, 
+                                lat = lat, 
+                                lon = lon,
+                                ras = ras, 
+                                weights = TRUE)
+          
+          # the point IDS
+          pts <-  dist_obj$pts
+          
+          # the distance matrix 
+          dist <- dist_obj$dist
+          
+          # a weight matrix to weight each distance by the number of points in it
+          wm <- dist_obj$wm
+        }
+      }else{ 
+        #distance calculation
         dist <- geosphere::distm(k[, c(lon, lat)], 
                                  fun = geosphere::distHaversine) / 1000
-        dist[dist == 0] <- NA
         
-        if(method == "distance"){
-          # get minimum distance to all other points
-          mins <- apply(dist, 1, min, na.rm = TRUE)
+        # set diagonale to NA, so it does not influence the mean
+        dist[dist == 0] <- NA
+      }
+      
+      # calculate the outliers for the different methods
+      ##  distance method useing absolute distance
+      if(method == "distance"){
+        # Drop an error if the sampling correction is activated
+        if(sampling_thresh > 0){
+          stop("Sampling correction impossible for method 'distance'" )
+        }
+        
+        # calculate the minimum distance to any next point
+        mins <- apply(dist, 1, min, na.rm = TRUE)
+        
+        # outliers based on absolute distance threshold
+        out <- which(mins > tdi)
+      }else{ # for the other methods the mean must be claculated 
+        # depending on if the raster method is used
+        # get row means
+        if(raster_flag & !thinning){
+          # get mean distance to all other points
+          mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
         }else{
           # get mean distance to all other points
-          mins <- apply(dist, 1, mean, na.rm = TRUE)
+          mins <-  apply(dist, 1, mean, na.rm = TRUE)
         }
+      }
+      
+      ## the quantile method
+      if(method == "quantile"){
+        # identify the quaniles
+        quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
         
+        # flag all upper outliers
+        out <- which(mins > (quo[2] + stats::IQR(mins) * mltpl))
+      }
+      
+      ## the mad method
+      if (method == "mad") {
+        # get the median
+        quo <- stats::median(mins, na.rm = TRUE)
+        
+        # get the mad stat
+        tester <- stats::mad(mins, na.rm = TRUE)
+        
+        # Identify outliers
+        out <- which(mins > (quo + tester * mltpl))
+      }
+      
+      # Identify the outlier points depending on 
+      # if the raster approximation was used
+      if(raster_flag){
+        # create output object
+        if (length(out) == 0) {
+          ret <- NA
+        }
+        if (length(out) > 0) {
+          ret <- rownames(k)[which(pts %in% gsub("X", "", names(out)))]
+        }
       }else{
-        # assign points to raster cells 
-        pts <- raster::extract(x = ras, y = sp::SpatialPoints(k[, c(lon, lat)]))
-        midp <- data.frame(raster::rasterToPoints(ras))
-        midp <- midp[midp$layer %in% unique(pts),]
-        midp <- midp[match(unique(pts), midp$layer),]
+        # create output object
+        if (length(out) == 0) {
+          ret <- NA
+        }
+        if (length(out) > 0) {
+          ret <- rownames(k)[out]
+        }
+      }
+      return(ret)
+    })
+    
+    # turn to numeric and remove NAs
+    flags <- as.numeric(as.vector(unlist(flags)))
+    flags <- flags[!is.na(flags)]
+    
+    # sampling correction for cross country datasets
+    if(sampling_thresh > 0){
+      # identify countries in the dataset, with point polygon test
+      pts <- sp::SpatialPoints(x[flags, c(lon, lat)])
+      
+      if (!requireNamespace("rnaturalearth", quietly = TRUE)) {
+        stop("package 'rnaturalearth' not found. Needed for sampling_cor = TRUE",
+             call. = FALSE
+        )
+      }
+      if (!requireNamespace("rgbif", quietly = TRUE)) {
+        stop("package 'rgbif' not found. Needed for sampling_cor = TRUE",
+             call. = FALSE
+        )
+      }
+      
+      if(class(try(rgbif::occ_count(country = "DEU"))) == "try-error"){
+        warnings("Could not retrive records number from GBIF, skipping sampling correction")
+      }else{
+        # get country area from naturalearth
+        ref <- rnaturalearth::ne_countries(scale = "medium")
+        sp::proj4string(ref) <- ""
+        area <- data.frame(country = ref@data$iso_a2, 
+                           area = geosphere::areaPolygon(ref))
+        area <- area[!is.na(area$area),]
+        area <- area[!is.na(area$country),]
         
-        # calculate geospheric distance between raster cells with points
-        dist <- geosphere::distm(midp[, c("x", "y")], 
-                                 fun = geosphere::distHaversine) / 1000
+        # get number of records in GBIF per country as proxy for sampling intensity
+        nrec <- vapply(area$country, 
+                       FUN = function(k){rgbif::occ_count(country = k)},
+                       FUN.VALUE = 1)##get record count
+        nrec <- data.frame(country = area$country, 
+                           recs = unlist(nrec), 
+                           row.names = NULL)
         
-        # approximate within cell distance as half 
-        # the cell size, assumin 1 deg = 100km
-        # this is crude, but doesn't really matter
-        dist[dist == 0] <- 100 * mean(raster::res(ras)) / 2
+        # normalize by area
+        nrec_norm <- dplyr::left_join(nrec, area, by = "country")
+        nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
+        #ref <- raster::crop(ref, raster::extent(pts) + 1)
         
-        dist <- as.data.frame(dist, row.names = as.integer(midp$layer))
-        names(dist) <- midp$layer
+        # get country from coordinates and compare with provided country
+        country <- sp::over(x = pts, y = ref)[, "iso_a2"]
         
-        # weight matrix to account for the number of points per cell
-        cou <- table(pts)
-        cou <- cou[match(unique(pts), names(cou))]
-        wm <- outer(cou, cou)
+        # get the sampling for the flagged countries
+        thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
+        s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]
+        s_flagged <- s_flagged > thresh
         
-        # multiply matrix elements to get weightend sum
-        dist <- round(dist * wm, 0)
+        #treat countries with no country information as FALSE
+        s_flagged[is.na(s_flagged)] <- FALSE
         
-        if(method == "distance"){
-          mins <- apply(dist, 1, min, na.rm = TRUE)
+        # Only retain those flags with sampling higher than threshold
+        flags <- flags[s_flagged]
+      }
+      
+      
+    }
+    
+    out <- rep(TRUE, nrow(x))
+    out[flags] <- FALSE
+    
+    
+    if (verbose) {
+      if (value == "ids") {
+        if(value == "clean"){
+          message(sprintf("Removed %s records.", length(flags)))
         }else{
-          # get row means
-          mins <- apply(dist, 1, sum) / rowSums(wm)
+          message(sprintf("Flagged %s records.", length(flags)))
+        }
+      } else {
+        if(value == "clean"){
+          message(sprintf("Removed %s records.", sum(!out)))
+        }else{
+          message(sprintf("Flagged %s records.", sum(!out)))
         }
       }
-    }else{
-      warning(sprintf("Only species with more than "))
     }
     
-    ## Absolute distance test with mean interpoint distance
-    if (method == "distance") {
-      out <- which(mins > tdi * 1000)
-      if(sampling_thresh > 0){
-        stop("Sampling correction impossible for method 'distance'" )
-      }
-    }
-    
-    ## Quantile based test, with mean interpoint distances
-    if (method == "quantile") {
-      quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
-      out <- which(mins < quo[1] - stats::IQR(mins) * mltpl | mins > quo[2] +
-                     stats::IQR(mins) * mltpl)
-    }
-    
-    ## MAD (Median absolute deviation) based test, 
-    if (method == "mad") {
-      quo <- stats::median(mins)
-      tester <- stats::mad(mins)
-      out <- which(mins < quo - tester * mltpl | mins > quo + tester *
-                     mltpl)
-    }
-    
-    if(nrow(k) > 10000){
-      # create output object
-      if (length(out) == 0) {
-        ret <- NA
-      }
-      if (length(out) > 0) {
-        ret <- which(pts %in% names(out))
-      }
-    }else{
-      # create output object
-      if (length(out) == 0) {
-        ret <- NA
-      }
-      if (length(out) > 0) {
-        ret <- rownames(k)[out]
-      }
-    }
-    return(ret)
-  })
-
-  flags <- as.numeric(as.vector(unlist(flags)))
-  flags <- flags[!is.na(flags)]
-  
-  if(sampling_thresh > 0){
-    # identify countries in the dataset, with point polygon test
-    pts <- sp::SpatialPoints(x[flags, c(lon, lat)])
-    
-    if (!requireNamespace("rnaturalearth", quietly = TRUE)) {
-      stop("package 'rnaturalearth' not found. Needed for sampling_cor = TRUE",
-           call. = FALSE
-      )
-    }
-    if (!requireNamespace("rgbif", quietly = TRUE)) {
-      stop("package 'rgbif' not found. Needed for sampling_cor = TRUE",
-           call. = FALSE
-      )
-    }
-    
-    # get country area from naturalearth
-    ref <- rnaturalearth::ne_countries(scale = "medium")
-    sp::proj4string(ref) <- ""
-    area <- data.frame(country = ref@data$iso_a3, 
-                       area = geosphere::areaPolygon(ref))
-    area <- area[!is.na(area$area),]
-    area <- area[!is.na(area$country),]
-    
-    # get number of records in GBIF per country as proxy for sampling intensity
-    nrec <- vapply(area$country, 
-                   FUN = function(k){rgbif::occ_count(country = k)},
-                   FUN.VALUE = 1)##get record count
-    nrec <- data.frame(country = area$country, 
-                       recs = unlist(nrec), 
-                       row.names = NULL)
-    
-    # normalize by area
-    nrec_norm <- dplyr::left_join(nrec, area, by = "country")
-    nrec_norm$norm <- log(nrec_norm$recs /  (nrec_norm$area  / 1000000 / 100))
-    ref <- raster::crop(ref, raster::extent(pts) + 1)
-    
-    # get country from coordinates and compare with provided country
-    country <- sp::over(x = pts, y = ref)[, "iso_a3"]
-    
-    # get the sampling for the flagged countries
-    thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
-    s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]
-    s_flagged <- s_flagged > thresh
-    
-    #treat countries with no country information as FALSE
-    s_flagged[is.na(s_flagged)] <- FALSE
-    
-    # Only retain those flags with sampling higher than threshold
-    flags <- flags[s_flagged]
+    switch(value, 
+           clean = return(x[out, ]), 
+           flagged = return(out), 
+           ids = return(init_ids[flags]))
   }
-  
-  out <- rep(TRUE, nrow(x))
-  out[flags] <- FALSE
-
-  if (verbose) {
-    if (value == "ids") {
-      if(value == "clean"){
-        message(sprintf("Removed %s records.", length(flags)))
-      }else{
-        message(sprintf("Flagged %s records.", length(flags)))
-      }
-    } else {
-      if(value == "clean"){
-        message(sprintf("Removed %s records.", sum(!out)))
-      }else{
-        message(sprintf("Flagged %s records.", sum(!out)))
-      }
-    }
-  }
-
-  switch(value, 
-         clean = return(x[out, ]), 
-         flagged = return(out), 
-         ids = return(flags))
 }

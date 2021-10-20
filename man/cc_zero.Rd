@@ -4,8 +4,14 @@
 \alias{cc_zero}
 \title{Identify Zero Coordinates}
 \usage{
-cc_zero(x, lon = "decimallongitude", lat = "decimallatitude",
-  buffer = 0.5, value = "clean", verbose = TRUE)
+cc_zero(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  buffer = 0.5,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -53,13 +59,19 @@ cc_zero(x, value = "flagged")
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
-  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
-  \code{\link{cc_iucn}}, \code{\link{cc_outl}},
-  \code{\link{cc_sea}}, \code{\link{cc_urb}},
-  \code{\link{cc_val}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

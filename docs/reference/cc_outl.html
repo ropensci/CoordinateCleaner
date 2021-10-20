@@ -8,21 +8,29 @@
 
 <title>Identify Geographic Outliers in Species Distributions — cc_outl • CoordinateCleaner</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,13 +38,13 @@
 
 
 
-<meta property="og:title" content="Identify Geographic Outliers in Species Distributions — cc_outl" />
 
+<meta property="og:title" content="Identify Geographic Outliers in Species Distributions — cc_outl" />
 <meta property="og:description" content="Removes out or flags records that are outliers in geographic space according to the method
 defined via the method argument. Geographic outliers often represent
 erroneous coordinates, for example due to data entry errors, imprecise
 geo-references, individuals in horticulture/captivity." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -50,9 +58,10 @@ geo-references, individuals in horticulture/captivity." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -66,7 +75,7 @@ geo-references, individuals in horticulture/captivity." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -74,7 +83,7 @@ geo-references, individuals in horticulture/captivity." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -89,31 +98,16 @@ geo-references, individuals in horticulture/captivity." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
+      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
-      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
-    </li>
-    <li>
-      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
+      <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -121,9 +115,13 @@ geo-references, individuals in horticulture/captivity." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -131,30 +129,40 @@ geo-references, individuals in horticulture/captivity." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Identify Geographic Outliers in Species Distributions</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/CoordinateCleaner/blob/master/R/cc_outl.R'><code>R/cc_outl.R</code></a></small>
     <div class="hidden name"><code>cc_outl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Removes out or flags records that are outliers in geographic space according to the method
 defined via the <code>method</code> argument. Geographic outliers often represent
 erroneous coordinates, for example due to data entry errors, imprecise
 geo-references, individuals in horticulture/captivity.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>sampling_thresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>min_occs</span> <span class='kw'>=</span> <span class='fl'>7</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>cc_outl</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
+  <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"species"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
+  <span class='kw'>mltpl</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
+  <span class='kw'>sampling_thresh</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>min_occs</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>thinning</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>thinning_res</span> <span class='kw'>=</span> <span class='fl'>0.5</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -216,18 +224,27 @@ of records flagged.</p></td>
       <th>min_occs</th>
       <td><p>Minimum number of geographically unique datapoints needed for a species to be tested. 
 This is necessary for reliable outlier estimation.
-Species wit less than min_occs records will not be tested and the output value will be 'TRUE'.
+Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
 Default is to 7. If <code>method == 'distance'</code>, consider a lower threshold.</p></td>
     </tr>
+    <tr>
+      <th>thinning</th>
+      <td><p>forces a raster approximation for the distance calculation. 
+This is routinely used for species with more than 10,000 records for computational reasons, 
+but can be enforced for smaller datasets, which is recommended when sampling is very uneven.</p></td>
+    </tr>
+    <tr>
+      <th>thinning_res</th>
+      <td><p>The resolution for the spatial thinning in decimal degrees. Default = 0.5.</p></td>
+    </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
 problematic . Default = &#8220;clean&#8221;.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The method for outlier identification depends on the <code>method</code> argument.
@@ -242,7 +259,7 @@ distances of all records of the species * mltpl. If &#8220;distance&#8221;:
 records are flagged as outliers, if the <em>minimum</em> distance to the next
 record of the species is &gt; <code>tdi</code>. For species with records from &gt; 10000
 unique locations a random sample of 1000 records is used for 
-the distance matrix calculation. The test skipps species with less than <code>min_occs</code>,
+the distance matrix calculation. The test skipps species with fewer than <code>min_occs</code>,
  geographically unique records.</p>
 <p>The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
 in any given location. To account for this, the sampling_cor option fetches 
@@ -250,170 +267,166 @@ the number of occurrence records available
 from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
 (the mean distance) for each records is than weighted by the log transformed 
 number of records per square kilometre in this country. 
-See for <a href='https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html'>https://ropensci.github.io/CoordinateCleaner/articles/Tutorial_geographic_outliers.html</a> 
+See for <a href='https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152'>https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152</a>
 an example and further explanation of the outlier test.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>See <a href='https://ropensci.github.io/CoordinateCleaner/'>https://ropensci.github.io/CoordinateCleaner/</a> for more
 details and tutorials.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Coordinates: <code><a href='cc_cap.html'>cc_cap</a></code>,
-  <code><a href='cc_cen.html'>cc_cen</a></code>, <code><a href='cc_coun.html'>cc_coun</a></code>,
-  <code><a href='cc_dupl.html'>cc_dupl</a></code>, <code><a href='cc_equ.html'>cc_equ</a></code>,
-  <code><a href='cc_gbif.html'>cc_gbif</a></code>, <code><a href='cc_inst.html'>cc_inst</a></code>,
-  <code><a href='cc_iucn.html'>cc_iucn</a></code>, <code><a href='cc_sea.html'>cc_sea</a></code>,
-  <code><a href='cc_urb.html'>cc_urb</a></code>, <code><a href='cc_val.html'>cc_val</a></code>,
-  <code><a href='cc_zero.html'>cc_zero</a></code></p></div>
-    
+    <div class='dont-index'><p>Other Coordinates: 
+<code><a href='cc_cap.html'>cc_cap</a>()</code>,
+<code><a href='cc_cen.html'>cc_cen</a>()</code>,
+<code><a href='cc_coun.html'>cc_coun</a>()</code>,
+<code><a href='cc_dupl.html'>cc_dupl</a>()</code>,
+<code><a href='cc_equ.html'>cc_equ</a>()</code>,
+<code><a href='cc_gbif.html'>cc_gbif</a>()</code>,
+<code><a href='cc_inst.html'>cc_inst</a>()</code>,
+<code><a href='cc_iucn.html'>cc_iucn</a>()</code>,
+<code><a href='cc_sea.html'>cc_sea</a>()</code>,
+<code><a href='cc_urb.html'>cc_urb</a>()</code>,
+<code><a href='cc_val.html'>cc_val</a>()</code>,
+<code><a href='cc_zero.html'>cc_zero</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
-                <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
-                <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
+                <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
+                <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
 <span class='fu'>cc_outl</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Removed 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
-#&gt; 1         a        33.595505      -49.261924
-#&gt; 2         b        67.203619       63.716334
-#&gt; 3         c        84.711681      -11.590733
-#&gt; 4         d       -14.002125      -37.929287
-#&gt; 5         e        58.319740       24.765241
-#&gt; 6         f      -179.655140      -42.382897
-#&gt; 7         g       171.347591      -20.471692
-#&gt; 8         h      -100.741156       21.454915
-#&gt; 9         i       -69.721978        7.502055
-#&gt; 10        j        83.363989       -2.730420
-#&gt; 11        a      -131.937759       47.573085
-#&gt; 12        b      -144.059018       82.984849
-#&gt; 13        c      -118.301345      -41.294784
-#&gt; 14        d        42.185372       41.508040
-#&gt; 15        e        65.974791      -65.850202
-#&gt; 16        f       104.606665      -81.288319
-#&gt; 17        g      -103.230674       36.649273
-#&gt; 18        h       105.123919      -63.501517
-#&gt; 19        i        33.348387       48.447960
-#&gt; 20        j        38.254897      -58.256980
-#&gt; 21        a      -140.123324      -70.063380
-#&gt; 22        b      -109.580890       78.901633
-#&gt; 23        c      -177.454521       62.364805
-#&gt; 24        d       158.713414       12.805845
-#&gt; 25        e      -155.444634       32.236813
-#&gt; 26        f      -130.705495      -73.921996
-#&gt; 27        g       -60.185871       51.367343
-#&gt; 28        h        -3.712215      -49.147659
-#&gt; 29        i      -117.736366       -9.327876
-#&gt; 30        j      -156.621873      -60.979025
-#&gt; 31        a       -17.399884      -58.299896
-#&gt; 32        b       -43.415153      -54.318938
-#&gt; 33        c       147.347412      -25.629963
-#&gt; 34        d      -169.219275      -57.360023
-#&gt; 35        e      -109.873309       11.006075
-#&gt; 36        f        64.612574       28.634942
-#&gt; 37        g        89.087869       28.845614
-#&gt; 38        h        53.833577      -89.567858
-#&gt; 39        i      -152.070956       88.820286
-#&gt; 40        j        35.875316       22.948062
-#&gt; 41        a       136.443892      -87.366540
-#&gt; 42        b        83.533376      -53.067921
-#&gt; 43        c      -151.180889       29.353800
-#&gt; 44        d       119.789932       -6.526075
-#&gt; 45        e       131.294051      -25.137332
-#&gt; 46        f        76.667390       34.085950
-#&gt; 47        g        92.666560      -43.405058
-#&gt; 48        h      -135.923790       63.216906
-#&gt; 49        i      -110.268763       -3.599156
-#&gt; 50        j       -66.895816        6.707950
-#&gt; 51        a      -130.488126       29.095182
-#&gt; 52        b       125.209037      -35.846188
-#&gt; 53        c        -5.320085      -42.569727
-#&gt; 54        d       -10.712619      -35.091697
-#&gt; 55        e       104.776335       67.492488
-#&gt; 56        f       -67.326022       39.318699
-#&gt; 57        g       -68.844775      -16.754455
-#&gt; 58        h       -55.744079      -86.515295
-#&gt; 59        i       118.239593      -80.967535
-#&gt; 60        j       -81.361621       36.405186
-#&gt; 61        a       -24.899009      -78.053351
-#&gt; 62        b       -29.916778      -83.496174
-#&gt; 63        c      -131.647608      -86.372335
-#&gt; 64        d        67.082904      -22.899403
-#&gt; 65        e      -118.051878      -49.380227
-#&gt; 66        f       152.457640       -1.454742
-#&gt; 67        g        40.947693       -9.603872
-#&gt; 68        h       -66.373399       34.236882
-#&gt; 69        i       111.503913       61.693196
-#&gt; 70        j       144.854676      -22.349940
-#&gt; 71        a      -134.892792       87.280144
-#&gt; 72        b        23.600590       81.436739
-#&gt; 73        c      -134.049202       88.181732
-#&gt; 74        d        45.935142      -10.236896
-#&gt; 75        e      -152.883377      -62.322507
-#&gt; 76        f       -77.237523       80.050918
-#&gt; 77        g       -68.183126        3.503954
-#&gt; 78        h      -127.178078       -7.985771
-#&gt; 79        i       107.917385      -50.383764
-#&gt; 80        j      -118.081411      -64.947171
-#&gt; 81        a       102.846172      -51.091581
-#&gt; 82        b       -10.787125      -16.977839
-#&gt; 83        c       -24.135218      -47.927774
-#&gt; 84        d        26.831830      -85.488055
-#&gt; 85        e        82.789180       45.421553
-#&gt; 86        f       141.907373       41.773058
-#&gt; 87        g      -100.689707      -16.360781
-#&gt; 88        h       -75.025282       23.554405
-#&gt; 89        i       112.643550      -78.219903
-#&gt; 90        j      -164.303161      -63.235413
-#&gt; 91        a         1.897799      -39.653682
-#&gt; 92        b       -93.003883       63.118226
-#&gt; 93        c        32.091271      -86.122660
-#&gt; 94        d       169.610605      -44.490622
-#&gt; 95        e       -96.220439       28.208070
-#&gt; 96        f       132.270486       52.046894
-#&gt; 97        g      -140.125773       37.592217
-#&gt; 98        h       108.537041      -78.373261
-#&gt; 99        i        56.852804        2.036042
-#&gt; 100       j        54.739547      -53.832897</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt; 1         a       169.610605     -44.4906216
+#&gt; 2         b       -96.220439      28.2080702
+#&gt; 3         c       132.270486      52.0468937
+#&gt; 4         d      -140.125773      37.5922166
+#&gt; 5         e       108.537041     -78.3732614
+#&gt; 6         f        56.852804       2.0360419
+#&gt; 7         g        54.739547     -53.8328970
+#&gt; 8         h       -98.523848      56.5408067
+#&gt; 9         i       127.432667      27.6804137
+#&gt; 10        j       -23.181466     -26.4146432
+#&gt; 11        a       -75.858575      17.3870813
+#&gt; 12        b        49.530481      40.9867872
+#&gt; 13        c       -84.765795      89.2023371
+#&gt; 14        d       -40.943384      -0.3500511
+#&gt; 15        e        42.909829     -48.5469415
+#&gt; 16        f        15.004110     -35.7742237
+#&gt; 17        g        -5.460840      39.6840018
+#&gt; 18        h        95.146171     -42.9470247
+#&gt; 19        i       165.969697     -70.6146573
+#&gt; 20        j       -82.589568     -42.7639118
+#&gt; 21        a        83.016080     -56.3928870
+#&gt; 22        b      -131.700403       7.6395023
+#&gt; 23        c      -162.576638     -78.2066746
+#&gt; 24        d        73.298545      68.4693246
+#&gt; 25        e      -127.003034     -39.7417433
+#&gt; 26        f        96.895920      31.0866609
+#&gt; 27        g      -116.513960     -79.1764427
+#&gt; 28        h      -140.126760      87.9273990
+#&gt; 29        i       157.803267     -39.1904224
+#&gt; 30        j       124.729610       9.7402260
+#&gt; 31        a        25.611689      70.2151208
+#&gt; 32        b        64.473626     -85.8956301
+#&gt; 33        c      -147.843992      31.9839217
+#&gt; 34        d       102.734685     -29.3292366
+#&gt; 35        e       -98.295319     -64.5847030
+#&gt; 36        f       -18.655753     -26.5384822
+#&gt; 37        g      -121.958051     -17.7399258
+#&gt; 38        h      -116.599792      70.0045834
+#&gt; 39        i      -108.637876     -33.7294462
+#&gt; 40        j       -51.259927     -78.9021525
+#&gt; 41        a      -114.720047      32.3075275
+#&gt; 42        b        22.012150     -21.9307376
+#&gt; 43        c        57.269883      15.9066627
+#&gt; 44        d        57.691227      -1.4438637
+#&gt; 45        e      -179.135716     -38.5601501
+#&gt; 46        f       177.640572     -88.4844729
+#&gt; 47        g        45.896123       9.1393735
+#&gt; 48        h      -174.733079      56.3815634
+#&gt; 49        i      -106.135842      25.8434254
+#&gt; 50        j        58.707599     -77.5688395
+#&gt; 51        a       -13.052149      41.1689289
+#&gt; 52        b       -50.274663      30.9800157
+#&gt; 53        c        68.171901      57.5641784
+#&gt; 54        d       -86.810116      74.6318804
+#&gt; 55        e       126.433812      34.1947225
+#&gt; 56        f        -7.198311      -1.4439955
+#&gt; 57        g        13.415900      26.4471571
+#&gt; 58        h        58.190363      -7.8273078
+#&gt; 59        i       -71.692376     -67.4196081
+#&gt; 60        j       -85.139454      18.7856953
+#&gt; 61        a       -70.183393      58.8288125
+#&gt; 62        b       134.984976      21.4880852
+#&gt; 63        c        78.637398      61.3896679
+#&gt; 64        d       -33.508910     -13.0956106
+#&gt; 65        e      -173.030590      48.4716067
+#&gt; 66        f      -161.935071      38.1853424
+#&gt; 67        g        72.810372     -78.5939025
+#&gt; 68        h      -156.106703     -13.3190575
+#&gt; 69        i      -166.992347     -74.1100242
+#&gt; 70        j      -172.744670     -52.5029725
+#&gt; 71        a       -45.798805     -48.9130428
+#&gt; 72        b       -98.760455     -80.9204141
+#&gt; 73        c        -2.909484      11.1278254
+#&gt; 74        d       -19.207744      34.9643060
+#&gt; 75        e        68.473764     -48.9703222
+#&gt; 76        f       123.386393      82.8564489
+#&gt; 77        g       -44.699880      -1.2893056
+#&gt; 78        h       174.560288      40.1775634
+#&gt; 79        i       162.873479      -1.5546451
+#&gt; 80        j       176.363463      62.1639146
+#&gt; 81        a       -20.473792     -85.4802606
+#&gt; 82        b      -124.645013       8.7120437
+#&gt; 83        c       160.101836      81.9818670
+#&gt; 84        d         7.007909     -64.7096640
+#&gt; 85        e       -15.971542      37.8492525
+#&gt; 86        f      -100.767528     -67.2476600
+#&gt; 87        g      -129.894342      60.4181300
+#&gt; 88        h      -102.183163     -36.3276893
+#&gt; 89        i       -33.955678     -21.3608250
+#&gt; 90        j       -95.855547     -45.3871196
+#&gt; 91        a      -170.976111     -27.9033031
+#&gt; 92        b        90.843105     -14.4389833
+#&gt; 93        c        83.546116      28.6397977
+#&gt; 94        d       -32.721561      81.7122688
+#&gt; 95        e        47.108810      -5.4191423
+#&gt; 96        f      -156.439806     -62.8882035
+#&gt; 97        g      -126.470825      72.4541123
+#&gt; 98        h       -79.307365     -11.1553735
+#&gt; 99        i       126.236451      55.2160051
+#&gt; 100       j      -172.245319      -3.3308157</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
+#&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 1 records.</span></div><div class='output co'>#&gt;   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+#&gt;  [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#&gt;  [97]  TRUE  TRUE  TRUE  TRUE</div><div class='input'><span class='fu'>cc_outl</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"distance"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>, <span class='kw'>tdi</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Testing geographic outliers</span></div><div class='output co'>#&gt; <span class='message'>Flagged 92 records.</span></div><div class='output co'>#&gt;   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [13]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+#&gt;  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [49] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+#&gt;  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+#&gt;  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#&gt;  [97] FALSE FALSE FALSE FALSE</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -421,13 +434,16 @@ details and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

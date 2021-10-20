@@ -17,7 +17,7 @@
 #' if they are flagged by a fraction of more than \sQuote{flag.thres}
 #' replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
 #' records are tested. Note that geographic distances are calculated as
-#' geospheric distances for datasets (or taxa) with less than 10,000 records
+#' geospheric distances for datasets (or taxa) with fewer than 10,000 records
 #' and approximated as Euclidean distances for datasets/taxa with 10,000 to
 #' 25,000 records. Datasets/taxa comprising more than 25,000 records are
 #' skipped.
@@ -65,6 +65,9 @@ cf_outl <- function(x,
   # check value argument
   match.arg(value, choices = c("clean", "flagged", "ids"))
   match.arg(method, choices = c("quantile", "mad"))
+  
+  #reset the rownames
+  rownames(x) <- NULL
 
   # report analyses step
   if (verbose) {

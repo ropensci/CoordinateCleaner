@@ -4,8 +4,16 @@
 \alias{cc_iucn}
 \title{Identify Records Outside Natural Ranges}
 \usage{
-cc_iucn(x, range, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", buffer = 0, value = "clean", verbose = TRUE)
+cc_iucn(
+  x,
+  range,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  buffer = 0,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -74,13 +82,19 @@ cc_iucn(x = x, range = range, buffer = 10)
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
-  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
-  \code{\link{cc_outl}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

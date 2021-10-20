@@ -4,9 +4,15 @@
 \alias{cc_dupl}
 \title{Identify Duplicated Records}
 \usage{
-cc_dupl(x, lon = "decimallongitude", lat = "decimallatitude",
-  species = "species", additions = NULL, value = "clean",
-  verbose = TRUE)
+cc_dupl(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  species = "species",
+  additions = NULL,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -43,10 +49,6 @@ from the same species can make up the bulk of records in a biological
 collection database, but are undesirable for many analyses. Both can be
 flagged with this function, the former given enough additional information.
 }
-\note{
-See \url{https://ropensci.github.io/CoordinateCleaner} for more
-details and tutorials.
-}
 \examples{
 
 x <- data.frame(species = letters[1:10], 
@@ -61,13 +63,19 @@ cc_dupl(x, additions = c("collector", "collector.number"))
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_equ}}, \code{\link{cc_gbif}},
-  \code{\link{cc_inst}}, \code{\link{cc_iucn}},
-  \code{\link{cc_outl}}, \code{\link{cc_sea}},
-  \code{\link{cc_urb}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_urb}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

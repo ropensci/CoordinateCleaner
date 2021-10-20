@@ -76,7 +76,7 @@ cc_cap <- function(x,
   }
   
   # set default projection
-  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
 
   # select relevant columns
   dat <- sp::SpatialPoints(x[, c(lon, lat)], 

@@ -8,21 +8,29 @@
 
 <title>Identify Records with Identical lat/lon — cc_equ • CoordinateCleaner</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,11 @@
 
 
 
-<meta property="og:title" content="Identify Records with Identical lat/lon — cc_equ" />
 
+<meta property="og:title" content="Identify Records with Identical lat/lon — cc_equ" />
 <meta property="og:description" content="Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -48,9 +56,10 @@ absolute. Equal coordinates can often indicate data entry errors." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -64,7 +73,7 @@ absolute. Equal coordinates can often indicate data entry errors." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-18</span>
       </span>
     </div>
 
@@ -72,7 +81,7 @@ absolute. Equal coordinates can often indicate data entry errors." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -87,31 +96,16 @@ absolute. Equal coordinates can often indicate data entry errors." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Background_comparison_other_software.html">Background - Comparison of CoordinateCleaner to other tools</a>
+      <a href="../articles/Cleaning_GBIF_data_with_CoordinateCleaner.html">Cleaning GBIF data for the use in biogeography</a>
     </li>
     <li>
-      <a href="../articles/Background_dataset_level_cleaning.html">Background - Dataset-level cleaning</a>
+      <a href="../articles/Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Cleaning fossil data for the use in biogeography and palaeontology</a>
     </li>
     <li>
-      <a href="../articles/Background_the_institutions_database.html">Background - The institutions database</a>
+      <a href="../articles/Comparison_other_software.html">Comparison of CoordinateCleaner to other tools</a>
     </li>
     <li>
-      <a href="../articles/Quickstart_clean_fossils.html">Quick start - Problematic fossils</a>
-    </li>
-    <li>
-      <a href="../articles/Quickstart_Flagging_problematic_coordinates_in_a_nutshell.html">Quick start - Flagging problematic coordinates in a nutshell</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_GBIF_data_with_CoordinateCleaner.html">Tutorial - Cleaning GBIF data for the use in biogeography</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Cleaning_PBDB_fossils_with_CoordinateCleaner.html">Tutorial - Cleaning fossil data for the use in biogeography and palaeontology</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_geographic_outliers.html">Tutorial - Identifying geographic outliers</a>
-    </li>
-    <li>
-      <a href="../articles/Tutorial_Using_custom_gazetteers.html">Tutorial - Using customized gazetteers</a>
+      <a href="../articles/Using_custom_gazetteers.html">Using customized gazetteers</a>
     </li>
   </ul>
 </li>
@@ -119,9 +113,13 @@ absolute. Equal coordinates can often indicate data entry errors." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropensci/CoordinateCleaner/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -129,26 +127,31 @@ absolute. Equal coordinates can often indicate data entry errors." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Identify Records with Identical lat/lon</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/CoordinateCleaner/blob/master/R/cc_equ.R'><code>R/cc_equ.R</code></a></small>
     <div class="hidden name"><code>cc_equ.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Removes or flags records with equal latitude and longitude coordinates, either exact or
 absolute. Equal coordinates can often indicate data entry errors.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>cc_equ</span>(<span class='no'>x</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"absolute"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>cc_equ</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"decimallongitude"</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"decimallatitude"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"absolute"</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"clean"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -183,137 +186,136 @@ Default = &#8220;decimallatitude&#8221;.</p></td>
 of records flagged.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the &#8216;value&#8217; argument, either a <code>data.frame</code>
 containing the records considered correct by the test (&#8220;clean&#8221;) or a
 logical vector (&#8220;flagged&#8221;), with TRUE = test passed and FALSE = test failed/potentially
 problematic . Default = &#8220;clean&#8221;.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>See <a href='https://ropensci.github.io/CoordinateCleaner'>https://ropensci.github.io/CoordinateCleaner</a> for more
-details and tutorials.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Coordinates: <code><a href='cc_cap.html'>cc_cap</a></code>,
-  <code><a href='cc_cen.html'>cc_cen</a></code>, <code><a href='cc_coun.html'>cc_coun</a></code>,
-  <code><a href='cc_dupl.html'>cc_dupl</a></code>, <code><a href='cc_gbif.html'>cc_gbif</a></code>,
-  <code><a href='cc_inst.html'>cc_inst</a></code>, <code><a href='cc_iucn.html'>cc_iucn</a></code>,
-  <code><a href='cc_outl.html'>cc_outl</a></code>, <code><a href='cc_sea.html'>cc_sea</a></code>,
-  <code><a href='cc_urb.html'>cc_urb</a></code>, <code><a href='cc_val.html'>cc_val</a></code>,
-  <code><a href='cc_zero.html'>cc_zero</a></code></p></div>
-    
+    <div class='dont-index'><p>Other Coordinates: 
+<code><a href='cc_cap.html'>cc_cap</a>()</code>,
+<code><a href='cc_cen.html'>cc_cen</a>()</code>,
+<code><a href='cc_coun.html'>cc_coun</a>()</code>,
+<code><a href='cc_dupl.html'>cc_dupl</a>()</code>,
+<code><a href='cc_gbif.html'>cc_gbif</a>()</code>,
+<code><a href='cc_inst.html'>cc_inst</a>()</code>,
+<code><a href='cc_iucn.html'>cc_iucn</a>()</code>,
+<code><a href='cc_outl.html'>cc_outl</a>()</code>,
+<code><a href='cc_sea.html'>cc_sea</a>()</code>,
+<code><a href='cc_urb.html'>cc_urb</a>()</code>,
+<code><a href='cc_val.html'>cc_val</a>()</code>,
+<code><a href='cc_zero.html'>cc_zero</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
-                <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
-                <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
+                <span class='kw'>decimallongitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>180</span>, <span class='fl'>180</span>),
+                <span class='kw'>decimallatitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>100</span>, -<span class='fl'>90</span>,<span class='fl'>90</span>))
 
 <span class='fu'>cc_equ</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Removed 0 records.</span></div><div class='output co'>#&gt;     species decimallongitude decimallatitude
-#&gt; 1         a       -50.085470     -39.3636493
-#&gt; 2         b        54.903614      37.2503696
-#&gt; 3         c      -128.318679     -10.4063544
-#&gt; 4         d        65.087502      31.9857341
-#&gt; 5         e       129.342922      36.1286974
-#&gt; 6         f       121.906796     -77.6868445
-#&gt; 7         g       137.272653      82.5306337
-#&gt; 8         h       -94.428814     -45.9929662
-#&gt; 9         i        28.307104      76.7310002
-#&gt; 10        j       143.244902       0.4944738
-#&gt; 11        a       -56.005549      78.3930856
-#&gt; 12        b        93.908963     -11.0160662
-#&gt; 13        c        83.197312     -26.9124234
-#&gt; 14        d       126.875656      -4.2292641
-#&gt; 15        e       171.294495      83.9087145
-#&gt; 16        f      -139.302900     -36.5108531
-#&gt; 17        g       169.294421     -37.6833045
-#&gt; 18        h        53.309801      64.7500046
-#&gt; 19        i      -159.813704     -55.2037200
-#&gt; 20        j        -9.670646      55.6395068
-#&gt; 21        a       -73.934995     -24.2124278
-#&gt; 22        b        39.707864     -44.5140624
-#&gt; 23        c      -136.400803      64.0945825
-#&gt; 24        d        46.589943     -66.5956135
-#&gt; 25        e        76.303909      52.5433789
-#&gt; 26        f        40.349803     -25.9377282
-#&gt; 27        g      -167.605476      83.5818908
-#&gt; 28        h        59.720683     -68.6370223
-#&gt; 29        i        55.068220      -7.5310831
-#&gt; 30        j       -17.330962       4.2570786
-#&gt; 31        a         6.049477      60.6711106
-#&gt; 32        b        63.579887     -83.9692733
-#&gt; 33        c       137.135914     -82.2008809
-#&gt; 34        d        83.242496      52.5785300
-#&gt; 35        e       -36.496867     -53.5141863
-#&gt; 36        f       -25.012565     -77.6168193
-#&gt; 37        g      -127.653355      65.5993932
-#&gt; 38        h       -17.596681     -76.1238253
-#&gt; 39        i        28.361337     -12.4193847
-#&gt; 40        j      -154.649837      85.2520604
-#&gt; 41        a        87.237425      12.7723219
-#&gt; 42        b        17.719454      45.7931962
-#&gt; 43        c        48.435938     -46.3582207
-#&gt; 44        d      -130.813710      22.8884158
-#&gt; 45        e       154.884059     -59.6853715
-#&gt; 46        f        54.402710      -9.9378661
-#&gt; 47        g        10.335338     -60.3584579
-#&gt; 48        h       -98.958460     -68.7101791
-#&gt; 49        i       173.976073     -23.8564097
-#&gt; 50        j      -140.742437      80.3806029
-#&gt; 51        a      -154.819614      67.5739374
-#&gt; 52        b        99.952382     -43.1893958
-#&gt; 53        c        56.996003      28.3137187
-#&gt; 54        d       -86.687012     -68.0643674
-#&gt; 55        e       150.601624     -32.6073530
-#&gt; 56        f      -126.464275      22.1509854
-#&gt; 57        g        50.644975      -9.5404626
-#&gt; 58        h      -107.554167      37.4928203
-#&gt; 59        i        87.703673      70.2052200
-#&gt; 60        j       125.149474     -71.2248293
-#&gt; 61        a       127.308914      23.4741094
-#&gt; 62        b       109.228526      61.4806039
-#&gt; 63        c      -171.404365     -24.4327623
-#&gt; 64        d       106.335977      22.1261001
-#&gt; 65        e       139.158184      -7.0654475
-#&gt; 66        f        36.013442     -60.5857897
-#&gt; 67        g       -24.196260       2.4960352
-#&gt; 68        h       151.299289     -64.2120411
-#&gt; 69        i        41.765194      27.0537662
-#&gt; 70        j       -23.141463     -62.0469844
-#&gt; 71        a       143.029588       1.4957752
-#&gt; 72        b        96.844868     -74.5433200
-#&gt; 73        c      -133.878327       0.5447994
-#&gt; 74        d        13.907923     -83.0570610
-#&gt; 75        e      -133.554159      58.3259179
-#&gt; 76        f         3.947358     -38.5225967
-#&gt; 77        g        15.765369     -45.5848439
-#&gt; 78        h       -92.960608     -18.3611530
-#&gt; 79        i       109.131881      23.7767175
-#&gt; 80        j       161.248941      80.7441921
-#&gt; 81        a       -33.349916     -28.7785361
-#&gt; 82        b         5.308043      22.9258774
-#&gt; 83        c       173.355066      58.4847711
-#&gt; 84        d       -52.492778     -63.8792322
-#&gt; 85        e       -15.897547      84.0850435
-#&gt; 86        f      -100.791106     -74.5129819
-#&gt; 87        g      -150.540112     -46.7169778
-#&gt; 88        h       -47.075015      24.9990719
-#&gt; 89        i      -134.400030       0.6111147
-#&gt; 90        j        86.354102     -44.9058133
-#&gt; 91        a       164.111863      86.2260794
-#&gt; 92        b        60.722821      28.1843248
-#&gt; 93        c       -11.487834     -73.8271978
-#&gt; 94        d        13.749281      23.4977275
-#&gt; 95        e       -60.856667      67.8181791
-#&gt; 96        f        46.325559      77.4506764
-#&gt; 97        g       -17.081110     -14.4925465
-#&gt; 98        h       139.685464      -0.7992234
-#&gt; 99        i       102.312655     -26.5131555
-#&gt; 100       j      -130.298562     -45.2277239</div><div class='input'><span class='fu'>cc_equ</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+#&gt; 1         a       13.7492808      23.4977275
+#&gt; 2         b      -60.8566673      67.8181791
+#&gt; 3         c       46.3255588      77.4506764
+#&gt; 4         d      -17.0811102     -14.4925465
+#&gt; 5         e      139.6854639      -0.7992234
+#&gt; 6         f      102.3126551     -26.5131555
+#&gt; 7         g     -130.2985617     -45.2277239
+#&gt; 8         h      -78.7272985      82.5710218
+#&gt; 9         i       74.5007393     -25.2071779
+#&gt; 10        j      -20.8127087     -54.1824765
+#&gt; 11        a       63.9714683      40.7313571
+#&gt; 12        b       72.2573948     -59.7361589
+#&gt; 13        c     -155.3736890     -49.2333607
+#&gt; 14        d      165.0612674      62.1972099
+#&gt; 15        e      -91.9859324     -27.7463518
+#&gt; 16        f      153.4620005     -77.8824309
+#&gt; 17        g        0.9889476     -85.1364983
+#&gt; 18        h      156.7861711     -68.7519775
+#&gt; 19        i      -22.0321323     -87.5348337
+#&gt; 20        j      -53.8248468      42.4312863
+#&gt; 21        a       -8.4585282      76.3129378
+#&gt; 22        b      167.8174290      86.7943078
+#&gt; 23        c      -73.0217063     -17.0513633
+#&gt; 24        d      -75.3666090     -41.4549660
+#&gt; 25        e      129.5000091      -2.1080429
+#&gt; 26        f     -110.4074399     -80.8087585
+#&gt; 27        g      111.2790137     -89.5541706
+#&gt; 28        h      -48.4248555      -0.7497585
+#&gt; 29        i      -89.0281249     -46.1175690
+#&gt; 30        j      128.1891650     -43.9651334
+#&gt; 31        a     -133.1912270       9.4173799
+#&gt; 32        b      105.0867578     -44.7160269
+#&gt; 33        c      -51.8754563      23.1210300
+#&gt; 34        d      167.1637816     -33.0992088
+#&gt; 35        e     -137.2740447      76.4136706
+#&gt; 36        f      -15.0621662      73.1685060
+#&gt; 37        g        8.5141572     -73.4454368
+#&gt; 38        h      121.3422213      42.8031274
+#&gt; 39        i     -167.9385465      12.5532972
+#&gt; 40        j     -164.4017618      35.3679436
+#&gt; 41        a      105.1570600      36.1381506
+#&gt; 42        b     -107.0283727     -82.8106821
+#&gt; 43        c     -155.2336387     -12.3259673
+#&gt; 44        d      131.1987864      56.5616458
+#&gt; 45        e     -152.2476506      11.9855299
+#&gt; 46        f      -24.8387693      15.8844911
+#&gt; 47        g      170.5041209      68.4556258
+#&gt; 48        h       25.5446438      39.4772334
+#&gt; 49        i       91.5863924      78.5572008
+#&gt; 50        j      -92.7164415     -12.7023095
+#&gt; 51        a       45.7768317     -38.4862814
+#&gt; 52        b     -119.3707429      48.7157730
+#&gt; 53        c      -19.8757321      20.9697546
+#&gt; 54        d     -120.7169157     -61.3305454
+#&gt; 55        e     -137.4203581     -17.7123590
+#&gt; 56        f      -47.7128194     -89.7036320
+#&gt; 57        g      160.7612058     -14.7661136
+#&gt; 58        h      135.1478748      47.5081849
+#&gt; 59        i      -86.3787915      53.0059800
+#&gt; 60        j       56.6274374     -46.3343363
+#&gt; 61        a     -136.1287348      46.6507717
+#&gt; 62        b      -65.2147060     -84.7612524
+#&gt; 63        c       44.3019709     -11.2786591
+#&gt; 64        d      -19.0809251       5.4737077
+#&gt; 65        e       74.9856405     -12.6303568
+#&gt; 66        f      140.4104400      55.6734526
+#&gt; 67        g     -142.4496586      76.0616313
+#&gt; 68        h       46.9482188      31.5042252
+#&gt; 69        i      122.9612078     -73.0857253
+#&gt; 70        j      -48.8655247     -54.4566029
+#&gt; 71        a       44.2522001      -4.4018774
+#&gt; 72        b      -14.1308949      38.5868942
+#&gt; 73        c     -121.1715794       6.8542712
+#&gt; 74        d        4.9920703      67.5689419
+#&gt; 75        e     -128.4240822     -37.1546257
+#&gt; 76        f       54.1075323     -49.5422230
+#&gt; 77        g     -124.0939688      34.3652096
+#&gt; 78        h        2.9915504     -33.7807071
+#&gt; 79        i     -149.0866400      -3.0063279
+#&gt; 80        j        1.0895987     -68.0766048
+#&gt; 81        a     -166.1141220      34.2013023
+#&gt; 82        b      116.6518358     -33.1683472
+#&gt; 83        c      -77.0451933      56.9137829
+#&gt; 84        d      -91.1696878       8.2647789
+#&gt; 85        e      -36.7223061      80.5170931
+#&gt; 86        f       47.5534351     -83.0652468
+#&gt; 87        g      161.4883843      26.5758978
+#&gt; 88        h      -57.5570722     -75.6685780
+#&gt; 89        i       45.8517548     -12.0724615
+#&gt; 90        j      116.9695422      46.9607641
+#&gt; 91        a     -127.7584643     -37.1234088
+#&gt; 92        b      168.1700870     -70.6802593
+#&gt; 93        c     -149.0259637     -76.8610005
+#&gt; 94        d      -93.4339555     -25.8633761
+#&gt; 95        e       49.9981439      12.8809517
+#&gt; 96        f        1.2222294      32.0378506
+#&gt; 97        g      -89.8116265      34.3294383
+#&gt; 98        h      172.4521588     -22.7860522
+#&gt; 99        i       56.3686495     -72.3639502
+#&gt; 100       j     -147.6543955     -72.1782526</div><div class='input'><span class='fu'>cc_equ</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"flagged"</span>)</div><div class='output co'>#&gt; <span class='message'>Testing equal lat/lon</span></div><div class='output co'>#&gt; <span class='message'>Flagged 0 records.</span></div><div class='output co'>#&gt;   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 #&gt;  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
@@ -322,22 +324,13 @@ details and tutorials.</p>
 #&gt;  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -345,13 +338,16 @@ details and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

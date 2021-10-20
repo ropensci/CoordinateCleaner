@@ -4,11 +4,22 @@
 \alias{cf_outl}
 \title{Identify Outlier Records in Space and Time}
 \usage{
-cf_outl(x, lon = "decimallongitude", lat = "decimallatitude",
-  min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
-  method = "quantile", size_thresh = 7, mltpl = 5, replicates = 5,
-  flag_thresh = 0.5, uniq_loc = FALSE, value = "clean",
-  verbose = TRUE)
+cf_outl(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  min_age = "min_ma",
+  max_age = "max_ma",
+  taxon = "accepted_name",
+  method = "quantile",
+  size_thresh = 7,
+  mltpl = 5,
+  replicates = 5,
+  flag_thresh = 0.5,
+  uniq_loc = FALSE,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing fossil records with taxon names, ages, 
@@ -82,7 +93,7 @@ times, to account for temporal uncertainty. Records are flagged as outliers
 if they are flagged by a fraction of more than \sQuote{flag.thres}
 replicates. Only datasets/taxa comprising more than \sQuote{size_thresh}
 records are tested. Note that geographic distances are calculated as
-geospheric distances for datasets (or taxa) with less than 10,000 records
+geospheric distances for datasets (or taxa) with fewer than 10,000 records
 and approximated as Euclidean distances for datasets/taxa with 10,000 to
 25,000 records. Datasets/taxa comprising more than 25,000 records are
 skipped.
@@ -104,8 +115,10 @@ cf_outl(x, value = "flagged", taxon = "")
 
 }
 \seealso{
-Other fossils: \code{\link{cf_age}},
-  \code{\link{cf_equal}}, \code{\link{cf_range}}
+Other fossils: 
+\code{\link{cf_age}()},
+\code{\link{cf_equal}()},
+\code{\link{cf_range}()}
 }
 \concept{fossils}
 \keyword{Coordinate}

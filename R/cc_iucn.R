@@ -85,17 +85,15 @@ cc_iucn <- function(x,
   } 
   
   # Check projection of ranges
-  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
   
   if(is.na(sp::proj4string(range))){
     warning("no projection information for reference found, 
-              assuming '+proj=longlat +datum=WGS84 
-              +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+              assuming '+proj=longlat +datum=WGS84 +no_defs'")
     sp::proj4string(range) <- sp::CRS(wgs84)
   }else if(sp::proj4string(range) != wgs84){
     range <- sp::spTransform(range, sp::CRS(wgs84))
-    warning("reprojecting reference to '+proj=longlat 
-              +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'")
+    warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs'")
   }
   
   # Point-in-polygon-test

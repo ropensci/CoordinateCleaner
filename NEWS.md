@@ -1,3 +1,108 @@
+CoordinateCleaner 2.0-20 (2021-10-08)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Fixed typos in vignette
+  * Fixed CRAN warning with rebuilding vignettes
+  * Removed defunct functions
+  * Added wordlist
+
+CoordinateCleaner 2.0-19 (2020-10-13)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Adaption of the Description file style.
+  
+CoordinateCleaner 2.0-18 (2020-10-09)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Precomputed vignettes that need internet access
+  
+  
+CoordinateCleaner 2.0-17 (2020-08-18)
+=========================
+
+### MINOR IMPROVEMENTS
+  * Fixed a bug that occasionally caused invalid polygons for cc_coun and cc_sea
+  * Added references for country centroids from other sources
+
+CoordinateCleaner 2.0-16 (2020-06-19)
+=========================
+
+### MINOR IMPROVEMENTS
+  * added an option to adapt the geographic extent to the plotting method for objects of class "spatialvalid"
+  * fixed a bug with the handling of the outlier test in clean_coordinates
+  * improved the handling of large data.frames in the plotting method for objects of class "spatialvalid"
+  * readapted the default country columns name to the rnaturalearth column names
+
+
+CoordinateCleaner 2.0-15 (2020-05-04)
+=========================
+
+### MINOR IMPROVEMENTS
+  * adapted the url format in the description files
+
+
+CoordinateCleaner 2.0-14 (2020-05-04)
+=========================
+
+### MINOR IMPROVEMENTS
+  * fixed a bug in cc_cen when setting an alternative reference
+  * added the ref_col argument to cc_coun to customize the column with ISO codes in the reference data
+  * adapted code to changes in sp and rgdal
+  * defunct CleanCoordinates, CleanCoordinatesDS, and CleanCoordinatesFOS
+  * fixed issue with input data.frame with unordered rownames in cc_outl
+  * fixed the 'ras not found' bug in cc_outl
+  
+  
+
+CoordinateCleaner 2.0-13 (2019-06-18)
+=========================
+
+### MINOR IMPROVEMENTS
+  * addressed the "ras not found" bug in cc_outl
+  
+CoordinateCleaner 2.0-12 (2019-05-2)
+=========================
+
+### MINOR IMPROVEMENTS
+  * improved documentation of cc_outl
+  * improved handling of rownames in cc_outl
+  
+  
+CoordinateCleaner 2.0-11 (2019-04-24)
+=========================
+
+### MINOR IMPROVEMENTS
+  * changes to the description file
+
+CoordinateCleaner 2.0-10 (2019-04-23)
+=========================
+
+### MINOR IMPROVEMENTS
+  * improved error handling by cc_sea and cc_urb, in case the default reference cannot be obtained from the web
+  * added a reference for the methodology to the description file
+
+
+CoordinateCleaner 2.0-9 (2019-04-02)
+=========================
+
+### MINOR IMPROVEMENTS
+  * recoded cc_outl, and added a thinning argument to account for sampling bias
+  * fixed a bug with the cc_outl test, that produced erroneous flags under some settings of mltpl
+  * extended the example dataset for the coordinate level-test suite to be more realistic
+
+
+CoordinateCleaner 2.0-8 (2019-03-21)
+=========================
+
+### MINOR IMPROVEMENTS
+  * moved vignettes to online documentation
+  * added an area column to the countryref dataset
+  * fixed some minor spelling issues in the documentation
+
+
 CoordinateCleaner 2.0-7 (2019-01-22)
 =========================
 
@@ -68,7 +173,7 @@ CoordinateCleaner 2.0-1 (2018-06-08)
   * fixed typos in Readme
   * set a download from naturalearth as default for cc_urb
   * reduced vignette memory use and size
-  * enables sf format for sustom references
+  * enables sf format for custom references
   * added speedup option for cc_sea
   * added webpage (https://azizka.github.io/CoordinateCleaner/)
 

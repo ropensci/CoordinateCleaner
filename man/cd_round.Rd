@@ -4,10 +4,21 @@
 \alias{cd_round}
 \title{Identify Datasets with Rasterized Coordinates}
 \usage{
-cd_round(x, lon = "decimallongitude", lat = "decimallatitude",
-  ds = "dataset", T1 = 7, reg_out_thresh = 2, reg_dist_min = 0.1,
-  reg_dist_max = 2, min_unique_ds_size = 4, graphs = TRUE,
-  test = "both", value = "clean", verbose = TRUE)
+cd_round(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  ds = "dataset",
+  T1 = 7,
+  reg_out_thresh = 2,
+  reg_dist_min = 0.1,
+  reg_dist_max = 2,
+  min_unique_ds_size = 4,
+  graphs = TRUE,
+  test = "both",
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -69,7 +80,7 @@ Flags datasets with periodicity patterns indicative of a rasterized
 (lattice) collection scheme, as often obtain from e.g. atlas data. Using a
 combination of autocorrelation and sliding-window outlier detection to
 identify periodicity patterns in the data. See 
-\url{https://ropensci.github.io/CoordinateCleaner/articles/Background_dataset_level_cleaning.html}
+\url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 for further details and 
 a description of the algorithm
 }
@@ -109,7 +120,8 @@ details and tutorials.
 
 }
 \seealso{
-Other Datasets: \code{\link{cd_ddmm}}
+Other Datasets: 
+\code{\link{cd_ddmm}()}
 }
 \concept{Datasets}
 \keyword{"Coordinate}

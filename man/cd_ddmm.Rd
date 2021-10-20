@@ -4,10 +4,19 @@
 \alias{cd_ddmm}
 \title{Identify Datasets with a Degree Conversion Error}
 \usage{
-cd_ddmm(x, lon = "decimallongitude", lat = "decimallatitude",
-  ds = "dataset", pvalue = 0.025, diff = 1, mat_size = 1000,
-  min_span = 2, value = "clean", verbose = TRUE,
-  diagnostic = FALSE)
+cd_ddmm(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  ds = "dataset",
+  pvalue = 0.025,
+  diff = 1,
+  mat_size = 1000,
+  min_span = 2,
+  value = "clean",
+  verbose = TRUE,
+  diagnostic = FALSE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -100,7 +109,8 @@ cd_ddmm(x = prob, value = "flagged")
 
 }
 \seealso{
-Other Datasets: \code{\link{cd_round}}
+Other Datasets: 
+\code{\link{cd_round}()}
 }
 \concept{Datasets}
 \keyword{"Coordinate}

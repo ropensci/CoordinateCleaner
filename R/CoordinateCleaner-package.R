@@ -13,6 +13,20 @@
 #' data("buffland")
 NULL
 
+#'Global Coastlines buffered by -1 degree
+#'
+#'  A \code{SpatialPolygonsDataFrame} with global coastlines, with a -1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify marine species on land without flagging records in estuaries, etc.
+#'
+#' @name buffsea
+#' @docType data
+#' @source 
+#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
+#' @keywords gazetteers
+#' @examples
+#' 
+#' data("buffsea")
+NULL
+
 
 #' CoordinateCleaner
 #' 
@@ -35,52 +49,40 @@ NULL
 #' 
 #' A \code{data.frame} with coordinates of country and province centroids and country
 #' capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
-#' Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/library/publications/the-world-factbook/} and \url{http://thematicmapping.org/downloads/world_borders.php}.
+#' Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/library/publications/the-world-factbook/},
+#' \url{http://thematicmapping.org/downloads/world_borders.php} and geolocate \url{http://geo-locate.org}.
 #' 
 #' 
 #' @name countryref
 #' @docType data
-#' @format A data frame with 5,142 observations on 10 variables.
-#' #' \describe{ \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
-#' \item{iso2}{ISO-2 code for each country, in case of provinces also referring to the country.} \item{name}{a
-#' factor; name of the country or province.} \item{adm1_code}{adm code for countries and provinces} 
+#' @format A data frame with 5,305 observations on 13 variables.
+#' #' \describe{ 
+#' \item{iso3}{ISO-3 code for each country, in case of provinces also referring to the country.}
+#' \item{iso2}{ISO-2 code for each country, in case of provinces also referring to the country.} 
+#' \item{adm1_code}{adm code for countries and provinces.} 
+#' \item{name}{a factor; name of the country or province.} 
 #' \item{type}{identifying if the entry refers to a country or province level.} 
-#' \item{centroid.lon}{Longitude of the country centroid}
-#' \item{centroid.lat}{Latitude of the country centroid}
-#' \item{capital}{Name of the country capital, empty for provinces}
-#' \item{capital.lon}{Longitude of the country capital}
-#' \item{capital.lat}{Latitude of the country capital}}
+#' \item{centroid.lon}{Longitude of the country centroid.}
+#' \item{centroid.lat}{Latitude of the country centroid.}
+#' \item{capital}{Name of the country capital, empty for provinces.}
+#' \item{capital.lon}{Longitude of the country capital.}
+#' \item{capital.lat}{Latitude of the country capital.}
+#' \item{area_sqkm}{The area of the country or province.}
+#' \item{uncertaintyRadiusMeters}{The uncertainty of the country centroid.}
+#' \item{source}{The data source. Currently only available for \url{http://geo-locate.org}}}
+#' 
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
 #' \url{https://www.cia.gov/library/publications/the-world-factbook/}
 #' \url{http://thematicmapping.org/downloads/world_borders.php}
+#' \url{http://geo-locate.org}
 #' @keywords gazetteers
 #' @examples
 #' 
 #' data(countryref)
 #' head(countryref)
 NULL
-
-#' Deprecated functions in CoordinateCleaener
-#' 
-#' These functions still work but will be removed (defunct) in the next version.
-#' 
-#' \itemize{
-#'  \item \code{\link{CleanCoordinates}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_coordinates}}
-#'  instead
-#'  \item \code{\link{CleanCoordinatesDS}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_dataset}}
-#'  instead
-#'  \item \code{\link{CleanCoordinatesFOS}}: This function is deprecated, and will
-#'  be removed in the next version of this package. Use \code{\link{clean_fossils}}
-#'  instead
-#' }
-#' 
-#' @name CoordinateCleaner-deprecated
-NULL
-
 
 
 #' Global Locations of Biodiversity Institutions
@@ -94,9 +96,9 @@ NULL
 #' @docType data
 #' @format A data frame with 12170 observations on 12 variables.
 #' @source Compiled from various sources: \itemize{ \item Global Biodiversity
-#' Information Facility \url{www.gbif.org} \item Wikipedia
-#' \url{www.wikipedia.org} \item Geonames \url{www.geonames.org} \item The Global
-#' Registry of Biodiversity Repositories \url{www.grbio.org} \item Index
+#' Information Facility \url{https://www.gbif.org/} \item Wikipedia
+#' \url{https://www.wikipedia.org/} \item Geonames \url{https://www.geonames.org/} \item The Global
+#' Registry of Biodiversity Repositories \item Index
 #' Herbariorum \url{http://sweetgum.nybg.org/science/ih/}
 #' \item Botanic Gardens Conservation International \url{https://www.bgci.org/}
 #' }

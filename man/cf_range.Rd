@@ -4,10 +4,21 @@
 \alias{cf_range}
 \title{Identify Fossils with Extreme Age Ranges}
 \usage{
-cf_range(x, lon = "decimallongitude", lat = "decimallatitude",
-  min_age = "min_ma", max_age = "max_ma", taxon = "accepted_name",
-  method = "quantile", mltpl = 5, size_thresh = 7, max_range = 500,
-  uniq_loc = FALSE, value = "clean", verbose = TRUE)
+cf_range(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  min_age = "min_ma",
+  max_age = "max_ma",
+  taxon = "accepted_name",
+  method = "quantile",
+  mltpl = 5,
+  size_thresh = 7,
+  max_range = 500,
+  uniq_loc = FALSE,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing fossil records with taxon names, ages, 
@@ -80,8 +91,10 @@ cf_range(x, value = "flagged", taxon = "")
 
 }
 \seealso{
-Other fossils: \code{\link{cf_age}},
-  \code{\link{cf_equal}}, \code{\link{cf_outl}}
+Other fossils: 
+\code{\link{cf_age}()},
+\code{\link{cf_equal}()},
+\code{\link{cf_outl}()}
 }
 \concept{fossils}
 \keyword{Fossil}

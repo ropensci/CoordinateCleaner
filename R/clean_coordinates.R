@@ -51,11 +51,11 @@
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 #' 
-#' @aliases CleanCoordinates summary.spatialvalid is.spatialvalid
+#' @aliases summary.spatialvalid is.spatialvalid
 #' 
 #' @param species a character string. A vector of the same length as rows in x,
-#' with the species identity for each record.  If missing, the outliers test is
-#' skipped.
+#' with the species identity for each record.  If NULL, \code{tests} must not
+#' include the "outliers" or "duplicates" tests.
 #' @param countries a character string. The column with the country assignment of
 #' each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
 #' countries test is skipped.
@@ -65,7 +65,7 @@
 #' "seas", "zeros")
 #' @param capitals_rad numeric. The radius around capital coordinates in
 #' meters. Default = 10000.
-#' @param centroids_rad numeric. The radius around capital coordinates in
+#' @param centroids_rad numeric. The radius around centroid coordinates in
 #' meters. Default = 1000.
 #' @param centroids_detail a \code{character string}. If set to
 #' \sQuote{country} only country (adm-0) centroids are tested, if set to
@@ -91,6 +91,9 @@
 #' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
 #' reference for the countries test. If NULL, the
 #' \code{rnaturalearth:ne_countries('medium')} dataset is used.
+#' @param country_refcol the column name in the reference dataset, containing the relevant
+#' ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
+#' codes in the reference dataset. See notes.
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
 #' biodiversity institution test. If NULL, the \code{institutions} dataset
 #' is used.  Alternatives must be identical in structure.
@@ -98,7 +101,7 @@
 #' Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.
 #' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
 #' for the seas test. If NULL, the 
-#' rnaturalearth::ne_download(scale = 50, type = 'land', category = 'physical') 
+#' rnaturalearth::ne_download(=scale = 110, type = 'land', category = 'physical') 
 #' dataset is used.
 #' @param seas_scale The scale of the default landmass reference. Must be one of 10, 50, 110.
 #' Higher numbers equal higher detail. Default = 50.
@@ -107,7 +110,7 @@
 #' reference gazetteers.
 #' @param value a character string defining the output value. See the value
 #' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-#' \sQuote{cleaned}. Default = \sQuote{\code{spatialvalid}}.
+#' \sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.
 #' @param report logical or character.  If TRUE a report file is written to the
 #' working directory, summarizing the cleaning results. If a character, the
 #' path to which the file should be written.  Default = FALSE.
@@ -131,6 +134,11 @@
 #' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 #' See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
 #' and tutorials.
+#' 
+#' @note The country_refcol argument allows to adapt the function to the structure of
+#' alternative reference datasets. For instance, for 
+#' \code{rnaturalearth::ne_countries(scale = "small")}, the default will fail, 
+#' but country_refcol = "iso_a3" will work.
 #' 
 #' @keywords Coordinate cleaning wrapper
 #' @family Wrapper functions
@@ -185,6 +193,7 @@ clean_coordinates <- function(x,
                              capitals_ref = NULL, 
                              centroids_ref = NULL, 
                              country_ref = NULL, 
+                             country_refcol = "iso_a3",
                              inst_ref = NULL, 
                              range_ref = NULL,
                              seas_ref = NULL, 
@@ -197,6 +206,9 @@ clean_coordinates <- function(x,
   match.arg(value, choices = c("spatialvalid", "flagged", "clean"))
   match.arg(centroids_detail, choices = c("both", "country", "provinces"))
   match.arg(outliers_method, choices = c("distance", "quantile", "mad"))
+  
+  #reset the rownames
+  #rownames(x) <- NULL
 
   # check column names
   nams <- c(lon, lat, species, countries)
@@ -286,7 +298,11 @@ clean_coordinates <- function(x,
   ## Country check
   if ("countries" %in% tests) {
     out$con <- cc_coun(x,
-      lon = lon, lat = lat, iso3 = countries, ref = country_ref,
+      lon = lon, 
+      lat = lat, 
+      iso3 = countries, 
+      ref = country_ref,
+      ref_col = country_refcol,
       verbose = verbose, value = "flagged"
     )
   }
@@ -305,7 +321,8 @@ clean_coordinates <- function(x,
       value = "ids", verbose = verbose
     )
     otl <- rep(TRUE, nrow(x))
-    otl[otl_flag] <- FALSE
+    names(otl) <- seq_len(nrow(x))
+    otl[as.numeric(otl_flag)] <- FALSE
     out$otl <- otl
   }
 

@@ -4,8 +4,14 @@
 \alias{cc_urb}
 \title{Identify Records Inside Urban Areas}
 \usage{
-cc_urb(x, lon = "decimallongitude", lat = "decimallatitude",
-  ref = NULL, value = "clean", verbose = TRUE)
+cc_urb(
+  x,
+  lon = "decimallongitude",
+  lat = "decimallatitude",
+  ref = NULL,
+  value = "clean",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species
@@ -57,13 +63,19 @@ cc_urb(x, value = "flagged")
 
 }
 \seealso{
-Other Coordinates: \code{\link{cc_cap}},
-  \code{\link{cc_cen}}, \code{\link{cc_coun}},
-  \code{\link{cc_dupl}}, \code{\link{cc_equ}},
-  \code{\link{cc_gbif}}, \code{\link{cc_inst}},
-  \code{\link{cc_iucn}}, \code{\link{cc_outl}},
-  \code{\link{cc_sea}}, \code{\link{cc_val}},
-  \code{\link{cc_zero}}
+Other Coordinates: 
+\code{\link{cc_cap}()},
+\code{\link{cc_cen}()},
+\code{\link{cc_coun}()},
+\code{\link{cc_dupl}()},
+\code{\link{cc_equ}()},
+\code{\link{cc_gbif}()},
+\code{\link{cc_inst}()},
+\code{\link{cc_iucn}()},
+\code{\link{cc_outl}()},
+\code{\link{cc_sea}()},
+\code{\link{cc_val}()},
+\code{\link{cc_zero}()}
 }
 \concept{Coordinates}
 \keyword{Coordinate}

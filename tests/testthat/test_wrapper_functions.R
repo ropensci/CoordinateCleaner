@@ -40,11 +40,6 @@ test_that("clean_coordinates countries argument produces correct output", {
                       tests = c("countries", "seas"))$.summary), 0)
 })
 
-
-test_that("CleanCoordinates work", {
-  expect_equal(sum(CleanCoordinates(exmpl)$.summary), 185)
-})
-
 #Dataset level cleaning
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
