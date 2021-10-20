@@ -39,7 +39,7 @@ install.packages("CoordinateCleaner")
 library(CoordinateCleaner)
 ```
 
-## Developmental using devtools
+## Developmental from GitHub
 ```r
 devtools::install_github("ropensci/CoordinateCleaner")
 library(CoordinateCleaner)
