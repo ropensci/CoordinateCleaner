@@ -391,8 +391,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "130599.409KB",
-  "contIntegration": ["https://travis-ci.org/ropensci/CoordinateCleaner", "https://codecov.io/github/ropensci/CoordinateCleaner"],
+  "fileSize": "130599.389KB",
   "relatedLink": "https://ropensci.github.io/CoordinateCleaner/",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
