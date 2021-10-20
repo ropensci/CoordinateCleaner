@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/ropensci/CoordinateCleaner",
   "issueTracker": "https://github.com/ropensci/CoordinateCleaner/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.0.18",
+  "version": "2.0.20",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2020-10-12 r79333)",
+  "runtimePlatform": "R Under development (unstable) (2021-10-19 r81077)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -28,7 +28,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "alexander.zizka@idiv.de"
+      "email": "zizka.alexander@gmail.com"
     }
   ],
   "contributor": [
@@ -103,7 +103,7 @@
       "@type": "Person",
       "givenName": "Alexander",
       "familyName": "Zizka",
-      "email": "alexander.zizka@idiv.de"
+      "email": "zizka.alexander@gmail.com"
     }
   ],
   "softwareSuggestions": [
@@ -391,7 +391,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/CoordinateCleaner/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/CoordinateCleaner/blob/master/README.md",
-  "fileSize": "129427.227KB",
+  "fileSize": "130599.72KB",
   "contIntegration": ["https://travis-ci.org/ropensci/CoordinateCleaner", "https://codecov.io/github/ropensci/CoordinateCleaner"],
   "relatedLink": "https://ropensci.github.io/CoordinateCleaner/",
   "developmentStatus": "https://www.repostatus.org/#active",
