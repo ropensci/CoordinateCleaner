@@ -242,7 +242,7 @@ dat_cl <- dat_cl%>%
   filter(year > 1945) # remove records from before second world war
 ```
 
-On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the [taxize R package](https://docs.ropensci.org/taxize/) or the [taxonomic name resolution service](http://tnrs.iplantcollaborative.org/) (plants only).
+On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We'll not treat taxonomic cleaning here, but if you need to, check out the [taxize R package](https://docs.ropensci.org/taxize/) or the [taxonomic name resolution service](https://tnrs.biendata.org) (plants only).
 
 ```{r clgbif14, collapse = T, eval = TRUE}
 table(dat_cl$family) #that looks good

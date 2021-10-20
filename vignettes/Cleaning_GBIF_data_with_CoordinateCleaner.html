@@ -377,7 +377,7 @@ div.csl-indent {
 ##    6   13   82   34   14   17   30   28   39   48   69   78   76  103  149  156  147  283  419  284  501  492  610  290  202</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat_cl <span class="ot">&lt;-</span> dat_cl<span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">1945</span>) <span class="co"># remove records from before second world war</span></span></code></pre></div>
-<p>On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We’ll not treat taxonomic cleaning here, but if you need to, check out the <a href="https://docs.ropensci.org/taxize/">taxize R package</a> or the <a href="http://tnrs.iplantcollaborative.org/">taxonomic name resolution service</a> (plants only).</p>
+<p>On top of the geographic cleaning, we also want to make sure to only include species level records and records from the right taxon. The latter is not a problem in this case, as we only have one species, but it can be helpful for large datasets. Taxonomic problems such as spelling mistakes in the names or synonyms can be a severe problem. We’ll not treat taxonomic cleaning here, but if you need to, check out the <a href="https://docs.ropensci.org/taxize/">taxize R package</a> or the <a href="https://tnrs.biendata.org">taxonomic name resolution service</a> (plants only).</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dat_cl<span class="sc">$</span>family) <span class="co">#that looks good</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Felidae </span></span>
@@ -484,7 +484,7 @@ div.csl-indent {
 <h2 class="unnumbered">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-Maldonado2015" class="csl-entry">
-Maldonado, C., Molina, C. I., Zizka, A., Persson, C., Taylor, C. M., Albán, J., Chilquillo, E., et al. (2015). <span class="nocase">Estimating species diversity and distribution in the era of Big Data: To what extent can we trust public databases</span>. <em>Glob Ecol Biogeogr</em>, <em>24</em>(8), 973–984.
+Maldonado, C., Molina, C. I., Zizka, A., Persson, C., Taylor, C. M., Albán, J., Chilquillo, E., et al. (2015). <a href="https://doi.org/10.1111/geb.12326"><span class="nocase">Estimating species diversity and distribution in the era of Big Data: To what extent can we trust public databases</span></a>. <em>Glob Ecol Biogeogr</em>, <em>24</em>(8), 973–984.
 </div>
 </div>
 </div>
