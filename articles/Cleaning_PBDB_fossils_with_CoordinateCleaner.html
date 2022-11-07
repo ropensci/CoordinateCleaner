@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/CoordinateCleaner/">
+  <a href="https://github.com/ropensci/CoordinateCleaner/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,334 +90,333 @@
       <h1 data-toc-skip>Cleaning fossil data for the use in biogeography and palaeontology</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/CoordinateCleaner/blob/master/vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd"><code>vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/CoordinateCleaner/blob/HEAD/vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd" class="external-link"><code>vignettes/Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd</code></a></small>
       <div class="hidden name"><code>Cleaning_PBDB_fossils_with_CoordinateCleaner.Rmd</code></div>
 
     </div>
 
     
     
-<div id="background" class="section level1">
-<h1 class="hasAnchor">
-<a href="#background" class="anchor"></a>Background</h1>
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
 <p>The public availability of fossils for large-scale analyses is rapidly increasing, mainly due to increased databasing efforts and data aggregators such as the paleobiology database (www.paleobiodb.org) or Neotoma (www.neotomadb.org), among others. However, data quality is an issue, in particular, for old collections or collections with uncertain taxonomy and/or bad preservation. Similar problems as known from biological collection databases (See supplementary material S2) are relevant for fossils, but in addition fossils might be dated wrongly or with very low precision. This tutorial presents a pipeline to clean fossil data from the paleobiology database (or any other) before using it in biogeographic or evolutionary analyses. We focus on identifying overly imprecisely geo-referenced and/or dated records by combining automated cleaning using <em>CoordinateCleaner</em> with cleaning based on meta-data. The proposed steps are by no means exhaustive, and keep in mind that what is “good data” depends entirely on your downstream analyses! We wrote this tutorial (and the whole <em>CoordinateCleaner</em> package) to help you to identify potential problems quicker and more reproducibly to improve data quality in large datasets. For the sake of this tutorial we will mostly remove flagged records from the dataset, however, we recommend to double check them individually.</p>
 </div>
-<div id="install-coordinatecleaner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#install-coordinatecleaner" class="anchor"></a>Install <code>CoordinateCleaner</code>
-</h1>
-<p>You can install the latest stable version of CoordinateCleaner (Currently 2.0-1) from CRAN using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("CoordinateCleaner")</a></code>. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed. In this tutorial, relevant R-code is shown in grey boxes, the resulting output lines are marked by ##.</p>
+<div class="section level2">
+<h2 id="install-coordinatecleaner">Install <code>CoordinateCleaner</code><a class="anchor" aria-label="anchor" href="#install-coordinatecleaner"></a>
+</h2>
+<p>You can install the latest stable version of CoordinateCleaner (Currently 2.0-1) from CRAN using <code>install.packages("CoordinateCleaner")</code>. Alternatively you can install the latest development version from GitHub using the devtools package. We recommend the latter, to stay up-to-date. Also, make sure to have the latest R version installed. In this tutorial, relevant R-code is shown in grey boxes, the resulting output lines are marked by ##.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span>
-
-<span class="fu">install_github</span><span class="op">(</span><span class="st">"ropensci/CoordinateCleaner"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ropensci/CoordinateCleaner"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="load-required-libraries" class="section level1">
-<h1 class="hasAnchor">
-<a href="#load-required-libraries" class="anchor"></a>Load required libraries</h1>
+<div class="section level2">
+<h2 id="load-required-libraries">Load required libraries<a class="anchor" aria-label="anchor" href="#load-required-libraries"></a>
+</h2>
 <p>As a first step we will load the R libraries required for the tutorial. You might need to install some of them using <code>install.packages</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ropensci.github.io/CoordinateCleaner/">CoordinateCleaner</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/countrycode/">countrycode</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/paleobioDB">paleobioDB</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ropensci.github.io/CoordinateCleaner/" class="external-link">CoordinateCleaner</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/countrycode/" class="external-link">countrycode</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/paleobioDB" class="external-link">paleobioDB</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="load-test-dataset" class="section level1">
-<h1 class="hasAnchor">
-<a href="#load-test-dataset" class="anchor"></a>Load test dataset</h1>
+<div class="section level2">
+<h2 id="load-test-dataset">Load test dataset<a class="anchor" aria-label="anchor" href="#load-test-dataset"></a>
+</h2>
 <p>For this tutorial we will use a dataset of vascular plant fossils from the last 65 million years, downloaded from the paleobiology database using the plaeobioDB package. For the tutorial we’ll limit the data to maximum 5,000 records, to keep the downloading time reasonable. If you obtained your data from the web mask of the paleobiology database, or use an entirely different database, you will have to adapt the column names in the script.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#load data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">paleobioDB</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/paleobioDB/reference/pbdb_occurrences.html">pbdb_occurrences</a></span><span class="op">(</span>base_name <span class="op">=</span> <span class="st">"Magnoliopsida"</span>, vocab <span class="op">=</span> <span class="st">"pbdb"</span>, limit <span class="op">=</span> <span class="fl">5000</span>,
-                        show <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"coords"</span>, <span class="st">"phylo"</span>, <span class="st">"attr"</span>, <span class="st">"loc"</span>, <span class="st">"time"</span>, <span class="st">"rem"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#load data</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">paleobioDB</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/paleobioDB/reference/pbdb_occurrences.html" class="external-link">pbdb_occurrences</a></span><span class="op">(</span>base_name <span class="op">=</span> <span class="st">"Magnoliopsida"</span>, vocab <span class="op">=</span> <span class="st">"pbdb"</span>, limit <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>                        show <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"coords"</span>, <span class="st">"phylo"</span>, <span class="st">"attr"</span>, <span class="st">"loc"</span>, <span class="st">"time"</span>, <span class="st">"rem"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 <p>Alternatively, CoordinateCleaner includes an example dataset, downloaded from paleobioDB as specified above. We will use this one for the rest of this tutorial.</p>
 </div>
-<div id="visualize-the-records-on-a-map" class="section level1">
-<h1 class="hasAnchor">
-<a href="#visualize-the-records-on-a-map" class="anchor"></a>Visualize the records on a map</h1>
+<div class="section level2">
+<h2 id="visualize-the-records-on-a-map">Visualize the records on a map<a class="anchor" aria-label="anchor" href="#visualize-the-records-on-a-map"></a>
+</h2>
 <p>As a first step we will visualize the records on a map, to get a general overview.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#plot data to get an overview</span>
-<span class="va">wm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders</a></span><span class="op">(</span><span class="st">"world"</span>, colour<span class="op">=</span><span class="st">"gray50"</span>, fill<span class="op">=</span><span class="st">"gray50"</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span> <span class="va">wm</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
-             colour <span class="op">=</span> <span class="st">"darkred"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#plot data to get an overview</span></span>
+<span><span class="va">wm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders</a></span><span class="op">(</span><span class="st">"world"</span>, colour<span class="op">=</span><span class="st">"gray50"</span>, fill<span class="op">=</span><span class="st">"gray50"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span> <span class="va">wm</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
+<span>             colour <span class="op">=</span> <span class="st">"darkred"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="pbdb-unnamed-chunk-15-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-15</p>
 </div>
 </div>
-<div id="coordinatecleaner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#coordinatecleaner" class="anchor"></a>CoordinateCleaner</h1>
+<div class="section level2">
+<h2 id="coordinatecleaner">CoordinateCleaner<a class="anchor" aria-label="anchor" href="#coordinatecleaner"></a>
+</h2>
 <p>CoordinateCleaner includes a suite of automated tests to identify problems common to biological and palaebiological databases.</p>
-<div id="spatial-issues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spatial-issues" class="anchor"></a>Spatial issues</h2>
+<div class="section level3">
+<h3 id="spatial-issues">Spatial issues<a class="anchor" aria-label="anchor" href="#spatial-issues"></a>
+</h3>
 <p>We’ll first check coordinate validity to check if all coordinates are numeric and part of a lat/lon coordinate reference system using <code>cc_val</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span><span class="op">(</span><span class="va">dat</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Testing coordinate validity</code></pre>
-<pre><code>## Removed 0 records.</code></pre>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span><span class="op">(</span><span class="va">dat</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Testing coordinate validity</span></span></code></pre>
+<pre><code><span><span class="co">## Removed 0 records.</span></span></code></pre>
 <p>Looks good, then we will test for coordinates with equal longitude and latitude. You can use the <code>test</code> argument to specify if coordinates should be flagged if their absolute values are identical (e.g. 56,-56).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Testing equal lat/lon</code></pre>
-<pre><code>## Removed 0 records.</code></pre>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Testing equal lat/lon</span></span></code></pre>
+<pre><code><span><span class="co">## Removed 0 records.</span></span></code></pre>
 <p>For the purpose of the tutorial, we will always exclude flagged records. If you want to further explore them, and you should if by any means possible, use the <code>value = "flagged"</code> argument, valid for all functions. In that case the output value will be a vector of logical values with the same length as <code>dat</code>, where TRUE = valid record, FALSE = flagged record. It is generally advisable to check flagged records whenever possible, to avoid data-loss and false flags.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span><span class="va">dat</span>, value <span class="op">=</span> <span class="st">"flagged"</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span>
-<span class="co">## Testing equal lat/lon</span>
-<span class="co">## Flagged 0 records.</span>
-
-<span class="co"># extract and check the flagged records</span>
-<span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="va">fl</span>,<span class="op">]</span> 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fl_rec</span><span class="op">)</span>
-<span class="co">##  [1] occurrence_no  record_type    collection_no  taxon_name     taxon_rank     taxon_no       matched_name   matched_rank  </span>
-<span class="co">##  [9] matched_no     early_interval late_interval  early_age      late_age       reference_no   lng            lat           </span>
-<span class="co">## [17] class          class_no       phylum         phylum_no      cc             state          geogscale      early_age.1   </span>
-<span class="co">## [25] late_age.1     cx_int_no      early_int_no   late_int_no    genus          genus_no       family         family_no     </span>
-<span class="co">## [33] order          order_no       county         reid_no       </span>
-<span class="co">## &lt;0 rows&gt; (or 0-length row.names)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span><span class="va">dat</span>, value <span class="op">=</span> <span class="st">"flagged"</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span>
+<span><span class="co">## Testing equal lat/lon</span></span>
+<span><span class="co">## Flagged 0 records.</span></span>
+<span></span>
+<span><span class="co"># extract and check the flagged records</span></span>
+<span><span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="va">fl</span>,<span class="op">]</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fl_rec</span><span class="op">)</span></span>
+<span><span class="co">##  [1] occurrence_no  record_type    collection_no  taxon_name     taxon_rank     taxon_no       matched_name   matched_rank  </span></span>
+<span><span class="co">##  [9] matched_no     early_interval late_interval  early_age      late_age       reference_no   lng            lat           </span></span>
+<span><span class="co">## [17] class          class_no       phylum         phylum_no      cc             state          geogscale      early_age.1   </span></span>
+<span><span class="co">## [25] late_age.1     cx_int_no      early_int_no   late_int_no    genus          genus_no       family         family_no     </span></span>
+<span><span class="co">## [33] order          order_no       county         reid_no       </span></span>
+<span><span class="co">## &lt;0 rows&gt; (or 0-length row.names)</span></span></code></pre></div>
 <p>We’ll also test if the records are identical, or in close vicinity to the centroids of political units. You can modify the buffer around each centroid using the <code>buffer</code> argument and the level of testing (country centroids, province centroids, or both) using the <code>test argument</code>. In case you have a list of geographic coordinates you consider problematic, for instance a list of cities you can provide them as custom gazetteer using the <code>ref</code> argument.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_cen.html">cc_cen</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, value <span class="op">=</span> <span class="st">"flagged"</span><span class="op">)</span>
-<span class="co">## Testing country centroids</span>
-<span class="co">## Flagged 6 records.</span>
-<span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="va">fl</span>, <span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">fl_rec</span><span class="op">$</span><span class="va">cc</span><span class="op">)</span>
-<span class="co">## [1] JP</span>
-<span class="co">## Levels: NZ US CN IR KP AU UK FR JP DE CA RU KE ZM EG CD ZA TZ UG ET MX IT</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="va">fl</span>, <span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_cen.html">cc_cen</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, value <span class="op">=</span> <span class="st">"flagged"</span><span class="op">)</span></span>
+<span><span class="co">## Testing country centroids</span></span>
+<span><span class="co">## Flagged 6 records.</span></span>
+<span><span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="va">fl</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">fl_rec</span><span class="op">$</span><span class="va">cc</span><span class="op">)</span></span>
+<span><span class="co">## [1] JP</span></span>
+<span><span class="co">## Levels: NZ US CN IR KP AU UK FR JP DE CA RU KE ZM EG CD ZA TZ UG ET MX IT</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="va">fl</span>, <span class="op">]</span></span></code></pre></div>
 <p>Next we will test if the coordinates are within the country they are assigned to. This test is a bit more tricky, as it will also flag records, if the country name in the country column is not following ISO3 or if the records have been assigned during a different political landscape. For instance records from former Western and Eastern Germany. Here we need to convert the country annotation in column cc from ISO2 to ISO3; it is advisable to double check which records have be flagged, to avoid unnecessary data loss (see above).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#adapt country code to ISO3, for country test</span>
-<span class="va">cs_ma</span> <span class="op">&lt;-</span> <span class="st">"GBR"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cs_ma</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UK"</span>
-<span class="va">cl</span><span class="op">$</span><span class="va">cc_iso3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vincentarelbundock.github.io/countrycode/reference/countrycode.html">countrycode</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">cc</span>, origin <span class="op">=</span> <span class="st">"iso2c"</span>, destination <span class="op">=</span> <span class="st">"iso3c"</span>, custom_match <span class="op">=</span> <span class="va">cs_ma</span><span class="op">)</span>
-
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_coun.html">cc_coun</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, iso3 <span class="op">=</span> <span class="st">"cc_iso3"</span><span class="op">)</span>
-<span class="co">## Testing country identity</span>
-<span class="co">## Removed 234 records.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#adapt country code to ISO3, for country test</span></span>
+<span><span class="va">cs_ma</span> <span class="op">&lt;-</span> <span class="st">"GBR"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cs_ma</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UK"</span></span>
+<span><span class="va">cl</span><span class="op">$</span><span class="va">cc_iso3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vincentarelbundock.github.io/countrycode/reference/countrycode.html" class="external-link">countrycode</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">cc</span>, origin <span class="op">=</span> <span class="st">"iso2c"</span>, destination <span class="op">=</span> <span class="st">"iso3c"</span>, custom_match <span class="op">=</span> <span class="va">cs_ma</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_coun.html">cc_coun</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, iso3 <span class="op">=</span> <span class="st">"cc_iso3"</span><span class="op">)</span></span>
+<span><span class="co">## Testing country identity</span></span>
+<span><span class="co">## Removed 234 records.</span></span></code></pre></div>
 <p>Next we will test if any of the records bear the coordinates of a hosting biodiversity institution or the GBIF headquarters, using the <code>institutions</code> database of <em>CoordinateCleaner</em>. As for the country centroid test you can change the buffer around the institutions with the <code>buffer</code> argument.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_inst.html">cc_inst</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span>
-<span class="co">## Testing biodiversity institutions</span>
-<span class="co">## Removed 0 records.</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_gbif.html">cc_gbif</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span>
-<span class="co">## Testing GBIF headquarters, flagging records around Copenhagen</span>
-<span class="co">## Removed 0 records.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_inst.html">cc_inst</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span>
+<span><span class="co">## Testing biodiversity institutions</span></span>
+<span><span class="co">## Removed 0 records.</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_gbif.html">cc_gbif</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span>
+<span><span class="co">## Testing GBIF headquarters, flagging records around Copenhagen</span></span>
+<span><span class="co">## Removed 0 records.</span></span></code></pre></div>
 <p>Finally, we will test for plain zero coordinates (e.g. 0/0).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_zero.html">cc_zero</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span>
-<span class="co">## Testing zero coordinates</span>
-<span class="co">## Removed 0 records.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_zero.html">cc_zero</a></span><span class="op">(</span><span class="va">cl</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span></span>
+<span><span class="co">## Testing zero coordinates</span></span>
+<span><span class="co">## Removed 0 records.</span></span></code></pre></div>
 </div>
-<div id="temporal-issues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#temporal-issues" class="anchor"></a>Temporal issues</h2>
+<div class="section level3">
+<h3 id="temporal-issues">Temporal issues<a class="anchor" aria-label="anchor" href="#temporal-issues"></a>
+</h3>
 <p>The spatial cleaning above is mostly identical with steps from recent geographic records. Additionally  includes three functions to test the temporal dimension of fossils. Fossil ages are usually defined with a maximum and a minimum range, based on geological strata. First we will exclude records without dating information (NA) and then test for records with equal minimum and maximum range. Unless your data includes absolutely dated fossils, this will most likely be an data entry error.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">late_age</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">early_age</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_equal.html">cf_equal</a></span><span class="op">(</span><span class="va">cl</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span>
-<span class="co">## Testing age validity</span>
-<span class="co">## Removed 0 records.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">late_age</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">early_age</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_equal.html">cf_equal</a></span><span class="op">(</span><span class="va">cl</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span>
+<span><span class="co">## Testing age validity</span></span>
+<span><span class="co">## Removed 0 records.</span></span></code></pre></div>
 <p>Next we will look at the age range (= max age - min age) of each record. The age range is the dating precision and can vary considerably, depending on the data available for dating. For many analyses, for instance in PyRate, very imprecisely dated records are not suitable. Lets first have a look at the age ranges in our test dataset.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rang</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">$</span><span class="va">early_age</span> <span class="op">-</span> <span class="va">cl</span><span class="op">$</span><span class="va">late_age</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">rang</span>, breaks <span class="op">=</span> <span class="fl">40</span>, xlab <span class="op">=</span> <span class="st">"Date range [max age - min age]"</span>, main <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rang</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">$</span><span class="va">early_age</span> <span class="op">-</span> <span class="va">cl</span><span class="op">$</span><span class="va">late_age</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">rang</span>, breaks <span class="op">=</span> <span class="fl">40</span>, xlab <span class="op">=</span> <span class="st">"Date range [max age - min age]"</span>, main <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="pbdb-unnamed-chunk-24-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-24</p>
 </div>
 <p>Some individual records are dated with a precision of more than 60 million years!  offers two ways to flag records based on their age range (1) based on absolute age, e.g. age range &gt; 35 million years or (2) based on age range outlier detection in the entire dataset (e.g. if few records are much less precisely dated than the rest of all records) and (3) based on age range outlier detection on taxon level (e.g. all  records that are much less precisely dated than the other  records. The second and third approach can be combined and offer some more flexibility over the absolute age limit, but need some consideration on the desired sensitivity. Here, we will run all three variants for illustration, if you use your own data you should decide which one is more suitable depending on your downstream analyses. In the case of (2) and (3) you can tweak the test sensitivity using the <code>mltpl</code> argument.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Outlier dataset</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">""</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span>
-<span class="co">## Testing temporal range outliers on dataset level</span>
-<span class="co">## Removed 57 records.</span>
-
-<span class="co"># Outlier per taxon</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span>
-<span class="co">## Testing temporal range outliers on taxon level</span>
-<span class="co">## Removed 86 records.</span>
-
-<span class="co"># Absolute age limit</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, 
-               max_age <span class="op">=</span> <span class="st">"early_age"</span>, method <span class="op">=</span> <span class="st">"time"</span>, max_range <span class="op">=</span> <span class="fl">35</span><span class="op">)</span>
-<span class="co">## Testing temporal range outliers on taxon level</span>
-<span class="co">## Removed 1 records.</span>
-
-<span class="va">rang</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">$</span><span class="va">early_age</span> <span class="op">-</span> <span class="va">cl</span><span class="op">$</span><span class="va">late_age</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">rang</span>, breaks <span class="op">=</span> <span class="fl">40</span>, xlab <span class="op">=</span> <span class="st">"Date range [max age - min age]"</span>, main <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Outlier dataset</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">""</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span>
+<span><span class="co">## Testing temporal range outliers on dataset level</span></span>
+<span><span class="co">## Removed 57 records.</span></span>
+<span></span>
+<span><span class="co"># Outlier per taxon</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span>
+<span><span class="co">## Testing temporal range outliers on taxon level</span></span>
+<span><span class="co">## Removed 86 records.</span></span>
+<span></span>
+<span><span class="co"># Absolute age limit</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, </span>
+<span>               max_age <span class="op">=</span> <span class="st">"early_age"</span>, method <span class="op">=</span> <span class="st">"time"</span>, max_range <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span>
+<span><span class="co">## Testing temporal range outliers on taxon level</span></span>
+<span><span class="co">## Removed 1 records.</span></span>
+<span></span>
+<span><span class="va">rang</span> <span class="op">&lt;-</span> <span class="va">cl</span><span class="op">$</span><span class="va">early_age</span> <span class="op">-</span> <span class="va">cl</span><span class="op">$</span><span class="va">late_age</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">rang</span>, breaks <span class="op">=</span> <span class="fl">40</span>, xlab <span class="op">=</span> <span class="st">"Date range [max age - min age]"</span>, main <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="pbdb-unnamed-chunk-25-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-25</p>
 </div>
 <p>Finally we will test for outliers in space-time, that is records that are either very distant in space or in time from all other records (1) in the dataset (2) per taxon. The test is again based on quantile outlier detection and can be modified using various arguments. Here it is important to carefully consider the desired test sensitivity. See <code><a href="../reference/cf_outl.html">?cf_outl</a></code> for help.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Outlier dataset</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">""</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,
-              min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span>
-<span class="co">## Testing spatio-temporal outliers on dataset level</span>
-<span class="co">## Removed 256 records.</span>
-
-<span class="co"># Outlier taxon</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,
-              min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span>
-<span class="co">## Testing spatio-temporal outliers on taxon level</span>
-<span class="co">## Removed 30 records.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Outlier dataset</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">""</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,</span>
+<span>              min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span>
+<span><span class="co">## Testing spatio-temporal outliers on dataset level</span></span>
+<span><span class="co">## Removed 256 records.</span></span>
+<span></span>
+<span><span class="co"># Outlier taxon</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span><span class="va">cl</span>, taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,</span>
+<span>              min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span>
+<span><span class="co">## Testing spatio-temporal outliers on taxon level</span></span>
+<span><span class="co">## Removed 30 records.</span></span></code></pre></div>
 <p>Done! To check how many records have been flagged in total, you can compare the two datasets.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 689</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 689</span></span></code></pre>
 <p>All test combined have removed about 689 records (13.8%). If you want to identify all flagged records, to double check or correct them, take a look at the <code>clean_fossils</code> wrapper function below.</p>
 <p>So far so good, we have significantly refined the data for our needs. In section 6 we will have a look at the meta-data for further refinement, but before, note that there are two different ways to run <em>CoordinateCleaner</em>. You can connect all functions directly in a row using the magrittr pipe (%&gt;%) operator.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_cen.html">cc_cen</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_coun.html">cc_coun</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, iso3 <span class="op">=</span> <span class="st">"cc"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_gbif.html">cc_gbif</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_inst.html">cc_inst</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cc_zero.html">cc_zero</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cf_equal.html">cf_equal</a></span><span class="op">(</span>min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span>taxon <span class="op">=</span> <span class="st">"taxon_name"</span>,
-           min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span>taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, 
-          lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,
-          min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_equ.html">cc_equ</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_cen.html">cc_cen</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_coun.html">cc_coun</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>, iso3 <span class="op">=</span> <span class="st">"cc"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_gbif.html">cc_gbif</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_inst.html">cc_inst</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cc_zero.html">cc_zero</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cf_equal.html">cf_equal</a></span><span class="op">(</span>min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cf_range.html">cf_range</a></span><span class="op">(</span>taxon <span class="op">=</span> <span class="st">"taxon_name"</span>,</span>
+<span>           min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cf_outl.html">cf_outl</a></span><span class="op">(</span>taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, </span>
+<span>          lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lng"</span>,</span>
+<span>          min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively you can use <code>clean_fossils</code>, a wrapper around all quality tests provided by <em>CoordinateCleaner</em> relevant for fossil data. See <code>?CleanCoordiantesFOS</code> for help.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#adapt country code to ISO3, for country test</span>
-<span class="va">cs_ma</span> <span class="op">&lt;-</span> <span class="st">"GBR"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cs_ma</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UK"</span>
-<span class="va">dat</span><span class="op">$</span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vincentarelbundock.github.io/countrycode/reference/countrycode.html">countrycode</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">cc</span>, origin <span class="op">=</span> <span class="st">"iso2c"</span>, destination <span class="op">=</span> <span class="st">"iso3c"</span>, custom_match <span class="op">=</span> <span class="va">cs_ma</span><span class="op">)</span>
-
-<span class="co">#run automated testing</span>
-<span class="va">flags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_fossils.html">clean_fossils</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat</span>, 
-                             taxon <span class="op">=</span> <span class="st">"taxon_name"</span>,
-                             min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span>, 
-                             value <span class="op">=</span> <span class="st">"spatialvalid"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">flags</span><span class="op">)</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">flags</span><span class="op">$</span><span class="va">.summary</span>,<span class="op">]</span> <span class="co">#the cleaned records</span>
-<span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="va">flags</span><span class="op">$</span><span class="va">.summary</span>,<span class="op">]</span> <span class="co"># the flagged records for verification</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#adapt country code to ISO3, for country test</span></span>
+<span><span class="va">cs_ma</span> <span class="op">&lt;-</span> <span class="st">"GBR"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cs_ma</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UK"</span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vincentarelbundock.github.io/countrycode/reference/countrycode.html" class="external-link">countrycode</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">cc</span>, origin <span class="op">=</span> <span class="st">"iso2c"</span>, destination <span class="op">=</span> <span class="st">"iso3c"</span>, custom_match <span class="op">=</span> <span class="va">cs_ma</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#run automated testing</span></span>
+<span><span class="va">flags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_fossils.html">clean_fossils</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat</span>, </span>
+<span>                             taxon <span class="op">=</span> <span class="st">"taxon_name"</span>,</span>
+<span>                             min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span>, </span>
+<span>                             value <span class="op">=</span> <span class="st">"spatialvalid"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">flags</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">flags</span><span class="op">$</span><span class="va">.summary</span>,<span class="op">]</span> <span class="co">#the cleaned records</span></span>
+<span><span class="va">fl_rec</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="va">flags</span><span class="op">$</span><span class="va">.summary</span>,<span class="op">]</span> <span class="co"># the flagged records for verification</span></span></code></pre></div>
 </div>
 </div>
-<div id="improving-data-quality-using-meta-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#improving-data-quality-using-meta-data" class="anchor"></a>Improving data quality using meta-data</h1>
+<div class="section level2">
+<h2 id="improving-data-quality-using-meta-data">Improving data quality using meta-data<a class="anchor" aria-label="anchor" href="#improving-data-quality-using-meta-data"></a>
+</h2>
 <p>Usually, at least some type of meta-data are provided with fossil occurrences, as is the case in the paleobiology database. We’ll now explore these and see if we can identify further problems.</p>
-<div id="basic-taxonomy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-taxonomy" class="anchor"></a>Basic taxonomy</h2>
+<div class="section level3">
+<h3 id="basic-taxonomy">Basic taxonomy<a class="anchor" aria-label="anchor" href="#basic-taxonomy"></a>
+</h3>
 <p>First we’ll take a short look at taxonomy. Fossil taxonomy is very complex and composite databases often have taxonomic issues that are extremely difficult to resolve. Here we will only do some very basic checks to test if: 1. all taxa in our dataset are plants, 2. they are at least identified to genus level.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#1. This looks OK</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">phylum</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">## Spermatophyta </span>
-<span class="co">##          4311</span>
-
-<span class="co">#2. Taxonomic level of identification</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_rank</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">##  subclass   species     genus     class    family     order subfamily </span>
-<span class="co">##         7      3340       536       271       124        20         0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#1. This looks OK</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">phylum</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Spermatophyta </span></span>
+<span><span class="co">##          4311</span></span>
+<span></span>
+<span><span class="co">#2. Taxonomic level of identification</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_rank</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  subclass   species     genus     class    family     order subfamily </span></span>
+<span><span class="co">##         7      3340       536       271       124        20         0</span></span></code></pre></div>
 <p>The required taxonomic level of course depends on the downstream analyses, but here we will exclude everything other than genus or species, which is a reasonable approach for most PyRate analyses.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">taxon_rank</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"genus"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="va">cl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">taxon_rank</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"genus"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="spatial-coordinates" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spatial-coordinates" class="anchor"></a>Spatial coordinates</h2>
+<div class="section level3">
+<h3 id="spatial-coordinates">Spatial coordinates<a class="anchor" aria-label="anchor" href="#spatial-coordinates"></a>
+</h3>
 <p>The Paleobiology database includes some information on the basis of the geographic data for many records.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">geogscale</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## small collection          outcrop       local area            basin 
-##             1953             1750               79                0</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">geogscale</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## small collection          outcrop       local area            basin </span></span>
+<span><span class="co">##             1953             1750               79                0</span></span></code></pre>
 <p>As expected most records are only roughly geo-referenced, but the precision is still relatively high for many records.</p>
 </div>
-<div id="time" class="section level2">
-<h2 class="hasAnchor">
-<a href="#time" class="anchor"></a>Time</h2>
+<div class="section level3">
+<h3 id="time">Time<a class="anchor" aria-label="anchor" href="#time"></a>
+</h3>
 <p>We have checked for potentially problematic records in time and space above, but it is definitively advisable to check again.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#minimum ages</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">late_age</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">##  63.3    66  70.6  93.5  93.9 100.5 </span>
-<span class="co">##    53   138     8     3     3    21</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">late_age</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#minimum ages</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">late_age</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  63.3    66  70.6  93.5  93.9 100.5 </span></span>
+<span><span class="co">##    53   138     8     3     3    21</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">late_age</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <div class="figure">
 <img src="pbdb-unnamed-chunk-33-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-33</p>
 </div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">#maximum ages</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">early_age</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">##  70.6  83.5  99.6 100.5 105.3   113 </span>
-<span class="co">##   126     9     3    11     3    21</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">early_age</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#maximum ages</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">early_age</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  70.6  83.5  99.6 100.5 105.3   113 </span></span>
+<span><span class="co">##   126     9     3    11     3    21</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">early_age</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <div class="figure">
 <img src="pbdb-unnamed-chunk-33-2.png" alt=""><p class="caption">plot of chunk unnamed-chunk-33</p>
 </div>
 <p>The minimum and maximum ages look unproblematic, but there are still some records with very large temporal uncertainties, and at least one case where the minimum and maximum age seem reversed. This might be informative in some cases, but for most analysis this might be problematic, so here we exclude all records with temporal uncertainty above 20.442 million years, which will retain 95% of the data. This is an arbitrary choice, and you’ll have to choose a more suitable value based on your planned analyses.</p>
 </div>
-<div id="additional-meta-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#additional-meta-data" class="anchor"></a>Additional meta-data</h2>
+<div class="section level3">
+<h3 id="additional-meta-data">Additional meta-data<a class="anchor" aria-label="anchor" href="#additional-meta-data"></a>
+</h3>
 <p>If you download data using the paleobiology database web portal, there are some additional fields you can check to generally gauge data precision, namely basis and precision of the geo-reference, the year of publications (old publications are more likely to be imprecise), preservation quality (bad preservation increases taxonomic uncertainty) and plant organ (also taxonomic uncertainty) and collection type. You might need to adapt the column names, and not all columns will be relevant for all taxa (e.g. “plant organ”).</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">latlng_basis</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">latlng_precision</span><span class="op">)</span>
-
-
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">ref_pubyr</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">collection_type</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">preservation_quality</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">plant_organ</span><span class="op">)</span>
-
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">preservation_quality</span> <span class="op">!=</span> <span class="st">"very poor"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">latlng_basis</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">latlng_precision</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">ref_pubyr</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">collection_type</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">preservation_quality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">plant_organ</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">preservation_quality</span> <span class="op">!=</span> <span class="st">"very poor"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="conclusions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#conclusions" class="anchor"></a>Conclusions</h1>
+<div class="section level2">
+<h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
+</h2>
 <p>Through the various cleaning steps outline above, we have identified some potential major caveats and hopefully increased the quality of the dataset. We have excluded a significant fraction of all records (-76.52 %). Data quality is a delicate issue, especially for fossils from compound data bases and the usefulness of individual records will depend on your downstream analyses. We hope that you find this tutorial useful in exploring data downloaded from the Paleobiology database and to explore the quality of any fossil dataset.</p>
 <p><img src="pbdb-unnamed-chunk-35-1.png" alt="plot of chunk unnamed-chunk-35"><img src="pbdb-unnamed-chunk-35-2.png" alt="plot of chunk unnamed-chunk-35"></p>
 <p>#Writing the result to disk in PyRate format</p>
-<p>If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, <a href="https://github.com/dsilvestro/PyRate">PyRate</a> might be useful for you. You can use the <code>write_pyrate</code> function of <em>CoordinateCleaner</em> to write ready-to-use PyRate input files from your now cleaned dataset to disk. To do so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the <code>status</code> argument of <code>write_pyrate</code>. If you want to specify a path were to save the file, use the <code>path</code> argument instead of <code>fname</code>.</p>
+<p>If you want to use fossil data to estimate speciation and extinction rates, their correlation with environmental factors or to do biogeography, <a href="https://github.com/dsilvestro/PyRate" class="external-link">PyRate</a> might be useful for you. You can use the <code>write_pyrate</code> function of <em>CoordinateCleaner</em> to write ready-to-use PyRate input files from your now cleaned dataset to disk. To do so, you additionally need an assessment of which species are extinct and which are extant today, which you can provide via the <code>status</code> argument of <code>write_pyrate</code>. If you want to specify a path were to save the file, use the <code>path</code> argument instead of <code>fname</code>.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># replace  blanks in taxon names</span>
-<span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"[[:blank:]]{1,}"</span>,<span class="st">"_"</span>, <span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span>
-
-<span class="co">#simulated current status, soley for demonstration purposes, replace with your own data</span>
-<span class="va">mock_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>taxon_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span>,
-                          status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extinct"</span>, <span class="st">"extant"</span><span class="op">)</span>, 
-                                          size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span><span class="op">)</span>, 
-                                          replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">#add current status to fossils</span>
-<span class="va">cl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">mock_status</span>, by <span class="op">=</span> <span class="st">"taxon_name"</span><span class="op">)</span>
-
-<span class="co">#Write PyRate input to disk</span>
-<span class="fu"><a href="../reference/write_pyrate.html">write_pyrate</a></span><span class="op">(</span><span class="va">cl</span>, fname <span class="op">=</span> <span class="st">"paleobioDB_angiosperms"</span>, status <span class="op">=</span> <span class="va">cl2</span><span class="op">$</span><span class="va">status</span>,
-            taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># replace  blanks in taxon names</span></span>
+<span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"[[:blank:]]{1,}"</span>,<span class="st">"_"</span>, <span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#simulated current status, soley for demonstration purposes, replace with your own data</span></span>
+<span><span class="va">mock_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>taxon_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span>,</span>
+<span>                          status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"extinct"</span>, <span class="st">"extant"</span><span class="op">)</span>, </span>
+<span>                                          size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">cl</span><span class="op">$</span><span class="va">taxon_name</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                                          replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#add current status to fossils</span></span>
+<span><span class="va">cl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">mock_status</span>, by <span class="op">=</span> <span class="st">"taxon_name"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Write PyRate input to disk</span></span>
+<span><span class="fu"><a href="../reference/write_pyrate.html">write_pyrate</a></span><span class="op">(</span><span class="va">cl</span>, fname <span class="op">=</span> <span class="st">"paleobioDB_angiosperms"</span>, status <span class="op">=</span> <span class="va">cl2</span><span class="op">$</span><span class="va">status</span>,</span>
+<span>            taxon <span class="op">=</span> <span class="st">"taxon_name"</span>, min_age <span class="op">=</span> <span class="st">"late_age"</span>, max_age <span class="op">=</span> <span class="st">"early_age"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -436,11 +431,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexander Zizka.</p>
+  <p></p>
+<p>Developed by Alexander Zizka.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -448,6 +445,8 @@
 
   
 
+
+  
 
   </body>
 </html>

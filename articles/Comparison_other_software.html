@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/CoordinateCleaner/">
+  <a href="https://github.com/ropensci/CoordinateCleaner/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,14 +90,14 @@
       <h1 data-toc-skip>Comparison of CoordinateCleaner to other tools</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/CoordinateCleaner/blob/master/vignettes/Comparison_other_software.Rmd"><code>vignettes/Comparison_other_software.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/CoordinateCleaner/blob/HEAD/vignettes/Comparison_other_software.Rmd" class="external-link"><code>vignettes/Comparison_other_software.Rmd</code></a></small>
       <div class="hidden name"><code>Comparison_other_software.Rmd</code></div>
 
     </div>
 
     
     
-<p>##Background Erroneous database entries and problematic geographic coordinates are a central issue in biogeography and there is a set of tools available to address different dimensions of the problem. CoordinateCleaner focuses on the fast and reproducible flagging of large amounts of records, and additional functions to detect dataset-level and fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci/scrubr">scrubr</a> and <a href="https://CRAN.R-project.org/package=biogeo">biogeo</a> offer cleaning approaches complementary to CoordinateCleaner. The scrubr package combines basic geographic cleaning (comparable to cc_dupl, cc_zero and cc_count in CoordinateCleaner) but adds options to clean taxonomic names (See also <a href="https://github.com/ropensci/taxize">taxize</a>) and date information. biogeo includes some basic automated geographic cleaning (similar to <code>cc_val</code>, <code>cc_count</code> and <code>cc_outl</code>) but rather focusses on correcting suspicious coordinates on a manual basis using environmental information.</p>
+<p>##Background Erroneous database entries and problematic geographic coordinates are a central issue in biogeography and there is a set of tools available to address different dimensions of the problem. CoordinateCleaner focuses on the fast and reproducible flagging of large amounts of records, and additional functions to detect dataset-level and fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci/scrubr" class="external-link">scrubr</a> and <a href="https://CRAN.R-project.org/package=biogeo" class="external-link">biogeo</a> offer cleaning approaches complementary to CoordinateCleaner. The scrubr package combines basic geographic cleaning (comparable to cc_dupl, cc_zero and cc_count in CoordinateCleaner) but adds options to clean taxonomic names (See also <a href="https://github.com/ropensci/taxize" class="external-link">taxize</a>) and date information. biogeo includes some basic automated geographic cleaning (similar to <code>cc_val</code>, <code>cc_count</code> and <code>cc_outl</code>) but rather focusses on correcting suspicious coordinates on a manual basis using environmental information.</p>
 <p>Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo.</p>
 <table class="table">
 <colgroup>
@@ -328,11 +324,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexander Zizka.</p>
+  <p></p>
+<p>Developed by Alexander Zizka.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -340,6 +338,8 @@
 
   
 
+
+  
 
   </body>
 </html>
