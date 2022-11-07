@@ -118,7 +118,8 @@ cf_outl(x, value = "flagged", taxon = "")
 Other fossils: 
 \code{\link{cf_age}()},
 \code{\link{cf_equal}()},
-\code{\link{cf_range}()}
+\code{\link{cf_range}()},
+\code{\link{write_pyrate}()}
 }
 \concept{fossils}
 \keyword{Coordinate}

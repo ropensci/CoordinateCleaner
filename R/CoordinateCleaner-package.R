@@ -37,6 +37,7 @@ NULL
 #' @name CoordinateCleaner-package
 #' @aliases CoordinateCleaner-package CoordinateCleaner
 #' @docType package
+#' @keywords  internal
 #' @author Alexander Zizka, Daniele Silvestro, Tobias Andermann, Josue Azevedo, 
 #' Camila Duarte Ritter, Daniel Edler, Harith Farooq, Andrei Herdean, Maria Ariza, 
 #' Ruud Scharn, Sten Svantesson, Niklas Wengstrom, Vera Zizka 

@@ -117,7 +117,8 @@ cf_age(x, value = "flagged", taxon = "", uniq_loc = TRUE)
 Other fossils: 
 \code{\link{cf_equal}()},
 \code{\link{cf_outl}()},
-\code{\link{cf_range}()}
+\code{\link{cf_range}()},
+\code{\link{write_pyrate}()}
 }
 \concept{fossils}
 \keyword{Coordinate}

@@ -67,6 +67,7 @@
 #' 
 #' @export
 #' @importFrom stats runif 
+#' @family fossils
 #' @importFrom utils write.table
 write_pyrate <- function(x,
                         status,

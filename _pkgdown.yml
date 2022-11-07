@@ -11,6 +11,16 @@ reference:
 - title: Fossil cleaning
   contents:
   - has_concept("fossils")
+- title: Data
+  contents:
+  - buffland
+  - buffsea
+  - countryref
+  - institutions
+  - pbdb_example
+- title: Visualization
+  contents:
+  - plot.spatialvalid
 
 extra_packages:
   - tidyverse
