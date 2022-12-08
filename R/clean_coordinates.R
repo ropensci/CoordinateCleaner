@@ -348,6 +348,7 @@ clean_coordinates <- function(x,
       out$rang <- cc_iucn(x,
                            lon = lon, lat = lat, species = species,
                            buffer = range_rad,
+                           range = range_ref,
                            verbose = verbose, value = "flagged"
       )
     }
