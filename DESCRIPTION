@@ -1,33 +1,46 @@
-Package: CoordinateCleaner
 Type: Package
-Title: Automated Cleaning of Occurrence Records from Biological Collections
+Package: CoordinateCleaner
+Title: Automated Cleaning of Occurrence Records from Biological
+    Collections
 Version: 2.0-20
-Authors@R: c(person(given = "Alexander", family = "Zizka", email = "zizka.alexander@gmail.com",
-                    role = c("aut", "cre")),
-             person(given = "Daniele", family = "Silvestro", role = "ctb"),
-             person(given = "Tobias", family = "Andermann", role = "ctb"),
-             person(given = "Josue", family = "Azevedo", role = "ctb"),
-             person(given = "Camila", family = "Duarte Ritter", role = "ctb"),
-             person(given = "Daniel", family = "Edler", role = "ctb"),
-             person(given = "Harith", family = "Farooq", role = "ctb"),
-             person(given = "Andrei", family = "Herdean", role = "ctb"),
-             person(given = "Maria", family = "Ariza", role = "ctb"),
-             person(given = "Ruud", family = "Scharn", role = "ctb"),
-             person(given = "Sten", family = "Svanteson", role = "ctb"),
-             person(given = "Niklas", family = "Wengstrom", role = "ctb"),
-             person(given = "Vera", family = "Zizka", role = "ctb"),
-             person(given = "Alexandre", family ="Antonelli", role = "ctb"),
-             person("Irene", "Steves", role = "rev",
-    comment = "Irene reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>"),
-             person("Francisco", "Rodriguez-Sanchez", role = "rev",
-    comment = "Francisco reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>"))
-Description: Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. The reference for the methodology is: Zizka et al. (2019) <doi:10.1111/2041-210X.13152>.
-Language: en-gb
-Encoding: UTF-8
+Authors@R: c(
+    person("Alexander", "Zizka", , "zizka.alexander@gmail.com", role = c("aut", "cre")),
+    person("Daniele", "Silvestro", role = "ctb"),
+    person("Tobias", "Andermann", role = "ctb"),
+    person("Josue", "Azevedo", role = "ctb"),
+    person("Camila", "Duarte Ritter", role = "ctb"),
+    person("Daniel", "Edler", role = "ctb"),
+    person("Harith", "Farooq", role = "ctb"),
+    person("Andrei", "Herdean", role = "ctb"),
+    person("Maria", "Ariza", role = "ctb"),
+    person("Ruud", "Scharn", role = "ctb"),
+    person("Sten", "Svanteson", role = "ctb"),
+    person("Niklas", "Wengstrom", role = "ctb"),
+    person("Vera", "Zizka", role = "ctb"),
+    person("Alexandre", "Antonelli", role = "ctb"),
+    person("Irene", "Steves", role = "rev",
+           comment = "Irene reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>"),
+    person("Francisco", "Rodriguez-Sanchez", role = "rev",
+           comment = "Francisco reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/210>")
+  )
+Description: Automated flagging of common spatial and temporal errors in
+    biological and paleontological collection data, for the use in
+    conservation, ecology and paleontology. Includes automated tests to
+    easily flag (and exclude) records assigned to country or province
+    centroid, the open ocean, the headquarters of the Global Biodiversity
+    Information Facility, urban areas or the location of biodiversity
+    institutions (museums, zoos, botanical gardens, universities).
+    Furthermore identifies per species outlier coordinates, zero
+    coordinates, identical latitude/longitude and invalid coordinates.
+    Also implements an algorithm to identify data sets with a significant
+    proportion of rounded coordinates. Especially suited for large data
+    sets. The reference for the methodology is: Zizka et al. (2019)
+    <doi:10.1111/2041-210X.13152>.
 License: GPL-3
 URL: https://ropensci.github.io/CoordinateCleaner/
 BugReports: https://github.com/ropensci/CoordinateCleaner/issues
-Depends: R (>= 3.5.0)
+Depends: 
+    R (>= 3.5.0)
 Imports: 
     dplyr,
     geosphere,
@@ -37,17 +50,31 @@ Imports:
     methods,
     raster,
     rgbif,
-    rgeos,
     rgdal,
+    rgeos,
     rnaturalearth (>= 0.3.2),
-    stats,
     sp,
+    stats,
+    terra,
     tidyselect,
     utils
-LazyData: true
-RoxygenNote: 7.2.1.9000
-Suggests: covr, countrycode, knitr, maps, magrittr, paleobioDB, rmarkdown, rnaturalearthdata, testthat, viridis
-SystemRequirements: GDAL (>= 2.0.1)
-VignetteBuilder: knitr
-Remotes:  
+Suggests: 
+    countrycode,
+    covr,
+    knitr,
+    magrittr,
+    maps,
+    paleobioDB,
+    rmarkdown,
+    rnaturalearthdata,
+    testthat,
+    viridis
+VignetteBuilder: 
+    knitr
+Remotes: 
     ropensci/rnaturalearth
+Encoding: UTF-8
+Language: en-gb
+LazyData: true
+RoxygenNote: 7.2.3
+SystemRequirements: GDAL (>= 2.0.1)

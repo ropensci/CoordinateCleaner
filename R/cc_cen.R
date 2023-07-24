@@ -23,13 +23,12 @@
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(100, -180, 180), 
-#'                 decimallatitude = runif(100, -90,90))
-#'                 
+#'                 decimallongitude = c(runif(99, -180, 180), -47.92), 
+#'                 decimallatitude = c(runif(99, -90,90), -15.78))
 #' cc_cen(x, geod = FALSE)
 #' 
 #' \dontrun{
-#' #' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+#' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
 #' }
 #' 
 #' @export
@@ -37,6 +36,7 @@
 #' @importFrom sp coordinates CRS disaggregate over Polygon Polygons proj4string "proj4string<-" SpatialPolygons SpatialPoints
 #' @importFrom raster extent crop
 #' @importFrom rgeos gBuffer
+
 cc_cen <- function(x, 
                    lon = "decimallongitude", 
                    lat = "decimallatitude", 
@@ -48,31 +48,32 @@ cc_cen <- function(x,
                    verify = FALSE,
                    value = "clean", 
                    verbose = TRUE) {
-
+  
   # check value argument
   match.arg(value, choices = c("clean", "flagged"))
   match.arg(test, choices = c("both", "country", "provinces"))
-
+  
   if (verbose) {
     message("Testing country centroids")
   }
-  if(buffer > 10 & !geod){
+  if (buffer > 10 & !geod) {
     warnings("Using large buffer check 'geod'")
   }
-  if(buffer < 100 & geod){
+  if (buffer < 100 & geod) {
     warnings("Using small buffer check 'geod'")
   }
-
+  
   # set default projection
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
   
   # select relevant columns
-  dat <- sp::SpatialPoints(x[, c(lon, lat)], 
-                           proj4string = sp::CRS(wgs84))
-
+  dat <- terra::vect(x[, c(lon, lat), drop = FALSE], 
+                     geom = c(lon, lat),
+                     crs = wgs84)
+  
   if (is.null(ref)) {
     ref <- CoordinateCleaner::countryref
-
+    
     switch(test, country = {
       ref <- ref[ref$type == "country", ]
     }, province = {
@@ -82,25 +83,26 @@ cc_cen <- function(x,
     #proj4string(ref) <- wgs84
     warning("assuming lat/lon for centroids.ref")
   }
-
-  limits <- raster::extent(dat) + buffer
-
+  
+  limits <- terra::ext(terra::buffer(dat, width = buffer))
+  
   # subset of testdatset according to speed up buffer
-  ref <- raster::crop(
-    sp::SpatialPoints(ref[, c("centroid.lon", "centroid.lat")], 
-                      proj4string = sp::CRS(wgs84)),
-    limits
-  )
-
+  lon_lat <- c("centroid.lon", "centroid.lat")
+  ref <- terra::crop(
+    terra::vect(ref[, lon_lat],
+                geom = lon_lat,
+                crs = wgs84),
+    limits)
+  
   # run buffering incase no centroids are found in the study area
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
-    if(geod){
+    if (geod) {
       # credits to https://seethedatablog.wordpress.com
       dg <- seq(from = 0, to = 360, by = 5)
       
-      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+      buff_XY <- geosphere::destPoint(p = terra::geom(ref)[, c("x", "y")], 
                                       b = rep(dg, each = length(ref)), 
                                       d = buffer)
       
@@ -110,21 +112,20 @@ cc_cen <- function(x,
       lst <- split(data.frame(buff_XY), f = id)
       
       # Make SpatialPolygons out of the list of coordinates
-      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
-      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
-      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
-      ref <- sp::disaggregate(spolys)
+      lst <- lapply(lst, as.matrix)
+      ref <- sapply(lst, terra::vect, crs = wgs84, type = "polygons")
+      ref <- Reduce(rbind, ref)
       
       #point in polygon test
-      out <- is.na(sp::over(x = dat, y = ref))
-    }else{
-      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
-      out <- is.na(sp::over(x = dat, y = ref))
-      }
+      out <- is.na(terra::extract(ref, dat)[, 2])
+    } else {
+      ref <- terra::buffer(ref, width = buffer)
+      out <- is.na(terra::extract(ref, dat)[, 2])
+    }
   }
   
   # implement the verification
-  if(verify & sum(out) > 0){
+  if (verify & sum(out) > 0) {
     # get flagged coordinates
     ver <- x[!out,]
     
@@ -145,16 +146,16 @@ cc_cen <- function(x,
     tester[is.na(tester)] <- 0
     
     #only flag those records that occure with only one coordinate in the buffer
-    out <-  tester$coord.count <= tester$species.count| out
+    out <-  tester$coord.count <= tester$species.count | out
   }
   # create output based on value argument
   if (verbose) {
-    if(value == "clean"){
+    if (value == "clean") {
       message(sprintf("Removed %s records.", sum(!out)))
-    }else{
+    } else {
       message(sprintf("Flagged %s records.", sum(!out)))
     }
   }
-
+  
   switch(value, clean = return(x[out, ]), flagged = return(out))
 }
