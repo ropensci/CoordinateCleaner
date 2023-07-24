@@ -28,8 +28,8 @@
 #' 
 #' @export
 #' @importFrom geosphere destPoint
-#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons SpatialPolygons SpatialPoints
-#' @importFrom rgeos gBuffer
+#' @importFrom terra vect buffer extract
+
 cc_gbif <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude",

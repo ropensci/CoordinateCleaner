@@ -8,7 +8,7 @@
 \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
 }
 \description{
-A \code{SpatialPolygonsDataFrame} with global coastlines, with a 1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify species in the sea, without flagging records in mangroves, marshes, etc.
+A \code{SpatVector} with global coastlines, with a 1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify species in the sea, without flagging records in mangroves, marshes, etc.
 }
 \examples{
 

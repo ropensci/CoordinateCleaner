@@ -33,9 +33,7 @@
 #' 
 #' @export
 #' @importFrom geosphere destPoint
-#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons proj4string "proj4string<-" SpatialPolygons SpatialPoints
-#' @importFrom raster extent crop
-#' @importFrom rgeos gBuffer
+#' @importFrom terra vect ext crop buffer geom
 
 cc_cen <- function(x, 
                    lon = "decimallongitude", 

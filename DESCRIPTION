@@ -48,12 +48,8 @@ Imports:
     graphics,
     grDevices,
     methods,
-    raster,
     rgbif,
-    rgdal,
-    rgeos,
     rnaturalearth (>= 0.3.2),
-    sp,
     stats,
     terra,
     tidyselect,
@@ -68,7 +64,8 @@ Suggests:
     rmarkdown,
     rnaturalearthdata,
     testthat,
-    viridis
+    viridis,
+    sf
 VignetteBuilder: 
     knitr
 Remotes: 

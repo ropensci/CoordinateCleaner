@@ -19,8 +19,7 @@ cc_inst(
 )
 }
 \arguments{
-\item{x}{data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
@@ -31,27 +30,27 @@ Default = \dQuote{decimallatitude}.}
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
 
-\item{buffer}{numerical. The buffer around each institution,
-where records should be flagged as problematic, in decimal
-degrees.  Default = 100m.}
+\item{buffer}{numerical. The buffer around each institution, where records
+should be flagged as problematic, in decimal degrees.  Default = 100m.}
 
 \item{geod}{logical. If TRUE the radius around each capital is calculated
-based on a sphere, buffer is in meters and independent of latitude. If FALSE
-the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = TRUE. See https://seethedatablog.wordpress.com/ 
-for detail and credits.}
+based on a sphere, buffer is in meters and independent of latitude. If
+FALSE the radius is calculated assuming planar coordinates and varies
+slightly with latitude. Default = TRUE.
+See https://seethedatablog.wordpress.com/ for detail and credits.}
 
-\item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
-be any SpatialPointsDataFrame, but the structure must be identical to
-\code{\link{institutions}}.  Default = \code{\link{institutions}}}
+\item{ref}{SpatVector (geometry: polygons). Providing the geographic
+gazetteer. Can be any SpatVector (geometry: polygons), but the structure
+must be identical to \code{\link{institutions}}.  Default =
+\code{\link{institutions}}}
 
-\item{verify}{logical. If TRUE, records close to institutions are only flagged,
-if there are no other records of the same species in the greater vicinity 
-(a radius of buffer * verify_mltpl).}
+\item{verify}{logical. If TRUE, records close to institutions are only
+flagged, if there are no other records of the same species in the greater
+vicinity (a radius of buffer * verify_mltpl).}
 
-\item{verify_mltpl}{numerical. indicates the factor by which the radius for verify
-exceeds the radius of the initial test. Default = 10, which might be suitable if 
-geod is TRUE, but might be too large otherwise.}
+\item{verify_mltpl}{numerical. indicates the factor by which the radius for
+verify exceeds the radius of the initial test. Default = 10, which might be
+suitable if geod is TRUE, but might be too large otherwise.}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -60,15 +59,15 @@ of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
-containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = \dQuote{clean}.
+  containing the records considered correct by the test (\dQuote{clean}) or a
+  logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = \dQuote{clean}.
 }
 \description{
-Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
-universities and museums, based on a global database of ~10,000 such
-biodiversity institutions. Coordinates from these locations can be related
-to data-entry errors, false automated geo-reference or individuals in
+Removes or flags records assigned to the location of zoos, botanical gardens,
+herbaria, universities and museums, based on a global database of ~10,000 such
+biodiversity institutions. Coordinates from these locations can be related to
+data-entry errors, false automated geo-reference or individuals in
 captivity/horticulture.
 }
 \details{
@@ -77,12 +76,12 @@ different latitudes.
 }
 \examples{
 
-x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
+x <- data.frame(species = letters[1:10],
+                decimallongitude = c(runif(99, -180, 180), 37.577800),
+                decimallatitude = c(runif(99, -90,90), 55.710800))
 
-#large buffer for demonstration, using geod = FALSE for shorter runtime              
-cc_inst(x, value = "flagged", buffer = 10, geod = FALSE) 
+#large buffer for demonstration, using geod = FALSE for shorter runtime
+cc_inst(x, value = "flagged", buffer = 10, geod = FALSE)
 
 \dontrun{
 #' cc_inst(x, value = "flagged", buffer = 50000) #geod = T

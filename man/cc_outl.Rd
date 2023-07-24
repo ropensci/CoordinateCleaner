@@ -21,8 +21,7 @@ cc_outl(
 )
 }
 \arguments{
-\item{x}{data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
@@ -30,12 +29,12 @@ Default = \dQuote{decimallongitude}.}
 \item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimallatitude}.}
 
-\item{species}{character string. The column with the species name. Default
-= \dQuote{species}.}
+\item{species}{character string. The column with the species name. Default =
+\dQuote{species}.}
 
-\item{method}{character string.  Defining the method for outlier
-selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
-\dQuote{mad}.  Default = \dQuote{quantile}.}
+\item{method}{character string.  Defining the method for outlier selection.
+See details. One of \dQuote{distance}, \dQuote{quantile}, \dQuote{mad}.
+Default = \dQuote{quantile}.}
 
 \item{mltpl}{numeric. The multiplier of the interquartile range
 (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
@@ -47,40 +46,44 @@ as outlier, in km. See details. Default = 1000.}
 
 \item{value}{character string.  Defining the output value. See value.}
 
-\item{sampling_thresh}{numeric. Cut off threshold for the sampling correction.
-Indicates the quantile of sampling in which outliers should be ignored. For instance, 
-if \code{sampling_thresh} == 0.25, records in the 25% worst sampled countries will 
-not be flagged as outliers. Default = 0 (no sampling correction).}
+\item{sampling_thresh}{numeric. Cut off threshold for the sampling
+correction. Indicates the quantile of sampling in which outliers should be
+ignored. For instance, if \code{sampling_thresh} == 0.25, records in the
+25% worst sampled countries will not be flagged as outliers. Default = 0
+(no sampling correction).}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
 
-\item{min_occs}{Minimum number of geographically unique datapoints needed for a species to be tested. 
-This is necessary for reliable outlier estimation.
-Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
-Default is to 7. If \code{method == 'distance'}, consider a lower threshold.}
+\item{min_occs}{Minimum number of geographically unique datapoints needed for
+a species to be tested. This is necessary for reliable outlier estimation.
+Species with fewer than min_occs records will not be tested and the output
+value will be 'TRUE'. Default is to 7. If \code{method == 'distance'},
+consider a lower threshold.}
 
-\item{thinning}{forces a raster approximation for the distance calculation. 
-This is routinely used for species with more than 10,000 records for computational reasons, 
-but can be enforced for smaller datasets, which is recommended when sampling is very uneven.}
+\item{thinning}{forces a raster approximation for the distance calculation.
+This is routinely used for species with more than 10,000 records for
+computational reasons, but can be enforced for smaller datasets, which is
+recommended when sampling is very uneven.}
 
-\item{thinning_res}{The resolution for the spatial thinning in decimal degrees. Default = 0.5.}
+\item{thinning_res}{The resolution for the spatial thinning in decimal
+degrees. Default = 0.5.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
-containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = \dQuote{clean}.
+  containing the records considered correct by the test (\dQuote{clean}) or a
+  logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = \dQuote{clean}.
 }
 \description{
-Removes out or flags records that are outliers in geographic space according to the method
-defined via the \code{method} argument. Geographic outliers often represent
-erroneous coordinates, for example due to data entry errors, imprecise
-geo-references, individuals in horticulture/captivity.
+Removes out or flags records that are outliers in geographic space according
+to the method defined via the \code{method} argument. Geographic outliers
+often represent erroneous coordinates, for example due to data entry errors,
+imprecise geo-references, individuals in horticulture/captivity.
 }
 \details{
 The method for outlier identification depends on the \code{method} argument.
-If \dQuote{outlier}: a boxplot method is used and records are flagged as
+If \dQuote{quantile}: a boxplot method is used and records are flagged as
 outliers if their \emph{mean} distance to all other records of the same
 species is larger than mltpl * the interquartile range of the mean distance
 of all records of this species. If \dQuote{mad}: the median absolute
@@ -90,33 +93,34 @@ the median of the mean distance of all points plus/minus the mad of the mean
 distances of all records of the species * mltpl. If \dQuote{distance}:
 records are flagged as outliers, if the \emph{minimum} distance to the next
 record of the species is > \code{tdi}. For species with records from > 10000
-unique locations a random sample of 1000 records is used for 
-the distance matrix calculation. The test skips species with fewer than \code{min_occs},
- geographically unique records.
+unique locations a random sample of 1000 records is used for the distance
+matrix calculation. The test skips species with fewer than \code{min_occs},
+geographically unique records.
 
-The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
-in any given location. To account for this, the sampling_cor option fetches 
-the number of occurrence records available 
-from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
-(the mean distance) for each records is than weighted by the log transformed 
-number of records per square kilometre in this country. 
-See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
+The likelihood of occurrence records being erroneous outliers is linked to
+the sampling effort in any given location. To account for this, the
+sampling_cor option fetches the number of occurrence records available from
+www.gbif.org, per country as a proxy of sampling effort. The outlier test
+(the mean distance) for each records is than weighted by the log transformed
+number of records per square kilometre in this country. See for
+\url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 an example and further explanation of the outlier test.
 }
 \note{
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more
-details and tutorials.
+  details and tutorials.
 }
 \examples{
 
-x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
+x <- data.frame(species = letters[1:10],
+                decimallongitude = runif(100, -180, 180),
                 decimallatitude = runif(100, -90,90))
-                
+
 cc_outl(x)
 cc_outl(x, method = "quantile", value = "flagged")
 cc_outl(x, method = "distance", value = "flagged", tdi = 10000)
 cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
+plot(x[, -1], col =  cc_outl(x, method = "distance", value = "flagged", tdi = 1000) + 1)
 
 }
 \seealso{
