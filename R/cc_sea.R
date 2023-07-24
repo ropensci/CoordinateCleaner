@@ -42,10 +42,8 @@
 #' 
 #' @export
 #' @importFrom dplyr inner_join
-#' @importFrom sp CRS SpatialPoints "proj4string<-" over proj4string coordinates
-#' @importFrom raster crop
-#' @importFrom rgdal readOGR
 #' @importFrom rnaturalearth ne_download
+#'@importFrom terra extract vect geom geomtype
 
 cc_sea <- function(x, 
                    lon = "decimallongitude", 

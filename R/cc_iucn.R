@@ -43,9 +43,9 @@
 #' cc_iucn(x = x, range = range, buffer = 0)
 #' 
 #' @export
-#' @importFrom rgeos gBuffer
 #' @importFrom dplyr bind_rows
-#' @importFrom sp CRS over Polygon Polygons proj4string SpatialPoints SpatialPolygons spTransform
+#' @importFrom terra vect buffer extract geomtype subset crs
+
 cc_iucn <- function(x,
                      range,
                      lon = "decimallongitude", 

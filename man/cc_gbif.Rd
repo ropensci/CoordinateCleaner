@@ -17,8 +17,7 @@ cc_gbif(
 )
 }
 \arguments{
-\item{x}{data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
@@ -36,9 +35,9 @@ where records should be flagged as problematic. Units depend on geod. Default = 
 based on a sphere, buffer is in meters. If FALSE
 the radius is calculated in degrees. Default = T.}
 
-\item{verify}{logical. If TRUE records are only flagged if they are the
-only record in a given species flagged close to a given reference.
-If FALSE, the distance is the only criterion}
+\item{verify}{logical. If TRUE records are only flagged if they are the only
+record in a given species flagged close to a given reference. If FALSE, the
+distance is the only criterion}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -47,9 +46,9 @@ of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
-containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = \dQuote{clean}.
+  containing the records considered correct by the test (\dQuote{clean}) or a
+  logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = \dQuote{clean}.
 }
 \description{
 Removes or flags records within 0.5 degree radius around the GBIF headquarters in

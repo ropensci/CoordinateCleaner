@@ -14,8 +14,7 @@ cc_urb(
 )
 }
 \arguments{
-\item{x}{data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
@@ -24,10 +23,10 @@ Default = \dQuote{decimallongitude}.}
 Default = \dQuote{decimallatitude}.}
 
 \item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer
-with the urban areas. See details. By default 
-rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas').
-Can be any \code{SpatialPolygonsDataframe}, but the structure must be
-identical to \code{rnaturalearth::ne_download()}.}
+with the urban areas. See details. By default
+rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas'). Can be
+any \code{SpatialPolygonsDataframe}, but the structure must be identical to
+\code{rnaturalearth::ne_download()}.}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -36,19 +35,19 @@ of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
-containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = \dQuote{clean}.
+  containing the records considered correct by the test (\dQuote{clean}) or a
+  logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = \dQuote{clean}.
 }
 \description{
-Removes or flags records from inside urban areas, based on a geographic gazetteer.
-Often records from large databases span substantial time periods (centuries)
-and old records might represent habitats which today are replaced by city
-area.
+Removes or flags records from inside urban areas, based on a geographic
+gazetteer. Often records from large databases span substantial time periods
+(centuries) and old records might represent habitats which today are replaced
+by city area.
 }
 \note{
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more
-details and tutorials.
+  details and tutorials.
 }
 \examples{
 

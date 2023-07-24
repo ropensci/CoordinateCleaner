@@ -81,11 +81,10 @@
 #' @export
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats mad IQR median quantile
-#' @importFrom sp over SpatialPoints
 #' @importFrom dplyr left_join
-#' @importFrom raster crop extent ncell res setValues
 #' @importFrom rgbif occ_count
-#' 
+#' @importFrom terra vect expanse 
+
 
 cc_outl <- function(x, 
                     lon = "decimallongitude", 

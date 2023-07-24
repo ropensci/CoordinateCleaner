@@ -19,8 +19,7 @@ cc_cen(
 )
 }
 \arguments{
-\item{x}{data.frame. Containing geographical coordinates and species
-names.}
+\item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 Default = \dQuote{decimallongitude}.}
@@ -36,22 +35,23 @@ centroid, where records should be flagged as problematic. Units depend on geod.
 Default = 1 kilometre.}
 
 \item{geod}{logical. If TRUE the radius around each capital is calculated
-based on a sphere, buffer is in meters and independent of latitude. If FALSE
-the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = TRUE. See https://seethedatablog.wordpress.com/ 
-for detail and credits.}
+based on a sphere, buffer is in meters and independent of latitude. If
+FALSE the radius is calculated assuming planar coordinates and varies
+slightly with latitude. Default = TRUE.
+See https://seethedatablog.wordpress.com/ for detail and credits.}
 
 \item{test}{a character string. Specifying the details of the test. One of
 c(\dQuote{both}, \dQuote{country}, \dQuote{provinces}).  If both tests for
 country and province centroids.}
 
-\item{ref}{SpatialPointsDataFrame. Providing the geographic gazetteer. Can
-be any SpatialPointsDataFrame, but the structure must be identical to
-\code{\link{countryref}}.  Default = \code{\link{countryref}}.}
+\item{ref}{SpatVector (geometry: polygons). Providing the geographic
+gazetteer. Can be any SpatVector (geometry: polygons), but the structure
+must be identical to \code{\link{countryref}}.  Default =
+\code{\link{countryref}}.}
 
-\item{verify}{logical. If TRUE records are only flagged if they are the
-only record in a given species flagged close to a given reference.
-If FALSE, the distance is the only criterion}
+\item{verify}{logical. If TRUE records are only flagged if they are the only
+record in a given species flagged close to a given reference. If FALSE, the
+distance is the only criterion}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -60,9 +60,9 @@ of records flagged.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
-containing the records considered correct by the test (\dQuote{clean}) or a
-logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = \dQuote{clean}.
+  containing the records considered correct by the test (\dQuote{clean}) or a
+  logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = \dQuote{clean}.
 }
 \description{
 Removes or flags records within a radius around the geographic centroids of political
@@ -76,13 +76,12 @@ details and tutorials.
 \examples{
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
-                
+                decimallongitude = c(runif(99, -180, 180), -47.92), 
+                decimallatitude = c(runif(99, -90,90), -15.78))
 cc_cen(x, geod = FALSE)
 
 \dontrun{
-#' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
+cc_inst(x, value = "flagged", buffer = 50000) #geod = T
 }
 
 }

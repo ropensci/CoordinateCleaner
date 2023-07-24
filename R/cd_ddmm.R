@@ -71,7 +71,8 @@
 #' 
 #' @export
 #' @importFrom stats complete.cases binom.test
-#' @importFrom raster plot raster
+#' @importFrom terra plot rast
+
 cd_ddmm <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude", 
@@ -170,8 +171,8 @@ cd_ddmm <- function(x,
 
       # diagnostic plot of the decimal matrix
       if (diagnostic) {
-        plo <- raster(dat_t1)
-        raster::plot(plo)
+        plo <- terra::rast(dat_t1)
+        terra::plot(plo)
         title(as.logical(flag_t1))
       }
     } else {
