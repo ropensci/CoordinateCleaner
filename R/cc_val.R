@@ -1,7 +1,7 @@
 #' Identify Invalid lat/lon Coordinates
 #' 
 #' Removes or flags non-numeric and not available coordinates
-#' as well as lat >90, la <-90, lon > 180 and lon < -180 are flagged.
+#' as well as lat >90, lat <-90, lon > 180 and lon < -180 are flagged.
 #' 
 #' This test is obligatory before running any further tests of
 #' CoordinateCleaner, as additional tests only run with valid coordinates.
@@ -54,14 +54,12 @@ cc_val <- function(x,
   out <- !Reduce("|", out)
 
   if (verbose) {
-    if(value == "clean"){
+    if (value == "clean") {
       message(sprintf("Removed %s records.", sum(!out)))
-    }else{
+    } else {
       message(sprintf("Flagged %s records.", sum(!out)))
     }
   }
 
   switch(value, clean = return(x[out, ]), flagged = return(out))
-
-  return(out)
 }

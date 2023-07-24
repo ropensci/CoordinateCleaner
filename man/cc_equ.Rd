@@ -39,8 +39,9 @@ logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test fail
 problematic . Default = \dQuote{clean}.
 }
 \description{
-Removes or flags records with equal latitude and longitude coordinates, either exact or
-absolute. Equal coordinates can often indicate data entry errors.
+Removes or flags records with equal latitude and longitude coordinates,
+either exact or absolute. Equal coordinates can often indicate data entry
+errors.
 }
 \examples{
 

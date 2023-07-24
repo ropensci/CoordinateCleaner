@@ -57,11 +57,11 @@ cc_gbif <- function(x,
   
   # set default projection
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
-
-  dat <- sp::SpatialPoints(x[, c(lon, lat)], 
-                           proj4string = sp::CRS(wgs84))
-
-  if(geod){
+  dat <- terra::vect(x[, c(lon, lat)],
+                     geom = c(lon, lat),
+                     crs = wgs84)
+  
+  if (geod) {
     # credits to https://seethedatablog.wordpress.com
     dg <- seq(from = 0, to = 360, by = 5)
     
@@ -74,20 +74,19 @@ cc_gbif <- function(x,
     
     lst <- split(data.frame(buff_XY), f = id)
     
+    
     # Make SpatialPolygons out of the list of coordinates
-    poly   <- lapply(lst, sp::Polygon, hole = FALSE)
-    polys  <- lapply(list(poly), sp::Polygons, ID = NA)
-    ref <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
+    lst <- lapply(lst, as.matrix)
+    ref <- sapply(lst, terra::vect, crs = wgs84, type = "polygons")
+    ref <- Reduce(rbind, ref)
     
     #point in polygon test
-    out <- is.na(sp::over(x = dat, y = ref))
-  }else{
-    ref <- rgeos::gBuffer(sp::SpatialPoints(cbind(12.58, 55.67), 
-                                            proj4string = sp::CRS(wgs84)), 
-                          width = 0.5)
-    
-    out <- sp::over(x = dat, y = ref)
-    out <- is.na(out)
+    out <- is.na(terra::extract(ref, dat)[, 2])
+  } else {
+    ref_cen <- terra::vect(cbind(12.58, 55.67),
+                           crs = wgs84)
+    ref <- terra::buffer(ref_cen, width = buffer)
+    out <- is.na(terra::extract(ref, dat)[, 2])
   }
   
   # implement the verification

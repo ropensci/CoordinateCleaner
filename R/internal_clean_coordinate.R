@@ -1,15 +1,15 @@
 # Check projection of custom reference and reproject to wgs84 if necessary
-reproj <- function(ref){
+reproj <- function(ref) {
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
   
   # if no projection information is given assume wgs84
-  if(is.na(sp::proj4string(ref))){
+  if (is.na(terra::crs(ref, proj = TRUE))) {
     warning("no projection information for reference found, 
             assuming '+proj=longlat +datum=WGS84 +no_defs'")
-    proj4string(ref) <- wgs84
-  }else if(sp::proj4string(ref) != wgs84){
+    ref <- terra::project(ref, wgs84)
+  } else if (terra::crs(ref, proj = TRUE) != wgs84) {
     #otherwise reproject
-    ref <- sp::spTransform(ref, sp::CRS(wgs84))
+    ref <- terra::project(ref, wgs84)
     warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs'")
   }
   return(ref)
@@ -20,7 +20,7 @@ reproj <- function(ref){
 
 ras_create <- function(x, lat, lon,  thinning_res){
   # get data extend
-  ex <- raster::extent(sp::SpatialPoints(x[, c(lon, lat)])) + thinning_res * 2
+  ex <- terra::ext(terra::vect(x[, c(lon, lat)])) + thinning_res * 2
   
   # check for boundary conditions
   if(ex[1] < -180 | ex[2] > 180 | ex[3] < -90 | ex[4] >90){
@@ -36,11 +36,11 @@ ras_create <- function(x, lat, lon,  thinning_res){
   }
   
   # create raster
-  ras <- raster::raster(x = ex, resolution = thinning_res)
+  ras <- terra::rast(x = ex, resolution = thinning_res)
   
   # set cell ids
-  vals <- seq_len(raster::ncell(ras))
-  ras <- raster::setValues(ras, vals)
+  vals <- seq_len(terra::ncell(ras))
+  ras <- terra::setValues(ras, vals)
   
   return(ras)
 }
@@ -49,14 +49,17 @@ ras_create <- function(x, lat, lon,  thinning_res){
 # A function to get the distance between raster midpoints and 
 #output a data.frame with the distances and the cell IDs as row and column names for cc_outl
 
-ras_dist <-  function(x, lat, lon, ras, weights){
+ras_dist <-  function(x, lat, lon, ras, weights) {
   # x = a data.frame of point coordinates, ras = a raster with cell IDs as layer,
   #weight = logical, shall the distance matrix be weightened by the number of points per cell?
   # assign each point to a raster cell
-  pts <- raster::extract(x = ras, y = sp::SpatialPoints(x[, c(lon, lat)]))
+  pts <- terra::extract(x = ras, 
+                        y = terra::vect(x[, c(lon, lat)],
+                                        geom = c(lon, lat),
+                                        crs = ras))
   
   # convert to data.frame
-  midp <- data.frame(raster::rasterToPoints(ras))
+  midp <- data.frame(terra::as.points(ras))
   
   # retain only cells that contain points
   midp <- midp[midp$layer %in% unique(pts),]
@@ -76,7 +79,7 @@ ras_dist <-  function(x, lat, lon, ras, weights){
     # approximate within cell distance as half 
     # the cell size, assumin 1 deg = 100km
     # this is crude, but doesn't really matter
-    dist[dist == 0] <- 100 * mean(raster::res(ras)) / 2
+    dist[dist == 0] <- 100 * mean(terra::res(ras)) / 2
     
     # weight matrix to account for the number of points per cell
     ## the number of points in each cell
@@ -92,7 +95,7 @@ ras_dist <-  function(x, lat, lon, ras, weights){
     dist <- round(dist * wm, 0)
     
     dist <- list(pts = pts, dist = dist, wm = wm)
-  }else{
+  } else {
     # set diagonale to NA, so it does not influence the mean
     dist[dist == 0] <- NA
     

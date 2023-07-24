@@ -79,16 +79,16 @@ cf_outl <- function(x,
   }
   
   #Also allow PBDB standard names
-  if("lat" %in% names(x) & !("decimallatitude" %in% names(x))){
+  if ("lat" %in% names(x) & !(lat %in% names(x))){
+    warning(paste0(lat, " not found. Using lat instead."))
     lat <- "lat"
-    warning("decimallatitude not found. Using lat instead.")
   }
   
-  if("lng" %in% names(x) & !("decimallongitude" %in% names(x))){
+  if ("lng" %in% names(x) & !(lon %in% names(x))){
+    warning(paste0(lon, " not found. Using lat instead."))
     lon <- "lng"
-    warning("decimallongitude not found. Using lng instead.")
   }
-
+  
   out <- replicate(replicates, expr = {
 
     # create testing data by simulating points within the age range of each
@@ -302,7 +302,7 @@ cf_outl <- function(x,
 
   # report to screen
   if (verbose) {
-    if(value == "clean"){
+    if (value == "clean"){
       message(sprintf("Removed %s records.", sum(!out, na.rm = TRUE)))
     }else{
       message(sprintf("Flagged %s records.", sum(!out, na.rm = TRUE)))
@@ -314,4 +314,3 @@ cf_outl <- function(x,
          flagged = return(out), 
          ids = return(which(!out)))
 }
-80

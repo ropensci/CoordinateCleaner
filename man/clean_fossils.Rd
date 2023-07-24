@@ -54,17 +54,16 @@ specified taxon. Default = \dQuote{accepted_name}.}
 See details for all tests available. Default = c("centroids",
 "equal", "gbif", "institutions", "temprange", "spatiotemp", "agesequal", "zeros")}
 
-\item{countries}{a character string. The column with the country assignment of
-each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
-countries test is skipped.}
+\item{countries}{a character string. The column with the country assignment
+of each record in three letter ISO code. Default = \dQuote{countrycode}. If
+missing, the countries test is skipped.}
 
 \item{centroids_rad}{numeric. The radius around centroid coordinates in
 meters. Default = 1000.}
 
-\item{centroids_detail}{a \code{character string}. If set to
-\sQuote{country} only country (adm-0) centroids are tested, if set to
-\sQuote{provinces} only province (adm-1) centroids are tested.  Default =
-\sQuote{both}.}
+\item{centroids_detail}{a \code{character string}. If set to \sQuote{country}
+only country (adm-0) centroids are tested, if set to \sQuote{provinces}
+only province (adm-1) centroids are tested.  Default = \sQuote{both}.}
 
 \item{inst_rad}{numeric. The radius around biodiversity institutions
 coordinates in metres. Default = 100.}
@@ -87,13 +86,13 @@ distance matrix calculation. See details.  Default = 5.}
 the centroid test. If NULL, the \code{countryref} dataset is used.
 Alternatives must be identical in structure.}
 
-\item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative
-reference for the countries test. If NULL, the
+\item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
+for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium')} dataset is used.}
 
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
-biodiversity institution test. If NULL, the \code{institutions} dataset
-is used.  Alternatives must be identical in structure.}
+biodiversity institution test. If NULL, the \code{institutions} dataset is
+used.  Alternatives must be identical in structure.}
 
 \item{value}{a character string defining the output value. See the value
 section for details. one of \sQuote{spatialvalid}, \sQuote{summary},

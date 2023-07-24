@@ -1,13 +1,13 @@
 #' Geographic Cleaning of Coordinates from Biologic Collections
-#' 
+#'
 #' Cleaning geographic coordinates by multiple empirical tests to flag
 #' potentially erroneous coordinates, addressing issues common in biological
 #' collection databases.
-#' 
+#'
 #' The function needs all coordinates to be formally valid according to WGS84.
-#' If the data contains invalid coordinates, the function will stop and return
-#' a vector flagging the invalid records. TRUE = non-problematic coordinate,
-#' FALSE = potentially problematic coordinates. 
+#' If the data contains invalid coordinates, the function will stop and return a
+#' vector flagging the invalid records. TRUE = non-problematic coordinate, FALSE
+#' = potentially problematic coordinates.
 #' * capitals tests a radius around adm-0 capitals. The
 #' radius is \code{capitals_rad}.
 #' * centroids tests a radius around country centroids.
@@ -16,8 +16,8 @@
 #' country indicated in the country column.  *Switched off by default.*
 #' * duplicates tests for duplicate records. This
 #' checks for identical coordinates or if a species vector is provided for
-#' identical coordinates within a species. All but the first records are
-#' flagged as duplicates. *Switched off by default.*
+#' identical coordinates within a species. All but the first records are flagged
+#' as duplicates. *Switched off by default.*
 #' * equal tests for equal absolute longitude and latitude.
 #' * gbif tests a one-degree radius around the GBIF
 #' headquarters in Copenhagen, Denmark.
@@ -26,120 +26,118 @@
 #' \code{inst_rad}.
 #' * outliers tests each species for outlier records.
 #' Depending on the \code{outliers_mtp} and \code{outliers.td} arguments either
-#' flags records that are a minimum distance away from all other records of
-#' this species (\code{outliers_td}) or records that are outside a multiple of
-#' the interquartile range of minimum distances to the next neighbour of this
-#' species (\code{outliers_mtp}). Three different methods are available 
-#' for the outlier test: "If
-#' \dQuote{outlier} a boxplot method is used and records are flagged as
-#' outliers if their \emph{mean} distance to all other records of the same
-#' species is larger than mltpl * the interquartile range of the mean distance
-#' of all records of this species. If \dQuote{mad} the median absolute
+#' flags records that are a minimum distance away from all other records of this
+#' species (\code{outliers_td}) or records that are outside a multiple of the
+#' interquartile range of minimum distances to the next neighbour of this
+#' species (\code{outliers_mtp}). Three different methods are available for the
+#' outlier test: "If \dQuote{outlier} a boxplot method is used and records are
+#' flagged as outliers if their \emph{mean} distance to all other records of the
+#' same species is larger than mltpl * the interquartile range of the mean
+#' distance of all records of this species. If \dQuote{mad} the median absolute
 #' deviation is used. In this case a record is flagged as outlier, if the
 #' \emph{mean} distance to all other records of the same species is larger than
 #' the median of the mean distance of all points plus/minus the mad of the mean
-#' distances of all records of the species * mltpl. If \dQuote{distance}
-#' records are flagged as outliers, if the \emph{minimum} distance to the next
-#' record of the species is > \code{tdi}.
+#' distances of all records of the species * mltpl. If \dQuote{distance} records
+#' are flagged as outliers, if the \emph{minimum} distance to the next record of
+#' the species is > \code{tdi}.
 #' * ranges tests if records fall within provided natural range polygons on
-#'   a per species basis. See \code{\link{cc_iucn}} for details.
+#' a per species basis. See \code{\link{cc_iucn}} for details.
 #' * seas tests if coordinates fall into the ocean.
-#' * urban tests if coordinates are from urban areas. 
+#' * urban tests if coordinates are from urban areas.
 #' *Switched off by default*
 #' * validity checks if coordinates correspond to a lat/lon coordinate reference system.
-#' This test is always on, since all records need to pass for any other test to run.
+#' This test is always on, since all records need to pass for any other test to
+#' run.
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 #' 
 #' @aliases summary.spatialvalid is.spatialvalid
-#' 
+#'
 #' @param species a character string. A vector of the same length as rows in x,
-#' with the species identity for each record.  If NULL, \code{tests} must not
-#' include the "outliers" or "duplicates" tests.
-#' @param countries a character string. The column with the country assignment of
-#' each record in three letter ISO code. Default = \dQuote{countrycode}. If missing, the
-#' countries test is skipped.
-#' @param tests a vector of character strings, indicating which tests to run. 
-#' See details for all tests available. Default = c("capitals", "centroids", 
-#' "equal", "gbif", "institutions", "outliers",
-#' "seas", "zeros")
-#' @param capitals_rad numeric. The radius around capital coordinates in
-#' meters. Default = 10000.
+#'   with the species identity for each record.  If NULL, \code{tests} must not
+#'   include the "outliers" or "duplicates" tests.
+#' @param countries a character string. The column with the country assignment
+#'   of each record in three letter ISO code. Default = \dQuote{countrycode}. If
+#'   missing, the countries test is skipped.
+#' @param tests a vector of character strings, indicating which tests to run.
+#'   See details for all tests available. Default = c("capitals", "centroids",
+#'   "equal", "gbif", "institutions", "outliers", "seas", "zeros")
+#' @param capitals_rad numeric. The radius around capital coordinates in meters.
+#'   Default = 10000.
 #' @param centroids_rad numeric. The radius around centroid coordinates in
-#' meters. Default = 1000.
-#' @param centroids_detail a \code{character string}. If set to
-#' \sQuote{country} only country (adm-0) centroids are tested, if set to
-#' \sQuote{provinces} only province (adm-1) centroids are tested.  Default =
-#' \sQuote{both}.
+#'   meters. Default = 1000.
+#' @param centroids_detail a \code{character string}. If set to \sQuote{country}
+#'   only country (adm-0) centroids are tested, if set to \sQuote{provinces}
+#'   only province (adm-1) centroids are tested.  Default = \sQuote{both}.
 #' @param inst_rad numeric. The radius around biodiversity institutions
-#' coordinates in metres. Default = 100.
+#'   coordinates in metres. Default = 100.
 #' @param outliers_method The method used for outlier testing. See details.
 #' @param outliers_mtp numeric. The multiplier for the interquartile range of
-#' the outlier test.  If NULL \code{outliers.td} is used.  Default = 5.
+#'   the outlier test.  If NULL \code{outliers.td} is used.  Default = 5.
 #' @param outliers_td numeric.  The minimum distance of a record to all other
-#' records of a species to be identified as outlier, in km. Default = 1000.
+#'   records of a species to be identified as outlier, in km. Default = 1000.
 #' @param outliers_size numerical.  The minimum number of records in a dataset
-#' to run the taxon-specific outlier test.  Default = 7.
+#'   to run the taxon-specific outlier test.  Default = 7.
 #' @param range_rad buffer around natural ranges. Default = 0.
 #' @param zeros_rad numeric. The radius around 0/0 in degrees. Default = 0.5.
 #' @param capitals_ref a \code{data.frame} with alternative reference data for
-#' the country capitals test. If missing, the \code{countryref} dataset is used.
-#' Alternatives must be identical in structure.
+#'   the country capitals test. If missing, the \code{countryref} dataset is
+#'   used. Alternatives must be identical in structure.
 #' @param centroids_ref a \code{data.frame} with alternative reference data for
-#' the centroid test. If NULL, the \code{countryref} dataset is used.
-#' Alternatives must be identical in structure.
-#' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative
-#' reference for the countries test. If NULL, the
-#' \code{rnaturalearth:ne_countries('medium')} dataset is used.
-#' @param country_refcol the column name in the reference dataset, containing the relevant
-#' ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
-#' codes in the reference dataset. See notes.
+#'   the centroid test. If NULL, the \code{countryref} dataset is used.
+#'   Alternatives must be identical in structure.
+#' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#'   for the countries test. If NULL, the
+#'   \code{rnaturalearth:ne_countries('medium')} dataset is used.
+#' @param country_refcol the column name in the reference dataset, containing
+#'   the relevant ISO codes for matching. Default is to "iso_a3_eh" which
+#'   referes to the ISO-3 codes in the reference dataset. See notes.
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
-#' biodiversity institution test. If NULL, the \code{institutions} dataset
-#' is used.  Alternatives must be identical in structure.
+#'   biodiversity institution test. If NULL, the \code{institutions} dataset is
+#'   used.  Alternatives must be identical in structure.
 #' @param range_ref a \code{SpatialPolygonsDataFrame} of species natural ranges.
-#' Required to include the 'ranges' test. See \code{\link{cc_iucn}} for details.
+#'   Required to include the 'ranges' test. See \code{\link{cc_iucn}} for
+#'   details.
 #' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
-#' for the seas test. If NULL, the 
-#' rnaturalearth::ne_download(=scale = 110, type = 'land', category = 'physical') 
-#' dataset is used.
-#' @param seas_scale The scale of the default landmass reference. Must be one of 10, 50, 110.
-#' Higher numbers equal higher detail. Default = 50.
+#'   for the seas test. If NULL, the rnaturalearth::ne_download(=scale = 110,
+#'   type = 'land', category = 'physical') dataset is used.
+#' @param seas_scale The scale of the default landmass reference. Must be one of
+#'   10, 50, 110. Higher numbers equal higher detail. Default = 50.
 #' @param urban_ref a \code{SpatialPolygonsDataFrame} as alternative reference
-#' for the urban test. If NULL, the test is skipped. See details for a
-#' reference gazetteers.
+#'   for the urban test. If NULL, the test is skipped. See details for a
+#'   reference gazetteers.
 #' @param value a character string defining the output value. See the value
-#' section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
-#' \sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.
+#'   section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
+#'   \sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.
 #' @param report logical or character.  If TRUE a report file is written to the
-#' working directory, summarizing the cleaning results. If a character, the
-#' path to which the file should be written.  Default = FALSE.
+#'   working directory, summarizing the cleaning results. If a character, the
+#'   path to which the file should be written.  Default = FALSE.
 #' @inheritParams cc_cap
-#' 
-#' @return Depending on the output argument: 
+#'
+#' @return Depending on the output argument:
 #' \describe{
 #' \item{\dQuote{spatialvalid}}{an object of class \code{spatialvalid} similar to x
 #' with one column added for each test. TRUE = clean coordinate entry, FALSE = potentially
 #' problematic coordinate entries.  The .summary column is FALSE if any test flagged
-#' the respective coordinate.} 
+#' the respective coordinate.}
 #' \item{\dQuote{flagged}}{a logical vector with the
 #' same order as the input data summarizing the results of all test. TRUE =
 #' clean coordinate, FALSE = potentially problematic (= at least one test
-#' failed).} 
+#' failed).}
 #' \item{\dQuote{clean}}{a \code{data.frame} similar to x
 #' with potentially problematic records removed}
 #' }
-#' 
+#'
 #' @note Always tests for coordinate validity: non-numeric or missing
-#' coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
-#' See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
-#' and tutorials.
-#' 
-#' @note The country_refcol argument allows to adapt the function to the structure of
-#' alternative reference datasets. For instance, for 
-#' \code{rnaturalearth::ne_countries(scale = "small")}, the default will fail, 
-#' but country_refcol = "iso_a3" will work.
-#' 
+#'   coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
+#'   See \url{https://ropensci.github.io/CoordinateCleaner/} for more details
+#'   and tutorials.
+#'
+#' @note The country_refcol argument allows to adapt the function to the
+#'   structure of alternative reference datasets. For instance, for
+#'   \code{rnaturalearth::ne_countries(scale = "small")}, the default will fail,
+#'   but country_refcol = "iso_a3" will work.
+#'
 #' @keywords Coordinate cleaning wrapper
 #' @family Wrapper functions
 #' 
@@ -342,9 +340,9 @@ clean_coordinates <- function(x,
   
   ## Natural ranges
   if ("range" %in% tests) {
-    if(is.null(range_rad)){
+    if (!is.null(range_rad)) {
       stop("'range_rad' not found")
-    }else{
+    } else {
       out$rang <- cc_iucn(x,
                            lon = lon, lat = lat, species = species,
                            buffer = range_rad,

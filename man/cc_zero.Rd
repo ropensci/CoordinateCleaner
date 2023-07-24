@@ -25,7 +25,7 @@ Default = \dQuote{decimallatitude}.}
 
 \item{buffer}{numerical. The buffer around the 0/0 point,
 where records should be flagged as problematic, in decimal
-degrees.  Default = 0.1.}
+degrees.  Default = 0.5.}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -39,10 +39,10 @@ logical vector (\dQuote{flagged}), with TRUE = test passed and FALSE = test fail
 problematic . Default = \dQuote{clean}.
 }
 \description{
-Removes or flags records with either zero longitude or latitude and a radius around the
-point at zero longitude and zero latitude. These problems are often due to
-erroneous data-entry or geo-referencing and can lead to typical patterns of
-high diversity around the equator.
+Removes or flags records with either zero longitude or latitude and a radius
+around the point at zero longitude and zero latitude. These problems are
+often due to erroneous data-entry or geo-referencing and can lead to typical
+patterns of high diversity around the equator.
 }
 \note{
 See \url{https://ropensci.github.io/CoordinateCleaner/} for more

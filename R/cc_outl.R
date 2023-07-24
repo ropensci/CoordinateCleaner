@@ -1,12 +1,12 @@
 #' Identify Geographic Outliers in Species Distributions
-#' 
-#' Removes out or flags records that are outliers in geographic space according to the method
-#' defined via the \code{method} argument. Geographic outliers often represent
-#' erroneous coordinates, for example due to data entry errors, imprecise
-#' geo-references, individuals in horticulture/captivity.
-#' 
+#'
+#' Removes out or flags records that are outliers in geographic space according
+#' to the method defined via the \code{method} argument. Geographic outliers
+#' often represent erroneous coordinates, for example due to data entry errors,
+#' imprecise geo-references, individuals in horticulture/captivity.
+#'
 #' The method for outlier identification depends on the \code{method} argument.
-#' If \dQuote{outlier}: a boxplot method is used and records are flagged as
+#' If \dQuote{quantile}: a boxplot method is used and records are flagged as
 #' outliers if their \emph{mean} distance to all other records of the same
 #' species is larger than mltpl * the interquartile range of the mean distance
 #' of all records of this species. If \dQuote{mad}: the median absolute
@@ -16,63 +16,68 @@
 #' distances of all records of the species * mltpl. If \dQuote{distance}:
 #' records are flagged as outliers, if the \emph{minimum} distance to the next
 #' record of the species is > \code{tdi}. For species with records from > 10000
-#' unique locations a random sample of 1000 records is used for 
-#' the distance matrix calculation. The test skips species with fewer than \code{min_occs},
-#'  geographically unique records.
-#' 
-#' The likelihood of occurrence records being erroneous outliers is linked to the sampling effort
-#' in any given location. To account for this, the sampling_cor option fetches 
-#' the number of occurrence records available 
-#' from www.gbif.org, per country as a proxy of sampling effort. The outlier test 
-#' (the mean distance) for each records is than weighted by the log transformed 
-#' number of records per square kilometre in this country. 
-#' See for \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
+#' unique locations a random sample of 1000 records is used for the distance
+#' matrix calculation. The test skips species with fewer than \code{min_occs},
+#' geographically unique records.
+#'
+#' The likelihood of occurrence records being erroneous outliers is linked to
+#' the sampling effort in any given location. To account for this, the
+#' sampling_cor option fetches the number of occurrence records available from
+#' www.gbif.org, per country as a proxy of sampling effort. The outlier test
+#' (the mean distance) for each records is than weighted by the log transformed
+#' number of records per square kilometre in this country. See for
+#' \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13152}
 #' an example and further explanation of the outlier test.
-#' 
-#' @param species character string. The column with the species name. Default
-#' = \dQuote{species}.
-#' @param method character string.  Defining the method for outlier
-#' selection.  See details. One of \dQuote{distance}, \dQuote{quantile},
-#' \dQuote{mad}.  Default = \dQuote{quantile}.
+#'
+#' @param species character string. The column with the species name. Default =
+#'   \dQuote{species}.
+#' @param method character string.  Defining the method for outlier selection.
+#'   See details. One of \dQuote{distance}, \dQuote{quantile}, \dQuote{mad}.
+#'   Default = \dQuote{quantile}.
 #' @param mltpl numeric. The multiplier of the interquartile range
 #' (\code{method == 'quantile'}) or median absolute deviation (\code{method ==
 #' 'mad'})to identify outliers. See details.  Default = 5.
 #' @param tdi numeric.  The minimum absolute distance (\code{method ==
-#' 'distance'}) of a record to all other records of a species to be identified
-#' as outlier, in km. See details. Default = 1000.
-#' @param sampling_thresh numeric. Cut off threshold for the sampling correction.
-#' Indicates the quantile of sampling in which outliers should be ignored. For instance, 
-#' if \code{sampling_thresh} == 0.25, records in the 25% worst sampled countries will 
-#' not be flagged as outliers. Default = 0 (no sampling correction).
-#' @param min_occs Minimum number of geographically unique datapoints needed for a species to be tested. 
-#' This is necessary for reliable outlier estimation.
-#' Species with fewer than min_occs records will not be tested and the output value will be 'TRUE'.
-#' Default is to 7. If \code{method == 'distance'}, consider a lower threshold.
-#' @param thinning forces a raster approximation for the distance calculation. 
-#' This is routinely used for species with more than 10,000 records for computational reasons, 
-#' but can be enforced for smaller datasets, which is recommended when sampling is very uneven.
-#' @param thinning_res The resolution for the spatial thinning in decimal degrees. Default = 0.5.
+#'   'distance'}) of a record to all other records of a species to be identified
+#'   as outlier, in km. See details. Default = 1000.
+#' @param sampling_thresh numeric. Cut off threshold for the sampling
+#'   correction. Indicates the quantile of sampling in which outliers should be
+#'   ignored. For instance, if \code{sampling_thresh} == 0.25, records in the
+#'   25% worst sampled countries will not be flagged as outliers. Default = 0
+#'   (no sampling correction).
+#' @param min_occs Minimum number of geographically unique datapoints needed for
+#'   a species to be tested. This is necessary for reliable outlier estimation.
+#'   Species with fewer than min_occs records will not be tested and the output
+#'   value will be 'TRUE'. Default is to 7. If \code{method == 'distance'},
+#'   consider a lower threshold.
+#' @param thinning forces a raster approximation for the distance calculation.
+#'   This is routinely used for species with more than 10,000 records for
+#'   computational reasons, but can be enforced for smaller datasets, which is
+#'   recommended when sampling is very uneven.
+#' @param thinning_res The resolution for the spatial thinning in decimal
+#'   degrees. Default = 0.5.
 #' @inheritParams cc_cap
-#' 
+#'
 #' @inherit cc_cap return
-#' 
+#'
 #' @note See \url{https://ropensci.github.io/CoordinateCleaner/} for more
-#' details and tutorials.
-#' 
+#'   details and tutorials.
+#'
 #' @keywords Coordinate cleaning
 #' @family Coordinates
-#' 
+#'
 #' @examples
-#' 
-#' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(100, -180, 180), 
+#'
+#' x <- data.frame(species = letters[1:10],
+#'                 decimallongitude = runif(100, -180, 180),
 #'                 decimallatitude = runif(100, -90,90))
-#'                 
+#'
 #' cc_outl(x)
 #' cc_outl(x, method = "quantile", value = "flagged")
 #' cc_outl(x, method = "distance", value = "flagged", tdi = 10000)
 #' cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
-#' 
+#' plot(x[, -1], col =  cc_outl(x, method = "distance", value = "flagged", tdi = 1000) + 1)
+#'
 #' @export
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats mad IQR median quantile
@@ -81,6 +86,7 @@
 #' @importFrom raster crop extent ncell res setValues
 #' @importFrom rgbif occ_count
 #' 
+
 cc_outl <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude", 
@@ -121,30 +127,30 @@ cc_outl <- function(x,
   splist <- splist[test >= min_occs]
   
   # issue warning if species are omitted due to few records
-  if(any(test < min_occs)){
+  if (any(test < min_occs)) {
     warning(sprintf(
       "Species with fewer than %o unique records will not be tested.", 
       min_occs))
   }
  
   #Return values in case all species have less than the minimum number of occurrences
-  if(all(test < min_occs)){
+  if (all(test < min_occs)) {
     switch(value, 
            clean = return(x), 
            flagged = return(rep(TRUE, nrow(x))), 
            ids = return(init_ids))
-  }else{
+  } else {
     
     # create a flag for raster approximation, in case 
     # thinning=TRUE or there are species with many records
     record_numbers <- unlist(lapply(splist, nrow))
     
-    if(any(record_numbers >= 10000) | thinning){ #Thanks to Barnaby Walker & Shawn Laffan
+    if (any(record_numbers >= 10000) | thinning) { #Thanks to Barnaby Walker & Shawn Laffan
       warning("Using raster approximation.")
       
       # create a raster with extent similar to all points, 
       # and unique IDs as cell values
-      ras <- ras_create(x = x, 
+      ras <- ras_create(x = x, # CHANGE HERE
                         lat = lat, 
                         lon = lon, 
                         thinning_res = thinning_res)
@@ -156,23 +162,23 @@ cc_outl <- function(x,
       
       # Set raster flag inc ase thinning= TRUE,
       # or this particualr species has 100000 or more records
-      if(nrow(k) >= 10000 | thinning){
+      if (nrow(k) >= 10000 | thinning) {
         raster_flag <- TRUE
-      }else{
+      } else {
         raster_flag <- FALSE
       }
       
       # calculate the distance matrix between all points for the outlier tests
       ## for small datasets and without thinning, 
       ## simply a distance matrix using geospheric distance
-      if(raster_flag){ 
+      if (raster_flag) { 
         # raster approximation for large datasets and thinning
         # get a distance matrix of raster midpoints, with the row 
         # and colnames giving the cell IDs
         
         # if the raster distance is used due to large dataset and 
         # not for thinning, account for the number of points per gridcell
-        if(thinning){
+        if (thinning) {
           dist_obj <- ras_dist(x = k, 
                                lat = lat, 
                                lon = lon,
@@ -185,7 +191,7 @@ cc_outl <- function(x,
           # the distance matrix 
           dist <- dist_obj$dist
           
-        }else{
+        } else {
           dist_obj <-  ras_dist(x = k, 
                                 lat = lat, 
                                 lon = lon,
@@ -201,7 +207,7 @@ cc_outl <- function(x,
           # a weight matrix to weight each distance by the number of points in it
           wm <- dist_obj$wm
         }
-      }else{ 
+      } else { 
         #distance calculation
         dist <- geosphere::distm(k[, c(lon, lat)], 
                                  fun = geosphere::distHaversine) / 1000
@@ -212,9 +218,9 @@ cc_outl <- function(x,
       
       # calculate the outliers for the different methods
       ##  distance method useing absolute distance
-      if(method == "distance"){
+      if (method == "distance") {
         # Drop an error if the sampling correction is activated
-        if(sampling_thresh > 0){
+        if (sampling_thresh > 0) {
           stop("Sampling correction impossible for method 'distance'" )
         }
         
@@ -283,9 +289,10 @@ cc_outl <- function(x,
     flags <- flags[!is.na(flags)]
     
     # sampling correction for cross country datasets
-    if(sampling_thresh > 0){
+    if (sampling_thresh > 0) {
       # identify countries in the dataset, with point polygon test
-      pts <- sp::SpatialPoints(x[flags, c(lon, lat)])
+      pts <- terra::vect(x[flags, c(lon, lat)],
+                         geom = c(lon, lat))
       
       if (!requireNamespace("rnaturalearth", quietly = TRUE)) {
         stop("package 'rnaturalearth' not found. Needed for sampling_cor = TRUE",
@@ -302,12 +309,11 @@ cc_outl <- function(x,
         warnings("Could not retrive records number from GBIF, skipping sampling correction")
       }else{
         # get country area from naturalearth
-        ref <- rnaturalearth::ne_countries(scale = "medium")
-        sp::proj4string(ref) <- ""
-        area <- data.frame(country = ref@data$iso_a2, 
-                           area = geosphere::areaPolygon(ref))
-        area <- area[!is.na(area$area),]
-        area <- area[!is.na(area$country),]
+        ref <- terra::vect(rnaturalearth::ne_countries(scale = "medium"))
+        area <- data.frame(country = ref$iso_a2, 
+                           area = terra::expanse(ref))
+        area <- area[!is.na(area$area), ]
+        area <- area[!is.na(area$country), ]
         
         # get number of records in GBIF per country as proxy for sampling intensity
         nrec <- vapply(area$country, 

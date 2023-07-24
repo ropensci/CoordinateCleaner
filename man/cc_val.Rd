@@ -35,7 +35,7 @@ problematic . Default = \dQuote{clean}.
 }
 \description{
 Removes or flags non-numeric and not available coordinates
-as well as lat >90, la <-90, lon > 180 and lon < -180 are flagged.
+as well as lat >90, lat <-90, lon > 180 and lon < -180 are flagged.
 }
 \details{
 This test is obligatory before running any further tests of

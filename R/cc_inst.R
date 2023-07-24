@@ -1,49 +1,49 @@
-#' Identify Records in the Vicinity of Biodiversity Institutions
-#' 
-#' Removes or flags records assigned to the location of zoos, botanical gardens, herbaria,
-#' universities and museums, based on a global database of ~10,000 such
-#' biodiversity institutions. Coordinates from these locations can be related
-#' to data-entry errors, false automated geo-reference or individuals in
-#' captivity/horticulture.
-#' 
-#' Note: the buffer radius is in degrees, thus will differ slightly between
-#' different latitudes.
-#' 
-#' @param buffer numerical. The buffer around each institution,
-#' where records should be flagged as problematic, in decimal
-#' degrees.  Default = 100m.
-#' @param ref  SpatialPointsDataFrame. Providing the geographic gazetteer. Can
-#' be any SpatialPointsDataFrame, but the structure must be identical to
-#' \code{\link{institutions}}.  Default = \code{\link{institutions}}
-#' @param verify logical. If TRUE, records close to institutions are only flagged,
-#'  if there are no other records of the same species in the greater vicinity 
-#'  (a radius of buffer * verify_mltpl).
-#' @param verify_mltpl numerical. indicates the factor by which the radius for verify
-#' exceeds the radius of the initial test. Default = 10, which might be suitable if 
-#' geod is TRUE, but might be too large otherwise.
-#' @inheritParams cc_cap
-#' 
-#' @inherit cc_cap return
-#' 
-#' @keywords Coordinate cleaning
-#' @family Coordinates
-#' @examples
-#' 
-#' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(100, -180, 180), 
-#'                 decimallatitude = runif(100, -90,90))
+#'Identify Records in the Vicinity of Biodiversity Institutions
 #'
-#'#large buffer for demonstration, using geod = FALSE for shorter runtime              
-#' cc_inst(x, value = "flagged", buffer = 10, geod = FALSE) 
-#' 
+#'Removes or flags records assigned to the location of zoos, botanical gardens,
+#'herbaria, universities and museums, based on a global database of ~10,000 such
+#'biodiversity institutions. Coordinates from these locations can be related to
+#'data-entry errors, false automated geo-reference or individuals in
+#'captivity/horticulture.
+#'
+#'Note: the buffer radius is in degrees, thus will differ slightly between
+#'different latitudes.
+#'
+#'@param buffer numerical. The buffer around each institution, where records
+#'  should be flagged as problematic, in decimal degrees.  Default = 100m.
+#'@param ref  SpatVector (geometry: polygons). Providing the geographic
+#'  gazetteer. Can be any SpatVector (geometry: polygons), but the structure
+#'  must be identical to \code{\link{institutions}}.  Default =
+#'  \code{\link{institutions}}
+#'@param verify logical. If TRUE, records close to institutions are only
+#'  flagged, if there are no other records of the same species in the greater
+#'  vicinity (a radius of buffer * verify_mltpl).
+#'@param verify_mltpl numerical. indicates the factor by which the radius for
+#'  verify exceeds the radius of the initial test. Default = 10, which might be
+#'  suitable if geod is TRUE, but might be too large otherwise.
+#'@inheritParams cc_cap
+#'
+#'@inherit cc_cap return
+#'
+#'@keywords Coordinate cleaning
+#'@family Coordinates
+#' @examples
+#'
+#' x <- data.frame(species = letters[1:10],
+#'                 decimallongitude = c(runif(99, -180, 180), 37.577800),
+#'                 decimallatitude = c(runif(99, -90,90), 55.710800))
+#'
+#'#large buffer for demonstration, using geod = FALSE for shorter runtime
+#' cc_inst(x, value = "flagged", buffer = 10, geod = FALSE)
+#'
 #' \dontrun{
 #' #' cc_inst(x, value = "flagged", buffer = 50000) #geod = T
 #' }
-#' 
-#' @export
-#' @importFrom geosphere destPoint
-#' @importFrom raster crop extent
-#' @importFrom sp coordinates CRS disaggregate over Polygon Polygons SpatialPolygons SpatialPoints
+#'
+#'@export
+#'@importFrom geosphere destPoint
+#'@importFrom terra extract vect geom buffer
+
 cc_inst <- function(x, 
                     lon = "decimallongitude", 
                     lat = "decimallatitude",
@@ -63,69 +63,75 @@ cc_inst <- function(x,
     message("Testing biodiversity institutions")
   }
   
-  if(buffer > 10 & !geod){
+  if (buffer > 10 & !geod) {
     warnings("Using large buffer check 'geod'")
   }
-  if(buffer < 100 & geod){
+  if (buffer < 100 & geod) {
     warnings("Using small buffer check 'geod'")
   }
+  
   # set default projection
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
 
-  dat <- sp::SpatialPoints(x[, c(lon, lat)], proj4string = sp::CRS(wgs84))
-
+  dat <- terra::vect(x[, c(lon, lat)],
+                     geom = c(lon, lat),
+                     crs = wgs84)
+  
   # prepare reference dataset
   if (is.null(ref)) {
     ref <- CoordinateCleaner::institutions
     ref <- ref[!is.na(ref$decimallongitude) & !is.na(ref$decimallatitude), ]
   }
-  limits <- raster::extent(dat) + buffer
+  limits <- terra::ext(dat) + buffer
 
-  # subset of testdatset according to limits
-  ref <- raster::crop(
-    sp::SpatialPoints(ref[, c("decimallongitude", "decimallatitude")], 
-                      proj4string = sp::CRS(wgs84)),
-    limits
-  )
-
+  # subset of test datset according to limits
+  ref <- terra::crop(terra::vect(
+    ref[, c("decimallongitude", "decimallatitude")],
+    geom = c("decimallongitude", "decimallatitude"),
+    crs = wgs84), limits)
+  
   # test reference data after limiting and do test in case no bdinstitutions
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
-    if(geod){
+    if (geod) {
       # credits to https://seethedatablog.wordpress.com
       dg <- seq(from = 0, to = 360, by = 5)
       
-      buff_XY <- geosphere::destPoint(p = sp::coordinates(ref), 
+      buff_XY <- geosphere::destPoint(p = terra::geom(ref)[, c("x", "y")], 
                                       b = rep(dg, each = length(ref)), 
                                       d = buffer)
+      
       
       id <- rep(seq_along(ref), times = length(dg))
       lst <- split(data.frame(buff_XY), f = id)
       
       # Make SpatialPolygons out of the list of coordinates
-      poly   <- lapply(lst, sp::Polygon, hole = FALSE)
-      polys  <- lapply(list(poly), sp::Polygons, ID = NA)
-      spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
-      ref <- sp::disaggregate(spolys)
-
-      #point in polygon test
-      out <- is.na(sp::over(x = dat, y = ref))
-    }else{
-      ref <- rgeos::gBuffer(ref, width = buffer, byid = TRUE)
-      out <- is.na(sp::over(x = dat, y = ref))
+      lst <- lapply(lst, as.matrix)
+      ref <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
+      ref <- Reduce(rbind, ref)
+      
+      # Point in polygon test
+      out <- terra::extract(ref, dat)
+      out <- out[!duplicated(out[, 1]), ]
+      out <- is.na(out[, 2])
+    } else {
+      ref <- terra::buffer(ref, width = buffer)
+      out <- terra::extract(ref, dat)
+      out <- out[!duplicated(out[, 1]), ]
+      out <- is.na(out[, 2])
     }
   }
   
   # double check flagged records, for records from the 
   # same species in the greater surroundings
-  if(verify){
+  if (verify) {
     #identify flagged records
-    ref_in <- x[!out,]
+    ref_in <- x[!out, ]
     
-    if(nrow(ref_in) > 0){
-      #buffer with a larger buffer than for the intial test
-      if(geod){
+    if (nrow(ref_in) > 0) {
+      #buffer with a larger buffer than for the initial test
+      if (geod) {
         # credits to https://seethedatablog.wordpress.com
         dg <- seq(from = 0, to = 360, by = 5)
         
@@ -137,31 +143,29 @@ cc_inst <- function(x,
         lst <- split(data.frame(buff_XY), f = id)
         
         # Make SpatialPolygons out of the list of coordinates
-        poly   <- lapply(lst, sp::Polygon, hole = FALSE)
-        polys <- list()
-        for(i in seq_along(poly)){
-          polys[[i]] <- sp::Polygons(list(poly[[i]]), ID = rownames(ref_in)[i])
-        }
-        spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(wgs84))
-        ref <- sp::SpatialPolygonsDataFrame(spolys, data = data.frame(ref_in))
-      }else{
-        ref <- rgeos::gBuffer(SpatialPoints(ref_in[,c (lon, lat)], 
-                                            proj4string = sp::CRS(wgs84)),
-                              width = buffer * verify_mltpl, byid = TRUE)
-        ref <- sp::SpatialPolygonsDataFrame(ref, data = data.frame(ref_in))
+        lst <- lapply(lst, as.matrix)
         
+        poly <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
+        ref <- Reduce(rbind, poly)
+        ref$species <- ref_in[, species]
+      } else {
+        ref <- terra::vect(ref_in, geom = c(lon, lat))
+        ref <- terra::buffer(ref, 
+                              width = buffer * verify_mltpl)
+        ref$species <- ref_in[, species]
       }
       
       #identify all records from flagged species in x
-      f_spec <- x[x[, species] %in% ref@data[, species],]
+      f_spec <- x[x[, species] %in% ref$species,]
       
       dbch_flag <- c()
       
-      for(i in seq_len(nrow(ref_in))){
-        dbch <- sp::over(sp::SpatialPoints(
-          f_spec[unlist(f_spec[species]) == ref@data[i, "species"], 
-                 c(lon, lat)], proj4string = CRS(wgs84)), 
-          ref[i,])
+      for (i in seq_len(nrow(ref_in))) {
+        dbch <- terra::extract(terra::vect(
+          f_spec[unlist(f_spec[species]) == ref$species[i], ],
+          geom = c(lon, lat),
+          crs = wgs84), 
+          terra::subset(ref, seq_len(length(ref)) == i))
         
         #check if there area other records of this species in the buffer
         dbch_flag[[i]] <- sum(!is.na(dbch[species])) > 
@@ -177,9 +181,9 @@ cc_inst <- function(x,
 
     # create output based on value argument
   if (verbose) {
-    if(value == "clean"){
+    if (value == "clean") {
       message(sprintf("Removed %s records.", sum(!out)))
-    }else{
+    } else {
       message(sprintf("Flagged %s records.", sum(!out)))
     }
   }
