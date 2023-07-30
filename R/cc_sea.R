@@ -86,7 +86,7 @@ cc_sea <- function(x,
       )),
       silent = TRUE)
     
-    if (class(ref) == "try-error") {
+    if (inherits(ref, "try-error")) {
       warning(sprintf("Gazetteer for land mass not found at\n%s",
                       rnaturalearth::ne_file_name(scale = scale,
                                                   type = 'land',
@@ -101,8 +101,8 @@ cc_sea <- function(x,
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 
-    if (!inherits(ref, "SpatVector") & 
-        terra::geomtype(ref) == "polygons") {
+    if (!(inherits(ref, "SpatVector") & 
+        terra::geomtype(ref) == "polygons")) {
       stop("ref must be a SpatVector with geomtype 'polygons'")
     }
     ref <- reproj(ref)

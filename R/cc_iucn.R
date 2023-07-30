@@ -27,7 +27,7 @@
 #' @keywords Coordinate cleaning
 #' @family Coordinates
 #' @examples
-#' require(sp)
+#' library(terra)
 #' 
 #' x <- data.frame(species = c("A", "B"),
 #' decimallongitude = runif(100, -170, 170),
@@ -37,7 +37,7 @@
 #' rangeA <- terra::vect(range_species_A, "polygons")
 #' range_species_B <- cbind(c(15,15,32,32,15), c(10,-10,-10,10,10))
 #' rangeB <- terra::vect(range_species_B, "polygons")
-#' range <- vect(list(rangeA, rangeB))
+#' range <- terra::vect(list(rangeA, rangeB))
 #' range$binomial <- c("A", "B")
 #'
 #' cc_iucn(x = x, range = range, buffer = 0)
