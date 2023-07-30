@@ -79,8 +79,8 @@ cc_coun <- function(x,
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 
-    if (!inherits(ref, "SpatVector") & 
-        terra::geomtype(ref) == "polygons") {
+    if (!(inherits(ref, "SpatVector") & 
+        terra::geomtype(ref) == "polygons")) {
       stop("ref must be a SpatVector with geomtype 'polygons'")
     }
     #Check projection of custom reference and reproject if necessary

@@ -60,7 +60,7 @@ cc_urb <- function(x,
       )),
       silent = TRUE)
     
-    if (class(ref) == "try-error") {
+    if (inherits(ref, "try-error")) {
       warning(sprintf("Gazetteer for urban areas not found at\n%s",
                       rnaturalearth::ne_file_name(scale = 'medium',
                                                   type = 'urban_areas',
@@ -75,8 +75,8 @@ cc_urb <- function(x,
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 
-    if (inherits(range, "SpatVector") & 
-        terra::geomtype(range) == "polygons") {
+    if (!(inherits(ref, "SpatVector") & 
+        terra::geomtype(ref) == "polygons")) {
       stop("ref must be a SpatVector with geomtype 'polygons'")
     }
     ref <- reproj(ref)

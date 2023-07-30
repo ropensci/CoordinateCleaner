@@ -304,8 +304,8 @@ cc_outl <- function(x,
         )
       }
       
-      if (class(try(rgbif::occ_count(country = "DEU"), silent = TRUE)
-      ) == "try-error") {
+      if (inherits(try(rgbif::occ_count(country = "DEU"), silent = TRUE), 
+                   "try-error")) {
         warnings("Could not retrive records number from GBIF, skipping sampling correction")
       }else{
         # get country area from naturalearth

@@ -19,7 +19,7 @@ test_that("clean_coordinates produces correct output", {
   t1 <- clean_coordinates(x = exmpl)
   expect_equal(ncol(t1), 14)
   expect_equal(nrow(t1), 250)
-  expect_equal(sum(t1$.summary), 184)
+  expect_equal(sum(t1$.summary), 185)
   
   expect_is(plot(t1), "gg")
   expect_is(plot(t1, clean = FALSE), "gg")
