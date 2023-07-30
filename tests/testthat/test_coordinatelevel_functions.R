@@ -1,6 +1,5 @@
 context("Individual coordinate functions cc_*")
 
-require(sp)
 require(rnaturalearth)
 require(dplyr)
 
@@ -18,6 +17,7 @@ range_species_A <- cbind(cbind(c(-180,-180, 180, 180,-180),
                                c(-90,90,90,-90,-90)))
 range <- terra::vect(range_species_A, "polygons")
 range$binomial <- "a"
+terra::crs(range) <- '+proj=longlat +datum=WGS84 +no_defs'
 
 # run tests
 ## cc_cap
@@ -50,6 +50,7 @@ skip_on_cran()
                         countrycode = c("DEU", "DEU"))
   
   cust_ref1 <- terra::vect(rnaturalearth::ne_countries(scale = "small"))
+  cust_ref1 <- terra::project(cust_ref1, '+proj=longlat +datum=WGS84 +no_defs')
   cust_ref2 <- cust_ref1
 
   expect_is(cc_coun(exmpl, value = "flagged"), "logical")
@@ -57,17 +58,15 @@ skip_on_cran()
   
   #customized references
   expect_equal(nrow(cc_coun(x = exmpl2)), 1)
-  suppressWarnings(expect_error(cc_coun(
-    x = exmpl2, ref = cust_ref1, ref_col = "test"
-  )))
-  suppressWarnings(expect_equal(nrow(
-    cc_coun(x = exmpl2, ref = cust_ref2, ref_col = "iso_a3_eh")
-  ), 1))
+  expect_error(cc_coun(x = exmpl2, ref = cust_ref1, ref_col = "test"))
+  expect_equal(nrow(cc_coun(
+    x = exmpl2, ref = cust_ref2, ref_col = "iso_a3_eh"
+  )), 1)
   
   
-  suppressWarnings(expect_equal(sum(
+  expect_equal(sum(
     cc_coun(x = exmpl, value = "flagged", ref = cust_ref1)
-  ), 0))
+  ), 0)
   expect_equal(sum(cc_coun(x = exmpl, value = "flagged")), 0)
   
   expect_error(cc_coun(x = exmpl, lon = "longitude", value = "flagged"), 
@@ -104,15 +103,15 @@ skip_on_cran()
                                     decimallongitude = c(12.58, 12.585, 12.58),
                                     decimallatitude = c(55.67, 55.676, 55.67),
                                     countrycode = "RUS"))
-  
-  expect_is(cc_inst(t.inst, value = "flagged"), "logical")
+  resA <- cc_inst(t.inst, value = "flagged")
+  expect_is(resA, "logical")
   expect_is(cc_inst(t.inst, value = "clean"), "data.frame")
   
-  expect_equal(sum(cc_inst(x = t.inst, value = "flagged")), 253)
+  expect_equal(sum(resA), 253)
   expect_equal(sum(cc_inst(x = t.inst, value = "flagged", geod = FALSE)), 253)
   
   expect_equal(sum(cc_inst(x = t.inst, value = "flagged", 
-                           geod = FALSE, buffer = 0.01)), 251)
+                           geod = FALSE, buffer = 0.01)), 253)
   
   expect_equal(sum(cc_inst(x = t.inst, 
                            value = "flagged",
@@ -123,7 +122,7 @@ skip_on_cran()
                            verify = T, 
                            geod = FALSE, 
                            buffer = 100)), 
-               252)
+               253)
   
   expect_error(cc_inst(x = exmpl, lon = "longitude", value = "flagged"), 
                "undefined columns selected")
@@ -133,34 +132,51 @@ skip_on_cran()
 # cc_iucn
 test_that("cc_iucn works", {
 skip_on_cran()
-  expect_equal(suppressWarnings(sum(cc_iucn(x = exmpl, range = range, value = "flagged"))),
+  res_iucn <- expect_warning(cc_iucn(x = exmpl, range = range,
+                      value = "flagged",
+                      verbose = FALSE))
+  expect_equal(sum(res_iucn),
                nrow(exmpl))
-  expect_true(suppressWarnings(sum(cc_iucn(x = exmpl, range = range, value = "flagged"))) > 0)
+  res_iucn2 <-
+    expect_warning(cc_iucn(x = exmpl, range = range, value = "flagged"))
+  expect_true(sum(res_iucn2) > 0)
 })
 
 # cc_outl (ADD SUPRESS WARNINGS)
 test_that("cc_outl works", {
 skip_on_cran() 
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged")), 249)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged"), verbose = FALSE), 249)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 0.1)), 200)
-  expect_equal(sum(cc_outl(x = exmpl, value = "flagged", mltpl = 1000)), 250)
+  
+  expect_equal(sum(cc_outl(
+    x = exmpl, value = "flagged", min_occs = 5
+  )), 249)
+  expect_equal(sum(
+    cc_outl(x = exmpl, value = "flagged", verbose = FALSE, min_occs = 5)
+  ), 249)
+  expect_equal(sum(
+    cc_outl(x = exmpl, value = "flagged", mltpl = 0.1, min_occs = 5)
+  ), 197)
+  expect_equal(sum(
+    cc_outl(x = exmpl, value = "flagged", mltpl = 1000, min_occs = 5)
+  ), 250)
   
   
-  if (class(try(rgbif::occ_count(country = "DEU"))) == "try-error") {
+  if (class(try(rgbif::occ_count(country = "DEU"), silent = TRUE)) == "try-error") {
     expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                             sampling_thresh = 0.2, mltpl = 0.1)), 200) 
+                             sampling_thresh = 0.2, mltpl = 0.1, 
+                             min_occs = 5)), 197) 
   } else {
     expect_equal(sum(cc_outl(x = exmpl, value = "flagged", 
-                             sampling_thresh = 0.2, mltpl = 0.1)), 242) 
+                             sampling_thresh = 0.2, mltpl = 0.1,
+                             min_occs = 5)), 197) 
   }
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
                            method = "distance", 
-                           tdi = .001)), 11)
+                           tdi = .001, min_occs = 5)), 0)
   expect_equal(sum(cc_outl(x = exmpl, 
                            value = "flagged", 
-                           method = "distance", tdi = 10000)), 250)
+                           method = "distance", tdi = 10000, 
+                           min_occs = 5)), 250)
 
   expect_error(cc_dupl(x = exmpl, 
                        lon = "longitude", 

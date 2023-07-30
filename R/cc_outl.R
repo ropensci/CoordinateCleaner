@@ -304,7 +304,8 @@ cc_outl <- function(x,
         )
       }
       
-      if(class(try(rgbif::occ_count(country = "DEU"))) == "try-error"){
+      if (class(try(rgbif::occ_count(country = "DEU"), silent = TRUE)
+      ) == "try-error") {
         warnings("Could not retrive records number from GBIF, skipping sampling correction")
       }else{
         # get country area from naturalearth
@@ -328,8 +329,10 @@ cc_outl <- function(x,
         #ref <- raster::crop(ref, raster::extent(pts) + 1)
         
         # get country from coordinates and compare with provided country
-        country <- sp::over(x = pts, y = ref)[, "iso_a2"]
-        
+        # country <- terra::over(x = pts, y = ref)[, "iso_a2"]
+        ext_over <- terra::extract(ref, pts)
+        out <- !is.na(ext_over[, 2])
+        country <- ext_over[out, "iso_a2"]
         # get the sampling for the flagged countries
         thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)
         s_flagged <- nrec_norm$norm[match(country, nrec_norm$country)]

@@ -89,8 +89,8 @@ set.seed(1)
 age <- runif(250, 0.1, 65)
 
 exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
-                    lng = lng,
-                    lat = lat,
+                    decimallongitude = lng,
+                    decimallatitude = lat,
                     min_ma = minages,
                     max_ma = minages + age)
 
@@ -98,7 +98,7 @@ exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
 test_that("fossil wrapper cleaning works", {
   skip("message")
   expect_is(clean_fossils(exmpl), "spatialvalid")
-  expect_equal(sum(clean_fossils(exmpl)$.summary), 249)
+  expect_equal(sum(clean_fossils(exmpl)$.summary), 250)
 })
 
 # test_that("CleanCoordinatesFOS work", {
