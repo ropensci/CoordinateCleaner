@@ -63,8 +63,8 @@ cf_range <- function(x,
   x$idf <- rownames(x)
 
   # time and uniq loc do not work together
-  if (method == "time") {
-    unig.loc <- FALSE
+  if (method == "time" & uniq_loc) {
+    uniq_loc <- FALSE
     warning("Using method = 'time', set 'uniq_loc' to FALSE")
   }
 
