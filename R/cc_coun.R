@@ -10,8 +10,10 @@
 #'   each record in three letter ISO code. Default = \dQuote{countrycode}.
 #' @param ref SpatVector (geometry: polygons). Providing the geographic
 #'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure
-#'   must be identical to \code{rnaturalearth::ne_countries(scale = "medium")}.
-#'   Default = \code{rnaturalearth::ne_countries(scale = "medium")}
+#'   must be identical to \code{rnaturalearth::ne_countries(scale = "medium",
+#'   returnclass = "sf")}.
+#'   Default = \code{rnaturalearth::ne_countries(scale = "medium", returnclass =
+#'   "sf")}
 #' @param ref_col the column name in the reference dataset, containing the
 #'   relevant ISO codes for matching. Default is to "iso_a3_eh" which refers to
 #'   the ISO-3 codes in the reference dataset. See notes.
@@ -72,10 +74,11 @@ cc_coun <- function(x,
         call. = FALSE
       )
     }
-    ref <- terra::vect(rnaturalearth::ne_countries(scale = "medium"))
+    ref <- terra::vect(rnaturalearth::ne_countries(scale = "medium",
+                                                   returnclass = "sf"))
   } else {
     #Enable sf formatted custom references
-    if (any(is(ref) == "Spatial")) {
+    if (any(is(ref) == "Spatial")  | inherits(ref, "sf")) {
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 

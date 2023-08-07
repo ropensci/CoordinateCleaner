@@ -88,7 +88,7 @@ Alternatives must be identical in structure.}
 
 \item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
 for the countries test. If NULL, the
-\code{rnaturalearth:ne_countries('medium')} dataset is used.}
+\code{rnaturalearth:ne_countries('medium', returnclass = "sf")} dataset is used.}
 
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
 biodiversity institution test. If NULL, the \code{institutions} dataset is

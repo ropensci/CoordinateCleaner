@@ -24,9 +24,9 @@ Default = \dQuote{decimallatitude}.}
 
 \item{ref}{a SpatialPolygonsDataFrame. Providing the geographic gazetteer
 with the urban areas. See details. By default
-rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas'). Can be
-any \code{SpatialPolygonsDataframe}, but the structure must be identical to
-\code{rnaturalearth::ne_download()}.}
+rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas',
+returnclass = "sf"). Can be any \code{SpatialPolygonsDataframe}, but the
+structure must be identical to \code{rnaturalearth::ne_download()}.}
 
 \item{value}{character string.  Defining the output value. See value.}
 

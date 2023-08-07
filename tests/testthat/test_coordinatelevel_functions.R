@@ -49,7 +49,8 @@ skip_on_cran()
                         decimallongitude = c(8, 40),
                         countrycode = c("DEU", "DEU"))
   
-  cust_ref1 <- terra::vect(rnaturalearth::ne_countries(scale = "small"))
+  cust_ref1 <- terra::vect(rnaturalearth::ne_countries(scale = "small",
+                                                       returnclass = "sf"))
   cust_ref1 <- terra::project(cust_ref1, '+proj=longlat +datum=WGS84 +no_defs')
   cust_ref2 <- cust_ref1
 
@@ -186,7 +187,8 @@ test_that("cc_sea works", {
   cust_ref1 <- cust_ref2 <- terra::vect(rnaturalearth::ne_download(scale = 
                                                          "medium", 
                                                        type = 'land', 
-                                                       category = "physical"))
+                                                       category = "physical", 
+                                                       returnclass = "sf"))
   # terra::project(cust_ref2, "")
   # proj4string(cust_ref2) <- ""
 
@@ -212,7 +214,8 @@ test_that("cc_urb works", {
   skip_if_offline()
   
   cust_ref <-
-    terra::vect(rnaturalearth::ne_download(scale = "medium", type = 'urban_areas'))
+    terra::vect(rnaturalearth::ne_download(scale = "medium", type = 'urban_areas',
+                                           returnclass = "sf"))
   xy <- terra::crds(cust_ref)[sample(1:terra::ncell(cust_ref), 200), ]
   city_exmpl <- data.frame(species = letters[1:10], 
                            xy )

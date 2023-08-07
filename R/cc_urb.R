@@ -8,9 +8,9 @@
 #'
 #' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer
 #'   with the urban areas. See details. By default
-#'   rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas'). Can be
-#'   any \code{SpatialPolygonsDataframe}, but the structure must be identical to
-#'   \code{rnaturalearth::ne_download()}.
+#'   rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas',
+#'   returnclass = "sf"). Can be any \code{SpatialPolygonsDataframe}, but the
+#'   structure must be identical to \code{rnaturalearth::ne_download()}.
 #' @inheritParams cc_cap
 #'
 #' @inherit cc_cap return
@@ -56,7 +56,8 @@ cc_urb <- function(x,
     ref <-
       try(suppressWarnings(terra::vect(
         rnaturalearth::ne_download(scale = 'medium',
-                                   type = 'urban_areas')
+                                   type = 'urban_areas',
+                                   returnclass = "sf")
       )),
       silent = TRUE)
     
@@ -71,7 +72,7 @@ cc_urb <- function(x,
 
   } else {
     # Enable sf formatted custom references
-    if (any(is(ref) == c("Spatial"))) {
+    if (any(is(ref) == c("Spatial"))  | inherits(ref, "sf")) {
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 

@@ -97,7 +97,7 @@ Alternatives must be identical in structure.}
 
 \item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
 for the countries test. If NULL, the
-\code{rnaturalearth:ne_countries('medium')} dataset is used.}
+\code{rnaturalearth:ne_countries('medium', returnclass = "sf")} dataset is used.}
 
 \item{country_refcol}{the column name in the reference dataset, containing
 the relevant ISO codes for matching. Default is to "iso_a3_eh" which
@@ -112,8 +112,8 @@ Required to include the 'ranges' test. See \code{\link{cc_iucn}} for
 details.}
 
 \item{seas_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
-for the seas test. If NULL, the rnaturalearth::ne_download(=scale = 110,
-type = 'land', category = 'physical') dataset is used.}
+for the seas test. If NULL, the rnaturalearth::ne_download(scale = 110,
+type = 'land', category = 'physical', returnclass = "sf") dataset is used.}
 
 \item{seas_scale}{The scale of the default landmass reference. Must be one of
 10, 50, 110. Higher numbers equal higher detail. Default = 50.}
@@ -211,7 +211,7 @@ and tutorials.
 
 The country_refcol argument allows to adapt the function to the
 structure of alternative reference datasets. For instance, for
-\code{rnaturalearth::ne_countries(scale = "small")}, the default will fail,
+\code{rnaturalearth::ne_countries(scale = "small", returnclass = "sf")}, the default will fail,
 but country_refcol = "iso_a3" will work.
 }
 \examples{
