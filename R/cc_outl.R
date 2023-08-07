@@ -309,7 +309,8 @@ cc_outl <- function(x,
         warnings("Could not retrive records number from GBIF, skipping sampling correction")
       }else{
         # get country area from naturalearth
-        ref <- terra::vect(rnaturalearth::ne_countries(scale = "medium"))
+        ref <- terra::vect(rnaturalearth::ne_countries(scale = "medium", 
+                                                       returnclass = "sf"))
         area <- data.frame(country = ref$iso_a2, 
                            area = terra::expanse(ref))
         area <- area[!is.na(area$area), ]

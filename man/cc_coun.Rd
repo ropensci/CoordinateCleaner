@@ -31,8 +31,10 @@ each record in three letter ISO code. Default = \dQuote{countrycode}.}
 
 \item{ref}{SpatVector (geometry: polygons). Providing the geographic
 gazetteer. Can be any SpatVector (geometry: polygons), but the structure
-must be identical to \code{rnaturalearth::ne_countries(scale = "medium")}.
-Default = \code{rnaturalearth::ne_countries(scale = "medium")}}
+must be identical to \code{rnaturalearth::ne_countries(scale = "medium",
+returnclass = "sf")}.
+Default = \code{rnaturalearth::ne_countries(scale = "medium", returnclass =
+"sf")}}
 
 \item{ref_col}{the column name in the reference dataset, containing the
 relevant ISO codes for matching. Default is to "iso_a3_eh" which refers to

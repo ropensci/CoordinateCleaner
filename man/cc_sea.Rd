@@ -28,8 +28,8 @@ Default = \dQuote{decimallatitude}.}
 gazetteer. Can be any SpatVector (geometry: polygons), but the structure
 must be identical to \code{\link{countryref}}. but the structure must be identical to
 rnaturalearth::ne_download(scale = 110, type = 'land', category =
-'physical'). Default = rnaturalearth::ne_download(scale = 110, type =
-'land', category = 'physical').}
+'physical', returnclass = 'sf'). Default = rnaturalearth::ne_download(scale = 110, type =
+'land', category = 'physical', returnclass = 'sf').}
 
 \item{scale}{the scale of the default reference, as downloaded from natural
 earth. Must be one of 10, 50, 110. Higher numbers equal higher detail.

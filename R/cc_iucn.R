@@ -62,7 +62,7 @@ cc_iucn <- function(x,
     message("Testing natural ranges")
   }
   
-  if (any(is(range) == "Spatial")) {
+  if (any(is(range) == "Spatial")  | inherits(range, "sf")) {
     range <- terra::vect(range)
   }
   # Check if object is a SpatVector 

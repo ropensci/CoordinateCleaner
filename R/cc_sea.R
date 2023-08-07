@@ -16,8 +16,8 @@
 #'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure
 #'   must be identical to \code{\link{countryref}}. but the structure must be identical to
 #'   rnaturalearth::ne_download(scale = 110, type = 'land', category =
-#'   'physical'). Default = rnaturalearth::ne_download(scale = 110, type =
-#'   'land', category = 'physical').
+#'   'physical', returnclass = 'sf'). Default = rnaturalearth::ne_download(scale = 110, type =
+#'   'land', category = 'physical', returnclass = 'sf').
 #' @param scale the scale of the default reference, as downloaded from natural
 #'   earth. Must be one of 10, 50, 110. Higher numbers equal higher detail.
 #'   Default = 110.
@@ -81,7 +81,8 @@ cc_sea <- function(x,
           scale = scale,
           type = 'land',
           category = 'physical',
-          load = TRUE
+          load = TRUE,
+          returnclass = "sf"
         )
       )),
       silent = TRUE)
@@ -97,7 +98,7 @@ cc_sea <- function(x,
     }
   } else {
     #Enable sf formatted custom references
-    if (any(is(ref) == "Spatial")) {
+    if (any(is(ref) == "Spatial") | inherits(ref, "sf")) {
       ref <- terra::vect(ref)
     }
     # Check if object is a SpatVector 
