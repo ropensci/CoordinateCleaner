@@ -127,7 +127,8 @@ cc_sea <- function(x,
     ## have to make sure they are the same and in this case they already are
     ## -----
     ## point-in-polygon test
-    out <- !is.na(terra::extract(ref, pts)[, 2])
+    ext_dat <- terra::extract(ref, pts)
+    out <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     out <- data.frame(terra::geom(pts)[, c("x", "y")], out)
     colnames(out)[1:2] <- c(lon, lat)
     ## remerge with coordinates
@@ -142,7 +143,9 @@ cc_sea <- function(x,
                        crs = wgs84)
     
     # select relevant columns
-    out <- !is.na(terra::extract(ref, pts)[, 2])
+    #point in polygon test
+    ext_dat <- terra::extract(ref, pts)
+    out <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
   }
   
   if (verbose) {

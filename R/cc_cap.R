@@ -117,11 +117,13 @@ cc_cap <- function(x,
       ref <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
       ref <- Reduce(rbind, ref)
       
-      # Point in polygon test
-      out <- is.na(terra::extract(ref, dat)[, 2])
+      #point in polygon test
+      ext_dat <- terra::extract(ref, dat)
+      out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     } else {
       ref <- terra::buffer(ref, width = buffer)
-      out <- is.na(terra::extract(ref, dat)[, 2])
+      ext_dat <- terra::extract(ref, dat)
+      out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     }
   }
   

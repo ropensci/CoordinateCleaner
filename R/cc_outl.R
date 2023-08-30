@@ -332,7 +332,7 @@ cc_outl <- function(x,
         # get country from coordinates and compare with provided country
         # country <- terra::over(x = pts, y = ref)[, "iso_a2"]
         ext_over <- terra::extract(ref, pts)
-        out <- !is.na(ext_over[, 2])
+        out <- !is.na(ext_over[!duplicated(ext_over[, 1]), 2])
         country <- ext_over[out, "iso_a2"]
         # get the sampling for the flagged countries
         thresh <- stats::quantile(nrec_norm$norm, probs = sampling_thresh)

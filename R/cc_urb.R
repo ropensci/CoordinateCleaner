@@ -98,7 +98,9 @@ cc_urb <- function(x,
   if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
-    out <- is.na(terra::extract(ref, dat)[, 2])
+    #point in polygon test
+    ext_dat <- terra::extract(ref, dat)
+    out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
   }
 
   if (verbose) {
