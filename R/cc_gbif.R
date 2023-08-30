@@ -81,12 +81,15 @@ cc_gbif <- function(x,
     ref <- Reduce(rbind, ref)
     
     #point in polygon test
-    out <- is.na(terra::extract(ref, dat)[, 2])
+    ext_dat <- terra::extract(ref, dat)
+    out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
   } else {
     ref_cen <- terra::vect(cbind(12.58, 55.67),
                            crs = wgs84)
     ref <- terra::buffer(ref_cen, width = buffer)
-    out <- is.na(terra::extract(ref, dat)[, 2])
+    #point in polygon test
+    ext_dat <- terra::extract(ref, dat)
+    out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
   }
   
   # implement the verification

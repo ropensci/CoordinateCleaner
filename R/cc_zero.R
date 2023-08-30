@@ -51,7 +51,8 @@ cc_zero <- function(x,
   dat <- terra::vect(x[, c(lon, lat)], geom = c(lon, lat))
   buff <- terra::buffer(terra::vect(data.frame("lat" = 0, "lon" = 0)), 
                       width = buffer)
-  t2 <- is.na(terra::extract(buff, dat)[, 2])
+  ext_dat <- terra::extract(buff, dat)
+  t2 <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
 
   # combine test results
   out <- Reduce("&", list(t1, t2))

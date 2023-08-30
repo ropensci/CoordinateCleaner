@@ -115,10 +115,12 @@ cc_cen <- function(x,
       ref <- Reduce(rbind, ref)
       
       #point in polygon test
-      out <- is.na(terra::extract(ref, dat)[, 2])
+      ext_dat <- terra::extract(ref, dat)
+      out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     } else {
       ref <- terra::buffer(ref, width = buffer)
-      out <- is.na(terra::extract(ref, dat)[, 2])
+      ext_dat <- terra::extract(ref, dat)
+      out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     }
   }
   

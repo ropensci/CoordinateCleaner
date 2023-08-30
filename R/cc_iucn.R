@@ -111,8 +111,10 @@ cc_iucn <- function(x,
                          geom = c(lon, lat))
       test_range_sub <- range[[species]][, 1] == unique(k[, species])
       range_sub <- terra::subset(range, test_range_sub)
-      flag <- !is.na(terra::extract(range_sub, sub)[, 2])
-      
+      #point in polygon test
+      ext_dat <- terra::extract(range_sub, sub)
+      flag <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
+
       data.frame(order = k$order,
                  flag = flag)
     }else{

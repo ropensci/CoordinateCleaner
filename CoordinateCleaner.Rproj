@@ -16,4 +16,4 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageCheckArgs: --as-cran _SP_EVOLUTION_STATUS_=2 R CMD check
-PackageRoxygenize: rd,collate,namespace,vignette
+PackageRoxygenize: vignette
