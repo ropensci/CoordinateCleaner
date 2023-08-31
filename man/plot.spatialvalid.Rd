@@ -6,8 +6,8 @@
 \usage{
 \method{plot}{spatialvalid}(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   bgmap = NULL,
   clean = TRUE,
   details = FALSE,
@@ -22,10 +22,10 @@
 \code{\link{clean_coordinates}}.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{bgmap}{an object of the class \code{SpatialPolygonsDataFrame} used as
 background map. Default = ggplot::borders()}
@@ -58,8 +58,8 @@ to visualize the flags from clean_coordinates
 
 
 exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11))
+                    decimalLongitude = runif(250, min = 42, max = 51),
+                    decimalLatitude = runif(250, min = -26, max = -11))
 
 test <- clean_coordinates(exmpl, species = "species", 
                           tests = c("sea", "gbif", "zeros"),

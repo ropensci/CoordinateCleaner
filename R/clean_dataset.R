@@ -62,8 +62,8 @@
 #' @examples
 #' #Create test dataset
 #' clean <- data.frame(dataset = rep("clean", 1000),
-#'                     decimallongitude = runif(min = -43, max = -40, n = 1000),
-#'                     decimallatitude = runif(min = -13, max = -10, n = 1000))
+#'                     decimalLongitude = runif(min = -43, max = -40, n = 1000),
+#'                     decimalLatitude = runif(min = -13, max = -10, n = 1000))
 #'                     
 #' bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
 #'                round(runif(min = -42, max = -40, n = 300), 0),
@@ -72,8 +72,8 @@
 #'               round(runif(min = -12, max = -10, n = 300), 0),
 #'               runif(min = -12, max = -10, n = 200))
 #' bias <- data.frame(dataset = rep("biased", 1000),
-#'                    decimallongitude = bias.long,
-#'                    decimallatitude = bias.lat)
+#'                    decimalLongitude = bias.long,
+#'                    decimalLatitude = bias.lat)
 #' test <- rbind(clean, bias)
 #' 
 #' \dontrun{                  
@@ -82,17 +82,17 @@
 #' 
 #' #check problems
 #' #clean
-#' hist(test[test$dataset == rownames(flags[flags$summary,]), "decimallongitude"])
+#' hist(test[test$dataset == rownames(flags[flags$summary,]), "decimalLongitude"])
 #' #biased
-#' hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
+#' hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimalLongitude"])
 #' 
 #' }
 #' @export
 #' @importFrom stats complete.cases
 #' @md
 clean_dataset <- function(x,
-                          lon = "decimallongitude", 
-                          lat = "decimallatitude",
+                          lon = "decimalLongitude", 
+                          lat = "decimalLatitude",
                           ds = "dataset",
                           tests = c("ddmm", "periodicity"),
                           value = "dataset",

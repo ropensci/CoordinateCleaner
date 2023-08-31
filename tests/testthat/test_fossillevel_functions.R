@@ -8,10 +8,10 @@ maxages <- minages + c(runif(n = 99, min = 0, max = 5), 25)
 
 test <- data.frame(
   species = c(letters[1:9], "z"),
-  decimallongitude = c(runif(
+  decimalLongitude = c(runif(
     n = 98, min = 4, max = 16
   ), 75, 7),
-  decimallatitude = c(runif(
+  decimalLatitude = c(runif(
     n = 100, min = -5, max = 5
   )),
   min_ma = minages,
@@ -177,10 +177,10 @@ set.seed(1)
 minages <- c(runif(n = 11, min = 10, max = 25), 62.5)
 test <- data.frame(
   species = c(letters[1:10], rep("z", 2)),
-  decimallongitude = c(runif(
+  decimalLongitude = c(runif(
     n = 10, min = 4, max = 16
   ), 75, 7),
-  decimallatitude = c(runif(
+  decimalLatitude = c(runif(
     n = 12, min = -5, max = 5
   )),
   min_ma = minages,

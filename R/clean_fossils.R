@@ -75,8 +75,8 @@
 #' 
 #' minages <- runif(250, 0, 65)
 #' exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
-#'                     decimallongitude = runif(250, min = 42, max = 51),
-#'                     decimallatitude = runif(250, min = -26, max = -11),
+#'                     decimalLongitude = runif(250, min = 42, max = 51),
+#'                     decimalLatitude = runif(250, min = -26, max = -11),
 #'                     min_ma = minages,
 #'                     max_ma = minages + runif(250, 0.1, 65))
 #' 
@@ -89,8 +89,8 @@
 #' @importFrom utils write.table
 #' @md
 clean_fossils <- function(x, 
-                          lon = "decimallongitude", 
-                          lat = "decimallatitude", 
+                          lon = "decimalLongitude", 
+                          lat = "decimalLatitude", 
                           min_age = "min_ma",
                           max_age = "max_ma", 
                           taxon = "accepted_name", 

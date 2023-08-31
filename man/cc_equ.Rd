@@ -6,8 +6,8 @@
 \usage{
 cc_equ(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   test = "absolute",
   value = "clean",
   verbose = TRUE
@@ -17,10 +17,10 @@ cc_equ(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{test}{character string. Defines if coordinates are compared exactly
 (\dQuote{identical}) or on the absolute scale (i.e. -1 = 1,
@@ -45,8 +45,8 @@ errors.
 \examples{
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90))
+                decimalLongitude = runif(100, -180, 180), 
+                decimalLatitude = runif(100, -90,90))
 
 cc_equ(x)
 cc_equ(x, value = "flagged")

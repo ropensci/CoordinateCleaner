@@ -6,8 +6,8 @@
 \usage{
 clean_dataset(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   ds = "dataset",
   tests = c("ddmm", "periodicity"),
   value = "dataset",
@@ -19,10 +19,10 @@ clean_dataset(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
 case \code{x} should be treated as a single dataset, identical for all
@@ -93,8 +93,8 @@ and tutorials.
 \examples{
 #Create test dataset
 clean <- data.frame(dataset = rep("clean", 1000),
-                    decimallongitude = runif(min = -43, max = -40, n = 1000),
-                    decimallatitude = runif(min = -13, max = -10, n = 1000))
+                    decimalLongitude = runif(min = -43, max = -40, n = 1000),
+                    decimalLatitude = runif(min = -13, max = -10, n = 1000))
                     
 bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
                round(runif(min = -42, max = -40, n = 300), 0),
@@ -103,8 +103,8 @@ bias.lat <- c(round(runif(min = -12, max = -10, n = 500), 1),
               round(runif(min = -12, max = -10, n = 300), 0),
               runif(min = -12, max = -10, n = 200))
 bias <- data.frame(dataset = rep("biased", 1000),
-                   decimallongitude = bias.long,
-                   decimallatitude = bias.lat)
+                   decimalLongitude = bias.long,
+                   decimalLatitude = bias.lat)
 test <- rbind(clean, bias)
 
 \dontrun{                  
@@ -113,9 +113,9 @@ flags <- clean_dataset(test)
 
 #check problems
 #clean
-hist(test[test$dataset == rownames(flags[flags$summary,]), "decimallongitude"])
+hist(test[test$dataset == rownames(flags[flags$summary,]), "decimalLongitude"])
 #biased
-hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimallongitude"])
+hist(test[test$dataset == rownames(flags[!flags$summary,]), "decimalLongitude"])
 
 }
 }

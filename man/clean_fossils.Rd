@@ -6,8 +6,8 @@
 \usage{
 clean_fossils(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   min_age = "min_ma",
   max_age = "max_ma",
   taxon = "accepted_name",
@@ -35,10 +35,10 @@ clean_fossils(
 and geographic coordinates..}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
@@ -175,8 +175,8 @@ and tutorials.
 
 minages <- runif(250, 0, 65)
 exmpl <- data.frame(accepted_name = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11),
+                    decimalLongitude = runif(250, min = 42, max = 51),
+                    decimalLatitude = runif(250, min = -26, max = -11),
                     min_ma = minages,
                     max_ma = minages + runif(250, 0.1, 65))
 

@@ -6,8 +6,8 @@
 \usage{
 cc_val(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   value = "clean",
   verbose = TRUE
 )
@@ -16,10 +16,10 @@ cc_val(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{value}{character string.  Defining the output value. See value.}
 
@@ -47,8 +47,8 @@ details and tutorials.
 \examples{
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
-                decimallatitude = runif(110, -90,90))
+                decimalLongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
+                decimalLatitude = runif(110, -90,90))
                 
 cc_val(x)
 cc_val(x, value = "flagged")

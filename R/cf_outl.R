@@ -48,8 +48,8 @@
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats median mad IQR quantile dist
 cf_outl <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude", 
                     min_age = "min_ma", 
                     max_age = "max_ma",
                     taxon = "accepted_name", 

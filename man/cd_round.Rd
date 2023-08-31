@@ -6,8 +6,8 @@
 \usage{
 cd_round(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   ds = "dataset",
   T1 = 7,
   reg_out_thresh = 2,
@@ -24,10 +24,10 @@ cd_round(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
 case \code{x} should be treated as a single dataset, identical for all
@@ -106,8 +106,8 @@ details and tutorials.
   
   #add biased data
   
-  inp <- data.frame(decimallongitude = lon,
-                    decimallatitude = lat,
+  inp <- data.frame(decimalLongitude = lon,
+                    decimalLatitude = lat,
                     dataset = "test")
             
           

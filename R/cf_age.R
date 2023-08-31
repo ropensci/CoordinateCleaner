@@ -18,9 +18,9 @@
 #' and geographic coordinates.
 #' @param lon character string. The column with the longitude coordinates.
 #' To identify unique records if \code{uniq_loc  = TRUE}.
-#' Default = \dQuote{decimallongitude}.
+#' Default = \dQuote{decimalLongitude}.
 #' @param lat character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallatitude}. To identify unique records if \code{uniq_loc  = T}.
+#' Default = \dQuote{decimalLatitude}. To identify unique records if \code{uniq_loc  = T}.
 #' @param min_age character string. The column with the minimum age. Default
 #' = \dQuote{min_ma}.
 #' @param max_age character string. The column with the maximum age. Default
@@ -64,8 +64,8 @@
 #' 
 #' # unique locations only
 #' x <- data.frame(species = c(letters[1:10], rep("z", 2)),
-#'                 decimallongitude = c(runif(n = 10, min = 4, max = 16), 75, 7),
-#'                 decimallatitude = c(runif(n = 12, min = -5, max = 5)),
+#'                 decimalLongitude = c(runif(n = 10, min = 4, max = 16), 75, 7),
+#'                 decimalLatitude = c(runif(n = 12, min = -5, max = 5)),
 #'                 min_ma = minages, 
 #'                 max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
 #' 
@@ -76,8 +76,8 @@
 #' @importFrom geosphere distm distHaversine
 #' @importFrom stats median mad IQR quantile dist
 cf_age <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude", 
                     min_age = "min_ma", 
                     max_age = "max_ma",
                     taxon = "accepted_name", 
@@ -104,13 +104,13 @@ cf_age <- function(x,
   }
   
   #Also allow PBDB standard names
-  if("lat" %in% names(x) & !("decimallatitude" %in% names(x))){
+  if("lat" %in% names(x) & !("decimalLatitude" %in% names(x))){
     lat <- "lat"
-    warning("decimallatitude not found. Using lat instead.")
+    warning("decimalLatitude not found. Using lat instead.")
   }
-  if("lng" %in% names(x) & !("decimallongitude" %in% names(x))){
+  if("lng" %in% names(x) & !("decimalLongitude" %in% names(x))){
     lon <- "lng"
-    warning("decimallongitude not found. Using lon instead.")
+    warning("decimalLongitude not found. Using lon instead.")
   }
   
   #Enable recent records with only one time stamp

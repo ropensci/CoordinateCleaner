@@ -19,7 +19,7 @@ library(countrycode)
 library(dplyr)
 library(ggplot2)
 library(magrittr)
-library(raster)
+library(terra)
 library(viridis)
 ```
 
@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 
 ```{r, echo = F, message = FALSE, warning = FALSE}
 data(institutions)
-institutions <- filter(institutions, !is.na(decimallongitude))
+institutions <- filter(institutions, !is.na(decimalLongitude))
 institutions$source <- trimws(institutions$source)
 ```
 
@@ -78,11 +78,11 @@ behr <- CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS
 
 #select and reproject institutions
 abu <- institutions%>%
-  dplyr::select(species = type, decimallongitude, decimallatitude) %>% 
-  filter(!is.na(decimallongitude))
+  dplyr::select(species = type, decimalLongitude, decimalLatitude) %>% 
+  filter(!is.na(decimalLongitude))
 
 abu.b <- abu%>%
-  dplyr::select(decimallongitude, decimallatitude)%>%
+  dplyr::select(decimalLongitude, decimalLatitude)%>%
   sp::SpatialPoints(proj4string = wgs1984)%>%
   spTransform(behr)
 

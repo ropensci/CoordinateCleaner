@@ -18,16 +18,16 @@
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(100, -180, 180), 
-#'                 decimallatitude = runif(100, -90,90))
+#'                 decimalLongitude = runif(100, -180, 180), 
+#'                 decimalLatitude = runif(100, -90,90))
 #' 
 #' cc_equ(x)
 #' cc_equ(x, value = "flagged")
 #' 
 #' @export
 cc_equ <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+                   lon = "decimalLongitude", 
+                   lat = "decimalLatitude", 
                    test = "absolute",
                    value = "clean", 
                    verbose = TRUE) {

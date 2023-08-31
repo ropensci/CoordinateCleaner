@@ -8,8 +8,8 @@
 \usage{
 clean_coordinates(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   countries = NULL,
   tests = c("capitals", "centroids", "equal", "gbif", "institutions", "outliers", "seas",
@@ -42,10 +42,10 @@ clean_coordinates(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{a character string. A vector of the same length as rows in x,
 with the species identity for each record.  If NULL, \code{tests} must not
@@ -218,8 +218,8 @@ but country_refcol = "iso_a3" will work.
 
 
 exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11))
+                    decimalLongitude = runif(250, min = 42, max = 51),
+                    decimalLatitude = runif(250, min = -26, max = -11))
 
 test <- clean_coordinates(x = exmpl, 
                           tests = c("equal"))

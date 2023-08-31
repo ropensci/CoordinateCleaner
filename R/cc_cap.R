@@ -6,9 +6,9 @@
 #'
 #' @param x data.frame. Containing geographical coordinates and species names.
 #' @param lon character string. The column with the longitude coordinates.
-#'   Default = \dQuote{decimallongitude}.
+#'   Default = \dQuote{decimalLongitude}.
 #' @param lat character string. The column with the latitude coordinates.
-#'   Default = \dQuote{decimallatitude}.
+#'   Default = \dQuote{decimalLatitude}.
 #' @param species character string. The column with the species identity. Only
 #'   required if verify = TRUE.
 #' @param buffer The buffer around each capital coordinate (the centre of the
@@ -40,8 +40,8 @@
 #' @examples
 #'
 #' x <- data.frame(species = letters[1:10],
-#'                 decimallongitude = c(runif(99, -180, 180), -47.882778),
-#'                 decimallatitude = c(runif(99, -90, 90), -15.793889))
+#'                 decimalLongitude = c(runif(99, -180, 180), -47.882778),
+#'                 decimalLatitude = c(runif(99, -90, 90), -15.793889))
 #'
 #' cc_cap(x)
 #' cc_cap(x, value = "flagged")
@@ -51,8 +51,8 @@
 #' @importFrom terra vect ext crop geom union extract buffer
 
 cc_cap <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude",
+                   lon = "decimalLongitude", 
+                   lat = "decimalLatitude",
                    species = "species",
                    buffer = 10000,
                    geod = TRUE,

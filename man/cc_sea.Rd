@@ -6,8 +6,8 @@
 \usage{
 cc_sea(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   ref = NULL,
   scale = 110,
   value = "clean",
@@ -19,10 +19,10 @@ cc_sea(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{ref}{SpatVector (geometry: polygons). Providing the geographic
 gazetteer. Can be any SpatVector (geometry: polygons), but the structure
@@ -69,8 +69,8 @@ See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 }
 \examples{
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(10, -30, 30), 
-                decimallatitude = runif(10, -30, 30))
+                decimalLongitude = runif(10, -30, 30), 
+                decimalLatitude = runif(10, -30, 30))
                 
 cc_sea(x, value = "flagged")
 

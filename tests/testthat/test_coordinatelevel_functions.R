@@ -9,8 +9,8 @@ lon <- runif(250, min = 42, max = 51)
 set.seed(2)
 lat <- runif(250, min = -26, max = -11)
 exmpl <- data.frame(species = sample(letters[-1], size = 250, replace = TRUE),
-                    decimallongitude = lon,
-                    decimallatitude = lat,
+                    decimalLongitude = lon,
+                    decimalLatitude = lat,
                     countrycode = "RUS")
 
 range_species_A <- cbind(cbind(c(-180,-180, 180, 180,-180),
@@ -45,8 +45,8 @@ test_that("cc_cen works", {
 ## cc_coun
 test_that("cc_coun works", {
 skip_on_cran()
-  exmpl2 <-  data.frame(decimallatitude = c(51.5, -10), 
-                        decimallongitude = c(8, 40),
+  exmpl2 <-  data.frame(decimalLatitude = c(51.5, -10), 
+                        decimalLongitude = c(8, 40),
                         countrycode = c("DEU", "DEU"))
   
   cust_ref1 <- terra::vect(rnaturalearth::ne_countries(scale = "small",
@@ -79,8 +79,8 @@ skip_on_cran()
 test_that("cc_gbif works", {
   
   t.gbif <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
-                                    decimallongitude = c(12.58, 12.585, 12.58),
-                                    decimallatitude = c(55.67, 55.676, 55.67),
+                                    decimalLongitude = c(12.58, 12.585, 12.58),
+                                    decimalLatitude = c(55.67, 55.676, 55.67),
                                     countrycode = "RUS"))
   
   expect_is(cc_gbif(exmpl, value = "flagged"), "logical")
@@ -101,8 +101,8 @@ test_that("cc_gbif works", {
 test_that("cc_inst works", {
 skip_on_cran()
   t.inst <- rbind(exmpl, data.frame(species = c("a", "a", "bia"), 
-                                    decimallongitude = c(12.58, 12.585, 12.58),
-                                    decimallatitude = c(55.67, 55.676, 55.67),
+                                    decimalLongitude = c(12.58, 12.585, 12.58),
+                                    decimalLatitude = c(55.67, 55.676, 55.67),
                                     countrycode = "RUS"))
   resA <- cc_inst(t.inst, value = "flagged")
   expect_is(resA, "logical")
@@ -219,7 +219,7 @@ test_that("cc_urb works", {
   xy <- terra::crds(cust_ref)[sample(1:terra::ncell(cust_ref), 200), ]
   city_exmpl <- data.frame(species = letters[1:10], 
                            xy )
-  names(city_exmpl) <- c("species", "decimallongitude", "decimallatitude")
+  names(city_exmpl) <- c("species", "decimalLongitude", "decimalLatitude")
   city_exmpl <- dplyr::bind_rows(exmpl, city_exmpl)
   
   expect_is(cc_urb(city_exmpl, value = "flagged"), "logical")
@@ -234,8 +234,8 @@ test_that("cc_urb works", {
 
 #extend input data
 exmpl <- rbind(exmpl, data.frame(species = rep("a", 50), 
-                                 decimallongitude = rep( 50.25, 50), 
-                                 decimallatitude = rep(55.77), 
+                                 decimalLongitude = rep( 50.25, 50), 
+                                 decimalLatitude = rep(55.77), 
                                  countrycode = "RUS"))
 
 exmpl <- data.frame(exmpl, 

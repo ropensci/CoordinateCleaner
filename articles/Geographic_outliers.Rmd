@@ -25,21 +25,19 @@ library(dplyr)
 library(ggplot2)
 library(magrittr)
 library(readr)
-library(rgdal)
 library(rgbif)
-library(sp)
 library(viridis)
 
 # load example data from local to speed up vignette building
 squ <- read_delim(file = "inst/0005313-180730143533302.csv", delim = "\t", guess_max = 100000)%>%
-  dplyr::select(species = specieskey, decimallongitude, decimallatitude,countrycode)%>%
-  filter(!is.na(decimallongitude))%>%
-  filter(!is.na(decimallatitude))
+  dplyr::select(species = specieskey, decimalLongitude, decimalLatitude,countrycode)%>%
+  filter(!is.na(decimalLongitude))%>%
+  filter(!is.na(decimalLatitude))
 
 lnx <- read_delim(file = "inst/0006556-180730143533302.csv", delim = "\t", guess_max = 100000)%>%
-  dplyr::select(species = specieskey, decimallongitude, decimallatitude, countrycode)%>%
-  filter(!is.na(decimallongitude))%>%
-  filter(!is.na(decimallatitude))
+  dplyr::select(species = specieskey, decimalLongitude, decimalLatitude, countrycode)%>%
+  filter(!is.na(decimalLongitude))%>%
+  filter(!is.na(decimalLatitude))
 ```
 
 
@@ -53,8 +51,8 @@ We will first download occurrence records for *Lynx lynx* from www.gbif.org usin
 # Load data from GBIF
 lnx <- rgbif::occ_search(scientificName = "Lynx lynx", limit = 200000,
          hasCoordinate = T, return = "data")%>%
-  dplyr::select(species = key, decimallongitude = decimalLongitude, 
-         decimallatitude = decimalLatitude, countrycode)
+  dplyr::select(species = key, decimalLongitude = decimalLongitude, 
+         decimalLatitude = decimalLatitude, countrycode)
 
 ```
 
@@ -76,7 +74,7 @@ plo <- data.frame(lnx, outlier =  as.factor(!outl))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -97,7 +95,7 @@ plo <- data.frame(lnx, outlier =  as.factor(!outl_6))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -119,7 +117,7 @@ plo <- data.frame(lnx, outlier =  as.factor(!outl_samp))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -139,7 +137,7 @@ squ <- rgbif::occ_search(scientificName = "Lynx lynx", limit = 200000,
          hasCoordinate = T)
 
 squ <- squ$data%>%
-  dplyr::select(species = key, decimallongitude, decimallatitude, countrycode,
+  dplyr::select(species = key, decimalLongitude, decimalLatitude, countrycode,
          hasCoordinate = T)
 
 ```
@@ -160,7 +158,7 @@ plo <- data.frame(squ, outlier =  as.factor(!outl))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -179,7 +177,7 @@ plo <- data.frame(squ, outlier =  as.factor(!outl_samp))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -210,7 +208,7 @@ ggplot()+
   borders(fill = "grey60")+
   geom_polygon(data = nat_range, aes(x = long, y = lat, group = group), fill = "green", alpha = 0.5, col = "grey50")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -247,7 +245,7 @@ ggplot()+
   borders(fill = "grey60")+
   geom_polygon(data = nat_range, aes(x = long, y = lat), fill = "green", alpha = 0.5, col = "grey50")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+

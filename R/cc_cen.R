@@ -23,8 +23,8 @@
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = c(runif(99, -180, 180), -47.92), 
-#'                 decimallatitude = c(runif(99, -90,90), -15.78))
+#'                 decimalLongitude = c(runif(99, -180, 180), -47.92), 
+#'                 decimalLatitude = c(runif(99, -90,90), -15.78))
 #' cc_cen(x, geod = FALSE)
 #' 
 #' \dontrun{
@@ -36,8 +36,8 @@
 #' @importFrom terra vect ext crop buffer geom
 
 cc_cen <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+                   lon = "decimalLongitude", 
+                   lat = "decimalLatitude", 
                    species = "species",
                    buffer = 1000,
                    geod = TRUE,

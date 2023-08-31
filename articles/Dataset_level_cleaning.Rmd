@@ -17,7 +17,7 @@ library(dplyr)
 library(ggplot2)
 library(knitr)
 library(magrittr)
-library(raster)
+library(terra)
 library(readr)
 library(tidyr)
 library(viridis)
@@ -257,7 +257,7 @@ summ <- summ%>%
   mutate(true.negative.rate = ifelse(bias.rate > 0, NA, true.negative.rate))
 
 ## plot summary stats
-plo.sum <- gather(summ, index, value,- diff, -bias.rate)
+plo.sum <- gather(summ, index, value,-diff, -bias.rate)
 
 ## diff threshold
 ggplot(plo.sum)+
@@ -336,8 +336,8 @@ The conversion error test is implemented in the cd_ddmm function. You can easily
 
 ```{r echo = T, evaluate = T, warning = F, message = F, fig.height=8, fig.width=8, fig.show = T}
 clean <- data.frame(species = letters[1:10],
-                    decimallongitude = runif(100, -180, 180),
-                    decimallatitude = runif(100, -90,90),
+                    decimalLongitude = runif(100, -180, 180),
+                    decimalLatitude = runif(100, -90,90),
                     dataset = "clean")
 
 #problematic dataset
@@ -345,8 +345,8 @@ lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
 lat <- sample(0:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
 
 biased <-  data.frame(species = letters[1:10],
-                      decimallongitude = lon,
-                      decimallatitude = lat,
+                      decimalLongitude = lon,
+                      decimalLatitude = lat,
                       dataset = "biased")
 
 dat <- rbind(clean, biased)
@@ -356,8 +356,8 @@ par(mfrow = c(1,2))
 cd_ddmm(x = dat, diagnostic = TRUE, value = "dataset", mat_size = 100)
 
 #inspect geographic extent of the flagged dataset to exclude island or patchy habitat
-min(biased$decimallongitude)
-max(biased$decimallongitude)
+min(biased$decimalLongitude)
+max(biased$decimalLongitude)
 
 ```
 
@@ -421,8 +421,8 @@ simDS <- function(n.rec,
   #add biased data
   inp.lon <- c(cl.lon, bi.lon)
   inp.lat <- c(cl.lat, bi.lat)
-  inp <- data.frame(decimallongitude = inp.lon,
-                    decimallatitude = inp.lat,
+  inp <- data.frame(decimalLongitude = inp.lon,
+                    decimalLatitude = inp.lat,
                     dataset = nrep)
   
   results <- data.frame(dataset.size = n.rec,
@@ -458,8 +458,8 @@ simDS <- function(n.rec,
     #run test
   par(mfrow = c(2,2))
   
-  res <- cd_round(x = sims.cl[[1]], lon = "decimallongitude", ds = "dataset", test = "lon", value = "dataset")
-  res <- cd_round(x = sims.bia[[1]], lon = "decimallongitude", ds = "dataset", test = "lon", value = "dataset")
+  res <- cd_round(x = sims.cl[[1]], lon = "decimalLongitude", ds = "dataset", test = "lon", value = "dataset")
+  res <- cd_round(x = sims.bia[[1]], lon = "decimalLongitude", ds = "dataset", test = "lon", value = "dataset")
   
 
 ```
@@ -481,7 +481,7 @@ plo <- plo%>%
   mutate(biased = ifelse(bias.rate == 0, F, T))%>%
   mutate(correct = flag != biased)
 #remember: flag = T means not biased/test passed
-summ <- plo%>%
+summ <- plo %>%
   group_by(outlier.threshold, bias.rate)%>%
   summarize(true.positive = sum(biased & !flag),
             true.negative = sum(!biased & flag),
@@ -497,7 +497,7 @@ summ <- plo%>%
             true.negative.rate = true.negative / n,
             false.positive.rate = false.positive / n)
 
-summ <- summ%>%
+summ <- summ %>%
   dplyr::select(-true.positive, -true.negative, -false.positive, -false.negative, -n, -precision, 
          -specificity, -detection.rate, -sensitivity)%>%
   mutate(false.positive.rate = ifelse(bias.rate > 0, NA, false.positive.rate))%>%
@@ -540,16 +540,16 @@ sig <- runif(3, 0.1, 5)
 cl <- rnorm(n = 900, mean = mu, sd = sig)
 lat <- c(cl, bi)
 
-biased <- data.frame(decimallongitude = lon,
-                  decimallatitude = lat,
+biased <- data.frame(decimalLongitude = lon,
+                  decimalLatitude = lat,
                   dataset = "biased")
 
 # simulate unbiased data
 lon <- runif(n = 1000, min = -30, max = 30)
 lat <- runif(n = 1000, min = -30, max = 30)
 
-clean <- data.frame(decimallongitude = lon,
-                    decimallatitude = lat, dataset = "clean")
+clean <- data.frame(decimalLongitude = lon,
+                    decimalLatitude = lat, dataset = "clean")
 
 dat <- rbind(biased, clean)
 

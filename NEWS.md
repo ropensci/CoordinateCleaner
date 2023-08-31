@@ -1,3 +1,8 @@
+CoordinateCleaner 3.0 (2023-08-31)
+=========================
+### MAJOR IMPROVEMENTS
+  * Modified all functions to remove dependencies on sp, raster, and rgeos.
+
 CoordinateCleaner 2.0-20 (2021-10-08)
 =========================
 

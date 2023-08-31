@@ -19,16 +19,16 @@
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
-#'                 decimallatitude = runif(110, -90,90))
+#'                 decimalLongitude = c(runif(106, -180, 180), NA, "13W33'", "67,09", 305), 
+#'                 decimalLatitude = runif(110, -90,90))
 #'                 
 #' cc_val(x)
 #' cc_val(x, value = "flagged")
 #' 
 #' @export
 cc_val <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+                   lon = "decimalLongitude", 
+                   lat = "decimalLatitude", 
                    value = "clean",
                    verbose = TRUE) {
 

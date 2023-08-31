@@ -86,7 +86,7 @@
 #' @param centroids_ref a \code{data.frame} with alternative reference data for
 #'   the centroid test. If NULL, the \code{countryref} dataset is used.
 #'   Alternatives must be identical in structure.
-#' @param country_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#' @param country_ref a \code{SpatVector} as alternative reference
 #'   for the countries test. If NULL, the
 #'   \code{rnaturalearth:ne_countries('medium', returnclass = "sf")} dataset is used.
 #' @param country_refcol the column name in the reference dataset, containing
@@ -95,15 +95,15 @@
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
 #'   biodiversity institution test. If NULL, the \code{institutions} dataset is
 #'   used.  Alternatives must be identical in structure.
-#' @param range_ref a \code{SpatialPolygonsDataFrame} of species natural ranges.
+#' @param range_ref a \code{SpatVector} of species natural ranges.
 #'   Required to include the 'ranges' test. See \code{\link{cc_iucn}} for
 #'   details.
-#' @param seas_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#' @param seas_ref a \code{SpatVector} as alternative reference
 #'   for the seas test. If NULL, the rnaturalearth::ne_download(scale = 110,
 #'   type = 'land', category = 'physical', returnclass = "sf") dataset is used.
 #' @param seas_scale The scale of the default landmass reference. Must be one of
 #'   10, 50, 110. Higher numbers equal higher detail. Default = 50.
-#' @param urban_ref a \code{SpatialPolygonsDataFrame} as alternative reference
+#' @param urban_ref a \code{SpatVector} as alternative reference
 #'   for the urban test. If NULL, the test is skipped. See details for a
 #'   reference gazetteers.
 #' @param value a character string defining the output value. See the value
@@ -145,8 +145,8 @@
 #' 
 #' 
 #' exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-#'                     decimallongitude = runif(250, min = 42, max = 51),
-#'                     decimallatitude = runif(250, min = -26, max = -11))
+#'                     decimalLongitude = runif(250, min = 42, max = 51),
+#'                     decimalLatitude = runif(250, min = -26, max = -11))
 #' 
 #' test <- clean_coordinates(x = exmpl, 
 #'                           tests = c("equal"))
@@ -169,8 +169,8 @@
 #' @importFrom utils write.table
 #' @md
 clean_coordinates <- function(x, 
-                             lon = "decimallongitude", 
-                             lat = "decimallatitude",
+                             lon = "decimalLongitude", 
+                             lat = "decimalLatitude",
                              species = "species", 
                              countries = NULL, 
                              tests = c("capitals", "centroids",
@@ -319,8 +319,8 @@ clean_coordinates <- function(x,
       value = "ids", verbose = verbose
     )
     otl <- rep(TRUE, nrow(x))
-    names(otl) <- seq_len(nrow(x))
-    otl[as.numeric(otl_flag)] <- FALSE
+    names(otl) <- rownames(x)
+    otl[otl_flag] <- FALSE
     out$otl <- otl
   }
 
@@ -383,7 +383,7 @@ clean_coordinates <- function(x,
     class(ret) <- c("spatialvalid", "data.frame", class(out))
     out <- ret
     
-    if (report) {
+    if (isTRUE(report)) {
       report <- "clean_coordinates_report.txt"
     }
     if (is.character(report)) {
@@ -393,9 +393,9 @@ clean_coordinates <- function(x,
         stringsAsFactors = FALSE
       )
       repo <- rbind(repo, c("Total number of records", length(out$summary)))
-      repo <- rbind(repo, c("Error Quotient", round(sum(!out$summary,
-        na.rm = TRUE
-      ) / length(out$summary), 2)))
+      zeros <- ifelse(is.null(out$summary), 0, sum(!out$summary, na.rm = TRUE))
+      repo <- rbind(repo, c("Error Quotient", 
+                            round(zeros / length(out$summary), 2)))
 
       write.table(repo, report, sep = "\t", row.names = FALSE, quote = FALSE)
     }

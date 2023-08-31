@@ -6,8 +6,8 @@
 \usage{
 cc_coun(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   iso3 = "countrycode",
   value = "clean",
   ref = NULL,
@@ -19,10 +19,10 @@ cc_coun(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{iso3}{a character string. The column with the country assignment of
 each record in three letter ISO code. Default = \dQuote{countrycode}.}
@@ -70,8 +70,8 @@ With the default reference, records are flagged if they fall outside
 
 \dontrun{
 x <- data.frame(species = letters[1:10],
-                decimallongitude = runif(100, -20, 30),
-                decimallatitude = runif(100, 35,60),
+                decimalLongitude = runif(100, -20, 30),
+                decimalLatitude = runif(100, 35,60),
                 countrycode = "RUS")
 
 cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong.

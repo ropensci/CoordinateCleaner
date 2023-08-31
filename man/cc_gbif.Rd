@@ -6,8 +6,8 @@
 \usage{
 cc_gbif(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   buffer = 1000,
   geod = TRUE,
@@ -20,10 +20,10 @@ cc_gbif(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
@@ -60,8 +60,8 @@ Not recommended if working with records from Denmark or the Copenhagen area.
 \examples{
 
 x <- data.frame(species = "A", 
-                decimallongitude = c(12.58, 12.58), 
-                decimallatitude = c(55.67, 30.00))
+                decimalLongitude = c(12.58, 12.58), 
+                decimalLatitude = c(55.67, 30.00))
                 
 cc_gbif(x)
 cc_gbif(x, value = "flagged")

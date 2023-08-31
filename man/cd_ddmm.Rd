@@ -6,8 +6,8 @@
 \usage{
 cd_ddmm(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   ds = "dataset",
   pvalue = 0.025,
   diff = 1,
@@ -22,10 +22,10 @@ cd_ddmm(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{ds}{a character string. The column with the dataset of each record. In
 case \code{x} should be treated as a single dataset, identical for all
@@ -89,8 +89,8 @@ details and tutorials.
 \examples{
 
 clean <- data.frame(species = letters[1:10], 
-                decimallongitude = runif(100, -180, 180), 
-                decimallatitude = runif(100, -90,90),
+                decimalLongitude = runif(100, -180, 180), 
+                decimalLatitude = runif(100, -90,90),
                 dataset = "FR")
                 
 cd_ddmm(x = clean, value = "flagged")
@@ -100,8 +100,8 @@ lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
 lat <- sample(0:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
 
 prob <-  data.frame(species = letters[1:10], 
-                decimallongitude = lon, 
-                decimallatitude = lat,
+                decimalLongitude = lon, 
+                decimalLatitude = lat,
                 dataset = "FR")
                 
 cd_ddmm(x = prob, value = "flagged")

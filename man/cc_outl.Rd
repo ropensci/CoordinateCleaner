@@ -6,8 +6,8 @@
 \usage{
 cc_outl(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   method = "quantile",
   mltpl = 5,
@@ -24,10 +24,10 @@ cc_outl(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{character string. The column with the species name. Default =
 \dQuote{species}.}
@@ -113,8 +113,8 @@ See \url{https://ropensci.github.io/CoordinateCleaner/} for more
 \examples{
 
 x <- data.frame(species = letters[1:10],
-                decimallongitude = runif(100, -180, 180),
-                decimallatitude = runif(100, -90,90))
+                decimalLongitude = runif(100, -180, 180),
+                decimalLatitude = runif(100, -90,90))
 
 cc_outl(x)
 cc_outl(x, method = "quantile", value = "flagged")

@@ -7,8 +7,8 @@
 cc_iucn(
   x,
   range,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   buffer = 0,
   value = "clean",
@@ -18,14 +18,14 @@ cc_iucn(
 \arguments{
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
-\item{range}{a SpatialPolygonsDataFrame of natural ranges for species in x. 
+\item{range}{a SpatVector of natural ranges for species in x. 
 Must contain a column named as indicated by \code{species}. See details.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{a character string. The column with the species name. 
 Default = \dQuote{species}.}
@@ -65,8 +65,8 @@ details and tutorials.
 library(terra)
 
 x <- data.frame(species = c("A", "B"),
-decimallongitude = runif(100, -170, 170),
-decimallatitude = runif(100, -80,80))
+decimalLongitude = runif(100, -170, 170),
+decimalLatitude = runif(100, -80,80))
 
 range_species_A <- cbind(c(-45,-45,-60,-60,-45), c(-10,-25,-25,-10,-10))
 rangeA <- terra::vect(range_species_A, "polygons")

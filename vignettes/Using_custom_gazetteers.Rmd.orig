@@ -33,8 +33,8 @@ dat <- rgbif::occ_search(scientificName = "Avicennia", limit = 1000,
 dat <- dat$data
 
 dat <-  dat %>% 
-  dplyr::select(species = name, decimallongitude = decimalLongitude, 
-         decimallatitude = decimalLatitude, countryCode)
+  dplyr::select(species = name, decimalLongitude = decimalLongitude, 
+         decimalLatitude = decimalLatitude, countryCode)
 
 # run with default gazetteer
 outl <- cc_sea(dat, value = "flagged")
@@ -45,7 +45,7 @@ plo <- data.frame(dat, outlier =  as.factor(!outl))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+
@@ -53,7 +53,7 @@ ggplot()+
 
 ```
 
-A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. *CoordinateCleaner* comes with a one degree buffered reference (`buffland`). In case a narrower or distance true buffer is necessary, you can provide any SpatialPolygonsDataFrame similar in structure to `buffland` via the `ref` argument.
+A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. *CoordinateCleaner* comes with a one degree buffered reference (`buffland`). In case a narrower or distance true buffer is necessary, you can provide any SpatVector similar in structure to `buffland` via the `ref` argument.
 
 ```{r cusgaz2, warning = F, message = F, collapse = T, fig.width=8, fig.height=6}
 # The buffered custom gazetteer
@@ -69,7 +69,7 @@ plo <- data.frame(dat, outlier =  as.factor(!outl))
 ggplot()+
   borders(fill = "grey60")+
   geom_point(data = plo, 
-             aes(x = decimallongitude, y = decimallatitude, col = outlier))+
+             aes(x = decimalLongitude, y = decimalLatitude, col = outlier))+
   scale_color_viridis(discrete = T, name = "Flagged outlier")+
   coord_fixed()+
   theme_bw()+

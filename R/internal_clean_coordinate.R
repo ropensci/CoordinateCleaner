@@ -1,16 +1,26 @@
 # Check projection of custom reference and reproject to wgs84 if necessary
 reproj <- function(ref) {
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
-  
+  ref_crs <- terra::crs(ref, proj = TRUE)
   # if no projection information is given assume wgs84
-  if (is.na(terra::crs(ref, proj = TRUE))) {
-    warning("no projection information for reference found, 
-            assuming '+proj=longlat +datum=WGS84 +no_defs'")
-    ref <- terra::project(ref, wgs84)
-  } else if (terra::crs(ref, proj = TRUE) != wgs84) {
-    #otherwise reproject
-    ref <- terra::project(ref, wgs84)
-    warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs'")
+  if (ref_crs == "") {
+    warning(
+      "no projection information for reference found,
+            assuming '+proj=longlat +datum=WGS84 +no_defs'"
+    )
+    terra::crs(ref) <- wgs84
+  } else {
+    if (is.na(ref_crs)) {
+      warning(
+        "no projection information for reference found,
+            assuming '+proj=longlat +datum=WGS84 +no_defs'"
+      )
+      ref <- terra::project(ref, wgs84)
+    } else if (ref_crs != wgs84) {
+      #otherwise reproject
+      ref <- terra::project(ref, wgs84)
+      warning("reprojecting reference to '+proj=longlat +datum=WGS84 +no_defs'")
+    }
   }
   return(ref)
 }

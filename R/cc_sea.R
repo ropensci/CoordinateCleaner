@@ -13,8 +13,7 @@
 #' reference, e.g.: \code{\link{buffland}}.
 #'
 #' @param ref SpatVector (geometry: polygons). Providing the geographic
-#'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure
-#'   must be identical to \code{\link{countryref}}. but the structure must be identical to
+#'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure must be identical to
 #'   rnaturalearth::ne_download(scale = 110, type = 'land', category =
 #'   'physical', returnclass = 'sf'). Default = rnaturalearth::ne_download(scale = 110, type =
 #'   'land', category = 'physical', returnclass = 'sf').
@@ -35,8 +34,8 @@
 #' 
 #' @examples
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = runif(10, -30, 30), 
-#'                 decimallatitude = runif(10, -30, 30))
+#'                 decimalLongitude = runif(10, -30, 30), 
+#'                 decimalLatitude = runif(10, -30, 30))
 #'                 
 #' cc_sea(x, value = "flagged")
 #' 
@@ -46,8 +45,8 @@
 #'@importFrom terra extract vect geom geomtype
 
 cc_sea <- function(x, 
-                   lon = "decimallongitude", 
-                   lat = "decimallatitude", 
+                   lon = "decimalLongitude", 
+                   lat = "decimalLatitude", 
                    ref = NULL,
                    scale = 110,
                    value = "clean",

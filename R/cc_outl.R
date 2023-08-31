@@ -69,8 +69,8 @@
 #' @examples
 #'
 #' x <- data.frame(species = letters[1:10],
-#'                 decimallongitude = runif(100, -180, 180),
-#'                 decimallatitude = runif(100, -90,90))
+#'                 decimalLongitude = runif(100, -180, 180),
+#'                 decimalLatitude = runif(100, -90,90))
 #'
 #' cc_outl(x)
 #' cc_outl(x, method = "quantile", value = "flagged")
@@ -87,8 +87,8 @@
 
 
 cc_outl <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude", 
                     species = "species",
                     method = "quantile", 
                     mltpl = 5, 
@@ -228,20 +228,20 @@ cc_outl <- function(x,
         
         # outliers based on absolute distance threshold
         out <- which(mins > tdi)
-      }else{ # for the other methods the mean must be claculated 
+      } else { # for the other methods the mean must be claculated 
         # depending on if the raster method is used
         # get row means
-        if(raster_flag & !thinning){
+        if (raster_flag & !thinning) {
           # get mean distance to all other points
           mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
-        }else{
+        } else {
           # get mean distance to all other points
           mins <-  apply(dist, 1, mean, na.rm = TRUE)
         }
       }
       
       ## the quantile method
-      if(method == "quantile"){
+      if (method == "quantile") {
         # identify the quaniles
         quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
         
@@ -263,7 +263,7 @@ cc_outl <- function(x,
       
       # Identify the outlier points depending on 
       # if the raster approximation was used
-      if(raster_flag){
+      if (raster_flag) {
         # create output object
         if (length(out) == 0) {
           ret <- NA
@@ -355,15 +355,11 @@ cc_outl <- function(x,
     
     if (verbose) {
       if (value == "ids") {
-        if(value == "clean"){
-          message(sprintf("Removed %s records.", length(flags)))
-        }else{
           message(sprintf("Flagged %s records.", length(flags)))
-        }
-      } else {
-        if(value == "clean"){
+        } else {
+        if (value == "clean") {
           message(sprintf("Removed %s records.", sum(!out)))
-        }else{
+        } else {
           message(sprintf("Flagged %s records.", sum(!out)))
         }
       }

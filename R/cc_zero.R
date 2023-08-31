@@ -22,8 +22,8 @@
 #' @examples
 #' 
 #' x <- data.frame(species = "A", 
-#'                 decimallongitude = c(0,34.84, 0, 33.98), 
-#'                 decimallatitude = c(23.08, 0, 0, 15.98))
+#'                 decimalLongitude = c(0,34.84, 0, 33.98), 
+#'                 decimalLatitude = c(23.08, 0, 0, 15.98))
 #'                 
 #' cc_zero(x)
 #' cc_zero(x, value = "flagged")
@@ -31,8 +31,8 @@
 #' @export
 #' @importFrom terra extract buffer vect
 cc_zero <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude",
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude",
                     buffer = 0.5,
                     value = "clean", 
                     verbose = TRUE) {

@@ -55,8 +55,8 @@ cutoff
 dc
 dd
 ddmm
-decimallatitude
-decimallongitude
+decimalLatitude
+decimalLongitude
 dedup
 devtools
 dismo

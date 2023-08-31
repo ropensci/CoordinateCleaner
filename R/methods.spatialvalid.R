@@ -14,9 +14,9 @@ is.spatialvalid <- function(x) {
 #' @param x an object of the class \code{spatialvalid} as from
 #' \code{\link{clean_coordinates}}.
 #' @param lon character string. The column with the longitude coordinates.
-#' Default = \dQuote{decimallongitude}.
+#' Default = \dQuote{decimalLongitude}.
 #' @param lat character string. The column with the latitude coordinates.
-#' Default = \dQuote{decimallatitude}.
+#' Default = \dQuote{decimalLatitude}.
 #' @param bgmap an object of the class \code{SpatialPolygonsDataFrame} used as
 #' background map. Default = ggplot::borders()
 #' @param clean logical.  If TRUE, non-flagged coordinates are included in the
@@ -37,8 +37,8 @@ is.spatialvalid <- function(x) {
 #' 
 #' 
 #' exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-#'                     decimallongitude = runif(250, min = 42, max = 51),
-#'                     decimallatitude = runif(250, min = -26, max = -11))
+#'                     decimalLongitude = runif(250, min = 42, max = 51),
+#'                     decimalLatitude = runif(250, min = -26, max = -11))
 #' 
 #' test <- clean_coordinates(exmpl, species = "species", 
 #'                           tests = c("sea", "gbif", "zeros"),
@@ -51,8 +51,8 @@ is.spatialvalid <- function(x) {
 #' @importFrom grDevices extendrange
 #' @importFrom ggplot2 borders fortify aes_string geom_polygon coord_fixed map_data theme_bw theme element_text geom_point scale_colour_manual scale_shape_manual element_blank
 plot.spatialvalid <- function(x, 
-                              lon = "decimallongitude",
-                              lat = "decimallatitude",
+                              lon = "decimalLongitude",
+                              lat = "decimalLatitude",
                               bgmap = NULL, 
                               clean = TRUE, 
                               details = FALSE,

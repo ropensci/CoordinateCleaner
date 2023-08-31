@@ -56,8 +56,8 @@ A simple example:
 # Simulate example data
 minages <- runif(250, 0, 65)
 exmpl <- data.frame(species = sample(letters, size = 250, replace = TRUE),
-                    decimallongitude = runif(250, min = 42, max = 51),
-                    decimallatitude = runif(250, min = -26, max = -11),
+                    decimalLongitude = runif(250, min = 42, max = 51),
+                    decimalLatitude = runif(250, min = -26, max = -11),
                     min_ma = minages,
                     max_ma = minages + runif(250, 0.1, 65),
                     dataset = "clean")
@@ -73,8 +73,8 @@ dsl <- clean_dataset(exmpl)
 # For fossils
 fl <- clean_fossils(x = exmpl,
                           taxon = "species",
-                          lon = "decimallongitude", 
-                          lat = "decimallatitude")
+                          lon = "decimalLongitude", 
+                          lat = "decimalLatitude")
 summary(fl)
 
 # Alternative example using the pipe
@@ -84,8 +84,8 @@ cl <- exmpl %>%
   cc_val()%>%
   cc_cap()%>%
   cd_ddmm()%>%
-  cf_range(lon = "decimallongitude", 
-           lat = "decimallatitude", 
+  cf_range(lon = "decimalLongitude", 
+           lat = "decimalLatitude", 
            taxon  ="species")
 ```
 
