@@ -20,8 +20,8 @@
 #' @examples
 #' 
 #' x <- data.frame(species = "A", 
-#'                 decimallongitude = c(12.58, 12.58), 
-#'                 decimallatitude = c(55.67, 30.00))
+#'                 decimalLongitude = c(12.58, 12.58), 
+#'                 decimalLatitude = c(55.67, 30.00))
 #'                 
 #' cc_gbif(x)
 #' cc_gbif(x, value = "flagged")
@@ -31,8 +31,8 @@
 #' @importFrom terra vect buffer extract
 
 cc_gbif <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude",
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude",
                     species = "species",
                     buffer = 1000,
                     geod = TRUE,

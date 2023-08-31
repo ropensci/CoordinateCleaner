@@ -6,8 +6,8 @@
 \usage{
 cc_inst(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   buffer = 100,
   geod = TRUE,
@@ -22,10 +22,10 @@ cc_inst(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
@@ -77,8 +77,8 @@ different latitudes.
 \examples{
 
 x <- data.frame(species = letters[1:10],
-                decimallongitude = c(runif(99, -180, 180), 37.577800),
-                decimallatitude = c(runif(99, -90,90), 55.710800))
+                decimalLongitude = c(runif(99, -180, 180), 37.577800),
+                decimalLatitude = c(runif(99, -90,90), 55.710800))
 
 #large buffer for demonstration, using geod = FALSE for shorter runtime
 cc_inst(x, value = "flagged", buffer = 10, geod = FALSE)

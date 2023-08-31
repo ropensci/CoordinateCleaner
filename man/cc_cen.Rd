@@ -6,8 +6,8 @@
 \usage{
 cc_cen(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   buffer = 1000,
   geod = TRUE,
@@ -22,10 +22,10 @@ cc_cen(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{character string. The column with the species identity. Only
 required if verify = TRUE.}
@@ -76,8 +76,8 @@ details and tutorials.
 \examples{
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = c(runif(99, -180, 180), -47.92), 
-                decimallatitude = c(runif(99, -90,90), -15.78))
+                decimalLongitude = c(runif(99, -180, 180), -47.92), 
+                decimalLatitude = c(runif(99, -90,90), -15.78))
 cc_cen(x, geod = FALSE)
 
 \dontrun{

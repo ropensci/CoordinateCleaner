@@ -6,8 +6,8 @@
 \usage{
 cc_dupl(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   species = "species",
   additions = NULL,
   value = "clean",
@@ -18,10 +18,10 @@ cc_dupl(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{species}{a character string. The column with the species name. Default
 = \dQuote{species}.}
@@ -51,8 +51,8 @@ flagged with this function, the former given enough additional information.
 \examples{
 
 x <- data.frame(species = letters[1:10], 
-                decimallongitude = sample(x = 0:10, size = 100, replace = TRUE), 
-                decimallatitude = sample(x = 0:10, size = 100, replace = TRUE),
+                decimalLongitude = sample(x = 0:10, size = 100, replace = TRUE), 
+                decimalLatitude = sample(x = 0:10, size = 100, replace = TRUE),
                 collector = "Bonpl",
                 collector.number = c(1001, 354),
                 collection = rep(c("K", "WAG","FR", "P", "S"), 20))

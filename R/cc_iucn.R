@@ -11,7 +11,7 @@
 #' Note: the buffer radius is in degrees, thus will differ slightly between
 #' different latitudes. 
 #' 
-#' @param range a SpatialPolygonsDataFrame of natural ranges for species in x. 
+#' @param range a SpatVector of natural ranges for species in x. 
 #' Must contain a column named as indicated by \code{species}. See details.  
 #' @param species a character string. The column with the species name. 
 #' Default = \dQuote{species}.
@@ -30,8 +30,8 @@
 #' library(terra)
 #' 
 #' x <- data.frame(species = c("A", "B"),
-#' decimallongitude = runif(100, -170, 170),
-#' decimallatitude = runif(100, -80,80))
+#' decimalLongitude = runif(100, -170, 170),
+#' decimalLatitude = runif(100, -80,80))
 #'
 #' range_species_A <- cbind(c(-45,-45,-60,-60,-45), c(-10,-25,-25,-10,-10))
 #' rangeA <- terra::vect(range_species_A, "polygons")
@@ -48,8 +48,8 @@
 
 cc_iucn <- function(x,
                      range,
-                     lon = "decimallongitude", 
-                     lat = "decimallatitude",
+                     lon = "decimalLongitude", 
+                     lat = "decimalLatitude",
                      species = "species",
                      buffer = 0,
                      value = "clean",

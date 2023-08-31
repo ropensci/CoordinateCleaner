@@ -67,8 +67,8 @@
 #'   
 #'   #add biased data
 #'   
-#'   inp <- data.frame(decimallongitude = lon,
-#'                     decimallatitude = lat,
+#'   inp <- data.frame(decimalLongitude = lon,
+#'                     decimalLatitude = lat,
 #'                     dataset = "test")
 #'             
 #'           
@@ -82,8 +82,8 @@
 #' @importFrom stats complete.cases
 #' @importFrom graphics title
 cd_round <- function(x, 
-                     lon = "decimallongitude", 
-                     lat = "decimallatitude", 
+                     lon = "decimalLongitude", 
+                     lat = "decimalLatitude", 
                      ds = "dataset",
                      T1 = 7, 
                      reg_out_thresh = 2, 

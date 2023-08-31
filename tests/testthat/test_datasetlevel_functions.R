@@ -3,8 +3,8 @@ context("Dataset level functions ds_*")
 #Create test dataset
 set.seed(1)
 clean <- data.frame(dataset = rep("clean", 1000),
-                    decimallongitude = runif(min = -43, max = -40, n = 1000),
-                    decimallatitude = runif(min = -13, max = -10, n = 1000))
+                    decimalLongitude = runif(min = -43, max = -40, n = 1000),
+                    decimalLatitude = runif(min = -13, max = -10, n = 1000))
 bias.long <- c(round(runif(min = -42, max = -40, n = 500), 1),
                round(runif(min = -42, max = -40, n = 300), 0),
                runif(min = -42, max = -40, n = 200))
@@ -12,8 +12,8 @@ bias.lat <- c(round(runif(min = -12, max = -10, n = 500), 1),
               round(runif(min = -12, max = -10, n = 300), 0),
               runif(min = -12, max = -10, n = 200))
 bias <- data.frame(dataset = rep("biased", 1000),
-                   decimallongitude = bias.long,
-                   decimallatitude = bias.lat)
+                   decimalLongitude = bias.long,
+                   decimalLatitude = bias.lat)
 test <- rbind(clean, bias)
 
 #cd_round
@@ -63,16 +63,16 @@ test_that("cd_round identifies existing bias", {
 # cd_ddmm
 set.seed(1)
 clean <- data.frame(species = letters[1:10], 
-                    decimallongitude = runif(100, -180, 180), 
-                    decimallatitude = runif(100, -90,90),
+                    decimalLongitude = runif(100, -180, 180), 
+                    decimalLatitude = runif(100, -90,90),
                     dataset = "clean")
 #problematic dataset
 lon <- sample(0:180, size = 100, replace = TRUE) + runif(100, 0,0.59)
 lat <- sample(0:90, size = 100, replace = TRUE) + runif(100, 0,0.59)
 
 prob <-  data.frame(species = letters[1:10], 
-                    decimallongitude = lon, 
-                    decimallatitude = lat,
+                    decimalLongitude = lon, 
+                    decimalLatitude = lat,
                     dataset = "prob")
 
 test <- rbind(prob,clean)

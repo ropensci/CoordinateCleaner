@@ -22,8 +22,8 @@
 #' @examples
 #' 
 #' x <- data.frame(species = letters[1:10], 
-#'                 decimallongitude = sample(x = 0:10, size = 100, replace = TRUE), 
-#'                 decimallatitude = sample(x = 0:10, size = 100, replace = TRUE),
+#'                 decimalLongitude = sample(x = 0:10, size = 100, replace = TRUE), 
+#'                 decimalLatitude = sample(x = 0:10, size = 100, replace = TRUE),
 #'                 collector = "Bonpl",
 #'                 collector.number = c(1001, 354),
 #'                 collection = rep(c("K", "WAG","FR", "P", "S"), 20))
@@ -33,8 +33,8 @@
 #' 
 #' @export
 cc_dupl <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude", 
                     species = "species",
                     additions = NULL, 
                     value = "clean", 

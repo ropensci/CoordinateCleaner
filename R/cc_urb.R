@@ -6,10 +6,10 @@
 #' by city area.
 #'
 #'
-#' @param ref a SpatialPolygonsDataFrame. Providing the geographic gazetteer
+#' @param ref a SpatVector. Providing the geographic gazetteer
 #'   with the urban areas. See details. By default
 #'   rnaturalearth::ne_download(scale = 'medium', type = 'urban_areas',
-#'   returnclass = "sf"). Can be any \code{SpatialPolygonsDataframe}, but the
+#'   returnclass = "sf"). Can be any \code{SpatVector}, but the
 #'   structure must be identical to \code{rnaturalearth::ne_download()}.
 #' @inheritParams cc_cap
 #'
@@ -25,8 +25,8 @@
 #'
 #' \dontrun{
 #' x <- data.frame(species = letters[1:10],
-#'                 decimallongitude = runif(100, -180, 180),
-#'                 decimallatitude = runif(100, -90,90))
+#'                 decimalLongitude = runif(100, -180, 180),
+#'                 decimalLatitude = runif(100, -90,90))
 #'
 #' cc_urb(x)
 #' cc_urb(x, value = "flagged")
@@ -37,8 +37,8 @@
 #' @importFrom rnaturalearth ne_download ne_file_name
 
 cc_urb <- function(x,
-                   lon = "decimallongitude",
-                   lat = "decimallatitude",
+                   lon = "decimalLongitude",
+                   lat = "decimalLatitude",
                    ref = NULL,
                    value = "clean",
                    verbose = TRUE) {

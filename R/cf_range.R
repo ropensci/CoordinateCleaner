@@ -30,8 +30,8 @@
 #' @export
 #' @importFrom stats median mad IQR quantile dist
 cf_range <- function(x, 
-                     lon = "decimallongitude", 
-                     lat = "decimallatitude", 
+                     lon = "decimalLongitude", 
+                     lat = "decimalLatitude", 
                      min_age = "min_ma", 
                      max_age = "max_ma",
                      taxon = "accepted_name", 
@@ -48,14 +48,14 @@ cf_range <- function(x,
   match.arg(method, choices = c("quantile", "mad", "time"))
   
   #Also allow PBDB standard names
-  if("lat" %in% names(x) & !("decimallatitude" %in% names(x))){
+  if ("lat" %in% names(x) & !(lat %in% names(x))) {
     lat <- "lat"
-    warning("decimallatitude not found. Using lat instead.")
+    warning(paste(lat, "not found. Using lng instead."))
   }
   
-  if("lng" %in% names(x) & !("decimallongitude" %in% names(x))){
+  if ("lng" %in% names(x) & !(lon %in% names(x))) {
     lon <- "lng"
-    warning("decimallongitude not found. Using lng instead.")
+    warning(paste(lon, "not found. Using lng instead."))
   }
 
   # select relevant columns and calcualte age range

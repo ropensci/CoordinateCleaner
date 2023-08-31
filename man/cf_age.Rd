@@ -6,8 +6,8 @@
 \usage{
 cf_age(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   min_age = "min_ma",
   max_age = "max_ma",
   taxon = "accepted_name",
@@ -27,10 +27,10 @@ and geographic coordinates.}
 
 \item{lon}{character string. The column with the longitude coordinates.
 To identify unique records if \code{uniq_loc  = TRUE}.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallatitude}. To identify unique records if \code{uniq_loc  = T}.}
+Default = \dQuote{decimalLatitude}. To identify unique records if \code{uniq_loc  = T}.}
 
 \item{min_age}{character string. The column with the minimum age. Default
 = \dQuote{min_ma}.}
@@ -105,8 +105,8 @@ cf_age(x, value = "flagged", taxon = "")
 
 # unique locations only
 x <- data.frame(species = c(letters[1:10], rep("z", 2)),
-                decimallongitude = c(runif(n = 10, min = 4, max = 16), 75, 7),
-                decimallatitude = c(runif(n = 12, min = -5, max = 5)),
+                decimalLongitude = c(runif(n = 10, min = 4, max = 16), 75, 7),
+                decimalLatitude = c(runif(n = 12, min = -5, max = 5)),
                 min_ma = minages, 
                 max_ma = c(minages[1:11] + runif(n = 11, min = 0, max = 5), 65))
 

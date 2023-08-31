@@ -38,8 +38,8 @@
 #'
 #' \dontrun{
 #' x <- data.frame(species = letters[1:10],
-#'                 decimallongitude = runif(100, -20, 30),
-#'                 decimallatitude = runif(100, 35,60),
+#'                 decimalLongitude = runif(100, -20, 30),
+#'                 decimalLatitude = runif(100, 35,60),
 #'                 countrycode = "RUS")
 #'
 #' cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong.
@@ -49,8 +49,8 @@
 #' @importFrom terra vect geomtype extract
 
 cc_coun <- function(x, 
-                    lon = "decimallongitude", 
-                    lat = "decimallatitude", 
+                    lon = "decimalLongitude", 
+                    lat = "decimalLatitude", 
                     iso3 = "countrycode",
                     value = "clean", 
                     ref = NULL, 

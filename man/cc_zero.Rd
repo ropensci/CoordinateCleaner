@@ -6,8 +6,8 @@
 \usage{
 cc_zero(
   x,
-  lon = "decimallongitude",
-  lat = "decimallatitude",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
   buffer = 0.5,
   value = "clean",
   verbose = TRUE
@@ -17,10 +17,10 @@ cc_zero(
 \item{x}{data.frame. Containing geographical coordinates and species names.}
 
 \item{lon}{character string. The column with the longitude coordinates.
-Default = \dQuote{decimallongitude}.}
+Default = \dQuote{decimalLongitude}.}
 
 \item{lat}{character string. The column with the latitude coordinates.
-Default = \dQuote{decimallatitude}.}
+Default = \dQuote{decimalLatitude}.}
 
 \item{buffer}{numerical. The buffer around the 0/0 point,
 where records should be flagged as problematic, in decimal
@@ -50,8 +50,8 @@ details and tutorials.
 \examples{
 
 x <- data.frame(species = "A", 
-                decimallongitude = c(0,34.84, 0, 33.98), 
-                decimallatitude = c(23.08, 0, 0, 15.98))
+                decimalLongitude = c(0,34.84, 0, 33.98), 
+                decimalLatitude = c(23.08, 0, 0, 15.98))
                 
 cc_zero(x)
 cc_zero(x, value = "flagged")
