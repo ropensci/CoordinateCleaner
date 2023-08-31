@@ -12,7 +12,8 @@ cc_coun(
   value = "clean",
   ref = NULL,
   ref_col = "iso_a3",
-  verbose = TRUE
+  verbose = TRUE,
+  buffer = NULL
 )
 }
 \arguments{
@@ -42,6 +43,9 @@ the ISO-3 codes in the reference dataset. See notes.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
+
+\item{buffer}{numeric. Units are in meters. If provided, a buffer is
+created around each country polygon.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}

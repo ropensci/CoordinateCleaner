@@ -12,7 +12,8 @@ cc_sea(
   scale = 110,
   value = "clean",
   speedup = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  buffer = NULL
 )
 }
 \arguments{
@@ -26,10 +27,10 @@ Default = \dQuote{decimalLatitude}.}
 
 \item{ref}{SpatVector (geometry: polygons). Providing the geographic
 gazetteer. Can be any SpatVector (geometry: polygons), but the structure
-must be identical to \code{\link{countryref}}. but the structure must be identical to
+must be identical to rnaturalearth::ne_download(scale = 110, type = 'land',
+category = 'physical', returnclass = 'sf'). Default =
 rnaturalearth::ne_download(scale = 110, type = 'land', category =
-'physical', returnclass = 'sf'). Default = rnaturalearth::ne_download(scale = 110, type =
-'land', category = 'physical', returnclass = 'sf').}
+'physical', returnclass = 'sf').}
 
 \item{scale}{the scale of the default reference, as downloaded from natural
 earth. Must be one of 10, 50, 110. Higher numbers equal higher detail.
@@ -42,6 +43,9 @@ data sets with many records per location.}
 
 \item{verbose}{logical. If TRUE reports the name of the test and the number
 of records flagged.}
+
+\item{buffer}{numeric. Units are in meters. If provided, a buffer is
+created around the sea polygon, or ref provided.}
 }
 \value{
 Depending on the \sQuote{value} argument, either a \code{data.frame}
