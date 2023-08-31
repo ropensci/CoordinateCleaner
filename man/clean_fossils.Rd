@@ -86,7 +86,7 @@ distance matrix calculation. See details.  Default = 5.}
 the centroid test. If NULL, the \code{countryref} dataset is used.
 Alternatives must be identical in structure.}
 
-\item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
+\item{country_ref}{a \code{SpatVector} as alternative reference
 for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium', returnclass = "sf")} dataset is used.}
 

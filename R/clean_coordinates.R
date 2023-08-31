@@ -92,6 +92,8 @@
 #' @param country_refcol the column name in the reference dataset, containing
 #'   the relevant ISO codes for matching. Default is to "iso_a3_eh" which
 #'   referes to the ISO-3 codes in the reference dataset. See notes.
+#' @param country_buffer numeric. Units are in meters. If provided, a buffer is
+#'   created around each country polygon.
 #' @param inst_ref a \code{data.frame} with alternative reference data for the
 #'   biodiversity institution test. If NULL, the \code{institutions} dataset is
 #'   used.  Alternatives must be identical in structure.
@@ -103,6 +105,8 @@
 #'   type = 'land', category = 'physical', returnclass = "sf") dataset is used.
 #' @param seas_scale The scale of the default landmass reference. Must be one of
 #'   10, 50, 110. Higher numbers equal higher detail. Default = 50.
+#' @param seas_buffer numeric. Units are in meters. If provided, a buffer is
+#'   created around sea polygon.
 #' @param urban_ref a \code{SpatVector} as alternative reference
 #'   for the urban test. If NULL, the test is skipped. See details for a
 #'   reference gazetteers.
@@ -192,10 +196,12 @@ clean_coordinates <- function(x,
                              centroids_ref = NULL, 
                              country_ref = NULL, 
                              country_refcol = "iso_a3",
+                             country_buffer = NULL,
                              inst_ref = NULL, 
                              range_ref = NULL,
                              seas_ref = NULL, 
                              seas_scale = 50,
+                             seas_buffer = NULL,
                              urban_ref = NULL,
                              value = "spatialvalid", 
                              verbose = TRUE, 
@@ -281,7 +287,8 @@ clean_coordinates <- function(x,
       lon = lon, lat = lat, ref = seas_ref, 
       scale = seas_scale,
       verbose = verbose,
-      value = "flagged"
+      value = "flagged",
+      buffer = seas_buffer
     )
   }
 
@@ -301,7 +308,9 @@ clean_coordinates <- function(x,
       iso3 = countries, 
       ref = country_ref,
       ref_col = country_refcol,
-      verbose = verbose, value = "flagged"
+      verbose = verbose, 
+      value = "flagged",
+      buffer = country_buffer
     )
   }
 

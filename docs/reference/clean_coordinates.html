@@ -98,10 +98,12 @@ collection databases.</p>
 <span>  centroids_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  country_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  country_refcol <span class="op">=</span> <span class="st">"iso_a3"</span>,</span>
+<span>  country_buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  inst_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  range_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seas_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seas_scale <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  seas_buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  urban_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"spatialvalid"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -204,7 +206,7 @@ Alternatives must be identical in structure.</p></dd>
 
 
 <dt>country_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative reference
+<dd><p>a <code>SpatVector</code> as alternative reference
 for the countries test. If NULL, the
 <code>rnaturalearth:ne_countries('medium', returnclass = "sf")</code> dataset is used.</p></dd>
 
@@ -215,6 +217,11 @@ the relevant ISO codes for matching. Default is to "iso_a3_eh" which
 referes to the ISO-3 codes in the reference dataset. See notes.</p></dd>
 
 
+<dt>country_buffer</dt>
+<dd><p>numeric. Units are in meters. If provided, a buffer is
+created around each country polygon.</p></dd>
+
+
 <dt>inst_ref</dt>
 <dd><p>a <code>data.frame</code> with alternative reference data for the
 biodiversity institution test. If NULL, the <code>institutions</code> dataset is
@@ -222,13 +229,13 @@ used.  Alternatives must be identical in structure.</p></dd>
 
 
 <dt>range_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> of species natural ranges.
+<dd><p>a <code>SpatVector</code> of species natural ranges.
 Required to include the 'ranges' test. See <code><a href="cc_iucn.html">cc_iucn</a></code> for
 details.</p></dd>
 
 
 <dt>seas_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative reference
+<dd><p>a <code>SpatVector</code> as alternative reference
 for the seas test. If NULL, the rnaturalearth::ne_download(scale = 110,
 type = 'land', category = 'physical', returnclass = "sf") dataset is used.</p></dd>
 
@@ -238,8 +245,13 @@ type = 'land', category = 'physical', returnclass = "sf") dataset is used.</p></
 10, 50, 110. Higher numbers equal higher detail. Default = 50.</p></dd>
 
 
+<dt>seas_buffer</dt>
+<dd><p>numeric. Units are in meters. If provided, a buffer is
+created around sea polygon.</p></dd>
+
+
 <dt>urban_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative reference
+<dd><p>a <code>SpatVector</code> as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
 reference gazetteers.</p></dd>
 

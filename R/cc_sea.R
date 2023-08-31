@@ -13,15 +13,18 @@
 #' reference, e.g.: \code{\link{buffland}}.
 #'
 #' @param ref SpatVector (geometry: polygons). Providing the geographic
-#'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure must be identical to
+#'   gazetteer. Can be any SpatVector (geometry: polygons), but the structure
+#'   must be identical to rnaturalearth::ne_download(scale = 110, type = 'land',
+#'   category = 'physical', returnclass = 'sf'). Default =
 #'   rnaturalearth::ne_download(scale = 110, type = 'land', category =
-#'   'physical', returnclass = 'sf'). Default = rnaturalearth::ne_download(scale = 110, type =
-#'   'land', category = 'physical', returnclass = 'sf').
+#'   'physical', returnclass = 'sf').
 #' @param scale the scale of the default reference, as downloaded from natural
 #'   earth. Must be one of 10, 50, 110. Higher numbers equal higher detail.
 #'   Default = 110.
 #' @param speedup logical. Using heuristic to speed up the analysis for large
 #'   data sets with many records per location.
+#' @param buffer numeric. Units are in meters. If provided, a buffer is
+#'   created around the sea polygon, or ref provided.
 #' @inheritParams cc_cap
 #'
 #' @inherit cc_cap return
@@ -51,7 +54,8 @@ cc_sea <- function(x,
                    scale = 110,
                    value = "clean",
                    speedup = TRUE, 
-                   verbose = TRUE){
+                   verbose = TRUE,
+                   buffer = NULL) {
   
   # check value argument
   match.arg(value, choices = c("clean", "flagged"))
@@ -106,6 +110,10 @@ cc_sea <- function(x,
       stop("ref must be a SpatVector with geomtype 'polygons'")
     }
     ref <- reproj(ref)
+  }
+  
+  if (is.numeric(buffer)) {
+    ref <- terra::buffer(ref, buffer)
   }
   
   # run test

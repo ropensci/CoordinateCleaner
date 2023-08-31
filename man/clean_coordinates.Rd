@@ -28,10 +28,12 @@ clean_coordinates(
   centroids_ref = NULL,
   country_ref = NULL,
   country_refcol = "iso_a3",
+  country_buffer = NULL,
   inst_ref = NULL,
   range_ref = NULL,
   seas_ref = NULL,
   seas_scale = 50,
+  seas_buffer = NULL,
   urban_ref = NULL,
   value = "spatialvalid",
   verbose = TRUE,
@@ -95,7 +97,7 @@ used. Alternatives must be identical in structure.}
 the centroid test. If NULL, the \code{countryref} dataset is used.
 Alternatives must be identical in structure.}
 
-\item{country_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
+\item{country_ref}{a \code{SpatVector} as alternative reference
 for the countries test. If NULL, the
 \code{rnaturalearth:ne_countries('medium', returnclass = "sf")} dataset is used.}
 
@@ -103,22 +105,28 @@ for the countries test. If NULL, the
 the relevant ISO codes for matching. Default is to "iso_a3_eh" which
 referes to the ISO-3 codes in the reference dataset. See notes.}
 
+\item{country_buffer}{numeric. Units are in meters. If provided, a buffer is
+created around each country polygon.}
+
 \item{inst_ref}{a \code{data.frame} with alternative reference data for the
 biodiversity institution test. If NULL, the \code{institutions} dataset is
 used.  Alternatives must be identical in structure.}
 
-\item{range_ref}{a \code{SpatialPolygonsDataFrame} of species natural ranges.
+\item{range_ref}{a \code{SpatVector} of species natural ranges.
 Required to include the 'ranges' test. See \code{\link{cc_iucn}} for
 details.}
 
-\item{seas_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
+\item{seas_ref}{a \code{SpatVector} as alternative reference
 for the seas test. If NULL, the rnaturalearth::ne_download(scale = 110,
 type = 'land', category = 'physical', returnclass = "sf") dataset is used.}
 
 \item{seas_scale}{The scale of the default landmass reference. Must be one of
 10, 50, 110. Higher numbers equal higher detail. Default = 50.}
 
-\item{urban_ref}{a \code{SpatialPolygonsDataFrame} as alternative reference
+\item{seas_buffer}{numeric. Units are in meters. If provided, a buffer is
+created around sea polygon.}
+
+\item{urban_ref}{a \code{SpatVector} as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
 reference gazetteers.}
 

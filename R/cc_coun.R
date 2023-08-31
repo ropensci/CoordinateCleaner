@@ -17,6 +17,8 @@
 #' @param ref_col the column name in the reference dataset, containing the
 #'   relevant ISO codes for matching. Default is to "iso_a3_eh" which refers to
 #'   the ISO-3 codes in the reference dataset. See notes.
+#' @param buffer numeric. Units are in meters. If provided, a buffer is
+#'   created around each country polygon.
 #' @inheritParams cc_cen
 #'
 #' @inherit cc_cap return
@@ -47,6 +49,7 @@
 #'
 #' @export
 #' @importFrom terra vect geomtype extract
+#' @importFrom stats na.omit
 
 cc_coun <- function(x, 
                     lon = "decimalLongitude", 
@@ -55,7 +58,8 @@ cc_coun <- function(x,
                     value = "clean", 
                     ref = NULL, 
                     ref_col = "iso_a3",
-                    verbose = TRUE) {
+                    verbose = TRUE,
+                    buffer = NULL) {
 
   # check function arguments for validity
   match.arg(value, choices = c("clean", "flagged"))
@@ -94,12 +98,30 @@ cc_coun <- function(x,
   dat <- terra::vect(x[, c(lon, lat)], 
                      geom = c(lon, lat),
                      crs = ref)
-
+  
+  # Buffer around countries
+  if (is.numeric(buffer)) {
+    ref_buff <- terra::buffer(ref, buffer)
+    # There is a weird bug in terra, so I did this work around
+    ref <- terra::vect(stats::na.omit(terra::geom(ref_buff)), 
+                       type = "polygon", crs = ref)
+    terra::values(ref) <- terra::values(ref_buff)
+  }
+  
   # get country from coordinates and compare with provided country
-  country <- terra::extract(ref, dat)[, ref_col]
-  out <- as.character(country) == as.character(unlist(x[, iso3]))
-  out[is.na(out)] <- FALSE # marine records are set to False
-
+  country <- terra::extract(ref, dat)
+  count_dat <- as.character(unlist(x[, iso3]))
+  
+  if (is.numeric(buffer)) {
+    out <- logical(length(dat))
+    for (i in seq_along(dat)) {
+      out[i] <- count_dat[i] %in% country[country[, 1] == i, ref_col]
+    }
+  } else {
+    country <- country[, ref_col]
+    out <- as.character(country) == count_dat
+    out[is.na(out)] <- FALSE # marine records are set to False
+  }
   # return output
   if (verbose) {
     if (value == "clean") {

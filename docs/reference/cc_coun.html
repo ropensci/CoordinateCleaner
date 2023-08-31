@@ -86,7 +86,8 @@ are switched.</p>
 <span>  value <span class="op">=</span> <span class="st">"clean"</span>,</span>
 <span>  ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_col <span class="op">=</span> <span class="st">"iso_a3"</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  buffer <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -133,6 +134,11 @@ the ISO-3 codes in the reference dataset. See notes.</p></dd>
 <dt>verbose</dt>
 <dd><p>logical. If TRUE reports the name of the test and the number
 of records flagged.</p></dd>
+
+
+<dt>buffer</dt>
+<dd><p>numeric. Units are in meters. If provided, a buffer is
+created around each country polygon.</p></dd>
 
 </dl></div>
     <div id="value">
