@@ -80,6 +80,7 @@ cc_iucn(x = x, range = range, buffer = 0)
 }
 \seealso{
 Other Coordinates: 
+\code{\link{cc_aohi}()},
 \code{\link{cc_cap}()},
 \code{\link{cc_cen}()},
 \code{\link{cc_coun}()},

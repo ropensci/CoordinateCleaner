@@ -133,3 +133,23 @@ NULL
 #' str(institutions)
 #' 
 NULL
+
+
+
+#' Artificial Hotspot Occurrence Inventory
+#'
+#'  A data frame with information on Artificial Hotspot Occurrence Inventory (AHOI)
+#'  as available in Park et al 2022. For more details see reference.
+#'
+#' @name aohi
+#' @docType data
+#' @source 
+#' \url{https://doi.org/10.1111/jbi.14543}
+#' @keywords gazetteers
+#' @references Park, D. S., Xie, Y., Thammavong, H. T., Tulaiha, R., & Feng, X.
+#'   (2023). Artificial Hotspot Occurrence Inventory (AHOI). Journal of
+#'   Biogeography, 50, 441–449. https://doi.org/10.1111/jbi.14543
+#' @examples
+#' 
+#' data("aohi")
+NULL

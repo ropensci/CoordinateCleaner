@@ -80,6 +80,7 @@ cc_cap(x, value = "flagged")
 }
 \seealso{
 Other Coordinates: 
+\code{\link{cc_aohi}()},
 \code{\link{cc_cen}()},
 \code{\link{cc_coun}()},
 \code{\link{cc_dupl}()},

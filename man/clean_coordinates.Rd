@@ -128,7 +128,9 @@ created around sea polygon.}
 
 \item{urban_ref}{a \code{SpatVector} as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
-reference gazetteers.}
+reference gazetteers.
+@param aohi_rad numeric. The radius around aohi coordinates in
+meters. Default = 1000.}
 
 \item{value}{a character string defining the output value. See the value
 section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
