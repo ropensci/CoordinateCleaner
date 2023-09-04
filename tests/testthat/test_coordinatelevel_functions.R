@@ -258,3 +258,14 @@ skip_on_cran()
                        value = "flagged"), 
                "undefined columns selected")
 })
+
+
+
+test_that("cc_aohi works", {
+  skip_on_cran()
+  
+  expect_equal(sum(cc_aohi(x = exmpl, value = "flagged")), 300)
+  expect_equal(sum(cc_aohi(x = exmpl, value = "flagged", 
+                           buffer = 10000000)), 0)
+})
+

@@ -125,6 +125,7 @@ plot(x[, -1], col =  cc_outl(x, method = "distance", value = "flagged", tdi = 10
 }
 \seealso{
 Other Coordinates: 
+\code{\link{cc_aohi}()},
 \code{\link{cc_cap}()},
 \code{\link{cc_cen}()},
 \code{\link{cc_coun}()},

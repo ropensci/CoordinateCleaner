@@ -110,6 +110,8 @@
 #' @param urban_ref a \code{SpatVector} as alternative reference
 #'   for the urban test. If NULL, the test is skipped. See details for a
 #'   reference gazetteers.
+#'  @param aohi_rad numeric. The radius around aohi coordinates in
+#'   meters. Default = 1000.
 #' @param value a character string defining the output value. See the value
 #'   section for details. one of \sQuote{spatialvalid}, \sQuote{summary},
 #'   \sQuote{clean}. Default = \sQuote{\code{spatialvalid}}.
@@ -352,7 +354,7 @@ clean_coordinates <- function(x,
     if (!is.null(range_rad)) {
       stop("'range_rad' not found")
     } else {
-      out$rang <- cc_iucn(x,
+      out$rang <- cc_iucn(x, range = range_ref,
                            lon = lon, lat = lat, species = species,
                            buffer = range_rad,
                            range = range_ref,
@@ -367,6 +369,11 @@ clean_coordinates <- function(x,
                        value = "flagged")
   }
 
+  if ("aohi" %in% tests) {
+    out$aohi <- cc_aohi(x, lon = lon, lat = lat, species = species, 
+                       value = "flagged", buffer = aohi_rad)
+  }
+  
   # prepare output data
   out <- Filter(function(x) !all(is.na(x)), out)
   suma <- as.vector(Reduce("&", out))

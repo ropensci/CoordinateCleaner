@@ -84,6 +84,7 @@ cc_coun(x, value = "flagged")#non-terrestrial records are flagged as wrong.
 }
 \seealso{
 Other Coordinates: 
+\code{\link{cc_aohi}()},
 \code{\link{cc_cap}()},
 \code{\link{cc_cen}()},
 \code{\link{cc_dupl}()},

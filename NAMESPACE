@@ -3,6 +3,7 @@
 S3method(is,spatialvalid)
 S3method(plot,spatialvalid)
 S3method(summary,spatialvalid)
+export(cc_aohi)
 export(cc_cap)
 export(cc_cen)
 export(cc_coun)

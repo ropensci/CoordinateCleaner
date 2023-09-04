@@ -63,6 +63,7 @@ cc_dupl(x, additions = c("collector", "collector.number"))
 }
 \seealso{
 Other Coordinates: 
+\code{\link{cc_aohi}()},
 \code{\link{cc_cap}()},
 \code{\link{cc_cen}()},
 \code{\link{cc_coun}()},
