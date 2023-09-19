@@ -351,7 +351,7 @@ clean_coordinates <- function(x,
   
   ## Natural ranges
   if ("range" %in% tests) {
-    if (!is.null(range_rad)) {
+    if (is.null(range_rad)) {
       stop("'range_rad' not found")
     } else {
       out$rang <- cc_iucn(x, range = range_ref,
