@@ -27,7 +27,7 @@ Default = \dQuote{decimalLongitude}.}
 \item{lat}{character string. The column with the latitude coordinates.
 Default = \dQuote{decimalLatitude}.}
 
-\item{bgmap}{an object of the class \code{SpatialPolygonsDataFrame} used as
+\item{bgmap}{an object of the class \code{SpatVector} or \code{sf} used as
 background map. Default = ggplot::borders()}
 
 \item{clean}{logical.  If TRUE, non-flagged coordinates are included in the
