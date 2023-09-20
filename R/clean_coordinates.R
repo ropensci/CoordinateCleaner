@@ -205,6 +205,7 @@ clean_coordinates <- function(x,
                              seas_scale = 50,
                              seas_buffer = NULL,
                              urban_ref = NULL,
+                             aohi_rad = NULL,
                              value = "spatialvalid", 
                              verbose = TRUE, 
                              report = FALSE) {
