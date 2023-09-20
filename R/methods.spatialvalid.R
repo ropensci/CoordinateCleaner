@@ -127,10 +127,10 @@ plot.spatialvalid <- function(x,
     }
     plo <- plo + 
       ggplot2::geom_point(data = pts, 
-                          ggplot2::aes(
-                            x = .data[[lon]],
-                            y = .data[[lat]], 
-                            colour = .summary), 
+                          ggplot2::aes_string(
+                            x = lon,
+                            y = lat, 
+                            colour = ".summary"), 
                           size = pts_size) + 
       ggplot2::scale_colour_manual(values = c("#440154FF", "#FDE725FF")[test_all], 
                                    labels = c("Flagged", "Clean")[test_all]) + 

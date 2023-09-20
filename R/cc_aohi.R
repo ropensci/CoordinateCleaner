@@ -32,6 +32,7 @@
 #' @export
 #' @importFrom geosphere destPoint
 #' @importFrom terra vect ext crop buffer geom
+#' @importFrom utils data
 
 cc_aohi <- function(x, 
                    lon = "decimalLongitude", 
