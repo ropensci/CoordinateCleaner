@@ -5,7 +5,7 @@
 \alias{buffsea}
 \title{Global Coastlines buffered by -1 degree}
 \source{
-\url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
+\url{https://www.naturalearthdata.com/downloads/10m-physical-vectors/}
 }
 \description{
 A \code{SpatVector} with global coastlines, with a -1 degree buffer to extent coastlines as alternative reference for \code{\link{cc_sea}}. Can be useful to identify marine species on land without flagging records in estuaries, etc.
