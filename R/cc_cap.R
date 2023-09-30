@@ -38,14 +38,14 @@
 #' @keywords Coordinate cleaning
 #' @family Coordinates
 #' @examples
-#'
+#' \dontrun{
 #' x <- data.frame(species = letters[1:10],
 #'                 decimalLongitude = c(runif(99, -180, 180), -47.882778),
 #'                 decimalLatitude = c(runif(99, -90, 90), -15.793889))
 #'
 #' cc_cap(x)
 #' cc_cap(x, value = "flagged")
-#'
+#' }
 #' @export
 #' @importFrom geosphere destPoint
 #' @importFrom terra vect ext crop geom union extract buffer
