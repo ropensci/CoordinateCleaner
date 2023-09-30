@@ -69,6 +69,7 @@ details and tutorials.
 x <- data.frame(species = letters[1:10], 
                 decimalLongitude = c(runif(99, -180, 180), -47.92), 
                 decimalLatitude = c(runif(99, -90,90), -15.78))
+cc_aohi(x)
 
 }
 \references{
