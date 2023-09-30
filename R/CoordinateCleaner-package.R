@@ -6,7 +6,7 @@
 #' @name buffland
 #' @docType data
 #' @source 
-#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
+#' \url{https://www.naturalearthdata.com/downloads/10m-physical-vectors/}
 #' @keywords gazetteers
 #' @examples
 #' 
@@ -20,7 +20,7 @@ NULL
 #' @name buffsea
 #' @docType data
 #' @source 
-#' \url{http://www.naturalearthdata.com/downloads/10m-physical-vectors/}
+#' \url{https://www.naturalearthdata.com/downloads/10m-physical-vectors/}
 #' @keywords gazetteers
 #' @examples
 #' 
@@ -32,7 +32,18 @@ NULL
 #' 
 #' Automated Cleaning of Occurrence Records from Biological Collections
 #' 
-#' Automated flagging of common spatial and temporal errors in biological and paleontological collection data, for the use in conservation, ecology and paleontology. Includes automated tests to easily flag (and exclude) records assigned to country or province centroid, the open ocean, the headquarters of the Global Biodiversity Information Facility, urban areas or the location of biodiversity institutions (museums, zoos, botanical gardens, universities). Furthermore identifies per species outlier coordinates, zero coordinates, identical latitude/longitude and invalid coordinates. Also implements an algorithm to identify data sets with a significant proportion of rounded coordinates. Especially suited for large data sets. See <https://ropensci.github.io/CoordinateCleaner/> for more details and tutorials.
+#' Automated flagging of common spatial and temporal errors in biological and
+#' paleontological collection data, for the use in conservation, ecology and
+#' paleontology. Includes automated tests to easily flag (and exclude) records
+#' assigned to country or province centroid, the open ocean, the headquarters of
+#' the Global Biodiversity Information Facility, urban areas or the location of
+#' biodiversity institutions (museums, zoos, botanical gardens, universities).
+#' Furthermore identifies per species outlier coordinates, zero coordinates,
+#' identical latitude/longitude and invalid coordinates. Also implements an
+#' algorithm to identify data sets with a significant proportion of rounded
+#' coordinates. Especially suited for large data sets. See
+#' <https://ropensci.github.io/CoordinateCleaner/> for more details and
+#' tutorials.
 #' 
 #' @name CoordinateCleaner-package
 #' @aliases CoordinateCleaner-package CoordinateCleaner
@@ -48,10 +59,13 @@ NULL
 
 #' Country Centroids and Country Capitals
 #' 
-#' A \code{data.frame} with coordinates of country and province centroids and country
-#' capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
-#' Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/the-world-factbook/},
-#' \url{http://thematicmapping.org/downloads/world_borders.php} and geolocate \url{http://geo-locate.org}.
+#' A \code{data.frame} with coordinates of country and province centroids and
+#' country capitals as reference for the \code{\link{clean_coordinates}},
+#' \code{\link{cc_cen}} and \code{\link{cc_cap}} functions. Coordinates are
+#' based on the Central Intelligence Agency World Factbook
+#' \url{https://www.cia.gov/the-world-factbook/},
+#' \url{https://thematicmapping.org/downloads/world_borders.php} and geolocate
+#' \url{https://geo-locate.org}.
 #' 
 #' 
 #' @name countryref
@@ -70,14 +84,14 @@ NULL
 #' \item{capital.lat}{Latitude of the country capital.}
 #' \item{area_sqkm}{The area of the country or province.}
 #' \item{uncertaintyRadiusMeters}{The uncertainty of the country centroid.}
-#' \item{source}{The data source. Currently only available for \url{http://geo-locate.org}}}
+#' \item{source}{The data source. Currently only available for \url{https://geo-locate.org}}}
 #' 
 #' @source CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 #' Washington, DC.
 #' 
 #' \url{https://www.cia.gov/the-world-factbook/}
-#' \url{http://thematicmapping.org/downloads/world_borders.php}
-#' \url{http://geo-locate.org}
+#' \url{https://thematicmapping.org/downloads/world_borders.php}
+#' \url{https://geo-locate.org}
 #' @keywords gazetteers
 #' @examples
 #' 
@@ -100,7 +114,7 @@ NULL
 #' Information Facility \url{https://www.gbif.org/} \item Wikipedia
 #' \url{https://www.wikipedia.org/} \item Geonames \url{https://www.geonames.org/} \item The Global
 #' Registry of Biodiversity Repositories \item Index
-#' Herbariorum \url{http://sweetgum.nybg.org/science/ih/}
+#' Herbariorum \url{https://sweetgum.nybg.org/science/ih/}
 #' \item Botanic Gardens Conservation International \url{https://www.bgci.org/}
 #' }
 #' @keywords gazetteers

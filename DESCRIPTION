@@ -61,7 +61,6 @@ Suggests:
     knitr,
     magrittr,
     maps,
-    paleobioDB,
     rmarkdown,
     rnaturalearthdata,
     sf,
@@ -69,8 +68,6 @@ Suggests:
     viridis
 VignetteBuilder:
     knitr
-Remotes:
-    ropensci/rnaturalearth
 Encoding: UTF-8
 Language: en-gb
 LazyData: true

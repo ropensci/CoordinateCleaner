@@ -19,21 +19,24 @@ A data frame with 5,305 observations on 13 variables.
 \item{capital.lat}{Latitude of the country capital.}
 \item{area_sqkm}{The area of the country or province.}
 \item{uncertaintyRadiusMeters}{The uncertainty of the country centroid.}
-\item{source}{The data source. Currently only available for \url{http://geo-locate.org}}}
+\item{source}{The data source. Currently only available for \url{https://geo-locate.org}}}
 }
 \source{
 CENTRAL INTELLIGENCE AGENCY (2014) \emph{The World Factbook},
 Washington, DC.
 
 \url{https://www.cia.gov/the-world-factbook/}
-\url{http://thematicmapping.org/downloads/world_borders.php}
-\url{http://geo-locate.org}
+\url{https://thematicmapping.org/downloads/world_borders.php}
+\url{https://geo-locate.org}
 }
 \description{
-A \code{data.frame} with coordinates of country and province centroids and country
-capitals as reference for the \code{\link{clean_coordinates}}, \code{\link{cc_cen}} and \code{\link{cc_cap}} functions.
-Coordinates are based on the Central Intelligence Agency World Factbook  \url{https://www.cia.gov/the-world-factbook/},
-\url{http://thematicmapping.org/downloads/world_borders.php} and geolocate \url{http://geo-locate.org}.
+A \code{data.frame} with coordinates of country and province centroids and
+country capitals as reference for the \code{\link{clean_coordinates}},
+\code{\link{cc_cen}} and \code{\link{cc_cap}} functions. Coordinates are
+based on the Central Intelligence Agency World Factbook
+\url{https://www.cia.gov/the-world-factbook/},
+\url{https://thematicmapping.org/downloads/world_borders.php} and geolocate
+\url{https://geo-locate.org}.
 }
 \examples{
 
