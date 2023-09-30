@@ -118,7 +118,7 @@ cd_round <- function(x,
           min_unique_ds_size) {
         warning("Dataset smaller than minimum test size")
         out <- data.frame(
-          dataset = unique(x[[ds]]), n.outliers = NA,
+          dataset = unique(k[[ds]]), n.outliers = NA,
           n.regular.outliers = NA, regular.distance = NA, summary = NA
         )
       } else {
