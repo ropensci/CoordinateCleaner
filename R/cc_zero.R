@@ -49,6 +49,9 @@ cc_zero <- function(x,
 
   # radius around point 0/0
   dat <- terra::vect(x[, c(lon, lat)], geom = c(lon, lat))
+  if (buffer == 0) { # error when buffer = 0
+    buffer <- 0.00000000000001
+  }
   buff <- terra::buffer(terra::vect(data.frame("lat" = 0, "lon" = 0)), 
                       width = buffer)
   ext_dat <- terra::extract(buff, dat)
