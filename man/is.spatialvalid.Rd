@@ -15,3 +15,4 @@ returns \code{TRUE} if its argument is a spatialvalid
 \description{
 Test if its argument is a spatialvalid object
 }
+\keyword{Check}

@@ -183,127 +183,14 @@ of records flagged.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>                decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">99</span>, <span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>, <span class="op">-</span><span class="fl">47.882778</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">99</span>, <span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span>, <span class="op">-</span><span class="fl">15.793889</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cc_cap</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Testing country capitals</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 1 records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    species decimalLongitude decimalLatitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        a       81.5247704      41.7323865</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        b       38.7255181     -57.8277744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        c      160.5282250      -0.9970314</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        d      -30.1481970      30.5180681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        e       10.2471123     -85.7245381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        f     -161.4308235      51.6653202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        g       37.5240207      -2.6567573</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8        h        6.8511781     -58.6618783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9        i      145.2848039     -10.1810884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       j      174.7444472      74.7448000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       a       98.3589772     -85.6574253</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       b      -43.5047870     -54.0091391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       c       37.8557099     -42.8721593</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14       d      156.8602022      63.3277240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       e      -22.3861550     -55.1587213</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16       f      -33.9813611     -59.1748766</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17       g      -96.5852130     -82.1605012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18       h      119.8641348     -76.4435037</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19       i       15.0957701     -57.0970963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20       j       -0.9678232     -52.5908156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21       a       28.7767751      -0.2311357</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22       b       74.0239551     -67.8370381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23       c       29.9063695      42.4868718</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24       d      -65.5736050      70.4138891</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25       e     -106.6476073     -82.3854272</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26       f     -113.7518543      81.1910751</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27       g      -88.0042062     -40.1825914</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28       h      136.0551668      23.0980683</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29       i      -77.5390313      17.2703665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30       j      -40.3225972     -20.6335347</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31       a     -146.2063635      50.7748589</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32       b      -16.1996097      85.2424881</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33       c       97.8030283     -43.5292853</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34       d      -28.4014861      12.1384115</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35       e      165.0571006       2.9472348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36       f     -174.3508969     -49.8341593</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37       g       -5.7593477      73.6183297</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38       h      176.7725170      66.3655820</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39       i      -46.7129342     -75.0510551</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40       j     -159.9161615      36.4207194</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41       a      -14.6965648      16.6009816</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42       b      -30.4503952     -58.8498113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43       c       36.9053636      33.7465461</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44       d      125.3509878     -10.4301728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45       e     -155.8588769      48.9649191</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46       f        9.7712237     -41.1445042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47       g        8.6602517     -48.6984440</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48       h      -15.0702864      18.6622092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49       i      118.4401656      12.3810661</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50       j      -48.9504869     -80.3138460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51       a     -147.9848860     -77.5037615</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52       b       -4.8887914     -16.5563048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53       c       11.2440127      -7.4428996</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54       d       36.0622967      21.6620054</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55       e       77.9430850      50.3386944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56       f     -100.1505323      50.1834901</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57       g     -140.1604976      -7.9390430</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58       h      102.6676837     -60.1613919</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59       i     -174.4882028      19.6191447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60       j      120.4548603      89.5623330</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61       a     -175.1737021     -62.8437581</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62       b       38.7406841     -82.2330097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63       c      -65.0106726      65.8941563</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64       d       31.4201257      76.5263354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65       e       13.0134414     -46.8559399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66       f      114.8424425      78.8743139</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67       g       94.1705138      89.0217749</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68       h       52.1839333     -60.3214408</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69       i      -31.5329086       3.6315766</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70       j     -160.6524838      62.6018201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71       a      -52.8052896     -65.6457054</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72       b      -87.8806280     -46.3256808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73       c      144.9952874      34.3582977</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74       d      165.4218022      45.5977784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75       e       50.7756624       8.4116731</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76       f     -166.9289716     -15.2830291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77       g      -60.8745402      57.4072359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78       h      123.6095070      37.2618096</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79       i      -32.6584762     -55.8685846</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80       j     -138.3695894      55.9883002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81       a     -177.1328469      52.7760359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82       b      -52.3633198     -53.6375326</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83       c       23.6658863      43.4568412</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84       d     -156.9655215     -41.4727177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85       e     -178.3428313      76.5622410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86       f       55.8691948      49.4950305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87       g       88.9998834     -55.8594228</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88       h      -45.8737188     -68.8155983</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89       i     -104.0506138     -27.6943471</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90       j     -102.8248651      76.2903495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91       a     -174.7796162     -86.2270353</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92       b      178.8555837      84.4558112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93       c       23.9792356       3.0805948</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 94       d       90.1079354      79.1683298</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95       e      104.9448339      61.9667377</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 96       f     -140.8631702      22.9960644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 97       g      131.1347631     -44.3792023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 98       h      -52.7108638      78.5704716</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 99       i      161.3818682     -41.7832210</span>
 <span class="r-in"><span><span class="fu">cc_cap</span><span class="op">(</span><span class="va">x</span>, value <span class="op">=</span> <span class="st">"flagged"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Testing country capitals</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 1 records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  TRUE  TRUE  TRUE FALSE</span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
