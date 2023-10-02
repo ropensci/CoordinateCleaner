@@ -51,7 +51,7 @@
 #' * zeros tests for plain zeros, equal latitude and
 #' longitude and a radius around the point 0/0. The radius is \code{zeros.rad}.
 #' 
-#' @aliases summary.spatialvalid is.spatialvalid
+#' @aliases summary.spatialvalid
 #'
 #' @param species a character string. A vector of the same length as rows in x,
 #'   with the species identity for each record.  If NULL, \code{tests} must not
