@@ -105,6 +105,7 @@ collection databases.</p>
 <span>  seas_scale <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  seas_buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  urban_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  aohi_rad <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"spatialvalid"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  report <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -253,8 +254,11 @@ created around sea polygon.</p></dd>
 <dt>urban_ref</dt>
 <dd><p>a <code>SpatVector</code> as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
-reference gazetteers.
-@param aohi_rad numeric. The radius around aohi coordinates in
+reference gazetteers.</p></dd>
+
+
+<dt>aohi_rad</dt>
+<dd><p>numeric. The radius around aohi coordinates in
 meters. Default = 1000.</p></dd>
 
 

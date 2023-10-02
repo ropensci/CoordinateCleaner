@@ -3,7 +3,8 @@
 #' Test if its argument is a spatialvalid object
 #' 
 #' @param x the object to be tested
-#' @return returns \code{TRUE} if its argument is a spatialvalid 
+#' @return returns \code{TRUE} if its argument is a spatialvalid
+#' @keywords Check
 #' @export
 
 
