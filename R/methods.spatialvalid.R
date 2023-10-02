@@ -1,7 +1,8 @@
 #' @export
 #' @method is spatialvalid
-is.spatialvalid <- function(x) {
-  inherits(x, "spatialvalid")
+
+is.spatialvalid <- function(objetc, class2 = "spatialvalid") {
+  inherits(objetc, class2)
 }
 
 
