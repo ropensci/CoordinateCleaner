@@ -3,7 +3,6 @@
 \name{clean_coordinates}
 \alias{clean_coordinates}
 \alias{summary.spatialvalid}
-\alias{is.spatialvalid}
 \title{Geographic Cleaning of Coordinates from Biologic Collections}
 \usage{
 clean_coordinates(

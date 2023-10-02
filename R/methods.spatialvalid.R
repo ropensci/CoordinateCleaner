@@ -1,8 +1,14 @@
+#' Check spatialvalid object
+#' 
+#' Test if its argument is a spatialvalid object
+#' 
+#' @param x the object to be tested
+#' @return returns \code{TRUE} if its argument is a spatialvalid 
 #' @export
-#' @method is spatialvalid
 
-is.spatialvalid <- function(objetc, class2 = "spatialvalid") {
-  inherits(objetc, class2)
+
+is.spatialvalid <- function(x) {
+  inherits(x, "spatialvalid")
 }
 
 
