@@ -1,5 +1,5 @@
-#' @method is spatialvalid
 #' @export
+#' @method is spatialvalid
 is.spatialvalid <- function(x) {
   inherits(x, "spatialvalid")
 }

@@ -15,5 +15,5 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageCheckArgs: --as-cran _SP_EVOLUTION_STATUS_=2 R CMD check
+PackageCheckArgs: --as-cran _SP_EVOLUTION_STATUS_=2 R CMD check _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 PackageRoxygenize: rd,collate,namespace,vignette

@@ -96,7 +96,7 @@ cc_cap <- function(x,
 
   # test if any points fall within the buffer in case no capitals are found in
   # the study area
-  if (is.null(ref)) {
+  if (is.null(ref) | ncol(ref) == 0) {
     out <- rep(TRUE, nrow(x))
   } else {
     if (geod) {
