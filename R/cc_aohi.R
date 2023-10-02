@@ -74,6 +74,9 @@ cc_aohi <- function(x,
                     geom = lon_lat,
                     crs = wgs84)
   
+  # fix buffer 0
+  buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
+  
   if (geod) {
     # credits to https://seethedatablog.wordpress.com
     dg <- seq(from = 0, to = 360, by = 5)

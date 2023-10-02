@@ -101,6 +101,7 @@ cc_coun <- function(x,
   
   # Buffer around countries
   if (is.numeric(buffer)) {
+    buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
     ref_buff <- terra::buffer(ref, buffer)
     # There is a weird bug in terra, so I did this work around
     ref <- terra::vect(stats::na.omit(terra::geom(ref_buff)), 
