@@ -20,7 +20,7 @@ the required polygon structure."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -81,8 +81,8 @@ the required polygon structure.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cc_iucn</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">range</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"decimallongitude"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"decimallatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"species"</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"clean"</span>,</span>
@@ -93,23 +93,22 @@ the required polygon structure.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>data.frame. Containing geographical coordinates and species
-names.</p></dd>
+<dd><p>data.frame. Containing geographical coordinates and species names.</p></dd>
 
 
 <dt>range</dt>
-<dd><p>a SpatialPolygonsDataFrame of natural ranges for species in x. 
+<dd><p>a SpatVector of natural ranges for species in x. 
 Must contain a column named as indicated by <code>species</code>. See details.</p></dd>
 
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>species</dt>
@@ -119,8 +118,7 @@ Default = “species”.</p></dd>
 
 <dt>buffer</dt>
 <dd><p>numerical. The buffer around each species' range,
-from where records should be flagged as problematic, in decimal
-degrees. Default = 0.</p></dd>
+from where records should be flagged as problematic, in meters. Default = 0.</p></dd>
 
 
 <dt>value</dt>
@@ -140,8 +138,8 @@ of records flagged.</p></dd>
 
 
 <p>containing the records considered correct by the test (“clean”) or a
-logical vector (“flagged”), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = “clean”.</p>
+  logical vector (“flagged”), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = “clean”.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -159,6 +157,7 @@ details and tutorials.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Coordinates: 
+<code><a href="cc_aohi.html">cc_aohi</a>()</code>,
 <code><a href="cc_cap.html">cc_cap</a>()</code>,
 <code><a href="cc_cen.html">cc_cen</a>()</code>,
 <code><a href="cc_coun.html">cc_coun</a>()</code>,
@@ -175,32 +174,27 @@ details and tutorials.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/edzer/sp/" class="external-link">sp</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sp</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> terra 1.7.46</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>decimallongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">170</span>, <span class="fl">170</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>decimallatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">80</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">170</span>, <span class="fl">170</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">80</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">range_species_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">45</span>,<span class="op">-</span><span class="fl">45</span>,<span class="op">-</span><span class="fl">60</span>,<span class="op">-</span><span class="fl">60</span>,<span class="op">-</span><span class="fl">45</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">25</span>,<span class="op">-</span><span class="fl">25</span>,<span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">range_species_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">15</span>,<span class="fl">32</span>,<span class="fl">32</span>,<span class="fl">15</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">range_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">range_species_A</span><span class="op">)</span>, ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">range_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">range_species_B</span><span class="op">)</span>, ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">range_A</span>, <span class="va">range_B</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygonsDataFrame</a></span><span class="op">(</span><span class="va">range</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">range_species_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">45</span>,<span class="op">-</span><span class="fl">45</span>,<span class="op">-</span><span class="fl">60</span>,<span class="op">-</span><span class="fl">60</span>,<span class="op">-</span><span class="fl">45</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">25</span>,<span class="op">-</span><span class="fl">25</span>,<span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rangeA</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">range_species_A</span>, <span class="st">"polygons"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">range_species_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">15</span>,<span class="fl">32</span>,<span class="fl">32</span>,<span class="fl">15</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span>,<span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rangeB</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">range_species_B</span>, <span class="st">"polygons"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">range</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rangeA</span>, <span class="va">rangeB</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">range</span><span class="op">$</span><span class="va">binomial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cc_iucn</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, range <span class="op">=</span> <span class="va">range</span>, buffer <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cc_iucn</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, range <span class="op">=</span> <span class="va">range</span>, buffer <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing natural ranges</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no projection information for reference found, </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>               assuming '+proj=longlat +datum=WGS84 +no_defs'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 95 records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     species decimallongitude decimallatitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         B        20.995818       -9.558330</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27        A       -53.294759      -32.053524</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31        A       -52.973646      -28.293894</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78        B         8.490185        1.845285</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100       B        33.854201       18.994918</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 100 records.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] species          decimalLongitude decimalLatitude </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;0 rows&gt; (or 0-length row.names)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -216,7 +210,7 @@ details and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

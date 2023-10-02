@@ -19,7 +19,7 @@ biological databases are often erroneously geo-referenced to centroids."><!-- ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -78,8 +78,8 @@ biological databases are often erroneously geo-referenced to centroids.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cc_cen</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"decimallongitude"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"decimallatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"species"</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  geod <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -94,18 +94,17 @@ biological databases are often erroneously geo-referenced to centroids.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>data.frame. Containing geographical coordinates and species
-names.</p></dd>
+<dd><p>data.frame. Containing geographical coordinates and species names.</p></dd>
 
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>species</dt>
@@ -121,10 +120,10 @@ Default = 1 kilometre.</p></dd>
 
 <dt>geod</dt>
 <dd><p>logical. If TRUE the radius around each capital is calculated
-based on a sphere, buffer is in meters and independent of latitude. If FALSE
-the radius is calculated assuming planar coordinates and varies slightly with latitude,
-in this case buffer is in degrees. Default = TRUE. See https://seethedatablog.wordpress.com/ 
-for detail and credits.</p></dd>
+based on a sphere, buffer is in meters and independent of latitude. If
+FALSE the radius is calculated assuming planar coordinates and varies
+slightly with latitude. Default = TRUE.
+See https://seethedatablog.wordpress.com/ for detail and credits.</p></dd>
 
 
 <dt>test</dt>
@@ -134,15 +133,16 @@ country and province centroids.</p></dd>
 
 
 <dt>ref</dt>
-<dd><p>SpatialPointsDataFrame. Providing the geographic gazetteer. Can
-be any SpatialPointsDataFrame, but the structure must be identical to
-<code><a href="countryref.html">countryref</a></code>.  Default = <code><a href="countryref.html">countryref</a></code>.</p></dd>
+<dd><p>SpatVector (geometry: polygons). Providing the geographic
+gazetteer. Can be any SpatVector (geometry: polygons), but the structure
+must be identical to <code><a href="countryref.html">countryref</a></code>.  Default =
+<code><a href="countryref.html">countryref</a></code>.</p></dd>
 
 
 <dt>verify</dt>
-<dd><p>logical. If TRUE records are only flagged if they are the
-only record in a given species flagged close to a given reference.
-If FALSE, the distance is the only criterion</p></dd>
+<dd><p>logical. If TRUE records are only flagged if they are the only
+record in a given species flagged close to a given reference. If FALSE, the
+distance is the only criterion</p></dd>
 
 
 <dt>value</dt>
@@ -162,8 +162,8 @@ of records flagged.</p></dd>
 
 
 <p>containing the records considered correct by the test (“clean”) or a
-logical vector (“flagged”), with TRUE = test passed and FALSE = test failed/potentially
-problematic . Default = “clean”.</p>
+  logical vector (“flagged”), with TRUE = test passed and FALSE = test
+  failed/potentially problematic . Default = “clean”.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -173,6 +173,7 @@ details and tutorials.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Coordinates: 
+<code><a href="cc_aohi.html">cc_aohi</a>()</code>,
 <code><a href="cc_cap.html">cc_cap</a>()</code>,
 <code><a href="cc_coun.html">cc_coun</a>()</code>,
 <code><a href="cc_dupl.html">cc_dupl</a>()</code>,
@@ -191,18 +192,115 @@ details and tutorials.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>                decimallongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>                decimallatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">90</span>,<span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                </span></span>
+<span class="r-in"><span>                decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">99</span>, <span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>, <span class="op">-</span><span class="fl">47.92</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">99</span>, <span class="op">-</span><span class="fl">90</span>,<span class="fl">90</span><span class="op">)</span>, <span class="op">-</span><span class="fl">15.78</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cc_cen</span><span class="op">(</span><span class="va">x</span>, geod <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing country centroids</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Spatial object is not projected; GEOS expects planar coordinates</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 100 records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] species          decimallongitude decimallatitude </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;0 rows&gt; (or 0-length row.names)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 0 records.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     species decimalLongitude decimalLatitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         a       141.251321       46.917863</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         b        40.369808      -73.946320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         c       120.511227      -22.188387</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         d        62.618052       45.239823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         e      -136.264671      -37.674450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         f       166.676737       87.765910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         g       176.416313       37.296296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         h      -122.585243       65.775467</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9         i      -160.175777       -4.743583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        j        -1.313123      -27.296162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        a         7.591688       67.845119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12        b        46.188688       14.663589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13        c       152.215046      -65.379560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14        d       107.992689      -40.798022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15        e        43.388671       34.737896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16        f       142.893549       23.106688</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17        g      -107.779059       48.176670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18        h        60.979837       78.088772</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19        i        99.389157      -45.800683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20        j      -103.900838      -84.012862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21        a       -21.101248       72.879711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22        b        -6.770962       71.936882</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23        c      -167.206461       86.538412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24        d       -74.732632      -61.342910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25        e       -13.952730       52.273410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26        f      -125.616163       62.176288</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27        g      -112.737548       86.344664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28        h        93.254200       -2.138746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29        i       -31.653596       64.398412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30        j      -126.136862      -27.793002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31        a      -158.924359      -48.208376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32        b      -161.482878      -69.575931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33        c      -177.873785      -39.467684</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34        d        21.687300       68.857140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35        e      -108.202159      -42.937304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36        f      -161.809366       -9.485971</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37        g        20.401661       42.637874</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38        h       123.243444       -2.723110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39        i       156.851895      -39.626081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40        j      -108.258325       42.178344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41        a       172.649697       37.623690</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42        b      -114.039291      -88.148232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43        c       -17.471592       51.018396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44        d       -32.924744      -32.081327</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45        e      -155.840520       58.863853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46        f        80.173934      -34.382174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47        g       -65.499246       78.746039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48        h      -151.922426        9.462066</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49        i       173.337534      -29.348518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50        j        26.491371      -33.611463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51        a       -62.722587      -64.824931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52        b      -113.962240      -12.080629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53        c      -160.930345       12.374035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54        d        -6.387953      -74.916091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55        e      -147.527917       62.386814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56        f       -84.669973       58.276676</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57        g      -161.019319       56.139875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58        h      -165.216939       39.308462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59        i       -79.134538       87.988521</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60        j        13.924423       54.006664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61        a         1.533268       44.133641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62        b       108.288321       27.191970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63        c       178.203647      -25.305281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64        d        85.824852       71.897374</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65        e        17.302071      -39.518492</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66        f        -6.268465      -78.064961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67        g      -146.190000      -72.941553</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68        h      -158.381803      -66.353186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69        i       124.784554      -85.533079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70        j       -76.209593        7.634840</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71        a       -61.489268      -40.858366</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72        b      -169.461478       36.023910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73        c      -140.746685      -43.327019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74        d       -12.130706      -80.561955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75        e        86.189838       43.227109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76        f      -121.624083       59.304764</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77        g      -179.809591       -2.357013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78        h      -101.521779       21.231597</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79        i       152.659813      -41.342278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80        j        34.786103       26.619448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81        a        62.878460      -47.838509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82        b       -21.471399       49.429528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83        c       170.405647       13.937843</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84        d       -68.767533      -86.060446</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85        e        32.291914       34.040899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86        f       -27.683566       87.524801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87        g       -78.887218      -18.145581</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88        h      -133.176195       81.520176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89        i       119.068743        6.334218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90        j        28.422350       71.882481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91        a       -59.432938      -65.428766</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92        b       113.457361       -5.193539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93        c        -7.983557      -23.952919</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94        d        38.186406      -21.699428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95        e       -72.465044      -44.781962</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96        f       -33.238247       79.397257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97        g       -59.649206      -55.581655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98        h       -52.759523       69.245630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99        i        88.549676       41.989671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100       j       -47.920000      -15.780000</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co">#' cc_inst(x, value = "flagged", buffer = 50000) #geod = T</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="cc_inst.html">cc_inst</a></span><span class="op">(</span><span class="va">x</span>, value <span class="op">=</span> <span class="st">"flagged"</span>, buffer <span class="op">=</span> <span class="fl">50000</span><span class="op">)</span> <span class="co">#geod = T</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -219,7 +317,7 @@ details and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

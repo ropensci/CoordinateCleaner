@@ -18,7 +18,7 @@ to visualize the flags from clean_coordinates"><!-- mathjax --><script src="http
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -75,10 +75,10 @@ to visualize the flags from clean_coordinates</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for spatialvalid</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"decimallongitude"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"decimallatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  bgmap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -98,16 +98,16 @@ to visualize the flags from clean_coordinates</p>
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>bgmap</dt>
-<dd><p>an object of the class <code>SpatialPolygonsDataFrame</code> used as
+<dd><p>an object of the class <code>SpatVector</code> or <code>sf</code> used as
 background map. Default = ggplot::borders()</p></dd>
 
 
@@ -156,17 +156,17 @@ up on the background map.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">exmpl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span>, size <span class="op">=</span> <span class="fl">250</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="clean_coordinates.html">clean_coordinates</a></span><span class="op">(</span><span class="va">exmpl</span>, species <span class="op">=</span> <span class="st">"species"</span>, </span></span>
 <span class="r-in"><span>                          tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sea"</span>, <span class="st">"gbif"</span>, <span class="st">"zeros"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                          verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .val     .zer     .gbf .summary </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        0        0        0        0 </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.spatialvalid-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -182,7 +182,7 @@ up on the background map.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

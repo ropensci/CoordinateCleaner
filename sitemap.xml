@@ -34,10 +34,16 @@
     <loc>/reference/CoordinateCleaner-package.html</loc>
   </url>
   <url>
+    <loc>/reference/aohi.html</loc>
+  </url>
+  <url>
     <loc>/reference/buffland.html</loc>
   </url>
   <url>
     <loc>/reference/buffsea.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cc_aohi.html</loc>
   </url>
   <url>
     <loc>/reference/cc_cap.html</loc>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
 
       
 
-      </header><script src="Using_custom_gazetteers_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using customized gazetteers</h1>
@@ -97,16 +97,37 @@
 
     
     
-<p>CoordinateCleaner identifies potentially erroneous geographic records with coordinates assigned to the sea, countr coordinate, country capitals, urban areas, institutions, the GBIF headquarters and countries based on the comparison with geographic gazetteers (i.e. reference databases). All of these functions include default reference databases compiled from various sources. These default references have been selected suitable for regional to global analyses. They will also work for smaller scale analyses, but in some case different references might be desirable and available. this could be for instance centroids of small scale political units, a different set of urban areas, or a different coastline when working with coastal species. To account for this, each <em>CoordinateCleaner</em> function using a gazetteer has a <code>ref</code> argument to specify custom gazetteers.</p>
-<p>We will use the case of coastlines and a coastal species to demonstrate the application of custom gazetteers. The purpose of <code>cc_sea</code> is to flag records in the sea, since these often represent erroneous and undesired records for terrestrial organisms. The standard gazetteer for this function is fetched from naturalearthdata.com at a 1:50m scale. However, often coordinates available from public databases are only precise at the scale of kilometres, which might lead to an overly critical flagging of coordinates close to the coastline, which is a problem especially for coastal or intertidal species. WE illustrate the issue on for the mangrove tree genus <em>Avicennia</em>.</p>
+<p>CoordinateCleaner identifies potentially erroneous geographic records
+with coordinates assigned to the sea, countr coordinate, country
+capitals, urban areas, institutions, the GBIF headquarters and countries
+based on the comparison with geographic gazetteers (i.e. reference
+databases). All of these functions include default reference databases
+compiled from various sources. These default references have been
+selected suitable for regional to global analyses. They will also work
+for smaller scale analyses, but in some case different references might
+be desirable and available. this could be for instance centroids of
+small scale political units, a different set of urban areas, or a
+different coastline when working with coastal species. To account for
+this, each <em>CoordinateCleaner</em> function using a gazetteer has a
+<code>ref</code> argument to specify custom gazetteers.</p>
+<p>We will use the case of coastlines and a coastal species to
+demonstrate the application of custom gazetteers. The purpose of
+<code>cc_sea</code> is to flag records in the sea, since these often
+represent erroneous and undesired records for terrestrial organisms. The
+standard gazetteer for this function is fetched from
+naturalearthdata.com at a 1:50m scale. However, often coordinates
+available from public databases are only precise at the scale of
+kilometres, which might lead to an overly critical flagging of
+coordinates close to the coastline, which is a problem especially for
+coastal or intertidal species. WE illustrate the issue on for the
+mangrove tree genus <em>Avicennia</em>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ropensci.github.io/CoordinateCleaner/" class="external-link">CoordinateCleaner</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/rgbif" class="external-link">rgbif</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/edzer/sp/" class="external-link">sp</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridis/" class="external-link">viridis</a></span><span class="op">)</span></span>
-<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#download data from GBIF</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">rgbif</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rgbif/reference/occ_search.html" class="external-link">occ_search</a></span><span class="op">(</span>scientificName <span class="op">=</span> <span class="st">"Avicennia"</span>, limit <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -115,8 +136,8 @@
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">data</span></span>
 <span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span>  <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">name</span>, decimallongitude <span class="op">=</span> <span class="va">decimalLongitude</span>, </span>
-<span>         decimallatitude <span class="op">=</span> <span class="va">decimalLatitude</span>, <span class="va">countryCode</span><span class="op">)</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">name</span>, decimalLongitude <span class="op">=</span> <span class="va">decimalLongitude</span>, </span>
+<span>         decimalLatitude <span class="op">=</span> <span class="va">decimalLatitude</span>, <span class="va">countryCode</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># run with default gazetteer</span></span>
 <span><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_sea.html">cc_sea</a></span><span class="op">(</span><span class="va">dat</span>, value <span class="op">=</span> <span class="st">"flagged"</span><span class="op">)</span></span>
@@ -125,40 +146,49 @@
 <span><span class="co">## with 127 features</span></span>
 <span><span class="co">## It has 3 fields</span></span>
 <span></span>
-<span><span class="va">plo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">dat</span>, outlier <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="op">!</span><span class="va">outl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">plo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">dat</span>, outlier <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/pkg/terra/man/is.bool.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="op">!</span><span class="va">outl</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#plot results</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span><span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">plo</span>, </span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">decimallongitude</span>, y <span class="op">=</span> <span class="va">decimallatitude</span>, col <span class="op">=</span> <span class="va">outlier</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">T</span>, name <span class="op">=</span> <span class="st">"Flagged outlier"</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">decimalLongitude</span>, y <span class="op">=</span> <span class="va">decimalLatitude</span>, col <span class="op">=</span> <span class="va">outlier</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">T</span>, name <span class="op">=</span> <span class="st">"Flagged outlier"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="cusgaz-cusgaz1-1.png" alt=""><p class="caption">plot of chunk cusgaz1</p>
 </div>
-<p>A large number of the coastal records gets flagged, which in this case is undesirable, because it is not a function of the records being wrong, but rather of the precision of the coordinates and the resolution of the reference. To avoid this problem you can use a buffered reference, which avoids flagging records close to the coast line and only flags records from the open ocean. <em>CoordinateCleaner</em> comes with a one degree buffered reference (<code>buffland</code>). In case a narrower or distance true buffer is necessary, you can provide any SpatialPolygonsDataFrame similar in structure to <code>buffland</code> via the <code>ref</code> argument.</p>
+<p>A large number of the coastal records gets flagged, which in this
+case is undesirable, because it is not a function of the records being
+wrong, but rather of the precision of the coordinates and the resolution
+of the reference. To avoid this problem you can use a buffered
+reference, which avoids flagging records close to the coast line and
+only flags records from the open ocean. <em>CoordinateCleaner</em> comes
+with a one degree buffered reference (<code>buffland</code>). In case a
+narrower or distance true buffer is necessary, you can provide any
+SpatVector similar in structure to <code>buffland</code> via the
+<code>ref</code> argument.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The buffered custom gazetteer</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"buffland"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">buffland</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">buffland</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">buffland</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">buffland</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="cusgaz-cusgaz2-1.png" alt=""><p class="caption">plot of chunk cusgaz2</p>
 </div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># run with custom gazetteer</span></span>
+<code class="sourceCode R"><span><span class="co"># run with custom gazetteer</span></span>
 <span><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cc_sea.html">cc_sea</a></span><span class="op">(</span><span class="va">dat</span>, value <span class="op">=</span> <span class="st">"flagged"</span>, ref <span class="op">=</span> <span class="va">buffland</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">dat</span>, outlier <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="op">!</span><span class="va">outl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">plo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">dat</span>, outlier <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/pkg/terra/man/is.bool.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="op">!</span><span class="va">outl</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#plot results</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">plo</span>, </span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">decimallongitude</span>, y <span class="op">=</span> <span class="va">decimallatitude</span>, col <span class="op">=</span> <span class="va">outlier</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">decimalLongitude</span>, y <span class="op">=</span> <span class="va">decimalLatitude</span>, col <span class="op">=</span> <span class="va">outlier</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">T</span>, name <span class="op">=</span> <span class="st">"Flagged outlier"</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
@@ -183,7 +213,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

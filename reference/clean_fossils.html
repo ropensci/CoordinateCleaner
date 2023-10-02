@@ -19,7 +19,7 @@ databases. Individual tests can be activated via the tests argument:"><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -78,8 +78,8 @@ databases. Individual tests can be activated via the tests argument:</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clean_fossils</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"lng"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"lat"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  min_age <span class="op">=</span> <span class="st">"min_ma"</span>,</span>
 <span>  max_age <span class="op">=</span> <span class="st">"max_ma"</span>,</span>
 <span>  taxon <span class="op">=</span> <span class="st">"accepted_name"</span>,</span>
@@ -112,12 +112,12 @@ and geographic coordinates..</p></dd>
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>min_age</dt>
@@ -143,9 +143,9 @@ See details for all tests available. Default = c("centroids",
 
 
 <dt>countries</dt>
-<dd><p>a character string. The column with the country assignment of
-each record in three letter ISO code. Default = “countrycode”. If missing, the
-countries test is skipped.</p></dd>
+<dd><p>a character string. The column with the country assignment
+of each record in three letter ISO code. Default = “countrycode”. If
+missing, the countries test is skipped.</p></dd>
 
 
 <dt>centroids_rad</dt>
@@ -154,10 +154,9 @@ meters. Default = 1000.</p></dd>
 
 
 <dt>centroids_detail</dt>
-<dd><p>a <code>character string</code>. If set to
-‘country’ only country (adm-0) centroids are tested, if set to
-‘provinces’ only province (adm-1) centroids are tested.  Default =
-‘both’.</p></dd>
+<dd><p>a <code>character string</code>. If set to ‘country’
+only country (adm-0) centroids are tested, if set to ‘provinces’
+only province (adm-1) centroids are tested.  Default = ‘both’.</p></dd>
 
 
 <dt>inst_rad</dt>
@@ -196,15 +195,15 @@ Alternatives must be identical in structure.</p></dd>
 
 
 <dt>country_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative
-reference for the countries test. If NULL, the
-<code>rnaturalearth:ne_countries('medium')</code> dataset is used.</p></dd>
+<dd><p>a <code>SpatVector</code> as alternative reference
+for the countries test. If NULL, the
+<code>rnaturalearth:ne_countries('medium', returnclass = "sf")</code> dataset is used.</p></dd>
 
 
 <dt>inst_ref</dt>
 <dd><p>a <code>data.frame</code> with alternative reference data for the
-biodiversity institution test. If NULL, the <code>institutions</code> dataset
-is used.  Alternatives must be identical in structure.</p></dd>
+biodiversity institution test. If NULL, the <code>institutions</code> dataset is
+used.  Alternatives must be identical in structure.</p></dd>
 
 
 <dt>value</dt>
@@ -304,8 +303,8 @@ and tutorials.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">minages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">0</span>, <span class="fl">65</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">exmpl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>accepted_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span>, size <span class="op">=</span> <span class="fl">250</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    lng <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                    min_ma <span class="op">=</span> <span class="va">minages</span>,</span></span>
 <span class="r-in"><span>                    max_ma <span class="op">=</span> <span class="va">minages</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">0.1</span>, <span class="fl">65</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -319,15 +318,9 @@ and tutorials.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing country centroids</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 records.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing spatio-temporal outliers on taxon level</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallatitude not found. Using lat instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallongitude not found. Using lng instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 records.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallatitude not found. Using lat instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallongitude not found. Using lng instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing temporal range outliers on dataset level</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 records.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallatitude not found. Using lat instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>decimallongitude not found. Using lng instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing temporal range outliers on taxon level</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 records.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing age validity</span>
@@ -338,7 +331,7 @@ and tutorials.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 records.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 0 of 250 records, EQ = 0</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .aeq     .cen     .equ     .gbf    .inst     .spt     .trg     .zer </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        0        0        0        0        0        0        0        0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .summary </span>
@@ -358,7 +351,7 @@ and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

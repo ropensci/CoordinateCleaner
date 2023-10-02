@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -84,10 +84,11 @@
 
       
 
-      </header><script src="Comparison_other_software_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Comparison of CoordinateCleaner to other tools</h1>
+      <h1 data-toc-skip>Comparison of CoordinateCleaner to other
+tools</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/CoordinateCleaner/blob/HEAD/vignettes/Comparison_other_software.Rmd" class="external-link"><code>vignettes/Comparison_other_software.Rmd</code></a></small>
@@ -97,8 +98,22 @@
 
     
     
-<p>##Background Erroneous database entries and problematic geographic coordinates are a central issue in biogeography and there is a set of tools available to address different dimensions of the problem. CoordinateCleaner focuses on the fast and reproducible flagging of large amounts of records, and additional functions to detect dataset-level and fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci/scrubr" class="external-link">scrubr</a> and <a href="https://CRAN.R-project.org/package=biogeo" class="external-link">biogeo</a> offer cleaning approaches complementary to CoordinateCleaner. The scrubr package combines basic geographic cleaning (comparable to cc_dupl, cc_zero and cc_count in CoordinateCleaner) but adds options to clean taxonomic names (See also <a href="https://github.com/ropensci/taxize" class="external-link">taxize</a>) and date information. biogeo includes some basic automated geographic cleaning (similar to <code>cc_val</code>, <code>cc_count</code> and <code>cc_outl</code>) but rather focusses on correcting suspicious coordinates on a manual basis using environmental information.</p>
-<p>Table 1. Function by function comparison of CoordinateCleaner, scrubr and biogeo.</p>
+<p>##Background Erroneous database entries and problematic geographic
+coordinates are a central issue in biogeography and there is a set of
+tools available to address different dimensions of the problem.
+CoordinateCleaner focuses on the fast and reproducible flagging of large
+amounts of records, and additional functions to detect dataset-level and
+fossil-specific biases. In the R-environment the <a href="https://github.com/ropensci-archive/scrubr" class="external-link">scrubr</a> and <a href="https://CRAN.R-project.org/package=biogeo" class="external-link">biogeo</a> offer
+cleaning approaches complementary to CoordinateCleaner. The scrubr
+package combines basic geographic cleaning (comparable to cc_dupl,
+cc_zero and cc_count in CoordinateCleaner) but adds options to clean
+taxonomic names (See also <a href="https://github.com/ropensci/taxize" class="external-link">taxize</a>) and date
+information. biogeo includes some basic automated geographic cleaning
+(similar to <code>cc_val</code>, <code>cc_count</code> and
+<code>cc_outl</code>) but rather focusses on correcting suspicious
+coordinates on a manual basis using environmental information.</p>
+<p>Table 1. Function by function comparison of CoordinateCleaner, scrubr
+and biogeo.</p>
 <table class="table">
 <colgroup>
 <col width="31%">
@@ -179,7 +194,8 @@
 <td>0%</td>
 </tr>
 <tr class="even">
-<td>Coordinates assigned to the location of biodiversity institutions</td>
+<td>Coordinates assigned to the location of biodiversity
+institutions</td>
 <td>cc_inst</td>
 <td>-</td>
 <td>-</td>
@@ -305,7 +321,8 @@
 <td>0 %</td>
 </tr>
 <tr class="even">
-<td>Correcting coordinates using guessing and environmental distance</td>
+<td>Correcting coordinates using guessing and environmental
+distance</td>
 <td>-</td>
 <td>-</td>
 <td>a large set of functions</td>
@@ -330,7 +347,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

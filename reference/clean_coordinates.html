@@ -19,7 +19,7 @@ collection databases."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -78,8 +78,8 @@ collection databases.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clean_coordinates</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"decimallongitude"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"decimallatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"species"</span>,</span>
 <span>  countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"capitals"</span>, <span class="st">"centroids"</span>, <span class="st">"equal"</span>, <span class="st">"gbif"</span>, <span class="st">"institutions"</span>, <span class="st">"outliers"</span>, <span class="st">"seas"</span>,</span>
@@ -98,11 +98,14 @@ collection databases.</p>
 <span>  centroids_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  country_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  country_refcol <span class="op">=</span> <span class="st">"iso_a3"</span>,</span>
+<span>  country_buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  inst_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  range_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seas_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seas_scale <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  seas_buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  urban_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  aohi_rad <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"spatialvalid"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  report <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -112,18 +115,17 @@ collection databases.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>data.frame. Containing geographical coordinates and species
-names.</p></dd>
+<dd><p>data.frame. Containing geographical coordinates and species names.</p></dd>
 
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>species</dt>
@@ -133,21 +135,20 @@ include the "outliers" or "duplicates" tests.</p></dd>
 
 
 <dt>countries</dt>
-<dd><p>a character string. The column with the country assignment of
-each record in three letter ISO code. Default = “countrycode”. If missing, the
-countries test is skipped.</p></dd>
+<dd><p>a character string. The column with the country assignment
+of each record in three letter ISO code. Default = “countrycode”. If
+missing, the countries test is skipped.</p></dd>
 
 
 <dt>tests</dt>
 <dd><p>a vector of character strings, indicating which tests to run.
 See details for all tests available. Default = c("capitals", "centroids",
-"equal", "gbif", "institutions", "outliers",
-"seas", "zeros")</p></dd>
+"equal", "gbif", "institutions", "outliers", "seas", "zeros")</p></dd>
 
 
 <dt>capitals_rad</dt>
-<dd><p>numeric. The radius around capital coordinates in
-meters. Default = 10000.</p></dd>
+<dd><p>numeric. The radius around capital coordinates in meters.
+Default = 10000.</p></dd>
 
 
 <dt>centroids_rad</dt>
@@ -156,10 +157,9 @@ meters. Default = 1000.</p></dd>
 
 
 <dt>centroids_detail</dt>
-<dd><p>a <code>character string</code>. If set to
-‘country’ only country (adm-0) centroids are tested, if set to
-‘provinces’ only province (adm-1) centroids are tested.  Default =
-‘both’.</p></dd>
+<dd><p>a <code>character string</code>. If set to ‘country’
+only country (adm-0) centroids are tested, if set to ‘provinces’
+only province (adm-1) centroids are tested.  Default = ‘both’.</p></dd>
 
 
 <dt>inst_rad</dt>
@@ -196,8 +196,8 @@ to run the taxon-specific outlier test.  Default = 7.</p></dd>
 
 <dt>capitals_ref</dt>
 <dd><p>a <code>data.frame</code> with alternative reference data for
-the country capitals test. If missing, the <code>countryref</code> dataset is used.
-Alternatives must be identical in structure.</p></dd>
+the country capitals test. If missing, the <code>countryref</code> dataset is
+used. Alternatives must be identical in structure.</p></dd>
 
 
 <dt>centroids_ref</dt>
@@ -207,44 +207,59 @@ Alternatives must be identical in structure.</p></dd>
 
 
 <dt>country_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative
-reference for the countries test. If NULL, the
-<code>rnaturalearth:ne_countries('medium')</code> dataset is used.</p></dd>
+<dd><p>a <code>SpatVector</code> as alternative reference
+for the countries test. If NULL, the
+<code>rnaturalearth:ne_countries('medium', returnclass = "sf")</code> dataset is used.</p></dd>
 
 
 <dt>country_refcol</dt>
-<dd><p>the column name in the reference dataset, containing the relevant
-ISO codes for matching. Default is to "iso_a3_eh" which referes to the ISO-3
-codes in the reference dataset. See notes.</p></dd>
+<dd><p>the column name in the reference dataset, containing
+the relevant ISO codes for matching. Default is to "iso_a3_eh" which
+referes to the ISO-3 codes in the reference dataset. See notes.</p></dd>
+
+
+<dt>country_buffer</dt>
+<dd><p>numeric. Units are in meters. If provided, a buffer is
+created around each country polygon.</p></dd>
 
 
 <dt>inst_ref</dt>
 <dd><p>a <code>data.frame</code> with alternative reference data for the
-biodiversity institution test. If NULL, the <code>institutions</code> dataset
-is used.  Alternatives must be identical in structure.</p></dd>
+biodiversity institution test. If NULL, the <code>institutions</code> dataset is
+used.  Alternatives must be identical in structure.</p></dd>
 
 
 <dt>range_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> of species natural ranges.
-Required to include the 'ranges' test. See <code><a href="cc_iucn.html">cc_iucn</a></code> for details.</p></dd>
+<dd><p>a <code>SpatVector</code> of species natural ranges.
+Required to include the 'ranges' test. See <code><a href="cc_iucn.html">cc_iucn</a></code> for
+details.</p></dd>
 
 
 <dt>seas_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative reference
-for the seas test. If NULL, the
-rnaturalearth::ne_download(=scale = 110, type = 'land', category = 'physical')
-dataset is used.</p></dd>
+<dd><p>a <code>SpatVector</code> as alternative reference
+for the seas test. If NULL, the rnaturalearth::ne_download(scale = 110,
+type = 'land', category = 'physical', returnclass = "sf") dataset is used.</p></dd>
 
 
 <dt>seas_scale</dt>
-<dd><p>The scale of the default landmass reference. Must be one of 10, 50, 110.
-Higher numbers equal higher detail. Default = 50.</p></dd>
+<dd><p>The scale of the default landmass reference. Must be one of
+10, 50, 110. Higher numbers equal higher detail. Default = 50.</p></dd>
+
+
+<dt>seas_buffer</dt>
+<dd><p>numeric. Units are in meters. If provided, a buffer is
+created around sea polygon.</p></dd>
 
 
 <dt>urban_ref</dt>
-<dd><p>a <code>SpatialPolygonsDataFrame</code> as alternative reference
+<dd><p>a <code>SpatVector</code> as alternative reference
 for the urban test. If NULL, the test is skipped. See details for a
 reference gazetteers.</p></dd>
+
+
+<dt>aohi_rad</dt>
+<dd><p>numeric. The radius around aohi coordinates in
+meters. Default = 1000.</p></dd>
 
 
 <dt>value</dt>
@@ -289,9 +304,9 @@ with potentially problematic records removed</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>The function needs all coordinates to be formally valid according to WGS84.
-If the data contains invalid coordinates, the function will stop and return
-a vector flagging the invalid records. TRUE = non-problematic coordinate,
-FALSE = potentially problematic coordinates.</p><ul><li><p>capitals tests a radius around adm-0 capitals. The
+If the data contains invalid coordinates, the function will stop and return a
+vector flagging the invalid records. TRUE = non-problematic coordinate, FALSE
+= potentially problematic coordinates.</p><ul><li><p>capitals tests a radius around adm-0 capitals. The
 radius is <code>capitals_rad</code>.</p></li>
 <li><p>centroids tests a radius around country centroids.
 The radius is <code>centroids_rad</code>.</p></li>
@@ -299,8 +314,8 @@ The radius is <code>centroids_rad</code>.</p></li>
 country indicated in the country column.  <em>Switched off by default.</em></p></li>
 <li><p>duplicates tests for duplicate records. This
 checks for identical coordinates or if a species vector is provided for
-identical coordinates within a species. All but the first records are
-flagged as duplicates. <em>Switched off by default.</em></p></li>
+identical coordinates within a species. All but the first records are flagged
+as duplicates. <em>Switched off by default.</em></p></li>
 <li><p>equal tests for equal absolute longitude and latitude.</p></li>
 <li><p>gbif tests a one-degree radius around the GBIF
 headquarters in Copenhagen, Denmark.</p></li>
@@ -309,28 +324,28 @@ biodiversity institutions from <code>instiutions</code>. The radius is
 <code>inst_rad</code>.</p></li>
 <li><p>outliers tests each species for outlier records.
 Depending on the <code>outliers_mtp</code> and <code>outliers.td</code> arguments either
-flags records that are a minimum distance away from all other records of
-this species (<code>outliers_td</code>) or records that are outside a multiple of
-the interquartile range of minimum distances to the next neighbour of this
-species (<code>outliers_mtp</code>). Three different methods are available
-for the outlier test: "If
-“outlier” a boxplot method is used and records are flagged as
-outliers if their <em>mean</em> distance to all other records of the same
-species is larger than mltpl * the interquartile range of the mean distance
-of all records of this species. If “mad” the median absolute
+flags records that are a minimum distance away from all other records of this
+species (<code>outliers_td</code>) or records that are outside a multiple of the
+interquartile range of minimum distances to the next neighbour of this
+species (<code>outliers_mtp</code>). Three different methods are available for the
+outlier test: "If “outlier” a boxplot method is used and records are
+flagged as outliers if their <em>mean</em> distance to all other records of the
+same species is larger than mltpl * the interquartile range of the mean
+distance of all records of this species. If “mad” the median absolute
 deviation is used. In this case a record is flagged as outlier, if the
 <em>mean</em> distance to all other records of the same species is larger than
 the median of the mean distance of all points plus/minus the mad of the mean
-distances of all records of the species * mltpl. If “distance”
-records are flagged as outliers, if the <em>minimum</em> distance to the next
-record of the species is &gt; <code>tdi</code>.</p></li>
+distances of all records of the species * mltpl. If “distance” records
+are flagged as outliers, if the <em>minimum</em> distance to the next record of
+the species is &gt; <code>tdi</code>.</p></li>
 <li><p>ranges tests if records fall within provided natural range polygons on
 a per species basis. See <code><a href="cc_iucn.html">cc_iucn</a></code> for details.</p></li>
 <li><p>seas tests if coordinates fall into the ocean.</p></li>
 <li><p>urban tests if coordinates are from urban areas.
 <em>Switched off by default</em></p></li>
 <li><p>validity checks if coordinates correspond to a lat/lon coordinate reference system.
-This test is always on, since all records need to pass for any other test to run.</p></li>
+This test is always on, since all records need to pass for any other test to
+run.</p></li>
 <li><p>zeros tests for plain zeros, equal latitude and
 longitude and a radius around the point 0/0. The radius is <code>zeros.rad</code>.</p></li>
 </ul></div>
@@ -340,9 +355,9 @@ longitude and a radius around the point 0/0. The radius is <code>zeros.rad</code
 coordinates and coordinates exceeding the global extent (lon/lat, WGS84).
 See <a href="https://ropensci.github.io/CoordinateCleaner/" class="external-link">https://ropensci.github.io/CoordinateCleaner/</a> for more details
 and tutorials.</p>
-<p>The country_refcol argument allows to adapt the function to the structure of
-alternative reference datasets. For instance, for
-<code>rnaturalearth::ne_countries(scale = "small")</code>, the default will fail,
+<p>The country_refcol argument allows to adapt the function to the
+structure of alternative reference datasets. For instance, for
+<code>rnaturalearth::ne_countries(scale = "small", returnclass = "sf")</code>, the default will fail,
 but country_refcol = "iso_a3" will work.</p>
     </div>
     <div id="see-also">
@@ -357,8 +372,8 @@ but country_refcol = "iso_a3" will work.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">exmpl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span>, size <span class="op">=</span> <span class="fl">250</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="fl">42</span>, max <span class="op">=</span> <span class="fl">51</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">250</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">26</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">clean_coordinates</span><span class="op">(</span>x <span class="op">=</span> <span class="va">exmpl</span>, </span></span>
 <span class="r-in"><span>                          tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equal"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -379,7 +394,7 @@ but country_refcol = "iso_a3" will work.</p>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span>                                 </span></span>
 <span class="r-in"><span>                                    </span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .val     .equ .summary </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        0        0        0 </span>
 <span class="r-in"><span></span></span>
@@ -397,7 +412,7 @@ but country_refcol = "iso_a3" will work.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

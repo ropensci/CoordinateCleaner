@@ -27,7 +27,7 @@ which can indicate imprecise coordinates, due to rounding or rasterization.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -91,8 +91,8 @@ which can indicate imprecise coordinates, due to rounding or rasterization.</p><
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clean_dataset</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  lon <span class="op">=</span> <span class="st">"decimallongitude"</span>,</span>
-<span>  lat <span class="op">=</span> <span class="st">"decimallatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  ds <span class="op">=</span> <span class="st">"dataset"</span>,</span>
 <span>  tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ddmm"</span>, <span class="st">"periodicity"</span><span class="op">)</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"dataset"</span>,</span>
@@ -104,18 +104,17 @@ which can indicate imprecise coordinates, due to rounding or rasterization.</p><
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>data.frame. Containing geographical coordinates and species
-names.</p></dd>
+<dd><p>data.frame. Containing geographical coordinates and species names.</p></dd>
 
 
 <dt>lon</dt>
 <dd><p>character string. The column with the longitude coordinates.
-Default = “decimallongitude”.</p></dd>
+Default = “decimalLongitude”.</p></dd>
 
 
 <dt>lat</dt>
 <dd><p>character string. The column with the latitude coordinates.
-Default = “decimallatitude”.</p></dd>
+Default = “decimalLatitude”.</p></dd>
 
 
 <dt>ds</dt>
@@ -202,8 +201,8 @@ and tutorials.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Create test dataset</span></span></span>
 <span class="r-in"><span><span class="va">clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"clean"</span>, <span class="fl">1000</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">43</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">40</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    decimallatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">13</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">43</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">40</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">13</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                    </span></span>
 <span class="r-in"><span><span class="va">bias.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">42</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">40</span>, n <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>               <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">42</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">40</span>, n <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
@@ -212,8 +211,8 @@ and tutorials.</p>
 <span class="r-in"><span>              <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, n <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, max <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, n <span class="op">=</span> <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">bias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"biased"</span>, <span class="fl">1000</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                   decimallongitude <span class="op">=</span> <span class="va">bias.long</span>,</span></span>
-<span class="r-in"><span>                   decimallatitude <span class="op">=</span> <span class="va">bias.lat</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   decimalLongitude <span class="op">=</span> <span class="va">bias.long</span>,</span></span>
+<span class="r-in"><span>                   decimalLatitude <span class="op">=</span> <span class="va">bias.lat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">clean</span>, <span class="va">bias</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>                  </span></span>
@@ -222,9 +221,9 @@ and tutorials.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#check problems</span></span></span>
 <span class="r-in"><span><span class="co">#clean</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span><span class="va">test</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">flags</span><span class="op">[</span><span class="va">flags</span><span class="op">$</span><span class="va">summary</span>,<span class="op">]</span><span class="op">)</span>, <span class="st">"decimallongitude"</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span><span class="va">test</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">flags</span><span class="op">[</span><span class="va">flags</span><span class="op">$</span><span class="va">summary</span>,<span class="op">]</span><span class="op">)</span>, <span class="st">"decimalLongitude"</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#biased</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span><span class="va">test</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">flags</span><span class="op">[</span><span class="op">!</span><span class="va">flags</span><span class="op">$</span><span class="va">summary</span>,<span class="op">]</span><span class="op">)</span>, <span class="st">"decimallongitude"</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span><span class="va">test</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">flags</span><span class="op">[</span><span class="op">!</span><span class="va">flags</span><span class="op">$</span><span class="va">summary</span>,<span class="op">]</span><span class="op">)</span>, <span class="st">"decimalLongitude"</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
@@ -241,7 +240,7 @@ and tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
