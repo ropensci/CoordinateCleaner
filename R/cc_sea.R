@@ -113,6 +113,9 @@ cc_sea <- function(x,
   }
   
   if (is.numeric(buffer)) {
+    # Fix buffer when equals 0 
+    buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
+    
     ref <- terra::buffer(ref, buffer)
   }
   

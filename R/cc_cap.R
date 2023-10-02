@@ -87,6 +87,7 @@ cc_cap <- function(x,
     ref <- ref[!is.na(ref$capital),]
   }
   # subset reference data to records extend to speed up the test
+  buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
   limits <- terra::ext(terra::buffer(dat, width = buffer))
   lat_lon <- c("capital.lon", "capital.lat")
   ref <- terra::crop(terra::vect(ref[, lat_lon], 
@@ -96,7 +97,7 @@ cc_cap <- function(x,
 
   # test if any points fall within the buffer in case no capitals are found in
   # the study area
-  if (is.null(ref) | ncol(ref) == 0) {
+  if (is.null(ref)) {
     out <- rep(TRUE, nrow(x))
   } else {
     if (geod) {

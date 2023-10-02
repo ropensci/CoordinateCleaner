@@ -81,7 +81,7 @@ cc_cen <- function(x,
     #proj4string(ref) <- wgs84
     warning("assuming lat/lon for centroids.ref")
   }
-  
+  buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
   limits <- terra::ext(terra::buffer(dat, width = buffer))
   
   # subset of testdatset according to speed up buffer

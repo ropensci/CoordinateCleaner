@@ -48,19 +48,21 @@ cc_gbif <- function(x,
   }
   
   
-  if(buffer > 10 & !geod){
+  if (buffer > 10 & !geod){
     warnings("Using large buffer check 'geod'")
   }
-  if(buffer < 100 & geod){
+  if (buffer < 100 & geod){
     warnings("Using small buffer check 'geod'")
   }
+
+  # Fix buffer when equals 0 
+  buffer <- ifelse(buffer == 0, 0.00000000001, buffer)
   
   # set default projection
   wgs84 <- "+proj=longlat +datum=WGS84 +no_defs"
   dat <- terra::vect(x[, c(lon, lat)],
                      geom = c(lon, lat),
                      crs = wgs84)
-  
   if (geod) {
     # credits to https://seethedatablog.wordpress.com
     dg <- seq(from = 0, to = 360, by = 5)
