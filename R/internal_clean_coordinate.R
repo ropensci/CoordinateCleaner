@@ -72,10 +72,10 @@ ras_dist <-  function(x, lat, lon, ras, weights) {
   midp <- data.frame(terra::as.points(ras))
   
   # retain only cells that contain points
-  midp <- midp[midp$lyr.1 %in% unique(pts),]
+  midp <- midp[midp$lyr.1 %in% unique(pts$lyr.1),]
   
   # order
-  midp <- midp[match(unique(pts), midp$lyr.1),]
+  midp <- midp[match(unique(pts$lyr.1), midp$lyr.1),]
   
   # calculate geospheric distance between raster cells with points
   dist <- geosphere::distm(midp[, c("x", "y")], 
