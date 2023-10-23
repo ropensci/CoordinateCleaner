@@ -30,19 +30,28 @@ reproj <- function(ref) {
 
 ras_create <- function(x, lat, lon,  thinning_res){
   # get data extend
-  ex <- terra::ext(terra::vect(x[, c(lon, lat)], geom=c(lon, lat))) + thinning_res * 2
+  ex <- terra::ext(terra::vect(x[, c(lon, lat)], 
+                               geom = c(lon, lat))) + thinning_res * 2
   
   # check for boundary conditions
-  if(ex[1] < -180 | ex[2] > 180 | ex[3] < -90 | ex[4] >90){
+  if (ex[1] < -180 | ex[2] > 180 | ex[3] < -90 | ex[4] > 90) {
     warning("fixing raster boundaries, assuming lat/lon projection")
     
-    if(ex[1] < -180){ex[1] <- -180}
+    if (ex[1] < -180) {
+      ex[1] <- -180
+    }
     
-    if(ex[2] > 180){ex[2] <- 180}
+    if (ex[2] > 180) {
+      ex[2] <- 180
+    }
     
-    if(ex[3] < -90){ex[3] <- -90}
+    if (ex[3] < -90) {
+      ex[3] <- -90
+    }
     
-    if(ex[4] > 90){ex[4] <- 90}
+    if (ex[4] > 90) {
+      ex[4] <- 90
+    }
   }
   
   # create raster
@@ -60,22 +69,24 @@ ras_create <- function(x, lat, lon,  thinning_res){
 #output a data.frame with the distances and the cell IDs as row and column names for cc_outl
 
 ras_dist <-  function(x, lat, lon, ras, weights) {
-  # x = a data.frame of point coordinates, ras = a raster with cell IDs as layer,
-  #weight = logical, shall the distance matrix be weightened by the number of points per cell?
-  # assign each point to a raster cell
+  #x = a data.frame of point coordinates, ras = a raster with cell IDs as layer,
+  #weight = logical, shall the distance matrix be weightened by the number of
+  #points per cell? assign each point to a raster cell
   pts <- terra::extract(x = ras, 
                         y = terra::vect(x[, c(lon, lat)],
                                         geom = c(lon, lat),
                                         crs = ras))
   
   # convert to data.frame
-  midp <- data.frame(terra::as.points(ras))
+  midp <- data.frame(terra::as.points(ras), 
+                     terra::xyFromCell(ras, 1:terra::ncell(ras)))
   
   # retain only cells that contain points
-  midp <- midp[midp$lyr.1 %in% unique(pts$lyr.1),]
+  midp <- midp[midp$lyr.1 %in% unique(pts$lyr.1), , drop = FALSE]
   
   # order
-  midp <- midp[match(unique(pts$lyr.1), midp$lyr.1),]
+  midp <- midp[match(unique(pts$lyr.1), midp$lyr.1), , drop = FALSE]
+  
   
   # calculate geospheric distance between raster cells with points
   dist <- geosphere::distm(midp[, c("x", "y")], 
@@ -85,7 +96,7 @@ ras_dist <-  function(x, lat, lon, ras, weights) {
   dist <- as.data.frame(dist, row.names = as.integer(midp$lyr.1))
   names(dist) <- midp$lyr.1
   
-  if(weights){
+  if (weights) {
     # approximate within cell distance as half 
     # the cell size, assumin 1 deg = 100km
     # this is crude, but doesn't really matter
@@ -93,10 +104,10 @@ ras_dist <-  function(x, lat, lon, ras, weights) {
     
     # weight matrix to account for the number of points per cell
     ## the number of points in each cell
-    cou <- table(pts)
+    cou <- table(pts$lyr.1)
     
     ## order
-    cou <- cou[match(unique(pts), names(cou))]
+    cou <- cou[match(unique(pts$lyr.1), names(cou))]
     
     # weight matrix, representing the number of distances between or within the cellse (points cell 1 * points cell 2)
     wm <- outer(cou, cou)

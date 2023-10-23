@@ -76,7 +76,6 @@
 #' cc_outl(x, method = "quantile", value = "flagged")
 #' cc_outl(x, method = "distance", value = "flagged", tdi = 10000)
 #' cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
-#' plot(x[, -1], col =  cc_outl(x, method = "distance", value = "flagged", tdi = 1000) + 1)
 #'
 #' @export
 #' @importFrom geosphere distm distHaversine
@@ -157,131 +156,16 @@ cc_outl <- function(x,
     
     
     # identify points for flagging
-    flags <- lapply(splist, function(k) {
-      
-      # Set raster flag inc ase thinning= TRUE,
-      # or this particualr species has 100000 or more records
-      if (nrow(k) >= 10000 | thinning) {
-        raster_flag <- TRUE
-      } else {
-        raster_flag <- FALSE
-      }
-      
-      # calculate the distance matrix between all points for the outlier tests
-      ## for small datasets and without thinning, 
-      ## simply a distance matrix using geospheric distance
-      if (raster_flag) { 
-        # raster approximation for large datasets and thinning
-        # get a distance matrix of raster midpoints, with the row 
-        # and colnames giving the cell IDs
-        
-        # if the raster distance is used due to large dataset and 
-        # not for thinning, account for the number of points per gridcell
-        if (thinning) {
-          dist_obj <- ras_dist(x = k, 
-                               lat = lat, 
-                               lon = lon,
-                               ras = ras, 
-                               weights = FALSE)
-          
-          # the point IDS
-          pts <-  dist_obj$pts
-          
-          # the distance matrix 
-          dist <- dist_obj$dist
-          
-        } else {
-          dist_obj <-  ras_dist(x = k, 
-                                lat = lat, 
-                                lon = lon,
-                                ras = ras, 
-                                weights = TRUE)
-          
-          # the point IDS
-          pts <-  dist_obj$pts
-          
-          # the distance matrix 
-          dist <- dist_obj$dist
-          
-          # a weight matrix to weight each distance by the number of points in it
-          wm <- dist_obj$wm
-        }
-      } else { 
-        #distance calculation
-        dist <- geosphere::distm(k[, c(lon, lat)], 
-                                 fun = geosphere::distHaversine) / 1000
-        
-        # set diagonale to NA, so it does not influence the mean
-        dist[dist == 0] <- NA
-      }
-      
-      # calculate the outliers for the different methods
-      ##  distance method useing absolute distance
-      if (method == "distance") {
-        # Drop an error if the sampling correction is activated
-        if (sampling_thresh > 0) {
-          stop("Sampling correction impossible for method 'distance'" )
-        }
-        
-        # calculate the minimum distance to any next point
-        mins <- apply(dist, 1, min, na.rm = TRUE)
-        
-        # outliers based on absolute distance threshold
-        out <- which(mins > tdi)
-      } else { # for the other methods the mean must be claculated 
-        # depending on if the raster method is used
-        # get row means
-        if (raster_flag & !thinning) {
-          # get mean distance to all other points
-          mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
-        } else {
-          # get mean distance to all other points
-          mins <-  apply(dist, 1, mean, na.rm = TRUE)
-        }
-      }
-      
-      ## the quantile method
-      if (method == "quantile") {
-        # identify the quaniles
-        quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
-        
-        # flag all upper outliers
-        out <- which(mins > (quo[2] + stats::IQR(mins) * mltpl))
-      }
-      
-      ## the mad method
-      if (method == "mad") {
-        # get the median
-        quo <- stats::median(mins, na.rm = TRUE)
-        
-        # get the mad stat
-        tester <- stats::mad(mins, na.rm = TRUE)
-        
-        # Identify outliers
-        out <- which(mins > (quo + tester * mltpl))
-      }
-      
-      # Identify the outlier points depending on 
-      # if the raster approximation was used
-      if (raster_flag) {
-        # create output object
-        if (length(out) == 0) {
-          ret <- NA
-        }
-        if (length(out) > 0) {
-          ret <- rownames(k)[which(pts %in% gsub("X", "", names(out)))]
-        }
-      }else{
-        # create output object
-        if (length(out) == 0) {
-          ret <- NA
-        }
-        if (length(out) > 0) {
-          ret <- rownames(k)[out]
-        }
-      }
-      return(ret)
-    })
+    flags <- lapply(splist, 
+                    .flagging, 
+                    thinning = thinning, 
+                    lon = lon,
+                    lat = lat,
+                    method = method,
+                    mltpl = mltpl,
+                    ras = ras,
+                    sampling_thresh = sampling_thresh, 
+                    tdi = tdi)
     
     # turn to numeric and remove NAs
     flags <- as.numeric(as.vector(unlist(flags)))
@@ -370,4 +254,134 @@ cc_outl <- function(x,
            flagged = return(out), 
            ids = return(init_ids[flags]))
   }
+}
+
+
+####------
+
+.flagging <- function(k, thinning, lon, lat, method, mltpl, ras,
+                      sampling_thresh, tdi) {
+  
+  # Set raster flag inc ase thinning= TRUE,
+  # or this particualr species has 100000 or more records
+  if (nrow(k) >= 10000 | thinning) {
+    raster_flag <- TRUE
+  } else {
+    raster_flag <- FALSE
+  }
+  
+  # calculate the distance matrix between all points for the outlier tests
+  ## for small datasets and without thinning, 
+  ## simply a distance matrix using geospheric distance
+  if (raster_flag) { 
+    # raster approximation for large datasets and thinning
+    # get a distance matrix of raster midpoints, with the row 
+    # and colnames giving the cell IDs
+    
+    # if the raster distance is used due to large dataset and 
+    # not for thinning, account for the number of points per gridcell
+    if (thinning) {
+      dist_obj <- ras_dist(x = k, 
+                           lat = lat, 
+                           lon = lon,
+                           ras = ras, 
+                           weights = FALSE)
+      
+      # the point IDS
+      pts <-  dist_obj$pts
+      
+      # the distance matrix 
+      dist <- dist_obj$dist
+      
+    } else {
+      dist_obj <-  ras_dist(x = k, 
+                            lat = lat, 
+                            lon = lon,
+                            ras = ras, 
+                            weights = TRUE)
+      
+      # the point IDS
+      pts <-  dist_obj$pts
+      
+      # the distance matrix 
+      dist <- dist_obj$dist
+      
+      # a weight matrix to weight each distance by the number of points in it
+      wm <- dist_obj$wm
+    }
+  } else { 
+    #distance calculation
+    dist <- geosphere::distm(k[, c(lon, lat)], 
+                             fun = geosphere::distHaversine) / 1000
+    
+    # set diagonale to NA, so it does not influence the mean
+    dist[dist == 0] <- NA
+  }
+  
+  # calculate the outliers for the different methods
+  ##  distance method useing absolute distance
+  if (method == "distance") {
+    # Drop an error if the sampling correction is activated
+    if (sampling_thresh > 0) {
+      stop("Sampling correction impossible for method 'distance'" )
+    }
+    
+    # calculate the minimum distance to any next point
+    mins <- apply(dist, 1, min, na.rm = TRUE)
+    
+    # outliers based on absolute distance threshold
+    out <- which(mins > tdi)
+  } else { # for the other methods the mean must be claculated 
+    # depending on if the raster method is used
+    # get row means
+    if (raster_flag & !thinning) {
+      # get mean distance to all other points
+      mins <- apply(dist, 1, sum, na.rm = TRUE) / rowSums(wm, na.rm = TRUE)
+    } else {
+      # get mean distance to all other points
+      mins <-  apply(dist, 1, mean, na.rm = TRUE)
+    }
+  }
+  
+  ## the quantile method
+  if (method == "quantile") {
+    # identify the quaniles
+    quo <- quantile(mins, c(0.25, 0.75), na.rm = TRUE)
+    
+    # flag all upper outliers
+    out <- which(mins > (quo[2] + stats::IQR(mins) * mltpl))
+  }
+  
+  ## the mad method
+  if (method == "mad") {
+    # get the median
+    quo <- stats::median(mins, na.rm = TRUE)
+    
+    # get the mad stat
+    tester <- stats::mad(mins, na.rm = TRUE)
+    
+    # Identify outliers
+    out <- which(mins > (quo + tester * mltpl))
+  }
+  
+  # Identify the outlier points depending on 
+  # if the raster approximation was used
+  if (raster_flag) {
+    # create output object
+    if (length(out) == 0) {
+      ret <- NA
+    }
+    if (length(out) > 0) {
+      ret <- rownames(k)[which(pts %in% gsub("X", "", names(out)))]
+    }
+  }else{
+    # create output object
+    if (length(out) == 0) {
+      ret <- NA
+    }
+    if (length(out) > 0) {
+      ret <- rownames(k)[out]
+    }
+  }
+  return(ret)
 }
