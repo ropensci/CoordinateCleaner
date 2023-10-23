@@ -168,115 +168,117 @@ of records flagged.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cc_dupl</span><span class="op">(</span><span class="va">x</span>, value <span class="op">=</span> <span class="st">"flagged"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing duplicates</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 5 records.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 3 records.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] FALSE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  TRUE  TRUE  TRUE  TRUE</span>
 <span class="r-in"><span><span class="fu">cc_dupl</span><span class="op">(</span><span class="va">x</span>, additions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"collector"</span>, <span class="st">"collector.number"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing duplicates</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 5 records.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 3 records.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     species decimalLongitude decimalLatitude collector collector.number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         a                4               8     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         b                9              10     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         c                0               6     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         d                5              10     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         e                2               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         a                9               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         b                5               3     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         c                8               3     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         d                3               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         e                6               4     Bonpl             1001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         f                4               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         g               10               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         h                3               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9         i                9               9     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10        j                5               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11        a                3               7     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12        b                4               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13        c                3               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14        d                3               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15        e                6               6     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16        f                5               7     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17        g                5               9     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18        h                4               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19        i                1               5     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        j               10               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21        a                5               1     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22        b                2               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23        c                1               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24        d                8               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26        f                5               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27        g                1               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28        h                4               9     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29        i                8               4     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30        j                1               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31        a                7               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32        b                0               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33        c                2               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34        d                2               4     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35        e                3               6     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36        f                5               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37        g                6               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38        h                7               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39        i                0               9     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40        j                7               6     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42        b                2               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43        c                6              10     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45        e                7               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46        f                2               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47        g                7               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48        h               10               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49        i                4               5     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50        j                1               4     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51        a                0               4     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52        b                5               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53        c               10               4     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54        d                4               9     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55        e                8               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56        f                8               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57        g                8               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58        h                4               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59        i                5               9     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60        j               10              10     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61        a                0               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62        b               10               7     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63        c                9               8     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64        d                8               6     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65        e                6               9     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66        f                4               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67        g                2               7     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68        h                8               1     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69        i                9               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70        j                4               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71        a                1               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72        b                1               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73        c                5               1     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74        d                2              10     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75        e                5               8     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76        f               10               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77        g                7               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78        h                1               4     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79        i                2               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80        j                2               7     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81        a               10               6     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82        b                2               5     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83        c                2              10     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84        d                2               7     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85        e                5               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86        f                1               3     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87        g                3               5     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88        h                3               8     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89        i                7               3     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90        j                1               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91        a                0               8     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92        b                3               0     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93        c                5               4     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95        e                2               2     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 96        f               10              10     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 98        h                3               2     Bonpl              354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 99        i                0               0     Bonpl             1001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100       j                6               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         g                5               8     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         h                2               3     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9         i                3               4     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        j                6               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        a                1               8     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12        b                2               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13        c                0               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14        d               10               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15        e                6               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16        f               10               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17        g                3               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18        h                3               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19        i                0               8     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20        j                0               7     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21        a                6               9     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22        b                0               4     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23        c               10               2     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24        d                1               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25        e                6               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26        f                5               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27        g                0               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28        h                5               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29        i                9               6     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30        j                0               5     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31        a                4               4     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32        b                6               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33        c                1               6     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34        d                7               5     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35        e                2               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36        f                2               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37        g                6               8     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38        h               10               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39        i                1               0     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40        j                6              10     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41        a                8               0     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42        b                7               2     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43        c                9              10     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45        e                0               7     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46        f                3               7     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47        g               10               0     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48        h                8               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49        i                5               7     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50        j                8               0     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51        a                8               9     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52        b               10               2     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53        c                7               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54        d                0               9     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55        e                3               9     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56        f                0               4     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57        g                9               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58        h                7               7     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60        j                6               2     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61        a                3               3     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62        b                8               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63        c                6               3     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64        d               10               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65        e                4               7     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66        f                1               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67        g                9               2     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68        h                9               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69        i                1               6     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70        j                9              10     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71        a                3               8     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72        b                8               2     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73        c                4               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74        d               10               5     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75        e                9               9     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76        f                9               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77        g                4               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78        h                9               4     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79        i                7               7     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80        j                7               1     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81        a                6              10     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82        b                3               7     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83        c                1               2     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84        d                0               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85        e                9               2     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86        f                6               2     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87        g                5               3     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88        h                5               4     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89        i               10               6     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90        j                8               9     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91        a                7              10     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92        b                7               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94        d                1              10     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95        e                9               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96        f                4               8     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97        g               10               5     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98        h                5               6     Bonpl              354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99        i                4               1     Bonpl             1001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100       j                3               4     Bonpl              354</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     collection</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1            K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          WAG</span>
@@ -302,6 +304,7 @@ of records flagged.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22         WAG</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23          FR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 24           P</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25           S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26           K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 27         WAG</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28          FR</span>
@@ -317,6 +320,7 @@ of records flagged.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 38          FR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 39           P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 40           S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41           K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 42         WAG</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 43          FR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 45           S</span>
@@ -333,7 +337,6 @@ of records flagged.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 56           K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 57         WAG</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 58          FR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59           P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 60           S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 61           K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 62         WAG</span>
@@ -367,9 +370,10 @@ of records flagged.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 90           S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 91           K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 92         WAG</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93          FR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94           P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 95           S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 96           K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97         WAG</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 98          FR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 99           P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100          S</span>
