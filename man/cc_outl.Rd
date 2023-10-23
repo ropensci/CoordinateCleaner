@@ -120,7 +120,6 @@ cc_outl(x)
 cc_outl(x, method = "quantile", value = "flagged")
 cc_outl(x, method = "distance", value = "flagged", tdi = 10000)
 cc_outl(x, method = "distance", value = "flagged", tdi = 1000)
-plot(x[, -1], col =  cc_outl(x, method = "distance", value = "flagged", tdi = 1000) + 1)
 
 }
 \seealso{
