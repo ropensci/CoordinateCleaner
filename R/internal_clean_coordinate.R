@@ -30,7 +30,7 @@ reproj <- function(ref) {
 
 ras_create <- function(x, lat, lon,  thinning_res){
   # get data extend
-  ex <- terra::ext(terra::vect(x[, c(lon, lat)])) + thinning_res * 2
+  ex <- terra::ext(terra::vect(x[, c(lon, lat)], geom=c(lon, lat))) + thinning_res * 2
   
   # check for boundary conditions
   if(ex[1] < -180 | ex[2] > 180 | ex[3] < -90 | ex[4] >90){
@@ -72,18 +72,18 @@ ras_dist <-  function(x, lat, lon, ras, weights) {
   midp <- data.frame(terra::as.points(ras))
   
   # retain only cells that contain points
-  midp <- midp[midp$layer %in% unique(pts),]
+  midp <- midp[midp$lyr.1 %in% unique(pts$lyr.1),]
   
   # order
-  midp <- midp[match(unique(pts), midp$layer),]
+  midp <- midp[match(unique(pts$lyr.1), midp$lyr.1),]
   
   # calculate geospheric distance between raster cells with points
   dist <- geosphere::distm(midp[, c("x", "y")], 
                            fun = geosphere::distHaversine) / 1000
   
   # set rownames and colnames to cell IDs
-  dist <- as.data.frame(dist, row.names = as.integer(midp$layer))
-  names(dist) <- midp$layer
+  dist <- as.data.frame(dist, row.names = as.integer(midp$lyr.1))
+  names(dist) <- midp$lyr.1
   
   if(weights){
     # approximate within cell distance as half 
