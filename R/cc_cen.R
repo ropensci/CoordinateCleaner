@@ -93,7 +93,7 @@ cc_cen <- function(x,
     limits)
   
   # run buffering incase no centroids are found in the study area
-  if (is.null(ref)) {
+  if (is.null(ref)  | nrow(ref) == 0) {
     out <- rep(TRUE, nrow(x))
   } else {
     if (geod) {
@@ -112,7 +112,7 @@ cc_cen <- function(x,
       # Make SpatialPolygons out of the list of coordinates
       lst <- lapply(lst, as.matrix)
       ref <- sapply(lst, terra::vect, crs = wgs84, type = "polygons")
-      ref <- Reduce(rbind, ref)
+      ref <- terra::vect(ref)
       
       #point in polygon test
       ext_dat <- terra::extract(ref, dat)

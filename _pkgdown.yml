@@ -20,7 +20,7 @@ reference:
   - pbdb_example
   - aohi
 - title: Visualization
-  contents:
+  contents: 
   - plot.spatialvalid
 - title: Check
   contents:
