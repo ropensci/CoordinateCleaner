@@ -49,7 +49,7 @@ cc_inst <- function(x,
                     lat = "decimalLatitude",
                     species = "species",
                     buffer = 100,
-                    geod = TRUE,
+                    geod = FALSE,
                     ref = NULL, 
                     verify = FALSE,
                     verify_mltpl = 10,
@@ -94,7 +94,7 @@ cc_inst <- function(x,
     crs = wgs84), limits)
   
   # test reference data after limiting and do test in case no bdinstitutions
-  if (is.null(ref)) {
+  if (is.null(ref)  | nrow(ref) == 0) {
     out <- rep(TRUE, nrow(x))
   } else {
     if (geod) {
@@ -112,8 +112,7 @@ cc_inst <- function(x,
       # Make SpatialPolygons out of the list of coordinates
       lst <- lapply(lst, as.matrix)
       ref <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
-      ref <- Reduce(rbind, ref)
-      
+      ref <- terra::vect(ref)
       #point in polygon test
       ext_dat <- terra::extract(ref, dat)
       out <- is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
@@ -149,7 +148,8 @@ cc_inst <- function(x,
         lst <- lapply(lst, as.matrix)
         
         poly <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
-        ref <- Reduce(rbind, poly)
+        ref <- terra::vect(ref)
+        
         ref$species <- ref_in[, species]
       } else {
         ref <- terra::vect(ref_in, geom = c(lon, lat))

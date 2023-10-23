@@ -10,7 +10,7 @@ cc_inst(
   lat = "decimalLatitude",
   species = "species",
   buffer = 100,
-  geod = TRUE,
+  geod = FALSE,
   ref = NULL,
   verify = FALSE,
   verify_mltpl = 10,

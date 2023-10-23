@@ -139,7 +139,7 @@ cc_sea <- function(x,
     ## point-in-polygon test
     ext_dat <- terra::extract(ref, pts)
     out <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
-    out <- data.frame(terra::geom(pts)[, c("x", "y")], out)
+    out <- data.frame(terra::geom(pts)[, c("x", "y"), drop = FALSE], out)
     colnames(out)[1:2] <- c(lon, lat)
     ## remerge with coordinates
     dum <- x

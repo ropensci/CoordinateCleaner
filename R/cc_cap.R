@@ -116,7 +116,7 @@ cc_cap <- function(x,
       # Make SpatialPolygons out of the list of coordinates
       lst <- lapply(lst, as.matrix)
       ref <- lapply(lst, terra::vect, crs = wgs84, type = "polygons")
-      ref <- Reduce(rbind, ref)
+      ref <- terra::vect(ref)
       
       #point in polygon test
       ext_dat <- terra::extract(ref, dat)

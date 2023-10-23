@@ -97,7 +97,7 @@ cc_aohi <- function(x,
     lst <- lapply(lst, as.matrix)
     ref <-
       sapply(lst, terra::vect, crs = wgs84, type = "polygons")
-    ref <- Reduce(rbind, ref)
+    ref <- terra::vect(ref)
     
     #point in polygon test
     ext_dat <- terra::extract(ref, dat)
