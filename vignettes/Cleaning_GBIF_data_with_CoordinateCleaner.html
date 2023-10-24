@@ -559,9 +559,9 @@ class="uri">https://www.iucnredlist.org/resources/spatial-data-download</a>.
 these, or any other, ranges to flag records in the <code>cc_iucn</code>
 function. Since downloading the IUCN shapes requires log-in we will
 approximate lion’s natural range from scratch for our example. For
-plants check out the botanical countries of the <a
-href="https://powo.science.kew.org/">World Checklist of selected plant
-families</a>.</p>
+plants check out the botanical countries of The World Checklist of
+Selected Plant Families facilitated by the Royal Botanic Gardens,
+Kew.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co">#create simple natural range for lions</span></span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>coords_range <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">cbind</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">23</span>, <span class="sc">-</span><span class="dv">7</span>, <span class="dv">31</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">42</span>, <span class="dv">41</span>, <span class="dv">24</span>, <span class="sc">-</span><span class="dv">23</span>), <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">37</span>, <span class="dv">32</span>, <span class="dv">27</span>, <span class="dv">18</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">16</span>, <span class="sc">-</span><span class="dv">38</span>, <span class="dv">14</span>)))</span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>wgs84 <span class="ot">&lt;-</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span></span>

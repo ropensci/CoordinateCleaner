@@ -402,9 +402,8 @@ https://www.iucnredlist.org/resources/spatial-data-download. *CoordinateCleaner*
 implements a straight forward way to use these, or any other, ranges to flag
 records in the `cc_iucn` function. Since downloading the IUCN shapes requires
 log-in we will approximate lion's natural range from scratch for our example.
-For plants check out the botanical countries of the [World Checklist of selected
-plant families](https://powo.science.kew.org/).
-
+For plants check out the botanical countries of The World Checklist of Selected
+Plant Families facilitated by the Royal Botanic Gardens, Kew.
 
 
 ```{r}
