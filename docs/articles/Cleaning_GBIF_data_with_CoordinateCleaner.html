@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CoordinateCleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.1</span>
       </span>
     </div>
 
@@ -488,8 +488,9 @@ natural distribution ranges. These can be downloaded for free at <a href="https:
 these, or any other, ranges to flag records in the <code>cc_iucn</code>
 function. Since downloading the IUCN shapes requires log-in we will
 approximate lion’s natural range from scratch for our example. For
-plants check out the botanical countries of the <a href="https://powo.science.kew.org/" class="external-link">World Checklist of selected plant
-families</a>.</p>
+plants check out the botanical countries of The World Checklist of
+Selected Plant Families facilitated by the Royal Botanic Gardens,
+Kew.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#create simple natural range for lions</span></span>
 <span><span class="va">coords_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">23</span>, <span class="op">-</span><span class="fl">7</span>, <span class="fl">31</span>, <span class="fl">71</span>, <span class="fl">83</span>, <span class="fl">42</span>, <span class="fl">41</span>, <span class="fl">24</span>, <span class="op">-</span><span class="fl">23</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>, <span class="fl">37</span>, <span class="fl">32</span>, <span class="fl">27</span>, <span class="fl">18</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">16</span>, <span class="op">-</span><span class="fl">38</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
