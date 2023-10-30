@@ -6,7 +6,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2539408.svg)](https://doi.org/10.5281/zenodo.2539408)
 [![rOpenSci peer-review](https://badges.ropensci.org/210_status.svg)](https://github.com/ropensci/software-review/issues/210)
 
-**CoordinateCleaner has been updated to version 3.0 on github and will shortly be updated on CRAN to adapt to the retirement of sp and raster. The update may not be compatible with analysis-pipelines build with version 2.x***
+**CoordinateCleaner has been updated to version 3.0 on github and on CRAN to adapt to the retirement of sp and raster. The update may not be compatible with analysis-pipelines build with version 2.x***
 
 Automated flagging of common spatial and temporal errors in biological and palaeontological collection data, for the use in conservation, ecology and palaeontology. Specifically includes tests for
 
