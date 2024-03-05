@@ -117,11 +117,32 @@ cd_round <- function(x,
       if (nrow(tester[!duplicated(tester[, c(lon, lat)]), ]) < 
           min_unique_ds_size) {
         warning("Dataset smaller than minimum test size")
-        out <- data.frame(
-          dataset = unique(k[[ds]]), n.outliers = NA,
-          n.regular.outliers = NA, regular.distance = NA, summary = NA
-        )
-      } else {
+        if (test == "lon") {
+          out <- data.frame(
+            dataset = unique(k[[ds]]), lon.n.outliers = NA,
+            lon.n.regular.distance = NA, lon.regular.distance = NA, summary = NA
+          )
+        }
+          if (test == "lat") {
+            out <- data.frame(
+              dataset = unique(k[[ds]]), lat.n.outliers = NA,
+              lat.n.regular.distance = NA, lat.regular.distance = NA, summary = NA
+            )
+          }
+          if (test == "both") {
+            out <- data.frame(
+              dataset = unique(k[[ds]]),
+              lon.n.outliers = NA,
+              lon.n.regular.outliers = NA,
+              lon.regular.distance = NA,
+              lon.flag = NA,
+              lat.n.outliers = NA,
+              lat.n.regular.outliers = NA,
+              lat.regular.distance = NA,
+              lat.flag = NA, 
+              summary = NA
+            )
+          }      } else {
         if (test == "lon") {
           # calculate autocorrelation
           gvec <- .CalcACT(
