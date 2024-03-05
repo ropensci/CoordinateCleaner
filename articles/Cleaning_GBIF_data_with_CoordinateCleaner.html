@@ -249,7 +249,7 @@ coordinate mismatch test we need to convert the country from ISO2 to
 ISO3 format.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#convert country code from ISO2c to ISO3c</span></span>
-<span><span class="va">dat</span><span class="op">$</span><span class="va">countryCode</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://vincentarelbundock.github.io/countrycode/reference/countrycode.html" class="external-link">countrycode</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">countryCode</span>, </span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">countryCode</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/countrycode/man/countrycode.html" class="external-link">countrycode</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">countryCode</span>, </span>
 <span>                                origin <span class="op">=</span>  <span class="st">'iso2c'</span>,</span>
 <span>                                destination <span class="op">=</span> <span class="st">'iso3c'</span><span class="op">)</span></span>
 <span></span>
@@ -277,10 +277,10 @@ ISO3 format.</p>
 <span><span class="co">## Flagged 314 records.</span></span>
 <span><span class="co">## Flagged 350 of 5000 records, EQ = 0.07.</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">flags</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flags</span>, lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>, lat <span class="op">=</span> <span class="st">"decimalLatitude"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="gbif-clgbif6-1.png" style="width:100.0%" alt=""><p class="caption">Records flagged by the automated cleaning.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">flags</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flags</span>, lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>, lat <span class="op">=</span> <span class="st">"decimalLatitude"</span><span class="op">)</span></span></code></pre></div>
+<div class="float">
+<img src="gbif-clgbif6-1.png" style="width:100.0%" alt="Records flagged by the automated cleaning."><div class="figcaption">Records flagged by the automated cleaning.</div>
 </div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##    .val     .equ     .zer     .cap     .cen     .con .summary </span></span>
@@ -304,7 +304,7 @@ using the magrittr pipe operator, which will directly result in a
 <code>data.frame</code> comprising only cleaned records.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To avoid specifying it in each function</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimalLongitude"</span>, <span class="st">"decimalLatitude"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimalLongitude"</span>, <span class="st">"decimalLatitude"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">clean</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/cc_val.html">cc_val</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -370,9 +370,9 @@ we deem them not reliable enough.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Coordinate uncertainty in meters"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="gbif-clgbif11-1.png" style="width:100.0%" alt=""><p class="caption">A histogram of the coordinate precision in the
-dataset..</p>
+<div class="float">
+<img src="gbif-clgbif11-1.png" style="width:100.0%" alt="A histogram of the coordinate precision in the dataset.."><div class="figcaption">A histogram of the coordinate precision in the
+dataset..</div>
 </div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_cl</span> <span class="op">&lt;-</span> <span class="va">dat_cl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -496,7 +496,7 @@ Kew.</p>
 <span><span class="va">coords_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">23</span>, <span class="op">-</span><span class="fl">7</span>, <span class="fl">31</span>, <span class="fl">71</span>, <span class="fl">83</span>, <span class="fl">42</span>, <span class="fl">41</span>, <span class="fl">24</span>, <span class="op">-</span><span class="fl">23</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>, <span class="fl">37</span>, <span class="fl">32</span>, <span class="fl">27</span>, <span class="fl">18</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">16</span>, <span class="op">-</span><span class="fl">38</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">wgs84</span> <span class="op">&lt;-</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span></span>
 <span></span>
-<span><span class="va">nat_range</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">coords_range</span>, <span class="st">"polygons"</span>,</span>
+<span><span class="va">nat_range</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">coords_range</span>, <span class="st">"polygons"</span>,</span>
 <span>                     crs <span class="op">=</span> <span class="va">wgs84</span><span class="op">)</span></span>
 <span><span class="va">nat_range</span><span class="op">$</span><span class="va">species</span> <span class="op">&lt;-</span> <span class="st">"Panthera leo"</span></span>
 <span> </span>
@@ -510,8 +510,8 @@ Kew.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="gbif-clgbif16-1.png" style="width:100.0%" alt=""><p class="caption">Species range polygon</p>
+<div class="float">
+<img src="gbif-clgbif16-1.png" style="width:100.0%" alt="Species range polygon"><div class="figcaption">Species range polygon</div>
 </div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># run cc_iucn()</span></span>
@@ -562,8 +562,8 @@ argument.</p>
 <code class="sourceCode R"><span><span class="va">out.ddmm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cd_ddmm.html">cd_ddmm</a></span><span class="op">(</span><span class="va">dat_cl</span>, lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>, lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>, </span>
 <span>                    ds <span class="op">=</span> <span class="st">"species"</span>, diagnostic <span class="op">=</span> <span class="cn">T</span>, diff <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                    value <span class="op">=</span> <span class="st">"dataset"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="gbif-clgbif18-1.png" alt=""><p class="caption">plot of chunk clgbif18</p>
+<div class="float">
+<img src="gbif-clgbif18-1.png" alt="plot of chunk clgbif18"><div class="figcaption">plot of chunk clgbif18</div>
 </div>
 <p>This looks good. The test indicates a slightly higher fraction of
 records with decimals below .60 than expected at random, but this is
@@ -590,12 +590,12 @@ might be to coarse for small scale species distribution models.</p>
 <span>                      T1 <span class="op">=</span> <span class="fl">7</span>,</span>
 <span>                      graphs <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">## Testing for rasterized collection</span></span></code></pre></div>
-<div class="figure">
-<img src="gbif-clgbif19-1.png" alt=""><p class="caption">Diagnostic plots testing for rasterized sampling or
-excessive rounding. The left panel shows histograms of the record
+<div class="float">
+<img src="gbif-clgbif19-1.png" alt="Diagnostic plots testing for rasterized sampling or excessive rounding. The left panel shows histograms of the record distribution, the right panel shows the autocorrelation plots. The upper panel shows longitude, the lower panel shows latitude. The logical flag in the heading of the right panel indicates the binary flag."><div class="figcaption">Diagnostic plots testing for rasterized sampling
+or excessive rounding. The left panel shows histograms of the record
 distribution, the right panel shows the autocorrelation plots. The upper
 panel shows longitude, the lower panel shows latitude. The logical flag
-in the heading of the right panel indicates the binary flag.</p>
+in the heading of the right panel indicates the binary flag.</div>
 </div>
 <p>These results look good. The dataset does not show rasterized
 collection schemes (see Supplementary material S1 for examples of biased
@@ -613,7 +613,7 @@ of sources.</p>
 <div class="section level3">
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-Maldonado2015" class="csl-entry">
 Maldonado, C., Molina, C. I., Zizka, A., Persson, C., Taylor, C. M.,
 Albán, J., Chilquillo, E., et al. (2015). <a href="https://doi.org/10.1111/geb.12326" class="external-link"><span class="nocase">Estimating
