@@ -25,11 +25,3 @@ reference:
 - title: Check
   contents:
   - is.spatialvalid
-
-extra_packages:
-  - tidyverse
-  - viridis
-  - caret
-  - msm
-  - countrycode
-  - cran/speciesgeocodeR
