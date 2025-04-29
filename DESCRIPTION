@@ -66,6 +66,7 @@ Suggests:
     sf,
     testthat,
     viridis
+Config/Needs/website: tidyverse, viridis, caret, msm, countrycode, cran/speciesgeocodeR
 VignetteBuilder:
     knitr
 Encoding: UTF-8
