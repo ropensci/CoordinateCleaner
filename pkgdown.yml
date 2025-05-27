@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.1.2
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   Cleaning_GBIF_data_with_CoordinateCleaner: Cleaning_GBIF_data_with_CoordinateCleaner.html
   Cleaning_PBDB_fossils_with_CoordinateCleaner: Cleaning_PBDB_fossils_with_CoordinateCleaner.html
   Comparison_other_software: Comparison_other_software.html
   Using_custom_gazetteers: Using_custom_gazetteers.html
-last_built: 2025-04-29T13:36Z
+last_built: 2025-05-27T10:35Z
