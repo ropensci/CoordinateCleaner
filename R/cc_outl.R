@@ -199,6 +199,13 @@ cc_outl <- function(x,
                            area = terra::expanse(ref))
         area <- area[!is.na(area$area), ]
         area <- area[!is.na(area$country), ]
+
+        ## naturalearth uses -99 for missing values?
+        area <- area[area$country != "-99", ]
+
+        ## CN-TW (Taiwan) doesn't map to a country in the GBIF database:
+        ## naturalearth dataset uses CN-TW for Taiwan, GBIF uses TW.
+        area[area$country == "CN-TW", "country"] <- "TW"
         
         # get number of records in GBIF per country as proxy for sampling intensity
         nrec <- vapply(area$country, 

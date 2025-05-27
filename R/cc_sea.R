@@ -137,7 +137,9 @@ cc_sea <- function(x,
     ## have to make sure they are the same and in this case they already are
     ## -----
     ## point-in-polygon test
-    ext_dat <- terra::extract(ref, pts)
+    ##ext_dat <- terra::extract(ref, pts)
+    ext_dat <- terra::relate(pts, ref, "intersects", pairs = TRUE,
+                             na.rm = FALSE)
     out <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
     out <- data.frame(terra::geom(pts)[, c("x", "y"), drop = FALSE], out)
     colnames(out)[1:2] <- c(lon, lat)
@@ -154,7 +156,9 @@ cc_sea <- function(x,
     
     # select relevant columns
     #point in polygon test
-    ext_dat <- terra::extract(ref, pts)
+    ext_dat <- terra::relate(pts, ref, "intersects", pairs = TRUE,
+                             na.rm = FALSE) 
+    ##ext_dat <- terra::extract(ref, pts)
     out <- !is.na(ext_dat[!duplicated(ext_dat[, 1]), 2])
   }
   
